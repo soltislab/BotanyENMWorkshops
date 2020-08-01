@@ -1,0 +1,36 @@
+{
+    "debugBreakpointsState" : {
+        "breakpoints" : [
+            {
+                "editor_line_number" : 166,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 0,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 166,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/Dropbox/Workshops/SSB2020_ENMworkshop/Demo/Rbased/CrashCourse/Phylogenetic_Diversity.R",
+                "state" : 1,
+                "type" : 1
+            },
+            {
+                "editor_line_number" : 16,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 1,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 16,
+                "needs_updated_steps" : true,
+                "package_name" : "",
+                "path" : "~/Dropbox/Workshops/SSB2020_ENMworkshop/Demo/Rbased/CrashCourse/ENMeval_Modeling.R",
+                "state" : 1,
+                "type" : 1
+            }
+        ]
+    }
+}

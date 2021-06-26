@@ -1,5 +1,5 @@
-# BotanyENMWorkshop2020
-Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2020   
+# BotanyENMWorkshop2021
+Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2021  
 See the html:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2020.html
 
 
@@ -9,5 +9,5 @@ See the html:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/Crash
 Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen), and more.  
 
 
-
-
+## Additional Resources
+[SDM Best Practices](https://github.com/plantarum/sdm-best-practices/wiki)

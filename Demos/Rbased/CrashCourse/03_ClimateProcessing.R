@@ -1,148 +1,207 @@
-# ClimateProcesssing.R
-## Climate Layer Processing
-## Original script by Charlotte Germain-Aubrey.
+# Climate Processing
+## Climate Layer Processing 
 ## Modified and created by ML Gaynor. 
+## Based on code by Mike Belitz (mbelitz/Odo_SDM_Rproj)
 
 # Load Packages 
-library(maptools)
 library(raster)
+library(gtools)
+library(dplyr)
 library(rgdal)
 library(sp)
-library(maps)
-library(mapproj)
+library(rangeBuilder)
+library(sf)
+library(caret)
+library(usdm)
+library(dismo)
+library(stringr)
+
+# Load functions
+source("functions/VIFLayerSelect.R")
 
 # Load bioclim layers
-alt_l <- raster("data/climate_processing/Bioclim/alt.bil")
-bio1_l <- raster("data/climate_processing/Bioclim/bio1.bil")
-bio2_l <- raster("data/climate_processing/Bioclim/bio2.bil")
-bio3_l <- raster("data/climate_processing/Bioclim/bio3.bil")
-bio4_l <- raster("data/climate_processing/Bioclim/bio4.bil")
-bio5_l <- raster("data/climate_processing/Bioclim/bio5.bil")
-bio6_l <- raster("data/climate_processing/Bioclim/bio6.bil")
-bio7_l <- raster("data/climate_processing/Bioclim/bio7.bil")
-bio8_l <- raster("data/climate_processing/Bioclim/bio8.bil")
-bio9_l <- raster("data/climate_processing/Bioclim/bio9.bil")
-bio10_l <- raster("data/climate_processing/Bioclim/bio10.bil")
-bio11_l <- raster("data/climate_processing/Bioclim/bio11.bil")
-bio12_l <- raster("data/climate_processing/Bioclim/bio12.bil")
-bio13_l <- raster("data/climate_processing/Bioclim/bio13.bil")
-bio14_l <- raster("data/climate_processing/Bioclim/bio14.bil")
-bio15_l <- raster("data/climate_processing/Bioclim/bio15.bil")
-bio16_l <- raster("data/climate_processing/Bioclim/bio16.bil")
-bio17_l <- raster("data/climate_processing/Bioclim/bio17.bil")
-bio18_l <- raster("data/climate_processing/Bioclim/bio18.bil")
-bio19_l <- raster("data/climate_processing/Bioclim/bio19.bil")
+biolist <- list.files("data/climate_processing/bioclim/", pattern = "*.tif", full.names = TRUE)
 
-# Define desired extent
-## We are going to use Florida as our desired extent
-FL <- rgdal::readOGR("data/climate_processing/FL/FLstate2.shp")
+## Order list using gtools
+biolist <- mixedsort(sort(biolist))
 
-# Crop bioclim layers to the desired extent
-# Visualize the first layer
-plot(alt_l)
-## First, mask the bioclim layer with Florida.
-alt <- mask(alt_l, FL)
-## Visualize the masked layers 
-plot(alt)
-## Next, crop the bioclim layers to Florida's extent.
-alt <- crop(alt, extent(FL))
-## Visualize the final layer
-plot(alt)
-## Now save the layer - note we already saved these layers for you, so you have to overwrite the file to save yours
-writeRaster(alt, "data/climate_processing/PresentLayers/alt.asc", format="ascii", overwrite = TRUE)
+### Load rasters
+biostack <- raster::stack(biolist)
 
-# Repeat with all additional files 
-bio1 <- mask(bio1_l, FL)
-bio1 <- crop(bio1, extent(FL))
-#writeRaster(bio1, "data/climate_processing/PresentLayers/bio1.asc", format="ascii")
+# Load occurrence records
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20210625.csv")
+alldf$name <- as.character(alldf$name)
 
-bio2 <- mask(bio2_l, FL)
-bio2 <- crop(bio2, extent(FL))
-#writeRaster(bio2, "data/climate_processing/PresentLayers/bio2.asc", format="ascii")
+# Present Layers - all
+## Here we will make the projection layers, or the layers which include shared space. 
+## First we have to define the accessible space.
+alldfsp <- alldf
 
-bio3 <- mask(bio3_l, FL)
-bio3 <- crop(bio3, extent(FL))
-#writeRaster(bio3, "data/climate_processing/PresentLayers/bio3.asc", format="ascii")
+## Make into a spatial point data frame
+coordinates(alldfsp) <- ~ long + lat
+proj4string(alldfsp) <- CRS("+proj=longlat +datum=WGS84")
 
-bio4 <- mask(bio4_l, FL)
-bio4 <- crop(bio4, extent(FL))
-#writeRaster(bio4, "data/climate_processing/PresentLayers/bio4.asc", format="ascii")
+## Create alpha hull
+hull <- getDynamicAlphaHull(x = alldfsp@coords, 
+                             fraction = 1, # min. fraction of records we want included
+                             partCount = 1, # number of polygons
+                             initialAlpha = 20, # initial alpha size, 20m
+                             clipToCoast = "terrestrial",
+                             proj = "+proj=longlat +datum=WGS84")
+### Visualize
+plot(hull[[1]], col=transparentColor('gray50', 0.5), border = NA)
+points(x = alldf$long, y = alldf$lat, cex = 0.5, pch = 3)
 
-bio5 <- mask(bio5_l, FL)
-bio5 <- crop(bio5, extent(FL))
-#writeRaster(bio5, "data/climate_processing/PresentLayers/bio5.asc", format="ascii")
+## Add buffer to hull
+### Transform into CRS related to meters
+hullTrans <- spTransform(hull[[1]], "+proj=cea +lat_ts=0 +lon_0=0")
+alldfspTrans <- spTransform(alldfsp, "+proj=cea +lat_ts=0 +lon_0")
 
-bio6 <- mask(bio6_l, FL)
-bio6 <- crop(bio6, extent(FL))
-#writeRaster(bio6, "data/climate_processing/PresentLayers/bio6.asc", format="ascii")
+### Calculate buffer size
+#### Here we take the 80th quantile of the max distance between points
+buffDist <- quantile(x = (apply(spDists(alldfspTrans), 2, FUN = function(x) sort(x)[2])), 
+                     probs = 0.80, na.rm = TRUE) 
 
-bio7 <- mask(bio7_l, FL)
-bio7 <- crop(bio7, extent(FL))
-#writeRaster(bio7, "data/climate_processing/PresentLayers/bio7.asc", format="ascii")
+### Buffer the hull
+buffer_m <- buffer(x = hullTrans, width = buffDist, dissolve = TRUE)
+buffer <- spTransform(buffer_m, "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
 
-bio8 <- mask(bio8_l, FL)
-bio8 <- crop(bio8, extent(FL))
-#writeRaster(bio8, "data/climate_processing/PresentLayers/bio8.asc", format="ascii")
+### Visualize
+plot(buffer, col=transparentColor('gray50', 0.5), border = NA)
+points(x = alldf$long, y = alldf$lat, cex = 0.5, pch = 3)
 
-bio9 <- mask(bio9_l, FL)
-bio9 <- crop(bio9, extent(FL))
-#writeRaster(bio9, "data/climate_processing/PresentLayers/bio9.asc", format="ascii")
+## Mask and crop bioclim layers
+path <- "data/climate_processing/all/"
+end <- ".asc"
+for(i in 1:length(biolist)){
+    # Subset raster layer
+    rast <- biostack[[i]]
+    # Setup file names
+    name <- names(rast)
+    out <- paste0(path, name)
+    outfile <- paste0(out, end)
+    # Crop and mask
+    c <- crop(rast, extent(buffer))
+    c <- mask(c, buffer)
+    # Write raster
+    writeRaster(c, outfile, format = "ascii", overwrite = TRUE)
+}
 
-bio10 <- mask(bio10_l, FL)
-bio10 <- crop(bio10, extent(FL))
-#writeRaster(bio10, "data/climate_processing/PresentLayers/bio10.asc", format="ascii")
-
-bio11 <- mask(bio11_l, FL)
-bio11 <- crop(bio11, extent(FL))
-#writeRaster(bio11, "data/climate_processing/PresentLayers/bio11.asc", format="ascii")
-
-bio12 <- mask(bio12_l, FL)
-bio12 <- crop(bio12, extent(FL))
-#writeRaster(bio12, "data/climate_processing/PresentLayers/bio12.asc", format="ascii")
-
-bio13 <- mask(bio13_l, FL)
-bio13 <- crop(bio13, extent(FL))
-#writeRaster(bio13, "data/climate_processing/PresentLayers/bio13.asc", format="ascii")
-
-bio14 <- mask(bio14_l, FL)
-bio14 <- crop(bio14, extent(FL))
-#writeRaster(bio14, "data/climate_processing/PresentLayers/bio14.asc", format="ascii")
-
-bio15 <- mask(bio15_l, FL)
-bio15 <- crop(bio15, extent(FL))
-#writeRaster(bio15, "data/climate_processing/PresentLayers/bio15.asc", format="ascii")
-
-bio16 <- mask(bio16_l, FL)
-bio16 <- crop(bio16, extent(FL))
-#writeRaster(bio16, "data/climate_processing/PresentLayers/bio16.asc", format="ascii")
-
-bio17 <- mask(bio17_l, FL)
-bio17 <- crop(bio17, extent(FL))
-#writeRaster(bio17, "data/climate_processing/PresentLayers/bio17.asc", format="ascii")
-
-bio18 <- mask(bio18_l, FL)
-bio18 <- crop(bio18, extent(FL))
-#writeRaster(bio18, "data/climate_processing/PresentLayers/bio18.asc", format="ascii")
-
-bio19 <- mask(bio19_l, FL)
-bio19 <- crop(bio19, extent(FL))
-#writeRaster(bio19, "data/climate_processing/PresentLayers/bio19.asc", format="ascii")
 
 # Select layers for MaxEnt
 ## We only want to include layers that are not highly correlated.
 ## To assess which layers we will include, we want to look at the pearson correlation coefficient among layers.
 ### Stack all layers
-stack <- stack(bio1, bio2, bio3, bio4, bio5, bio6, bio7, bio8, bio9, bio10, bio11, bio12, bio13, bio14, bio15, bio16, bio17, bio18, bio19)
+clippedlist <- list.files("data/climate_processing/all/", pattern = "*.asc", full.names = TRUE)
+clippedlist <- mixedsort(sort(clippedlist))
+clippedstack <- raster::stack(clippedlist)
+
 ### Then calculate the correlation coefficient
-corr <- layerStats(stack, 'pearson', na.rm=TRUE)
-### Isolate only the pearson correlation coefficient 
-c <- corr$`pearson correlation coefficient`
+corr <- layerStats(clippedstack, 'pearson', na.rm=TRUE)
+
+### Isolate only the pearson correlation coefficient and take absolute value
+c <- abs(corr$`pearson correlation coefficient`)
 
 ### Write file and view in excel
-#write.csv(c, "data/climate_processing/correlationBioclim.csv")
-
+write.csv(c, "data/climate_processing/correlationBioclim.csv", row.names = FALSE)
 ## Highly correlated layers (> |0.80|) can impact the statistical significance 
 ## of the niche models and therefore must be removed. 
 
+# Randomly select variables to remove
+envtCor <- mixedsort(sort(findCorrelation(c, cutoff = 0.80, names = TRUE, exact = TRUE)))
+envtCor
 
+## Variable inflation factor (VIF)
+### VIF can detect for multicollinearity in a set of multiple regression variables. 
+### Run a simple maxent model for every species and calculate the average permutation contribution
+#### Loop through each species and save permutation importance in list
+set.seed(195)
+m <- c()
+for(i in  1:length(unique(alldf$name))){
+    species <- unique(alldf$name)[i]
+    spp_df <-  alldf %>%
+               dplyr::filter(name == species)
+    coordinates(spp_df) <- ~ long + lat
+    model <- maxent(x = clippedstack, p = coordinates(spp_df), progress = "text", silent = FALSE) 
+    m[[i]] <- vimportance(model)
+}
+
+#### Bind the dataframes
+mc <- do.call(rbind, m)
+
+#### Calculate the mean and rename columns
+mc_average <- aggregate(mc[, 2], list(mc$Variables), mean)
+mc_average <- mc_average %>%
+              dplyr::select(Variables = Group.1, permutation.importance = x)
+mc1 <- mc_average
+
+# Use VIF and the MaxEnt permutation importance to select the best variables for your model.
+## Note, this leads to different layers when the models are rerun 
+## without setting seed due to permutations having randomness to them. 
+selectedlayers <- VIF_layerselect(clippedstack, mc_average)
+mixedsort(sort(names(selectedlayers)))
+
+## Since this can vary per system (despite setting seed), we added this line to keep our files consistent for the workshop
+sl <- c("bio_3", "bio_7", "bio_8", "bio_9", "bio_14", "bio_15", "bio_18", "elev")
+selectedlayers <- raster::subset(clippedstack, sl)
+
+## Copy selected layers to Present Layer folder
+for(i in 1:length(names(selectedlayers))){
+    name <- names(selectedlayers)[i]
+    from <- paste0("data/climate_processing/all/", name, ".asc")
+    to <- paste0("data/climate_processing/PresentLayers/all/", name, ".asc")
+    file.copy(from, to,
+              overwrite = TRUE, recursive = FALSE, 
+              copy.mode = TRUE)
+}
+
+# Create Species Training Layers
+
+for(i in 1:length(unique(alldf$name))){
+    species <- unique(alldf$name)[i]
+    # Subset species from data frame
+    spp_df <-  alldf %>%
+               dplyr::filter(name == species)
+    # Make spatial
+    coordinates(spp_df) <- ~ long + lat
+    proj4string(spp_df) <- CRS("+proj=longlat +datum=WGS84")
+    
+    ## Create alpha hull
+    sphull <- getDynamicAlphaHull(x = spp_df@coords, 
+                                fraction = 1, # min. fraction of records we want included
+                                partCount = 1, # number of polygons
+                                initialAlpha = 20, # initial alpha size, 20m
+                                clipToCoast = "terrestrial",
+                                proj = "+proj=longlat +datum=WGS84")
+    
+    ### Transform into CRS related to meters
+    sphullTrans <- spTransform(sphull[[1]], "+proj=cea +lat_ts=0 +lon_0=0")
+    spp_dfTrans <- spTransform(spp_df, "+proj=cea +lat_ts=0 +lon_0")
+    
+    ### Calculate buffer size
+    #### Here we take the 80th quantile of the max distance between points
+    spbuffDist <- quantile(x = (apply(spDists(spp_dfTrans), 2, FUN = function(x) sort(x)[2])), 
+                         probs = 0.80, na.rm = TRUE) 
+    
+    ### Buffer the hull
+    spbuffer_m <- buffer(x = sphullTrans, width = spbuffDist, dissolve = TRUE)
+    spbuffer <- spTransform(spbuffer_m, "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+    ### Crop and Mask
+    spec <- gsub(" ", "_", species)
+    path <- paste0("data/climate_processing/PresentLayers/", spec,"/")
+    end <- ".asc"
+    for(j in 1:length(names(selectedlayers))){
+        # Subset raster layer
+        rast <- selectedlayers[[j]]
+        # Setup file names
+        name <- names(rast)
+        out <- paste0(path, name)
+        outfile <- paste0(out, end)
+        # Crop and mask
+        c <- crop(rast, extent(spbuffer))
+        c <- mask(c, spbuffer)
+        # Write raster
+        writeRaster(c, outfile, format = "ascii", overwrite = TRUE)
+    }
+}
 

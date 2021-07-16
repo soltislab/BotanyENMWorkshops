@@ -1,0 +1,2011 @@
+Tue Jun 29 12:39:19 EDT 2021
+MaxEnt version 3.4.4
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_14.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_15.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_18.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_3.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_7.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_8.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_9.asc
+Checking header of /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/elev.asc
+Reading samples from diapensiaceae_maxentready_20210625.csv
+Read samples: max memory 4294967296, total allocated 268435456, free 203448632, used 64986824, increment 64986824
+Warning: interpreting lat column of sample file as latitude
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_14.asc size 9285907, max memory = 4294967296
+Reading file bio_14.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 268435456, free 110924280, used 157511176, increment 92524352
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_14.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_15.asc size 19894341, max memory = 4294967296
+Reading file bio_15.asc
+Time since start: 1.175
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 268435456, free 232535928, used 35899528, increment -121611648
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_15.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_18.asc size 10020364, max memory = 4294967296
+Reading file bio_18.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 268435456, free 82807840, used 185627616, increment 149728088
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_18.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_3.asc size 19816973, max memory = 4294967296
+Reading file bio_3.asc
+Time since start: 2.415
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 268435456, free 56801512, used 211633944, increment 26006328
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_3.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_7.asc size 18018006, max memory = 4294967296
+Reading file bio_7.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 268435456, free 64554048, used 203881408, increment -7752536
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_7.mxe
+Time since start: 3.433
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_8.asc size 19287138, max memory = 4294967296
+Reading file bio_8.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 322961408, free 75138464, used 247822944, increment 43941536
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_8.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/bio_9.asc size 19504677, max memory = 4294967296
+Reading file bio_9.asc
+Time since start: 4.886
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 322961408, free 94059440, used 228901968, increment -18920976
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/bio_9.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/elev.asc size 9762895, max memory = 4294967296
+Reading file elev.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 322961408, free 98444224, used 224517184, increment -4384784
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata/maxent.cache/elev.mxe
+Time since start: 6.424
+Extractor: max memory 4294967296, total allocated 322961408, free 83736320, used 239225088, increment 14707904
+Extracting random background and sample data
+766165 points with values for all grids
+Adding samples to background in feature space
+Command line used: 
+Command line to repeat: java density.MaxEnt nowarnings noprefixes responsecurves jackknife outputformat=logistic outputdirectory=/Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata projectionlayers=/Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all samplesfile=/Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/diapensiaceae_maxentready_20210625.csv environmentallayers=/Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata randomseed noaskoverwrite randomtestpoints=25 replicates=5 replicatetype=subsample writebackgroundpredictions responsecurvesexponent writeplotdata maximumiterations=5000
+Species: Galax_urceolata_0 Galax_urceolata_1 Galax_urceolata_2 Galax_urceolata_3 Galax_urceolata_4
+Layers: bio_14 bio_15 bio_18 bio_3 bio_7 bio_8 bio_9 elev
+Layertypes: Continuous Continuous Continuous Continuous Continuous Continuous Continuous Continuous
+responsecurves: true
+jackknife: true
+outputformat: logistic
+outputdirectory: /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata
+projectionlayers: /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all
+samplesfile: /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/diapensiaceae_maxentready_20210625.csv
+environmentallayers: /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/Galax_urceolata
+randomseed: true
+askoverwrite: false
+randomtestpoints: 25
+replicates: 5
+replicatetype: subsample
+writebackgroundpredictions: true
+responsecurvesexponent: true
+writeplotdata: true
+maximumiterations: 5000
+
+getSamples: max memory 4294967296, total allocated 322961408, free 70132672, used 252828736, increment 13603648
+Making features
+makeFeatures: max memory 4294967296, total allocated 322961408, free 64376072, used 258585336, increment 5756600
+Galax_urceolata_0: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 322961408, free 187088080, used 135873328, increment -122712008
+linearPredictor: max memory 4294967296, total allocated 322961408, free 187088080, used 135873328, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 322961408, free 187088080, used 135873328, increment 0
+Sequential: max memory 4294967296, total allocated 322961408, free 187086032, used 135875376, increment 2048
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 9.363
+380: time = 2.062000 loss = 8.401605 testLoss 8.550698
+Resulting gain: 0.8141206055411079
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_0.asc
+Time since start: 12.14
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_0.png
+Projecting...
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_14.asc size 9285907, max memory = 4294967296
+Reading file bio_14.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 322961408, free 88413984, used 234547424, increment 98672048
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_14.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_15.asc size 19894341, max memory = 4294967296
+Reading file bio_15.asc
+Time since start: 13.553
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 322961408, free 165038016, used 157923392, increment -76624032
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_15.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_18.asc size 10020364, max memory = 4294967296
+Reading file bio_18.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 293733928, used 94239192, increment -63684200
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_18.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_3.asc size 19816973, max memory = 4294967296
+Reading file bio_3.asc
+Time since start: 14.785
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 254735496, used 133237624, increment 38998432
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_3.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_7.asc size 18018006, max memory = 4294967296
+Reading file bio_7.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 250369216, used 137603904, increment 4366280
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_7.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_8.asc size 19287138, max memory = 4294967296
+Reading file bio_8.asc
+Time since start: 16.008
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 192099912, used 195873208, increment 58269304
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_8.mxe
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/bio_9.asc size 19504677, max memory = 4294967296
+Reading file bio_9.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 85409816, used 302563304, increment 106690096
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/bio_9.mxe
+Time since start: 17.088
+Converting file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/elev.asc size 9762895, max memory = 4294967296
+Reading file elev.asc
+FLOAT, 766165 pixels with data
+readGrid: max memory 4294967296, total allocated 387973120, free 111480696, used 276492424, increment -26070880
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse/data/climate_processing/PresentLayers/all/maxent.cache/elev.mxe
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_0_all.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_0_all_clamping.asc
+Time since start: 20.19
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_0_all.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_0_all_clamping.png
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_0_all_novel.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_0_all_novel_limiting.asc
+Time since start: 23.303
+Galax_urceolata_0 response curves
+Response curve: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 245916920, used 142056200, increment -134436224
+Galax_urceolata_0 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 245228792, used 142744328, increment 688128
+linearPredictor: max memory 4294967296, total allocated 387973120, free 244933104, used 143040016, increment 295688
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 244933104, used 143040016, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 244933104, used 143040016, increment 0
+Initial loss: 9.215725844252521
+200: time = 0.272000 loss = 8.834941
+Resulting gain: 0.38078510546256616
+Galax_urceolata_0 response curves
+Response curve: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 234382408, used 153590712, increment 10550696
+Galax_urceolata_0 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 231301616, used 156671504, increment 3080792
+linearPredictor: max memory 4294967296, total allocated 387973120, free 231301616, used 156671504, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 231301616, used 156671504, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 231301616, used 156671504, increment 0
+Initial loss: 9.215725844252521
+80: time = 0.238000 loss = 9.058785
+Resulting gain: 0.1569408079740917
+Galax_urceolata_0 response curves
+Response curve: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 290281160, used 97691960, increment -58979544
+Galax_urceolata_0 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 289101000, used 98872120, increment 1180160
+linearPredictor: max memory 4294967296, total allocated 387973120, free 289101000, used 98872120, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 289101000, used 98872120, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 289101000, used 98872120, increment 0
+Initial loss: 9.215725844252521
+Time since start: 24.391
+140: time = 0.154000 loss = 9.019895
+Resulting gain: 0.19583117964539198
+Galax_urceolata_0 response curves
+Response curve: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 275144968, used 112828152, increment 13956032
+Galax_urceolata_0 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 273749656, used 114223464, increment 1395312
+linearPredictor: max memory 4294967296, total allocated 387973120, free 273669208, used 114303912, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 273669208, used 114303912, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 273669208, used 114303912, increment 0
+Initial loss: 9.215725844252521
+120: time = 0.236000 loss = 9.078767
+Resulting gain: 0.13695914893114036
+Galax_urceolata_0 response curves
+Response curve: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 90484152, used 297488968, increment 183185056
+Galax_urceolata_0 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 89511352, used 298461768, increment 972800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 89430904, used 298542216, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 89430904, used 298542216, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 89430904, used 298542216, increment 0
+Initial loss: 9.215725844252521
+140: time = 0.133000 loss = 8.922018
+Resulting gain: 0.2937081384943454
+Galax_urceolata_0 response curves
+Response curve: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 80669904, used 307303216, increment 8761000
+Galax_urceolata_0 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 79668728, used 308304392, increment 1001176
+linearPredictor: max memory 4294967296, total allocated 387973120, free 79668728, used 308304392, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 79668728, used 308304392, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 79668728, used 308304392, increment 0
+Initial loss: 9.215725844252521
+100: time = 0.123000 loss = 9.103509
+Resulting gain: 0.1122167952299975
+Galax_urceolata_0 response curves
+Response curve: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 284699008, used 103274112, increment -205030280
+Galax_urceolata_0 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 283279536, used 104693584, increment 1419472
+linearPredictor: max memory 4294967296, total allocated 387973120, free 283279536, used 104693584, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 283279536, used 104693584, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 283279536, used 104693584, increment 0
+Initial loss: 9.215725844252521
+120: time = 0.188000 loss = 9.160120
+Resulting gain: 0.055605783087125715
+Galax_urceolata_0 response curves
+Response curve: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 219255600, used 168717520, increment 64023936
+Galax_urceolata_0 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 218267824, used 169705296, increment 987776
+linearPredictor: max memory 4294967296, total allocated 387973120, free 218267824, used 169705296, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 218267824, used 169705296, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 218267824, used 169705296, increment 0
+Initial loss: 9.215725844252521
+Time since start: 25.672
+280: time = 0.308000 loss = 8.770904
+Resulting gain: 0.4448218686043788
+Galax_urceolata_0 response curves
+Jackknife: leave bio_14 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 100789128, used 287183992, increment 117478696
+Galax_urceolata_0 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 92924360, used 295048760, increment 7864768
+linearPredictor: max memory 4294967296, total allocated 387973120, free 92924360, used 295048760, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 92924360, used 295048760, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 92924360, used 295048760, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 27.91
+400: time = 1.859000 loss = 8.421027 testLoss 8.454986
+Jackknife: leave bio_15 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 154559720, used 233413400, increment -61635360
+Galax_urceolata_0 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 147509272, used 240463848, increment 7050448
+linearPredictor: max memory 4294967296, total allocated 387973120, free 147509272, used 240463848, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 147509272, used 240463848, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 147509272, used 240463848, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 29.6
+520: time = 1.601000 loss = 8.446788 testLoss 8.503869
+Jackknife: leave bio_18 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 313694304, used 74278816, increment -166185032
+Galax_urceolata_0 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 306010288, used 81962832, increment 7684016
+linearPredictor: max memory 4294967296, total allocated 387973120, free 306010288, used 81962832, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 306010288, used 81962832, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 306010288, used 81962832, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 31.251
+340: time = 1.568000 loss = 8.423128 testLoss 8.546123
+Jackknife: leave bio_3 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 230867320, used 157105800, increment 75142968
+Galax_urceolata_0 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 223672632, used 164300488, increment 7194688
+linearPredictor: max memory 4294967296, total allocated 387973120, free 223592184, used 164380936, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 223592184, used 164380936, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 223592184, used 164380936, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 32.884
+400: time = 1.549000 loss = 8.437829 testLoss 8.549893
+Jackknife: leave bio_7 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 216592936, used 171380184, increment 6999248
+Galax_urceolata_0 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 208590248, used 179382872, increment 8002688
+linearPredictor: max memory 4294967296, total allocated 387973120, free 208590248, used 179382872, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 208590248, used 179382872, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 208590248, used 179382872, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 34.438
+340: time = 1.481000 loss = 8.451774 testLoss 8.574124
+Jackknife: leave bio_8 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 115928784, used 272044336, increment 92661464
+Galax_urceolata_0 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 108299048, used 279674072, increment 7629736
+linearPredictor: max memory 4294967296, total allocated 387973120, free 108218600, used 279754520, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 108218600, used 279754520, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 108218600, used 279754520, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 36.088
+360: time = 1.571000 loss = 8.412203 testLoss 8.555192
+Jackknife: leave bio_9 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 239122040, used 148851080, increment -130903440
+Galax_urceolata_0 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 231359224, used 156613896, increment 7762816
+linearPredictor: max memory 4294967296, total allocated 387973120, free 231359224, used 156613896, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 231359224, used 156613896, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 231359224, used 156613896, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 38.328
+520: time = 2.162000 loss = 8.407554 testLoss 8.550520
+Jackknife: leave elev out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 190220256, used 197752864, increment 41138968
+Galax_urceolata_0 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 182537888, used 205435232, increment 7682368
+linearPredictor: max memory 4294967296, total allocated 387973120, free 182457440, used 205515680, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 182457440, used 205515680, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 182457440, used 205515680, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 41.11
+600: time = 2.702000 loss = 8.434440 testLoss 8.529937
+Jackknife: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 98464592, used 289508528, increment 83992848
+Galax_urceolata_0 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 97519120, used 290454000, increment 945472
+linearPredictor: max memory 4294967296, total allocated 387973120, free 97519120, used 290454000, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 97519120, used 290454000, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 97519120, used 290454000, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+200: time = 0.164000 loss = 8.834941 testLoss 8.620227
+Res.gain: 0.38078510546256616
+Jackknife: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 90687896, used 297285224, increment 6831224
+Galax_urceolata_0 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 88931456, used 299041664, increment 1756440
+linearPredictor: max memory 4294967296, total allocated 387973120, free 88851008, used 299122112, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 88851008, used 299122112, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 88851008, used 299122112, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+80: time = 0.236000 loss = 9.058785 testLoss 9.133266
+Res.gain: 0.1569408079740917
+Jackknife: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 136358264, used 251614856, increment -47507256
+Galax_urceolata_0 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 134974552, used 252998568, increment 1383712
+linearPredictor: max memory 4294967296, total allocated 387973120, free 134974552, used 252998568, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 134974552, used 252998568, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 134974552, used 252998568, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+140: time = 0.125000 loss = 9.019895 testLoss 8.907304
+Res.gain: 0.19583117964539198
+Jackknife: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 124856856, used 263116264, increment 10117696
+Galax_urceolata_0 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 123344048, used 264629072, increment 1512808
+linearPredictor: max memory 4294967296, total allocated 387973120, free 123263600, used 264709520, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 123263600, used 264709520, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 123263600, used 264709520, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+120: time = 0.209000 loss = 9.078767 testLoss 9.189028
+Res.gain: 0.13695914893114036
+Jackknife: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 166629056, used 221344064, increment -43365456
+Galax_urceolata_0 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 165728472, used 222244648, increment 900584
+linearPredictor: max memory 4294967296, total allocated 387973120, free 165728472, used 222244648, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 165728472, used 222244648, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 165728472, used 222244648, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+Time since start: 42.116
+140: time = 0.121000 loss = 8.922018 testLoss 8.768055
+Res.gain: 0.2937081384943454
+Jackknife: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 160449816, used 227523304, increment 5278656
+Galax_urceolata_0 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 159356568, used 228616552, increment 1093248
+linearPredictor: max memory 4294967296, total allocated 387973120, free 159276120, used 228697000, increment 80448
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 159276120, used 228697000, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 159276120, used 228697000, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+100: time = 0.107000 loss = 9.103509 testLoss 8.990341
+Res.gain: 0.1122167952299975
+Jackknife: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 128347544, used 259625576, increment 30928576
+Galax_urceolata_0 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 127447240, used 260525880, increment 900304
+linearPredictor: max memory 4294967296, total allocated 387973120, free 127447240, used 260525880, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 127447240, used 260525880, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 127447240, used 260525880, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+120: time = 0.147000 loss = 9.160120 testLoss 9.081680
+Res.gain: 0.055605783087125715
+Jackknife: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 290175280, used 97797840, increment -162728040
+Galax_urceolata_0 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 289176768, used 98796352, increment 998512
+linearPredictor: max memory 4294967296, total allocated 387973120, free 289176768, used 98796352, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 289176768, used 98796352, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 289176768, used 98796352, increment 0
+Initial loss: 9.215725844252521
+Initial test loss: 9.215725844252521
+280: time = 0.236000 loss = 8.770904 testLoss 8.593759
+Res.gain: 0.4448218686043788
+getSamples: max memory 4294967296, total allocated 387973120, free 206904000, used 181069120, increment 82272768
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 202468808, used 185504312, increment 4435192
+Galax_urceolata_1: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 193716360, used 194256760, increment 8752448
+linearPredictor: max memory 4294967296, total allocated 387973120, free 193716360, used 194256760, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 193716360, used 194256760, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 193716360, used 194256760, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 44.507
+380: time = 1.752000 loss = 8.453146 testLoss 8.469608
+Resulting gain: 0.7624806594395501
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_1.asc
+Time since start: 46.596
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_1.png
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_1_all.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_1_all_clamping.asc
+Time since start: 49.325
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_1_all.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_1_all_clamping.png
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_1_all_novel.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_1_all_novel_limiting.asc
+Time since start: 52.803
+Galax_urceolata_1 response curves
+Response curve: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 199818368, used 188154752, increment -6102008
+Galax_urceolata_1 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 199115320, used 188857800, increment 703048
+linearPredictor: max memory 4294967296, total allocated 387973120, free 199034880, used 188938240, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 199034880, used 188938240, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 199034880, used 188938240, increment 0
+Initial loss: 9.215626376405421
+160: time = 0.204000 loss = 8.821159
+Resulting gain: 0.39446779455451875
+Galax_urceolata_1 response curves
+Response curve: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 189893288, used 198079832, increment 9141592
+Galax_urceolata_1 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 188299912, used 199673208, increment 1593376
+linearPredictor: max memory 4294967296, total allocated 387973120, free 188219472, used 199753648, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 188219472, used 199753648, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 188219472, used 199753648, increment 0
+Initial loss: 9.215626376405421
+Time since start: 54.25
+300: time = 0.935000 loss = 9.072535
+Resulting gain: 0.1430913432056169
+Galax_urceolata_1 response curves
+Response curve: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 166082240, used 221890880, increment 22137232
+Galax_urceolata_1 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 165105792, used 222867328, increment 976448
+linearPredictor: max memory 4294967296, total allocated 387973120, free 165105792, used 222867328, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 165105792, used 222867328, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 165105792, used 222867328, increment 0
+Initial loss: 9.215626376405421
+160: time = 0.141000 loss = 9.030110
+Resulting gain: 0.18551623507518222
+Galax_urceolata_1 response curves
+Response curve: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 149863616, used 238109504, increment 15242176
+Galax_urceolata_1 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 148677896, used 239295224, increment 1185720
+linearPredictor: max memory 4294967296, total allocated 387973120, free 148597456, used 239375664, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 148597456, used 239375664, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 148597456, used 239375664, increment 0
+Initial loss: 9.215626376405421
+120: time = 0.275000 loss = 9.085551
+Resulting gain: 0.13007568466840702
+Galax_urceolata_1 response curves
+Response curve: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 173309808, used 214663312, increment -24712352
+Galax_urceolata_1 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 172297008, used 215676112, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 172297008, used 215676112, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 172297008, used 215676112, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 172297008, used 215676112, increment 0
+Initial loss: 9.215626376405421
+140: time = 0.122000 loss = 8.943705
+Resulting gain: 0.2719215530374033
+Galax_urceolata_1 response curves
+Response curve: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 163872624, used 224100496, increment 8424384
+Galax_urceolata_1 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 162859824, used 225113296, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 162859824, used 225113296, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 162859824, used 225113296, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 162859824, used 225113296, increment 0
+Initial loss: 9.215626376405421
+140: time = 0.194000 loss = 9.079026
+Resulting gain: 0.13660011245983306
+Galax_urceolata_1 response curves
+Time since start: 55.296
+Response curve: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 116686704, used 271286416, increment 46173120
+Galax_urceolata_1 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 115555064, used 272418056, increment 1131640
+linearPredictor: max memory 4294967296, total allocated 387973120, free 115555064, used 272418056, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 115555064, used 272418056, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 115555064, used 272418056, increment 0
+Initial loss: 9.215626376405421
+200: time = 0.304000 loss = 9.125744
+Resulting gain: 0.08988225839341268
+Galax_urceolata_1 response curves
+Response curve: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 221254632, used 166718488, increment -105699568
+Galax_urceolata_1 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 220243880, used 167729240, increment 1010752
+linearPredictor: max memory 4294967296, total allocated 387973120, free 220163440, used 167809680, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 220163440, used 167809680, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 220163440, used 167809680, increment 0
+Initial loss: 9.215626376405421
+320: time = 0.295000 loss = 8.831386
+Resulting gain: 0.3842406392373938
+Galax_urceolata_1 response curves
+Jackknife: leave bio_14 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 92477488, used 295495632, increment 127685952
+Galax_urceolata_1 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 84525520, used 303447600, increment 7951968
+linearPredictor: max memory 4294967296, total allocated 387973120, free 84525520, used 303447600, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 84525520, used 303447600, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 84525520, used 303447600, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 57.551
+300: time = 1.343000 loss = 8.467007 testLoss 8.362920
+Jackknife: leave bio_15 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 109915000, used 278058120, increment -25389480
+Galax_urceolata_1 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 102861400, used 285111720, increment 7053600
+linearPredictor: max memory 4294967296, total allocated 387973120, free 102861400, used 285111720, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 102861400, used 285111720, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 102861400, used 285111720, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 59.016
+460: time = 1.389000 loss = 8.487978 testLoss 8.464248
+Jackknife: leave bio_18 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 143399680, used 244573440, increment -40538280
+Galax_urceolata_1 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 135474016, used 252499104, increment 7925664
+linearPredictor: max memory 4294967296, total allocated 387973120, free 135474016, used 252499104, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 135474016, used 252499104, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 135474016, used 252499104, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 60.788
+380: time = 1.693000 loss = 8.480548 testLoss 8.385937
+Jackknife: leave bio_3 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 176581416, used 211391704, increment -41107400
+Galax_urceolata_1 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 169314144, used 218658976, increment 7267272
+linearPredictor: max memory 4294967296, total allocated 387973120, free 169233704, used 218739416, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 169233704, used 218739416, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 169233704, used 218739416, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 62.266
+360: time = 1.378000 loss = 8.500199 testLoss 8.427795
+Jackknife: leave bio_7 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 188028296, used 199944824, increment -18794592
+Galax_urceolata_1 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 180239744, used 207733376, increment 7788552
+linearPredictor: max memory 4294967296, total allocated 387973120, free 180239744, used 207733376, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 180239744, used 207733376, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 180239744, used 207733376, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 63.832
+320: time = 1.485000 loss = 8.516383 testLoss 8.476802
+Jackknife: leave bio_8 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 232901192, used 155071928, increment -52661448
+Galax_urceolata_1 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 225028608, used 162944512, increment 7872584
+linearPredictor: max memory 4294967296, total allocated 387973120, free 225028608, used 162944512, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 225028608, used 162944512, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 225028608, used 162944512, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 65.409
+320: time = 1.457000 loss = 8.473699 testLoss 8.417255
+Jackknife: leave bio_9 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 139501320, used 248471800, increment 85527288
+Galax_urceolata_1 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 131622136, used 256350984, increment 7879184
+linearPredictor: max memory 4294967296, total allocated 387973120, free 131622136, used 256350984, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 131622136, used 256350984, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 131622136, used 256350984, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 67.026
+380: time = 1.521000 loss = 8.457980 testLoss 8.473995
+Jackknife: leave elev out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 214149656, used 173823464, increment -82527520
+Galax_urceolata_1 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 206365320, used 181607800, increment 7784336
+linearPredictor: max memory 4294967296, total allocated 387973120, free 206365320, used 181607800, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 206365320, used 181607800, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 206365320, used 181607800, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 69.188
+500: time = 2.085000 loss = 8.466785 testLoss 8.530109
+Jackknife: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 187680016, used 200293104, increment 18685304
+Galax_urceolata_1 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 186739336, used 201233784, increment 940680
+linearPredictor: max memory 4294967296, total allocated 387973120, free 186658896, used 201314224, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 186658896, used 201314224, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 186658896, used 201314224, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+160: time = 0.142000 loss = 8.821159 testLoss 8.652379
+Res.gain: 0.39446779455451875
+Jackknife: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 180861576, used 207111544, increment 5797320
+Galax_urceolata_1 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 179165032, used 208808088, increment 1696544
+linearPredictor: max memory 4294967296, total allocated 387973120, free 179084592, used 208888528, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 179084592, used 208888528, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 179084592, used 208888528, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+300: time = 0.821000 loss = 9.072535 testLoss 9.087918
+Res.gain: 0.1430913432056169
+Time since start: 70.193
+Jackknife: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 107670880, used 280302240, increment 71413712
+Galax_urceolata_1 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 106784272, used 281188848, increment 886608
+linearPredictor: max memory 4294967296, total allocated 387973120, free 106784272, used 281188848, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 106784272, used 281188848, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 106784272, used 281188848, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+160: time = 0.141000 loss = 9.030110 testLoss 8.914963
+Res.gain: 0.18551623507518222
+Jackknife: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 95178712, used 292794408, increment 11605560
+Galax_urceolata_1 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 93785760, used 294187360, increment 1392952
+linearPredictor: max memory 4294967296, total allocated 387973120, free 93705320, used 294267800, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 93705320, used 294267800, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 93705320, used 294267800, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+120: time = 0.235000 loss = 9.085551 testLoss 9.165917
+Res.gain: 0.13007568466840702
+Jackknife: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 106649320, used 281323800, increment -12944000
+Galax_urceolata_1 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 105674912, used 282298208, increment 974408
+linearPredictor: max memory 4294967296, total allocated 387973120, free 105594472, used 282378648, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 105594472, used 282378648, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 105594472, used 282378648, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+140: time = 0.121000 loss = 8.943705 testLoss 8.716939
+Res.gain: 0.2719215530374033
+Jackknife: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 100476696, used 287496424, increment 5117776
+Galax_urceolata_1 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 99463896, used 288509224, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 99383456, used 288589664, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 99383456, used 288589664, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 99383456, used 288589664, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+140: time = 0.153000 loss = 9.079026 testLoss 9.069799
+Res.gain: 0.13660011245983306
+Jackknife: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 56761528, used 331211592, increment 42621928
+Galax_urceolata_1 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 55423704, used 332549416, increment 1337824
+linearPredictor: max memory 4294967296, total allocated 387973120, free 55423704, used 332549416, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 55423704, used 332549416, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 55423704, used 332549416, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+200: time = 0.269000 loss = 9.125744 testLoss 9.166694
+Res.gain: 0.08988225839341268
+Jackknife: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 148568640, used 239404480, increment -93144936
+Galax_urceolata_1 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 147338568, used 240634552, increment 1230072
+linearPredictor: max memory 4294967296, total allocated 387973120, free 147338568, used 240634552, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 147338568, used 240634552, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 147338568, used 240634552, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 71.458
+320: time = 0.273000 loss = 8.831386 testLoss 8.417635
+Res.gain: 0.3842406392373938
+getSamples: max memory 4294967296, total allocated 387973120, free 54534128, used 333438992, increment 92804440
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 50019504, used 337953616, increment 4514624
+Galax_urceolata_2: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 226956744, used 161016376, increment -176937240
+linearPredictor: max memory 4294967296, total allocated 387973120, free 226876304, used 161096816, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 226876304, used 161096816, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 226876304, used 161096816, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 73.669
+420: time = 2.078000 loss = 8.368437 testLoss 8.646624
+Resulting gain: 0.8471889635198409
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_2.asc
+Time since start: 76.274
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_2.png
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_2_all.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_2_all_clamping.asc
+Time since start: 79.896
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_2_all.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_2_all_clamping.png
+Time since start: 80.957
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_2_all_novel.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_2_all_novel_limiting.asc
+Time since start: 84.277
+Galax_urceolata_2 response curves
+Response curve: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 305692880, used 82280240, increment -78816576
+Galax_urceolata_2 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 304763072, used 83210048, increment 929808
+linearPredictor: max memory 4294967296, total allocated 387973120, free 304763072, used 83210048, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 304763072, used 83210048, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 304763072, used 83210048, increment 0
+Initial loss: 9.215626376405421
+220: time = 0.330000 loss = 8.726315
+Resulting gain: 0.4893114572062416
+Galax_urceolata_2 response curves
+Response curve: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 293757696, used 94215424, increment 11005376
+Galax_urceolata_2 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 292154464, used 95818656, increment 1603232
+linearPredictor: max memory 4294967296, total allocated 387973120, free 292074024, used 95899096, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 292074024, used 95899096, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 292074024, used 95899096, increment 0
+Initial loss: 9.215626376405421
+Time since start: 86.388
+320: time = 1.383000 loss = 9.064016
+Resulting gain: 0.1516102349156796
+Galax_urceolata_2 response curves
+Response curve: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 280786904, used 107186216, increment 11287120
+Galax_urceolata_2 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 279774104, used 108199016, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 279774104, used 108199016, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 279774104, used 108199016, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 279774104, used 108199016, increment 0
+Initial loss: 9.215626376405421
+140: time = 0.230000 loss = 8.953313
+Resulting gain: 0.2623134055454681
+Galax_urceolata_2 response curves
+Response curve: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 265986056, used 121987064, increment 13788048
+Galax_urceolata_2 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 264567704, used 123405416, increment 1418352
+linearPredictor: max memory 4294967296, total allocated 387973120, free 264487264, used 123485856, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 264487264, used 123485856, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 264487264, used 123485856, increment 0
+Initial loss: 9.215626376405421
+160: time = 0.477000 loss = 9.110199
+Resulting gain: 0.10542745640245954
+Galax_urceolata_2 response curves
+Response curve: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 243700304, used 144272816, increment 20786960
+Galax_urceolata_2 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 242687504, used 145285616, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 242687504, used 145285616, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 242687504, used 145285616, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 242687504, used 145285616, increment 0
+Initial loss: 9.215626376405421
+Time since start: 87.551
+240: time = 0.282000 loss = 8.884803
+Resulting gain: 0.33082358013090385
+Galax_urceolata_2 response curves
+Response curve: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 231001824, used 156971296, increment 11685680
+Galax_urceolata_2 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 229945304, used 158027816, increment 1056520
+linearPredictor: max memory 4294967296, total allocated 387973120, free 229864864, used 158108256, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 229864864, used 158108256, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 229864864, used 158108256, increment 0
+Initial loss: 9.215626376405421
+180: time = 0.262000 loss = 9.064665
+Resulting gain: 0.15096098276918468
+Galax_urceolata_2 response curves
+Response curve: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 171794456, used 216178664, increment 58070408
+Galax_urceolata_2 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 170763848, used 217209272, increment 1030608
+linearPredictor: max memory 4294967296, total allocated 387973120, free 170239560, used 217733560, increment 524288
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 170239560, used 217733560, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 170239560, used 217733560, increment 0
+Initial loss: 9.215626376405421
+200: time = 0.494000 loss = 9.042804
+Resulting gain: 0.17282232118005858
+Galax_urceolata_2 response curves
+Response curve: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 290861936, used 97111184, increment -120622376
+Galax_urceolata_2 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 289849136, used 98123984, increment 1012800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 289849136, used 98123984, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 289849136, used 98123984, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 289849136, used 98123984, increment 0
+Initial loss: 9.215626376405421
+Time since start: 89.036
+380: time = 0.580000 loss = 8.760044
+Resulting gain: 0.45558238685249464
+Galax_urceolata_2 response curves
+Jackknife: leave bio_14 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 148955528, used 239017592, increment 140893608
+Galax_urceolata_2 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 140951344, used 247021776, increment 8004184
+linearPredictor: max memory 4294967296, total allocated 387973120, free 140951344, used 247021776, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 140951344, used 247021776, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 140951344, used 247021776, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 92.866
+440: time = 3.365000 loss = 8.380038 testLoss 8.615629
+Jackknife: leave bio_15 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 223343032, used 164630088, increment -82391688
+Galax_urceolata_2 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 216339968, used 171633152, increment 7003064
+linearPredictor: max memory 4294967296, total allocated 387973120, free 216339968, used 171633152, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 216339968, used 171633152, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 216339968, used 171633152, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 95.057
+380: time = 2.046000 loss = 8.421858 testLoss 8.627288
+Jackknife: leave bio_18 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 303075912, used 84897208, increment -86735944
+Galax_urceolata_2 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 295283560, used 92689560, increment 7792352
+linearPredictor: max memory 4294967296, total allocated 387973120, free 295283560, used 92689560, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 295283560, used 92689560, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 295281512, used 92691608, increment 2048
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 98.712
+460: time = 3.511000 loss = 8.410024 testLoss 8.606962
+Jackknife: leave bio_3 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 297218488, used 90754632, increment -1936976
+Galax_urceolata_2 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 289570184, used 98402936, increment 7648304
+linearPredictor: max memory 4294967296, total allocated 387973120, free 289570184, used 98402936, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 289570184, used 98402936, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 289570184, used 98402936, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 102.252
+540: time = 3.390000 loss = 8.383653 testLoss 8.724429
+Jackknife: leave bio_7 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 253157248, used 134815872, increment 36412936
+Galax_urceolata_2 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 244981640, used 142991480, increment 8175608
+linearPredictor: max memory 4294967296, total allocated 387973120, free 244981640, used 142991480, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 244981640, used 142991480, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 244981640, used 142991480, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 105.014
+320: time = 2.614000 loss = 8.406289 testLoss 8.761551
+Jackknife: leave bio_8 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 238474576, used 149498544, increment 6507064
+Galax_urceolata_2 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 230771376, used 157201744, increment 7703200
+linearPredictor: max memory 4294967296, total allocated 387973120, free 230690936, used 157282184, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 230690936, used 157282184, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 230690936, used 157282184, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 108.515
+440: time = 3.358000 loss = 8.375572 testLoss 8.663822
+Jackknife: leave bio_9 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 209274864, used 178698256, increment 21416072
+Galax_urceolata_2 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 201336944, used 186636176, increment 7937920
+linearPredictor: max memory 4294967296, total allocated 387973120, free 201336944, used 186636176, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 201336944, used 186636176, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 201336944, used 186636176, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 111.826
+420: time = 3.168000 loss = 8.391384 testLoss 8.571056
+Jackknife: leave elev out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 138575360, used 249397760, increment 62761584
+Galax_urceolata_2 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 130741560, used 257231560, increment 7833800
+linearPredictor: max memory 4294967296, total allocated 387973120, free 130741560, used 257231560, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 130741560, used 257231560, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 130741560, used 257231560, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 116.376
+560: time = 4.388000 loss = 8.386909 testLoss 8.740400
+Jackknife: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 206210952, used 181762168, increment -75469392
+Galax_urceolata_2 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 205301624, used 182671496, increment 909328
+linearPredictor: max memory 4294967296, total allocated 387973120, free 205221184, used 182751936, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 205221184, used 182751936, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 205221184, used 182751936, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+220: time = 0.319000 loss = 8.726315 testLoss 8.966029
+Res.gain: 0.4893114572062416
+Jackknife: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 197333824, used 190639296, increment 7887360
+Galax_urceolata_2 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 195664112, used 192309008, increment 1669712
+linearPredictor: max memory 4294967296, total allocated 387973120, free 195583672, used 192389448, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 195583672, used 192389448, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 195583672, used 192389448, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 118.182
+320: time = 1.431000 loss = 9.064016 testLoss 9.117188
+Res.gain: 0.1516102349156796
+Jackknife: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 170874160, used 217098960, increment 24709512
+Galax_urceolata_2 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 169778672, used 218194448, increment 1095488
+linearPredictor: max memory 4294967296, total allocated 387973120, free 169778672, used 218194448, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 169778672, used 218194448, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 169778672, used 218194448, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+140: time = 0.244000 loss = 8.953313 testLoss 9.116949
+Res.gain: 0.2623134055454681
+Jackknife: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 159386712, used 228586408, increment 10391960
+Galax_urceolata_2 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 157960136, used 230012984, increment 1426576
+linearPredictor: max memory 4294967296, total allocated 387973120, free 157879696, used 230093424, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 157879696, used 230093424, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 157879696, used 230093424, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+160: time = 0.504000 loss = 9.110199 testLoss 9.086885
+Res.gain: 0.10542745640245954
+Jackknife: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 140682160, used 247290960, increment 17197536
+Galax_urceolata_2 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 139712816, used 248260304, increment 969344
+linearPredictor: max memory 4294967296, total allocated 387973120, free 139712816, used 248260304, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 139712816, used 248260304, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 139712816, used 248260304, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 119.307
+240: time = 0.296000 loss = 8.884803 testLoss 8.871918
+Res.gain: 0.33082358013090385
+Jackknife: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 131130816, used 256842304, increment 8582000
+Galax_urceolata_2 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 129753392, used 258219728, increment 1377424
+linearPredictor: max memory 4294967296, total allocated 387973120, free 129753392, used 258219728, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 129753392, used 258219728, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 129753392, used 258219728, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+180: time = 0.285000 loss = 9.064665 testLoss 9.133744
+Res.gain: 0.15096098276918468
+Jackknife: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 75146160, used 312826960, increment 54607232
+Galax_urceolata_2 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 74178864, used 313794256, increment 967296
+linearPredictor: max memory 4294967296, total allocated 387973120, free 74178864, used 313794256, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 74178864, used 313794256, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 74178864, used 313794256, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+200: time = 0.583000 loss = 9.042804 testLoss 9.442967
+Res.gain: 0.17282232118005858
+Jackknife: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 195653872, used 192319248, increment -121475008
+Galax_urceolata_2 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 194406784, used 193566336, increment 1247088
+linearPredictor: max memory 4294967296, total allocated 387973120, free 194406784, used 193566336, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 194406784, used 193566336, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 194406784, used 193566336, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 120.88
+380: time = 0.636000 loss = 8.760044 testLoss 8.635962
+Res.gain: 0.45558238685249464
+getSamples: max memory 4294967296, total allocated 387973120, free 85959608, used 302013512, increment 108447176
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 80613168, used 307359952, increment 5346440
+Galax_urceolata_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 71801784, used 316171336, increment 8811384
+linearPredictor: max memory 4294967296, total allocated 387973120, free 71801784, used 316171336, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 71801784, used 316171336, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 71801784, used 316171336, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 123.691
+300: time = 2.568000 loss = 8.445422 testLoss 8.281965
+Resulting gain: 0.7702042633372042
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_3.asc
+Time since start: 127.871
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_3.png
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_3_all.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_3_all_clamping.asc
+Time since start: 133.216
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_3_all.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_3_all_clamping.png
+Time since start: 134.749
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_3_all_novel.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_3_all_novel_limiting.asc
+Time since start: 139.549
+Galax_urceolata_3 response curves
+Response curve: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 106053184, used 281919936, increment -34251400
+Galax_urceolata_3 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 104954840, used 283018280, increment 1098344
+linearPredictor: max memory 4294967296, total allocated 387973120, free 104954840, used 283018280, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 104954840, used 283018280, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 104954840, used 283018280, increment 0
+Initial loss: 9.215626376405421
+Time since start: 140.847
+260: time = 0.752000 loss = 8.796493
+Resulting gain: 0.4191337140656284
+Galax_urceolata_3 response curves
+Response curve: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 91446864, used 296526256, increment 13507976
+Galax_urceolata_3 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 89831384, used 298141736, increment 1615480
+linearPredictor: max memory 4294967296, total allocated 387973120, free 89750944, used 298222176, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 89750944, used 298222176, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 89750944, used 298222176, increment 0
+Initial loss: 9.215626376405421
+80: time = 0.618000 loss = 9.112586
+Resulting gain: 0.10304028779733265
+Galax_urceolata_3 response curves
+Response curve: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 104028208, used 283944912, increment -14277264
+Galax_urceolata_3 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 102792816, used 285180304, increment 1235392
+linearPredictor: max memory 4294967296, total allocated 387973120, free 102792816, used 285180304, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 102792816, used 285180304, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 102792816, used 285180304, increment 0
+Initial loss: 9.215626376405421
+Time since start: 142.058
+180: time = 0.434000 loss = 9.005058
+Resulting gain: 0.21056834509898614
+Galax_urceolata_3 response curves
+Response curve: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 86462832, used 301510288, increment 16329984
+Galax_urceolata_3 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 84954560, used 303018560, increment 1508272
+linearPredictor: max memory 4294967296, total allocated 387973120, free 84874120, used 303099000, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 84874120, used 303099000, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 84874120, used 303099000, increment 0
+Initial loss: 9.215626376405421
+120: time = 0.623000 loss = 9.121904
+Resulting gain: 0.09372194278168777
+Galax_urceolata_3 response curves
+Response curve: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 99511592, used 288461528, increment -14637472
+Galax_urceolata_3 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 98534640, used 289438480, increment 976952
+linearPredictor: max memory 4294967296, total allocated 387973120, free 98534640, used 289438480, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 98534640, used 289438480, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 98534640, used 289438480, increment 0
+Initial loss: 9.215626376405421
+Time since start: 143.189
+180: time = 0.335000 loss = 8.867396
+Resulting gain: 0.3482308715674378
+Galax_urceolata_3 response curves
+Response curve: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 88339336, used 299633784, increment 10195304
+Galax_urceolata_3 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 87000304, used 300972816, increment 1339032
+linearPredictor: max memory 4294967296, total allocated 387973120, free 87000304, used 300972816, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 87000304, used 300972816, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 87000304, used 300972816, increment 0
+Initial loss: 9.215626376405421
+100: time = 0.215000 loss = 9.066859
+Resulting gain: 0.1487673534849634
+Galax_urceolata_3 response curves
+Response curve: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 244142264, used 143830856, increment -157141960
+Galax_urceolata_3 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 243168336, used 144804784, increment 973928
+linearPredictor: max memory 4294967296, total allocated 387973120, free 243087896, used 144885224, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 243087896, used 144885224, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 243087896, used 144885224, increment 0
+Initial loss: 9.215626376405421
+240: time = 0.494000 loss = 9.127898
+Resulting gain: 0.0877280809724379
+Galax_urceolata_3 response curves
+Response curve: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 119436368, used 268536752, increment 123651528
+Galax_urceolata_3 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 118232696, used 269740424, increment 1203672
+linearPredictor: max memory 4294967296, total allocated 387973120, free 118232696, used 269740424, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 118232696, used 269740424, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 118232696, used 269740424, increment 0
+Initial loss: 9.215626376405421
+Time since start: 144.528
+240: time = 0.449000 loss = 8.751134
+Resulting gain: 0.4644921797136998
+Galax_urceolata_3 response curves
+Jackknife: leave bio_14 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 205888824, used 182084296, increment -87656128
+Galax_urceolata_3 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 198046720, used 189926400, increment 7842104
+linearPredictor: max memory 4294967296, total allocated 387973120, free 198046720, used 189926400, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 198046720, used 189926400, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 198046720, used 189926400, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 148.294
+380: time = 3.223000 loss = 8.454675 testLoss 8.323760
+Jackknife: leave bio_15 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 122270144, used 265702976, increment 75776576
+Galax_urceolata_3 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 115149312, used 272823808, increment 7120832
+linearPredictor: max memory 4294967296, total allocated 387973120, free 115149312, used 272823808, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 115149312, used 272823808, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 115149312, used 272823808, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 150.997
+440: time = 2.535000 loss = 8.462976 testLoss 8.337049
+Jackknife: leave bio_18 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 102331264, used 285641856, increment 12818048
+Galax_urceolata_3 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 94250200, used 293722920, increment 8081064
+linearPredictor: max memory 4294967296, total allocated 387973120, free 94250200, used 293722920, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 94250200, used 293722920, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 94250200, used 293722920, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 153.328
+280: time = 2.167000 loss = 8.459031 testLoss 8.305660
+Jackknife: leave bio_3 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 69415728, used 318557392, increment 24834472
+Galax_urceolata_3 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 61849832, used 326123288, increment 7565896
+linearPredictor: max memory 4294967296, total allocated 387973120, free 61849832, used 326123288, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 61849832, used 326123288, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 61849832, used 326123288, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 155.46
+340: time = 1.947000 loss = 8.466012 testLoss 8.335101
+Jackknife: leave bio_7 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 214058248, used 173914872, increment -152208416
+Galax_urceolata_3 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 206082232, used 181890888, increment 7976016
+linearPredictor: max memory 4294967296, total allocated 387973120, free 206082232, used 181890888, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 206082232, used 181890888, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 206082232, used 181890888, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 158.235
+380: time = 2.646000 loss = 8.525529 testLoss 8.251657
+Jackknife: leave bio_8 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 163114024, used 224859096, increment 42968208
+Galax_urceolata_3 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 155418744, used 232554376, increment 7695280
+linearPredictor: max memory 4294967296, total allocated 387973120, free 155418744, used 232554376, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 155418744, used 232554376, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 155418744, used 232554376, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 160.285
+300: time = 1.917000 loss = 8.449321 testLoss 8.264443
+Jackknife: leave bio_9 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 184932160, used 203040960, increment -29513416
+Galax_urceolata_3 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 177131976, used 210841144, increment 7800184
+linearPredictor: max memory 4294967296, total allocated 387973120, free 177131976, used 210841144, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 177131976, used 210841144, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 177131976, used 210841144, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 162.469
+360: time = 2.067000 loss = 8.464890 testLoss 8.271786
+Jackknife: leave elev out
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 142940064, used 245033056, increment 34191912
+Galax_urceolata_3 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 135163512, used 252809608, increment 7776552
+linearPredictor: max memory 4294967296, total allocated 387973120, free 135163512, used 252809608, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 135163512, used 252809608, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 135163512, used 252809608, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 165.309
+480: time = 2.721000 loss = 8.478062 testLoss 8.290982
+Jackknife: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 100564104, used 287409016, increment 34599408
+Galax_urceolata_3 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 99569608, used 288403512, increment 994496
+linearPredictor: max memory 4294967296, total allocated 387973120, free 99569608, used 288403512, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 99569608, used 288403512, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 99569608, used 288403512, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+260: time = 0.252000 loss = 8.796493 testLoss 8.694715
+Res.gain: 0.4191337140656284
+Jackknife: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 90586728, used 297386392, increment 8982880
+Galax_urceolata_3 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 89052768, used 298920352, increment 1533960
+linearPredictor: max memory 4294967296, total allocated 387973120, free 88972328, used 299000792, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 88972328, used 299000792, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 88972328, used 299000792, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+80: time = 0.277000 loss = 9.112586 testLoss 8.969785
+Res.gain: 0.10304028779733265
+Jackknife: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 76819640, used 311153480, increment 12152688
+Galax_urceolata_3 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 75652224, used 312320896, increment 1167416
+linearPredictor: max memory 4294967296, total allocated 387973120, free 75652224, used 312320896, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 75652224, used 312320896, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 75652224, used 312320896, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+180: time = 0.210000 loss = 9.005058 testLoss 8.953217
+Res.gain: 0.21056834509898614
+Jackknife: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 62665912, used 325307208, increment 12986312
+Galax_urceolata_3 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 61221200, used 326751920, increment 1444712
+linearPredictor: max memory 4294967296, total allocated 387973120, free 61140760, used 326832360, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 61140760, used 326832360, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 61140760, used 326832360, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 166.403
+120: time = 0.279000 loss = 9.121904 testLoss 9.056516
+Res.gain: 0.09372194278168777
+Jackknife: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 205616240, used 182356880, increment -144475480
+Galax_urceolata_3 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 204240032, used 183733088, increment 1376208
+linearPredictor: max memory 4294967296, total allocated 387973120, free 204240032, used 183733088, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 204240032, used 183733088, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 204240032, used 183733088, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+180: time = 0.168000 loss = 8.867396 testLoss 8.922327
+Res.gain: 0.3482308715674378
+Jackknife: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 197843928, used 190129192, increment 6396104
+Galax_urceolata_3 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 196781160, used 191191960, increment 1062768
+linearPredictor: max memory 4294967296, total allocated 387973120, free 196781160, used 191191960, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 196781160, used 191191960, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 196781160, used 191191960, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+100: time = 0.127000 loss = 9.066859 testLoss 9.091764
+Res.gain: 0.1487673534849634
+Jackknife: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 165898344, used 222074776, increment 30882816
+Galax_urceolata_3 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 164920480, used 223052640, increment 977864
+linearPredictor: max memory 4294967296, total allocated 387973120, free 164920480, used 223052640, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 164920480, used 223052640, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 164920480, used 223052640, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+240: time = 0.299000 loss = 9.127898 testLoss 9.156121
+Res.gain: 0.0877280809724379
+Jackknife: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 206493408, used 181479712, increment -41572928
+Galax_urceolata_3 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 205580520, used 182392600, increment 912888
+linearPredictor: max memory 4294967296, total allocated 387973120, free 205580520, used 182392600, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 205580520, used 182392600, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 205580520, used 182392600, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+240: time = 0.263000 loss = 8.751134 testLoss 8.648251
+Res.gain: 0.4644921797136998
+getSamples: max memory 4294967296, total allocated 387973120, free 134223856, used 253749264, increment 71356664
+Making features
+makeFeatures: max memory 4294967296, total allocated 387973120, free 129079168, used 258893952, increment 5144688
+Galax_urceolata_4: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+Time since start: 167.466
+54 samples
+Density: max memory 4294967296, total allocated 387973120, free 120472504, used 267500616, increment 8606664
+linearPredictor: max memory 4294967296, total allocated 387973120, free 120392064, used 267581056, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 387973120, free 120392064, used 267581056, increment 0
+Sequential: max memory 4294967296, total allocated 387973120, free 120392064, used 267581056, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 170.975
+680: time = 3.506000 loss = 8.264372 testLoss 9.159375
+Resulting gain: 0.9512541635974507
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_4.asc
+Time since start: 173.596
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_4.png
+Projecting...
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_4_all.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_4_all_clamping.asc
+Time since start: 176.829
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_4_all.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_4_all_clamping.png
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_4_all_novel.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_4_all_novel_limiting.asc
+Time since start: 180.664
+Galax_urceolata_4 response curves
+Response curve: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 98561952, used 367005792, increment 99424736
+Galax_urceolata_4 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 97573360, used 367994384, increment 988592
+linearPredictor: max memory 4294967296, total allocated 465567744, free 97573360, used 367994384, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 97573360, used 367994384, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 97573360, used 367994384, increment 0
+Initial loss: 9.215626376405421
+220: time = 0.285000 loss = 8.696071
+Resulting gain: 0.5195552169846707
+Galax_urceolata_4 response curves
+Response curve: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 85978920, used 379588824, increment 11594440
+Galax_urceolata_4 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 84226696, used 381341048, increment 1752224
+linearPredictor: max memory 4294967296, total allocated 465567744, free 84146256, used 381421488, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 84146256, used 381421488, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 84146256, used 381421488, increment 0
+Initial loss: 9.215626376405421
+Time since start: 182.268
+300: time = 1.005000 loss = 8.988413
+Resulting gain: 0.22721329831271575
+Galax_urceolata_4 response curves
+Response curve: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 147675496, used 317892248, increment -63529240
+Galax_urceolata_4 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 146759696, used 318808048, increment 915800
+linearPredictor: max memory 4294967296, total allocated 465567744, free 146275856, used 319291888, increment 483840
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 146275856, used 319291888, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 146275856, used 319291888, increment 0
+Initial loss: 9.215626376405421
+180: time = 0.211000 loss = 9.018608
+Resulting gain: 0.19701855628318832
+Galax_urceolata_4 response curves
+Response curve: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 129904664, used 335663080, increment 16371192
+Galax_urceolata_4 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 128372640, used 337195104, increment 1532024
+linearPredictor: max memory 4294967296, total allocated 465567744, free 128292200, used 337275544, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 128292200, used 337275544, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 128292200, used 337275544, increment 0
+Initial loss: 9.215626376405421
+140: time = 0.314000 loss = 9.135371
+Resulting gain: 0.08025573401958397
+Galax_urceolata_4 response curves
+Response curve: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 170582768, used 294984976, increment -42290568
+Galax_urceolata_4 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 169682096, used 295885648, increment 900672
+linearPredictor: max memory 4294967296, total allocated 465567744, free 169601656, used 295966088, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 169601656, used 295966088, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 169601656, used 295966088, increment 0
+Initial loss: 9.215626376405421
+240: time = 0.214000 loss = 8.902216
+Resulting gain: 0.3134103774249102
+Galax_urceolata_4 response curves
+Response curve: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 157112120, used 308455624, increment 12489536
+Galax_urceolata_4 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 156131048, used 309436696, increment 981072
+linearPredictor: max memory 4294967296, total allocated 465567744, free 156131048, used 309436696, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 156131048, used 309436696, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 156131048, used 309436696, increment 0
+Initial loss: 9.215626376405421
+Time since start: 183.369
+100: time = 0.154000 loss = 8.996832
+Resulting gain: 0.21879408118393506
+Galax_urceolata_4 response curves
+Response curve: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 121460560, used 344107184, increment 34670488
+Galax_urceolata_4 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 120479464, used 345088280, increment 981096
+linearPredictor: max memory 4294967296, total allocated 465567744, free 120479464, used 345088280, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 120479464, used 345088280, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 120479464, used 345088280, increment 0
+Initial loss: 9.215626376405421
+300: time = 0.477000 loss = 9.091787
+Resulting gain: 0.12383940031061336
+Galax_urceolata_4 response curves
+Response curve: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 98272584, used 367295160, increment 22206880
+Galax_urceolata_4 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 97184752, used 368382992, increment 1087832
+linearPredictor: max memory 4294967296, total allocated 465567744, free 97184752, used 368382992, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 97184752, used 368382992, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 97184752, used 368382992, increment 0
+Initial loss: 9.215626376405421
+180: time = 0.243000 loss = 8.627504
+Resulting gain: 0.5881220013199311
+Galax_urceolata_4 response curves
+Time since start: 184.474
+Jackknife: leave bio_14 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 141272304, used 324295440, increment -44087552
+Galax_urceolata_4 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 133356592, used 332211152, increment 7915712
+linearPredictor: max memory 4294967296, total allocated 465567744, free 133356592, used 332211152, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 133356592, used 332211152, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 133356592, used 332211152, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 188.053
+520: time = 3.486000 loss = 8.278305 testLoss 9.107563
+Jackknife: leave bio_15 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 163001488, used 302566256, increment -29644896
+Galax_urceolata_4 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 155597480, used 309970264, increment 7404008
+linearPredictor: max memory 4294967296, total allocated 465567744, free 155597480, used 309970264, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 155597480, used 309970264, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 155597480, used 309970264, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 190.141
+460: time = 1.965000 loss = 8.315715 testLoss 9.009484
+Jackknife: leave bio_18 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 147135256, used 318432488, increment 8462224
+Galax_urceolata_4 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 139157872, used 326409872, increment 7977384
+linearPredictor: max memory 4294967296, total allocated 465567744, free 139157872, used 326409872, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 139157872, used 326409872, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 139157872, used 326409872, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 193.321
+520: time = 3.068000 loss = 8.282959 testLoss 9.172857
+Jackknife: leave bio_3 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 107397160, used 358170584, increment 31760712
+Galax_urceolata_4 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 100067792, used 365499952, increment 7329368
+linearPredictor: max memory 4294967296, total allocated 465567744, free 100067792, used 365499952, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 100067792, used 365499952, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 100067792, used 365499952, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 196.299
+520: time = 2.808000 loss = 8.291250 testLoss 9.192400
+Jackknife: leave bio_7 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 129052744, used 336515000, increment -28984952
+Galax_urceolata_4 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 121112576, used 344455168, increment 7940168
+linearPredictor: max memory 4294967296, total allocated 465567744, free 121112576, used 344455168, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 121112576, used 344455168, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 121112576, used 344455168, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 199.031
+420: time = 2.598000 loss = 8.305571 testLoss 9.251333
+Jackknife: leave bio_8 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 122745472, used 342822272, increment -1632896
+Galax_urceolata_4 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 114864464, used 350703280, increment 7881008
+linearPredictor: max memory 4294967296, total allocated 465567744, free 114864464, used 350703280, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 114864464, used 350703280, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 114864464, used 350703280, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 202.048
+480: time = 2.892000 loss = 8.282397 testLoss 9.084579
+Jackknife: leave bio_9 out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 106428080, used 359139664, increment 8436384
+Galax_urceolata_4 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 98788112, used 366779632, increment 7639968
+linearPredictor: max memory 4294967296, total allocated 465567744, free 98788112, used 366779632, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 98788112, used 366779632, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 98788112, used 366779632, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 205.713
+580: time = 3.547000 loss = 8.294614 testLoss 9.082631
+Jackknife: leave elev out
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 70377088, used 395190656, increment 28411024
+Galax_urceolata_4 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 62754024, used 402813720, increment 7623064
+linearPredictor: max memory 4294967296, total allocated 465567744, free 62673584, used 402894160, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 62673584, used 402894160, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 62673584, used 402894160, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 208.968
+480: time = 3.127000 loss = 8.283445 testLoss 9.124708
+Jackknife: only bio_14
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 87713456, used 377854288, increment -25039872
+Galax_urceolata_4 bio_14: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 86767080, used 378800664, increment 946376
+linearPredictor: max memory 4294967296, total allocated 465567744, free 86767080, used 378800664, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 86767080, used 378800664, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 86767080, used 378800664, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+220: time = 0.247000 loss = 8.696071 testLoss 9.055217
+Res.gain: 0.5195552169846707
+Jackknife: only bio_15
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 78296984, used 387270760, increment 8470096
+Galax_urceolata_4 bio_15: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 76578288, used 388989456, increment 1718696
+linearPredictor: max memory 4294967296, total allocated 465567744, free 76497848, used 389069896, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 76497848, used 389069896, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 76497848, used 389069896, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 210.42
+300: time = 1.157000 loss = 8.988413 testLoss 9.541405
+Res.gain: 0.22721329831271575
+Jackknife: only bio_18
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 65859136, used 399708608, increment 10638712
+Galax_urceolata_4 bio_18: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 64868024, used 400699720, increment 991112
+linearPredictor: max memory 4294967296, total allocated 465567744, free 64787584, used 400780160, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 64787584, used 400780160, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 64787584, used 400780160, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+180: time = 0.247000 loss = 9.018608 testLoss 8.913829
+Res.gain: 0.19701855628318832
+Jackknife: only bio_3
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 51217600, used 414350144, increment 13569984
+Galax_urceolata_4 bio_3: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 49959224, used 415608520, increment 1258376
+linearPredictor: max memory 4294967296, total allocated 465567744, free 49878784, used 415688960, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 49878784, used 415688960, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 49878784, used 415688960, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+140: time = 0.391000 loss = 9.135371 testLoss 9.020486
+Res.gain: 0.08025573401958397
+Jackknife: only bio_7
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 81037040, used 384530704, increment -31158256
+Galax_urceolata_4 bio_7: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 80333800, used 385233944, increment 703240
+linearPredictor: max memory 4294967296, total allocated 465567744, free 80253360, used 385314384, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 80253360, used 385314384, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 80253360, used 385314384, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 211.448
+240: time = 0.330000 loss = 8.902216 testLoss 8.830584
+Res.gain: 0.3134103774249102
+Jackknife: only bio_8
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 71084224, used 394483520, increment 9169136
+Galax_urceolata_4 bio_8: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 69979440, used 395588304, increment 1104784
+linearPredictor: max memory 4294967296, total allocated 465567744, free 69979440, used 395588304, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 69979440, used 395588304, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 69979440, used 395588304, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+100: time = 0.219000 loss = 8.996832 testLoss 9.373514
+Res.gain: 0.21879408118393506
+Jackknife: only bio_9
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 72336584, used 393231160, increment -2357144
+Galax_urceolata_4 bio_9: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 71257376, used 394310368, increment 1079208
+linearPredictor: max memory 4294967296, total allocated 465567744, free 71176936, used 394390808, increment 80440
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 71176936, used 394390808, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 71176936, used 394390808, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+300: time = 0.615000 loss = 9.091787 testLoss 9.327470
+Res.gain: 0.12383940031061336
+Jackknife: only elev
+Making features
+makeFeatures: max memory 4294967296, total allocated 465567744, free 51764096, used 413803648, increment 19412840
+Galax_urceolata_4 elev: 
+Regularization values: linear/quadratic/product: 0.181, categorical: 0.250, threshold: 1.460, hinge: 0.500
+54 samples
+Density: max memory 4294967296, total allocated 465567744, free 83007808, used 382559936, increment -31243712
+linearPredictor: max memory 4294967296, total allocated 465567744, free 83007808, used 382559936, increment 0
+FeaturedSpace: max memory 4294967296, total allocated 465567744, free 83007808, used 382559936, increment 0
+Sequential: max memory 4294967296, total allocated 465567744, free 83007808, used 382559936, increment 0
+Initial loss: 9.215626376405421
+Initial test loss: 9.215626376405421
+Time since start: 212.65
+180: time = 0.308000 loss = 8.627504 testLoss 9.046381
+Res.gain: 0.5881220013199311
+Creating average grid, stddev grid etc.
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_avg.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_stddev.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_min.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_max.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_median.asc
+Time since start: 228.25
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_avg.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_stddev.png
+Time since start: 229.608
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_min.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_max.png
+Time since start: 231.13
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_median.png
+Creating average grid, stddev grid etc.
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_all_avg.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_all_stddev.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_all_min.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_all_max.asc
+Writing file /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/Galax_urceolata_all_median.asc
+Time since start: 246.578
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_all_avg.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_all_stddev.png
+Time since start: 247.69
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_all_min.png
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_all_max.png
+Time since start: 248.881
+Writing /Users/shellygaynor/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Manual/Ecological_Niche_Modeling/Output/Galax_urceolata/plots/Galax_urceolata_all_median.png
+Galax_urceolata average response curves
+Time since start: 251.388
+Ending

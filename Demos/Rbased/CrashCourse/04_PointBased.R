@@ -1,190 +1,227 @@
-# PointBased.R
+# Point Based
 # Ecological Analysis using Points
 # This is based off scripts created by Hannah Owens and James Watling, and Anthony Melton.  
 # Modified and created by ML Gaynor. 
 
 # Load Packages
 library(raster)
-library(rgdal)
-library(ENMTools)
-library(dismo)
-library(RStoolbox)
-library(hypervolume)
-library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(gtools)
-library(ggbiplot)
+library(factoextra)
+library(FactoMineR)
+library(multcompView)
+library(ggsci)
+library(gridExtra)
+library(ggplot2)
+library(ecospat)
+library(dismo)
 
-# Load Datafiles 
-florida_points <- read.csv("data/cleaning_demo/MaxEntPointsInput_cleaned.csv")
+# Load function
+source("functions/ggbiplot_copy.R")
 
-## Subset occurence records for each species
-Asclepias_curtissii <- florida_points %>%
-                       filter(species == "Asclepias_curtissii")
+# Load data file
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20210625.csv")
 
-Asimina_obovata <- florida_points %>%
-                   filter(species == "Asimina_obovata")
-
-Pinus_palustris <- florida_points %>%
-                   filter(species == "Pinus_palustris")
 
 # Raster layers
-list <- list.files("data/climate_processing/PresentLayers/", full.names = T, recursive = FALSE) 
+list <- list.files("data/climate_processing/PresentLayers/all", full.names = T, recursive = FALSE) 
 list <- mixedsort(sort(list))
 envtStack <- stack(list)
 
-## Removing highly correlated layers
-library(caret)
-c <- data.matrix(read.csv("data/climate_processing/correlationBioclim.csv", header = TRUE, row.names = 1,
-                          sep = ","))
-### Take absolute value
-c <- abs(c)
-# Find rows that should be removed
-envtCor <- findCorrelation(c, cutoff = 0.80, names = TRUE, exact = TRUE)
-sort(envtCor)
-# keep: bio2, bio3, bio5, bio8, bio9, bio12,  bio14, and bio18
-
-### Subset layers
-envt.subset<-subset(envtStack, c(3, 4, 6, 9, 10, 13, 15, 19)) 
-envt.subset
 
 ####################################################################################################################################################################################
 # ENM - Realized Niche
 
 ## For each occurence record, extract the value for each bioclim variables using the package raster.
-ptExtract_Asclepias_curtissii <- raster::extract(envt.subset, Asclepias_curtissii[3:2])
-ptExtract_Asimina_obovata <- raster::extract(envt.subset, Asimina_obovata[3:2])
-ptExtract_Pinus_palustris <- raster::extract(envt.subset, Pinus_palustris[3:2])
+##### Extract value for each point
+ptExtracted <- raster::extract(envtStack, alldf[3:2])
 
-## Convert the extracted information for all three species and combined. I wrote a quick function to convert the files to dataframes.
-convert_ptExtract <- function(value, name){
-                    # convert ptExtract to a data frame
-                    value_df <- as.data.frame(value)
-                    # add a column with species name
-                    value_df_DONE <- value_df %>% 
-                      mutate(species = name)
-                    # return data frame
-                    return(value_df_DONE)
-}
+#### Convert to data frame
+ptExtracteddf <- as.data.frame(ptExtracted)
 
-ptExtract_Asclepias_curtissii_df <- convert_ptExtract(ptExtract_Asclepias_curtissii, "Asclepias_curtissii")
-ptExtract_Asimina_obovata_df <- convert_ptExtract(ptExtract_Asimina_obovata, "Asimina_obovata")
-ptExtract_Pinus_palustris_df <- convert_ptExtract(ptExtract_Pinus_palustris, "Pinus_palustris")
+#### Add species name
+ptExtracteddf <- ptExtracteddf %>%
+                 dplyr::mutate(name = as.character(alldf$name), x = alldf$long, y = alldf$lat)
 
-### Combined the three converted files and remove any values where NA appears 
-pointsamples_combined <- rbind(ptExtract_Asclepias_curtissii_df,ptExtract_Asimina_obovata_df, ptExtract_Pinus_palustris_df)
-pointsamples_combined <- pointsamples_combined %>% 
-                         drop_na(bio2, bio3, bio5, bio8, bio9, bio12, bio14, bio18)
-
+#### Drop any NA
+ptExtracteddf <- ptExtracteddf %>% 
+                 tidyr::drop_na(bio_3, bio_7, bio_8, bio_9, bio_14, bio_15, bio_18, elev)
 
 ## PCA 
 ### Create two dataframes.
-data.bioclim <- pointsamples_combined[, 1:8]
-data.species <- pointsamples_combined[, 9]
+data.bioclim <- ptExtracteddf[, 1:8]
+data.species <- ptExtracteddf[, 9]
 
 ### Using only the bioclim columns to run the principal components analysis.
 data.pca <- prcomp(data.bioclim, scale. = TRUE) 
 
 #### Understanding the PCA - Optional 
-library(factoextra)
-library(FactoMineR)
-
 ##### When you use the command prcomp your loading variables show up as rotational variables. 
 ##### Thanks to a really great answer on stack overflow: https://stackoverflow.com/questions/43407859/how-do-i-find-the-link-between-principal-components-and-raw-datas-variables
 ##### you can even convert the rotational 
 ##### variable to show the relative contribution.
-
 loadings <- data.pca$rotation
 summary(loadings)
 
 ##### There are two options to convert the loading to show the relative contribution, 
 ##### they both give the same answer so either can be used.
 loadings_relative_A <- t(t(abs(loadings))/rowSums(t(abs(loadings))))*100
-summary(loadings_relative_A)
+loadings_relative_A
 
 loadings_relative_B <- sweep(x = abs(loadings), MARGIN = 2, STATS = colSums(abs(loadings)), FUN = "/")*100
-summary(loadings_relative_B)
+loadings_relative_B
 
 #### Plotting the PCA
 ##### First, I made a theme to change the background of the plot. Next, I changed the plot margins and the text size.
-theme <- theme(panel.background = element_blank(),panel.border=element_rect(fill=NA),
-               panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
-               strip.background=element_blank(),axis.ticks=element_line(colour="black"),
-               plot.margin=unit(c(1,1,1,1),"line"), axis.text = element_text(size = 12), 
-               legend.text = element_text(size = 12), legend.title = element_text(size = 12),
+theme <- theme(panel.background = element_blank(),
+               panel.border=element_rect(fill=NA),
+               panel.grid.major = element_blank(),
+               panel.grid.minor = element_blank(),
+               strip.background=element_blank(),
+               axis.ticks=element_line(colour="black"),
+               plot.margin=unit(c(1,1,1,1),"line"), 
+               axis.text = element_text(size = 12), 
+               legend.text = element_text(size = 12), 
+               legend.title = element_text(size = 12),
                text = element_text(size = 12))
+
+##### Set colors
+pal <- pal_locuszoom()(4)
+
 ##### Next, ggbiplot where obs.scale indicates the scale factor to apply to observation, 
 ##### var.scale indicates the scale factor to apply to variables, 
 ##### ellipse as TRUE draws a normal data ellipse for each group, 
 ##### and circle as TRUE draws a correlation circle.
-g <- ggbiplot(data.pca, obs.scale = 1, var.scale = 1, groups = data.species, ellipse = TRUE, circle = TRUE)
-g <- g + theme
-g <- g + scale_colour_manual(values = c("#73dfff", "#ff8700", "#7a8ef5"))
-g <- g + theme(legend.direction = 'horizontal', legend.position = 'bottom')
+g <- ggbiplot(data.pca, obs.scale = 1, var.scale = 1, 
+              groups = data.species, ellipse = TRUE, circle = TRUE) +
+     scale_color_manual(name = '', values = pal) +
+     theme(legend.direction = 'vertical', legend.position = 'bottom', 
+           legend.text = element_text(size = 12, face = "italic")) +
+     theme
+ 
 g
 
 ####################################################################################################################################################################################
-# Multivariate environment similarity surface (MESS) analysis and mahalanobis distances
-## Load layers 
-### Training region layers
-env.files.c <- list.files(path = "data/climate_processing/PresentLayers/", pattern = ".asc", full.names = TRUE) #Always check for tiff or asc
-current <- stack(env.files.c)
-names(current) <- c("alt", "bio1", "bio10", "bio11", "bio12", "bio13", "bio14", "bio15", "bio16", "bio17", "bio18", "bio19", "bio2", "bio3", "bio4", "bio5", "bio6", "bio7", "bio8", "bio9")
-current <- setMinMax(current)
-projection(current) <- "+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs"
-plot(current[[1]])
+# ANOVA
+## Simple function to run an ANOVA and a post-hoc Tukey-HSD test
+stat.test <- function(data = ptExtracteddf, x = "name", y){
+    bioaov <- aov(as.formula(paste0(y,"~",x)), data = data) 
+    TH <- TukeyHSD(bioaov, "name")
+    m <- multcompLetters(TH$name[,4])
+    groups <- data.frame(groups = m$Letters, name = names(m$Letters))
+    return(groups)
+}
 
-### Projection layers
-#### These can be a different geographic region or different time period
-env.files.p <- list.files(path = "data/climate_processing/Coastal_Plains_Layers/", pattern = ".asc", full.names = TRUE) #Always check for tiff or asc
-proj <- stack(env.files.p)
-names(proj) <- c("alt", "bio1", "bio10", "bio11", "bio12", "bio13", "bio14", "bio15", "bio16", "bio17", "bio18", "bio19", "bio2", "bio3", "bio4", "bio5", "bio6", "bio7", "bio8", "bio9")
-proj <- setMinMax(proj)
-projection(proj) <- "+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs"
-plot(proj[[1]])
+###### BIO3 ONLY ######
+bio3aovplot <- ggplot(ptExtracteddf, aes(x = name, y = bio_3)) +
+               geom_boxplot(aes(fill = name)) +
+               scale_color_manual(name = '', values = pal) +
+               geom_text(data = stat.test(y = "bio_3"), 
+                        mapping = aes(x = name,
+                                      y = max(ptExtracteddf["bio_3"]+1), 
+                                      label = groups), 
+                        size = 5, inherit.aes = FALSE) +
+               theme(axis.text.x = element_text(angle = 90, size = 8, face = 'italic'))
+bio3aovplot
 
-## MESS
-### For MESS, the more negative the score, the more likely you are to project 
-### into novel environments. 
+## Loop through all variables
+variablelist <- colnames(ptExtracteddf)[1:8]
+plotlist <- c()
+for(i in 1:8){
+  bio <- variablelist[i]
+  tempdf <- ptExtracteddf %>%
+            dplyr::select(name, variablelist[i])
+  plotlist[[i]] <- ggplot(tempdf, aes(x = name, y = tempdf[,2])) +
+                    geom_boxplot(aes(fill = name)) +
+                    scale_colour_manual(name = 'Species', values = pal) +
+                    geom_text(data = stat.test(y = variablelist[i]), 
+                              mapping = aes(x = name,
+                                            y = max(tempdf[,2]+1), 
+                                            label = groups), 
+                              size = 5, inherit.aes = FALSE) +
+                    scale_x_discrete(labels = c('G', 'Pba','Pbr', 'S')) +
+                    ggtitle(label = paste0(variablelist[i])) +
+                    ylab(paste0(variablelist[i])) +
+                    theme(legend.position = "none")
+}
 
-### Generate a data frame from the raster data
-ref <- as.data.frame(current) 
-head(ref)
+gridExtra::grid.arrange(grobs = plotlist)
 
-### Use dismo to run the MESS. Negative results means dissimilarity
-mess <- mess(x = proj, v = ref, full = FALSE)  
-plot(mess)
+#################
+# Ecospat Niche Overlap and Niche Equivalency
+## Set up background points
+bg1 <- randomPoints(mask = envtStack, n = 1000, p = alldf[,3:2])
+bg1.env <- raster::extract(envtStack, bg1)
+bg1.env <- data.frame(bg1.env)
+allpt.bioclim <- rbind(bg1.env, data.bioclim)
 
-## Mahalanobis distances.
-### For mahalanobis distances, zero equals completely overlapping. 
-### Comparatively, the higher the distance, 
-### the more likely you are to project into an environment that falls 
-### outside the range of the training region, leading to unreliable projections.
+## dudi.PCA to reduce variables
+pca.env <- dudi.pca(allpt.bioclim,
+                    center = TRUE, # Center by the mean
+                    scannf = FALSE, # Don't plot
+                    nf = 2) # Number of axis to keep 
+## Pull out scores for each species
+p1.score <- suprow(pca.env, dplyr::filter(ptExtracteddf, name == "Galax urceolata")[, 1:8])$li
+p2.score <- suprow(pca.env, dplyr::filter(ptExtracteddf, name == "Pyxidanthera barbulata")[, 1:8])$li
+p3.score <- suprow(pca.env, dplyr::filter(ptExtracteddf, name == "Pyxidanthera brevifolia")[, 1:8])$li
+p4.score <- suprow(pca.env, dplyr::filter(ptExtracteddf, name == "Shortia galacifolia")[, 1:8])$li
+scores.clim <- pca.env$li
 
-## Greater numbers means the variables are more dissimilar.
- 
-### Generate data frames containing the environmental data
-refdat <- as.data.frame(ref) 
-head(refdat)
+## Visualize 
+plot(scores.clim, pch = 16, asp = 1,
+     col = adjustcolor(1, alpha.f = 0.2), cex = 2,
+     xlab = "PC1", ylab = "PC2") 
+points(p1.score, pch = 18, col = pal[1], cex = 2)
+points(p2.score, pch = 18, col = pal[2], cex = 2)
+points(p3.score, pch = 18, col = pal[3], cex = 2)
+points(p4.score, pch = 18, col = pal[4], cex = 2)
 
-projdat <- as.data.frame(proj) 
-head(projdat)
+## Kernel density estimates
+### create occurrence density grids based on the ordination data
+z1 <- ecospat.grid.clim.dyn(scores.clim, scores.clim, p1.score, R = 100)
+z2 <- ecospat.grid.clim.dyn(scores.clim, scores.clim, p2.score, R = 100)
+z3 <- ecospat.grid.clim.dyn(scores.clim, scores.clim, p3.score, R = 100)
+z4 <- ecospat.grid.clim.dyn(scores.clim, scores.clim, p4.score, R = 100)
+zlist  <- list(z1, z2, z3, z4)
 
-### Calculate the average and covariance matrix of the variables 
-### in the reference set
-ref.av <- colMeans(refdat, na.rm=TRUE)
-ref.cov <- var(refdat, na.rm=TRUE)
+## Niche Overlap 
+### Schoener's D ranges from 0 to 1
+### 0 represents no similarity between niche space
+### 1 represents completely identical niche space
+overlapD <- matrix(ncol = 2, nrow = 7)
+n <- 1
+for(i in 1:3){
+  for(j in 2:4){
+    if(i != j){
+      overlapD[n, 1]<- paste0("z", i, "-", "z", j)
+      overlapD[n, 2]<- ecospat.niche.overlap(zlist[[i]], zlist[[j]], cor = TRUE)$D
+      n <- n + 1
+    }
+  }
+}
 
-### Calculate the mahalanobis distance of each raster cell to the environmental center of the reference 
-### set for both the reference and the projection data set and calculate the ratio between the two.
-mah.ref <- mahalanobis(x=refdat, center=ref.av, cov=ref.cov, tol=1e-20)
-mah.pro <- mahalanobis(x=projdat, center=ref.av, cov=ref.cov, tol=1e-20)
-mah.max <- max(mah.ref[is.finite(mah.ref)])
-nt2 <- as.data.frame(mah.pro / mah.max)
+overlapDdf <- data.frame(overlapD)
+overlapDdf
 
-### Create and plot the raster layer
-NT2 <- read.asciigrid(env.files.p[[1]])
-NT2@data <- nt2
-NT2rast <- raster(NT2)
-plot(NT2rast, col=rainbow(100))
+## Niche Overlap Visualization 
+par(mfrow=c(2,1))
+ecospat.plot.niche.dyn(z1, z4, quant=0.25, interest = 1
+                       , title= "Niche Overlap - Z1 top", name.axis1="PC1", name.axis2="PC2")
+ecospat.plot.niche.dyn(z1, z4, quant=0.25, interest = 2
+                       , title= "Niche Overlap - Z4 top", name.axis1="PC1", name.axis2="PC2")
+
+## Niche Equivalency Test
+### Based on Warren et al. 2008 - Are the two niche identical?
+#### Hypothesis test for D, null based on randomization 
+#### H1: the niche overlap is higher than expected by chance (or when randomized)
+eq.test <- ecospat.niche.equivalency.test(z1, z4, rep = 10, alternative = "greater")
+ecospat.plot.overlap.test(eq.test, "D", "Equivalency")
+
+
+## Niche Similarity Test
+### Based on Warren et al. 2008 - Are the two niche similar?
+### Can one species’ niche predicted the occurrences of a second species better than expected by chance.
+sim.test <- ecospat.niche.similarity.test(z1, z4, rep = 10, alternative = "greater", rand.type=2)
+ecospat.plot.overlap.test(sim.test, "D", "Similarity")
+

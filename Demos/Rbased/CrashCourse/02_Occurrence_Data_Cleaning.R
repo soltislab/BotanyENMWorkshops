@@ -1,176 +1,195 @@
 # Occurrence_Data_Cleaning.R
 ## Occurrence Data Cleaning
-## Modified based on script written by Charlotte Germain-Aubrey.
 ## Modified and created by ML Gaynor
 
 ### Load Packages
-library(dplyr)
-library(tidyr)
-library(rjson)  
-library(RCurl) 
+library(tidyverse)
 library(raster)
 library(sp)
+library(spatstat)
+library(spThin)
+library(fields)
+library(lubridate)
+library(CoordinateCleaner)
+library(ggspatial)
 
-### Load data files
-# The datafiles for this demo are stored in "data/cleaning_demo/". 
-raw.data <- read.csv("data/cleaning_demo/SampleFL-data.csv")
-head(raw.data)
+### Load functions 
+#### This is a function I created with Natalie Patten.
+source("functions/gators.R")
 
+## Read in downloaded data frame
+rawdf <- read.csv("data/download/raw/Shortia_galacifolia_raw_20210614.csv")
 
-#### Exploring the datafile 
-##### How many species are included in this file?
-(species_count <- raw.data %>%
-                  group_by(species) %>%
-                  tally())
+# Cleaning
+## Inspect the data frame
+### What columns are included?
+names(rawdf)
 
-### Taxonomic Cleaning
-#### Why? Lots of bad names due to misspelling, synonymns, and more  
-#### How? **iPlant TNRS Tool**  
+### How many observations do we start with?
+nrow(rawdf)
 
-## In addition to accessing the iPlant TNRS Tool in R, you can also use the 
-## website to access the database (http://tnrs.iplantcollaborative.org/). 
-## In this tutorial, we only focus on checking synoymns using one tool, 
-## however there are many other tools to check taxonomy.
-## For example, taxize(https://ropensci.github.io/taxize-book/index.html) can 
-## be used to accesss taxomny databases including Encylopedia of Life (eol), 
-## Taxonomic Name Resolution Service (tnrs), Integrated Taxonomic Information Service (itis), 
-## and [many more](https://ropensci.github.io/taxize-book/data-sources.html). 
+# 1. Resolve taxon names
+## Inspect scientific names included in the raw df. 
+unique(rawdf$name)
 
-#### Using the iPlant TNRS tool
+## Create a list of accepted names based on the name column in your data frame
+search <-  c("Shortia galacifolia", "Sherwoodia galacifolia")
 
-##### Transform the species names list
-###### First, we need to subset the names from the list we made above.
+## Filter to only include accepted names:
+df <-  filter_fix_names(rawdf, listofsynonyms = search, acceptedname = "Shortia galacifolia")
 
-# Subset from the list we made above
-(names <- species_count$species)
+## How many observations do we have now?
+nrow(df)
 
-# Next, remove the underscores between the genus and species name, replace with spaces.
-(names<-gsub('_',' ',names))
+# 2. Decrease number of columns
+## Merge the two locality columns
+df$Latitude <- dplyr::coalesce(df$Latitude, df$spocc.latitude)
+df$Longitude <- dplyr::coalesce(df$Longitude, df$spocc.longitude)
 
-# Turn the list into a string by adding commas.
-(names<-paste(names,collapse=','))
+# Merge the two date columns
+df$date <- dplyr::coalesce(df$date, df$spocc.date)
 
-# Using the package **RCurl** makes the string URL-encoded.
-names<-curlEscape(names)
+## Subset the columns
+df <- df %>%
+      dplyr::select(ID = ID, 
+                    name = new_name, 
+                    basis = basis, 
+                    coordinateUncertaintyInMeters = coordinateUncertaintyInMeters, 
+                    informationWithheld = informationWithheld, 
+                    lat = Latitude, 
+                    long = Longitude, 
+                    date = date)
 
-##### Query the API
-# Using the packages **rjson** and **RCurl** we can query the Application programming interface (API) for the iPlant TNRS tool.  
-# We have to set an object equal to the API url address.
-tnrs.api<-'http://tnrs.iplantc.org/tnrsm-svc'
+# 3. Clean localities 
+## Filtering out NA's
+df <- df %>%
+      filter(!is.na(long)) %>%
+      filter(!is.na(lat))
 
-# Next, we send a request to the address specified above. 
-url<-paste(tnrs.api,'/matchNames?retrieve=best&names=',names,sep='')
-tnrs.json<-getURL(url) 
+## How many observations do we have now?
+nrow(df)
 
-##### Process the results
-# The response is saved as tnrs.json above. Now, the response needs to be converted to a readable format from JSON. 
-tnrs.results<-fromJSON(tnrs.json)
+## Precision 
+### Round to two decimal places
+df$lat <- round(df$lat, digits = 2)
+df$long <- round(df$long, digits = 2)
 
-# Next, we need to summarize the names and change the format to match our raw data.
-# First we isolate the names submitted and the found accepted name.
-# Next, we replace the space in between the genus and species names with an underscore. 
-# Then, we convert the data file to a dataframe. Finally, we rename the columns to match the names in raw.data.
+## Remove unlikely points
+### Remove points at 0.00, 0.00
+df <- df %>%
+      filter(long != 0.00) %>%
+      filter(lat != 0.00)
 
-corrected_names<-sapply(tnrs.results[[1]], function(x) c(x$nameSubmitted,x$acceptedName))
-corrected_names <- gsub(" ", "_", corrected_names)
-corrected_names<-as.data.frame(t(corrected_names),stringsAsFactors=FALSE)
-names(corrected_names) <- c("species", "new")
-corrected_names
+### Remove coordinates in cultivated zones, botanicals gardens, and outside our desired range
+df <- cc_inst(df, 
+              lon = "long", 
+              lat = "lat", 
+              species = "name")
+### Next, we look for geographic outliers and remove outliers. 
+df <- cc_outl(df, 
+              lon = "long", 
+              lat = "lat", 
+              species = "name")
 
-##### Correcting names
-# We now need to correct the names in the raw data file. To do this, we are going to merge the datasets, 
-# so we can save the new name with all the information in our raw data file.
-merged_datasets <- merge(raw.data, corrected_names, by = "species")
-head(merged_datasets)
+## How many observations do we have now?
+nrow(df)
 
-### Date Cleaning
-# In addition to taxonmy fixes, we need to check the format of other columns, like dates.
-# If you noticed above, when the year is missing there is an odd symbol. Lets replace that symbol with "NA"
-merged_datasets$year <- gsub("\\N", NA, merged_datasets$year)
+# 4. Remove Duplicates
+## Fix dates
+## Parse dates into the same format
+df$date <- lubridate::ymd(df$date)
 
-## Is there any other issues? 
-# Visualize the year and data associated. 
+### Separate date into year, month, day
+df <- df %>%
+      mutate(year = lubridate::year(date), 
+             month = lubridate::month(date), 
+             day = lubridate::day(date))
 
-(year_count <- merged_datasets %>%
-               group_by(year) %>%
-               tally())
+## Remove rows with identical lat, long, year, month, and day
+df <- distinct(df, lat, long, year, month, day, .keep_all = TRUE)
 
-### Location Cleaning
-#### Precision
-# How precise is the locality information? 
+## How many observations do we have now?
+nrow(df)
 
-# Precision is influenced by the number of decimal places associated with latitude and longitude. 
-# See below how degree and distance are related. 
+# 5. Spatial Correction
+## Maxent will only retain one point per pixel. 
+## To make the ecological niche analysis comparable, we will retain only one pt per pixel. 
+## Read in raster file
+bio1 <- raster("data/climate_processing/bioclim/bio_1.tif")
+# Set resolution
+rasterResolution <- max(res(bio1))
 
-location_table <- data.frame(places = c(0,1,2,3,4), 
-degree = c(1, 0.1, 0.01, 0.001, 0.0001), 
-distance = c("111 km", "11.1 km", "1.11 km", "111 m", "11.1 m"))
+# Remove a point which nearest neighbor distance is smaller than the resolution size
+## aka remove one point in a pair that occurs within one pixel
+while(min(nndist(df[,6:7])) < rasterResolution){
+  nnD <- nndist(df[,6:7])
+  df <- df[-(which(min(nnD) == nnD) [1]), ]
+}
 
-location_table 
+## How many observations do we have now?
+nrow(df)
 
-# Here we are going to round to two decimal points. 
+## Spatial thinning
+### Reduce the effects of sampling bias using randomization approach
+## Calculate minimum nearest neighbor distance in km
+nnDm <- rdist.earth(as.matrix(data.frame(lon = df$long, lat = df$lat)), miles = FALSE, R = NULL)
+nnDmin <- do.call(rbind, lapply(1:5, function(i) sort(nnDm[,i])[2]))
+min(nnDmin)
 
-(merged_datasets$lat <- round(merged_datasets$lat, digits = 2))
-merged_datasets$long <- round(merged_datasets$long, digits = 2)
+# Identify points to keep using spThin
+keep <- spThin::thin(loc.data =  df, 
+        verbose = FALSE, 
+        long.col = "long", 
+        lat.col = "lat",
+        spec.col = "name",
+        thin.par = 0.002, # Studies found 2m distance was enough to collect unique genets
+        reps = 1, 
+        locs.thinned.list.return = TRUE, 
+        write.files = FALSE)[[1]]
 
-#### Removing impossible points
-# Prior to the next step we have 142 points, after we have 137.
+## Filter df to only include those lat/long
+df <- df %>%
+       filter((lat %in% keep$Latitude +
+                long %in% keep$Longitude) == 2)
+nrow(df)
 
-merged_datasets <- merged_datasets %>%
-                   filter(lat != 0, long != 0)
+# 6. Plot Cleaned Records
+## Set basemap
+USA <- borders(database = "usa", colour = "gray50", fill = "gray50")
+state <- borders(database = "state", colour = "black", fill = NA)
 
+## Plot 
+simple_map <- ggplot() +
+              USA +
+              state +
+              geom_point(df, 
+                         mapping = aes(x = long, y = lat),
+                         col = "blue") +
+              coord_sf(xlim = c(min(df$long) - 3, max(df$long) + 3),
+                       ylim = c(min(df$lat) - 3, max(df$lat) + 3)) +
+              xlab("Longitude") +
+              ylab("Latitude") +
+              annotation_scale() +
+              annotation_north_arrow(height = unit(1, "cm"), 
+                                     width = unit(1, "cm"), 
+                                     location = "tl")
+simple_map
 
-# Remove points that are botanical gardens.  
-# First, load the data file of the botanical gardens in florida. 
-bg.points <- read.csv("data/cleaning_demo/BotanicalGardensFloridaCoordinates.csv", header=TRUE)
+# 7. Save Cleaned.csv
+write.csv(df, "data/cleaning_demo/Shortia_galacifolia_20210625-cleaned.csv", row.names = FALSE)
 
-# Next, we are going to filter the merged_dataset to exclude any coordinates that are in the bg.points dataset.
-merged_datasets <- merged_datasets %>%
-                   filter(!lat %in% bg.points$Lat & !long %in% bg.points$Long)
+# 8. Make maxent ready
+## Read in all cleaned files
+alldf <- list.files("data/cleaning_demo/", full.names = TRUE, 
+                    recursive = FALSE, include.dirs = FALSE, pattern = "*.csv")
+alldf <- lapply(alldf, read.csv)
+alldf <- do.call(rbind, alldf)
 
-#### Removing duplicates
-# We currently have 137 observations. Once only unique records are obtained, we have 121 observation. 
+## Select needed columns
+alldf <- alldf %>%
+         dplyr::select(name, lat, long)
 
-merged_datasets.unique <- merged_datasets %>%
-                          distinct
-head(merged_datasets.unique) 
+## Save Maxent.csv
+write.csv(alldf, "data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20210625.csv", row.names = FALSE)
 
-#### Trimming to the desired area 
-# Our desired area is Florida.
-# Using the package **raster**  we are able to create a raster layer of the USA.
-#If you want to download other countries using getData, check out the [avaliable maps](https://gadm.org/maps.html).
-# Next, we can subset for Florida. State names are saved as "NAME_1" and county names are saved as "NAME_2" in the map file.   
-
-# name = 'GADM' which is Database of Global Administrative Areas
-# level = 2 gives the  level of subdivision (States)
-usa <- getData('GADM', country='USA', level=2)
-
-# subset
-florida <- subset(usa, NAME_1=="Florida")
-
-
-# Next, convert merged dataset unique into a spatial file. 
-
-xy_data <- data.frame(x = merged_datasets.unique$long, y = merged_datasets.unique$lat)
-coordinates(xy_data) <- ~ x + y
-proj4string(xy_data) <- crs("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
-
-
-# Extract the values of the points for the Florida polygon.
-# Then, recombine everything to gather all data. 
-# Next, filter for only the points in Florida, select the columns needed for MaxEnt input, and rename the new names as simply 'species'.
-over <- over(xy_data, florida)
-total <- cbind(merged_datasets.unique, over)
-florida_points <- total %>%
-                  filter(NAME_1 == "Florida") %>%
-                  dplyr::select(new, lat, long) %>%
-                  rename(species = new)
-                  #rename(replace = c("species" = "new")) # AEM EDIT
-head(florida_points)
-
-
-### Finally, write a csv for the maxent steps.
-
-# We need a csv with only species, lat, long for MaxEnt input
-write.csv(florida_points, "data/cleaning_demo/MaxEntPointsInput_cleaned.csv", row.names = FALSE)
-
+    

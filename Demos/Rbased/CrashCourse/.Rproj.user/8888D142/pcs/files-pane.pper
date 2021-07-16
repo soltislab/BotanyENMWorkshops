@@ -1,9 +1,9 @@
 {
-    "path" : "~/Dropbox/Workshops/BotanyENMWorkshop2020/Demos/Rbased/CrashCourse",
-    "sortOrder" : [
+    "path": "~/Dropbox/Workshops/BotanyENMWorkshop2021/Demos/Rbased/CrashCourse",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": false
         }
     ]
 }

@@ -14,19 +14,22 @@ library(tidyverse)
 library(rgdal)
 library(rgeos)
 library(sp)
-library(spatialEco)
 
 
 # Load the tree file
-tree <- read.tree(file = "data/phylogenetic_diversity/tree_withBL.tre")
+tree <- ape::read.tree(file = "data/Ecological_Niche_Modeling/AOC_Test_Demo/diapensiaceae_subset.tre")
 tree <- ape::compute.brlen(phy = tree, method = "grafen")
 plot(tree)
 
+## Drop the outgroup
+tree <- drop.tip(tree, "Cyrilla_racemiflora")
+
+
 # Read ENM models
-Asclepias_curtissii_enm.mx.b <- raster("data/enm_output/Asclepias_curtissii/Asclepias_curtissii_avg.asc")
-Asimina_obovata_enm.mx.b <- raster("data/enm_output/Asclepias_obovata/Asimina_obovata_avg.asc")
-Pinus_palustris_enm.mx.b <- raster("data/enm_output/Pinus_palustris/Pinus_palustris_avg.asc")
-Liatris_chapmanii_enm.mx.b <- raster("data/phylogenetic_diversity/Liatris_chapmanii/Liatris_chapmanii_avg.asc")
+sp1_enm.mx.b <- raster("data/Ecological_Niche_Modeling/enm_output/Galax_urceolata_avg.asc")
+sp2_enm.mx.b <- raster("data/Ecological_Niche_Modeling/enm_output/Pyxidanthera_barbulata_avg.asc")
+sp3_enm.mx.b <- raster("data/Ecological_Niche_Modeling/enm_output/Pyxidanthera_brevifolia_avg.asc")
+sp4_enm.mx.b <- raster("data/Ecological_Niche_Modeling/enm_output/Shortia_galacifolia_avg.asc")
 
 # Reclassify rasters
 reclassify_raster <- function(OGraster){
@@ -38,39 +41,35 @@ reclassify_raster <- function(OGraster){
   return(OGraster)
 }
 
-Asclepias_curtissii_enm.mx.b  <- reclassify_raster(Asclepias_curtissii_enm.mx.b)
-Asimina_obovata_enm.mx.b <- reclassify_raster(Asimina_obovata_enm.mx.b)
-Pinus_palustris_enm.mx.b <- reclassify_raster(Pinus_palustris_enm.mx.b)
-Liatris_chapmanii_enm.mx.b <- reclassify_raster(Liatris_chapmanii_enm.mx.b)
+sp1_enm.mx.b  <- reclassify_raster(sp1_enm.mx.b)
+sp2_enm.mx.b  <- reclassify_raster(sp2_enm.mx.b)
+sp3_enm.mx.b  <- reclassify_raster(sp3_enm.mx.b)
+sp4_enm.mx.b  <- reclassify_raster(sp4_enm.mx.b)
 
 ## Inspect the reclassified layers
-par(mfrow=c(2,4))
-plot(Asclepias_curtissii_enm.mx.b)
-plot(Asimina_obovata_enm.mx.b)
-plot(Pinus_palustris_enm.mx.b)
-plot(Liatris_chapmanii_enm.mx.b)
-par(mfrow=c(1,1))
+par(mfrow=c(2,2))
+plot(sp1_enm.mx.b)
+plot(sp2_enm.mx.b)
+plot(sp3_enm.mx.b)
+plot(sp4_enm.mx.b)
+
 
 # Stack rasters and create dataframe
-rasterstack <- stack(Asclepias_curtissii_enm.mx.b, Asimina_obovata_enm.mx.b,
-                   Pinus_palustris_enm.mx.b, Liatris_chapmanii_enm.mx.b)
-## Rename
-names(rasterstack) <- c("Asclepias_curtissii1", "Asimina_obovata1", "Pinus_palustris1", "Liatris_chapmanii1")
+enm_stack <- stack(sp1_enm.mx.b, sp2_enm.mx.b, sp3_enm.mx.b, sp4_enm.mx.b)
+names(enm_stack) <- c("Galax_urceolata", "Pyxidanthera_barbulata",  "Pyxidanthera_brevifolia","Shortia_galacifolia" )
 
 ## Convert to dataframe
-rasterstack_df <- as.data.frame(rasterstack, xy = TRUE)
+rasterstack_df <- as.data.frame(enm_stack, xy = TRUE)
 
 # Extract Ecoregions for points
-## Load Florida shapefile
-### Obtained at https://www.epa.gov/eco-research/ecoregion-download-files-state-region-4
-shp <- ("data/phylogenetic_diversity/Florida_Raster/reg4_eco_l4/reg4_eco_l4.shp")
-floridashape <- shapefile(shp)
+## Load USA shapefile
+### Obtained at https://www.epa.gov/eco-research/level-iii-and-iv-ecoregions-continental-united-states
+shp <- ("data/phylogenetic_diversity/USraster/us_eco_l4/us_eco_l4_no_st.shp")
+USAshape <- readOGR(shp, layer="us_eco_l4_no_st")
+
 ## Correct CRS
 newcrs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-floridashape2 <- spTransform(floridashape, newcrs)
-## Crop to florida
-floridashape3 <- raster::crop(floridashape2, extent(-87.625, -80.04167, 24.54167, 31))
-plot(floridashape3)
+USAshape2 <- spTransform(USAshape, newcrs)
 
 
 ## Convert dataframe to points
@@ -79,19 +78,23 @@ coordinates(df.sp)<-~x+y
 crs(df.sp) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
 ## Extract points from shapefile
-df.sp.info <- sp::over(df.sp, floridashape3)
+### Warning: this will take a while!! 
+df.sp.info <- sp::over(df.sp, USAshape2)
 
 ## Bind dataframe with points and with ecosystems
 rasterstack_df.info <- cbind(df.sp.info, rasterstack_df)
 rasterstack_df.info2 <- rasterstack_df.info %>%
                         dplyr::group_by(L4_KEY) %>% 
-                        dplyr::summarize(Asclepias_curtissii = max(Asclepias_curtissii1),
-                               Asimina_obovata = max(Asimina_obovata1),
-                               Pinus_palustris = max(Pinus_palustris1), 
-                               Liatris_chapmanii = max(Liatris_chapmanii1))
+                        dplyr::summarize(Galax_urceolata = max(Galax_urceolata),
+                                         Pyxidanthera_barbulata = max(Pyxidanthera_barbulata),
+                                         Pyxidanthera_brevifolia = max(Pyxidanthera_brevifolia), 
+                                         Shortia_galacifolia = max(Shortia_galacifolia))
 rasterstack_df.info2df <- as.data.frame(rasterstack_df.info2, row.names = FALSE)
-rasterstack_df.info4 <- rasterstack_df.info2df[1:20,]
+## Removing NA
+rasterstack_df.info4 <- rasterstack_df.info2df[1:137,]
+## Removing the first column
 rasterstack_df.info3 <- rasterstack_df.info4[,-1]
+## Renaming the rows
 row.names(rasterstack_df.info3) <- NULL
 row.names(rasterstack_df.info3) <- rasterstack_df.info4[,1]
 rasterstack_df.info3
@@ -147,24 +150,24 @@ mntd_result
 
 ## Plot PD results by community
 ggplot()+
-  geom_point(data = pd_result, aes(x = rownames(pd_result), y = pd.obs))+
-  ggtitle("PD values for FL by ecoregion")+
+  geom_point(data = pd_result, aes(x = rownames(pd_result), y = pd.obs, col = pd.obs))+
+  ggtitle("PD values by ecoregion")+
   xlab("Community")+
   ylab("PD")+
   theme(text = element_text(size=10), axis.text.x = element_text(angle = 90, hjust = 1))
 
 ## Plot MPD results by community
 ggplot()+
-  geom_point(data = mpd_result, aes(x = rownames(mpd_result), y = mpd.obs))+
-  ggtitle("MPD values for FL by ecoregion")+
+  geom_point(data = mpd_result, aes(x = rownames(mpd_result), y = mpd.obs, col = mpd.obs))+
+  ggtitle("MPD values by ecoregion")+
   xlab("Community")+
   ylab("MPD")+
   theme(text = element_text(size=10), axis.text.x = element_text(angle = 90, hjust = 1))
 
 ## Plot MNTD results by community
 ggplot()+
-  geom_point(data = mntd_result, aes(x = rownames(mntd_result), y = mntd.obs))+
-  ggtitle("MNTD values for FL by ecoregion")+
+  geom_point(data = mntd_result, aes(x = rownames(mntd_result), y = mntd.obs, col = mntd.obs))+
+  ggtitle("MNTD values by ecoregion")+
   xlab("Community")+
   ylab("MNTD")+
   theme(text = element_text(size=10), axis.text.x = element_text(angle = 90, hjust = 1))

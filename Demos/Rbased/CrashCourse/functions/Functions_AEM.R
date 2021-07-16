@@ -4,11 +4,9 @@
 make.binary.map <- function(model, occ.dat){
   
   ###Extract suitability scores
-  SuitabilityScores <- extract(model, occ.dat[,3:2])
-  
+  SuitabilityScores <- raster::extract(model, occ.dat[,3:2])
   ###Get rid of NAs
   SuitabilityScores <- SuitabilityScores[complete.cases(SuitabilityScores)]
-  
   ###Reclassify the raster; set threshold to minimum suitability score at a known occurrence
   threshold <- min(SuitabilityScores)
   
@@ -16,19 +14,18 @@ make.binary.map <- function(model, occ.dat){
   
   rclmat <- matrix(M, ncol=3, byrow=TRUE); 
   
-  Dist <- reclassify(model, rcl = rclmat);
+  Dist <- raster::reclassify(model, rcl = rclmat);
 }
 
 # The following code creates a function to calculate hypervolumes
 get_hypervolume <- function(binary_projection, envt) {
   dist.points <-  rasterToPoints(binary_projection)#Need predicted occurrence points (calculated from thresholded model)
-  hv.dat <- extract(envt, dist.points[,1:2]);
+  hv.dat <- raster::extract(envt, dist.points[,1:2]);
   hv.dat <- hv.dat[complete.cases(hv.dat),];
   hv.dat <- scale(hv.dat, center=TRUE, scale=TRUE)
-  #estimate_bandwidth(enaEnvt, method = "silverman")
-  #enaExp <- expectation_ball(enaEnvt)
   hv <- hypervolume(data = hv.dat, method = "box")
 }
+
 ##################################ENMTOOLS functions########################################################
 #' Calculates the correlation coefficient between two rasters.
 #'

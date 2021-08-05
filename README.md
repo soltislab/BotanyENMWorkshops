@@ -4,7 +4,7 @@ See the html:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/Crash
 
 
 ## Organizers 
-[Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), Tal Kinser, Makenzie Mabry, Doug Soltis, and Pam Soltis.     
+[Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), Tal Kinser, Makenzie Mabry, Hector Figueroa, Hannah Marx, Jon Spoelhof, Ryan Folk, CJ Grady, Doug Soltis, and Pam Soltis.     
      
 Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen), and more.  
 
@@ -70,6 +70,33 @@ Many people contributted to this material including [Anthony Melton](https://git
 * Cardillo and Warren. 2016. Analysing patterns of spatial and niche overlap among species at multiple resolutions. Global Ecology and Biogeography.     
 * Jantzen et al. 2019. Effects of taxon sampling and tree reconstruction methods on phylodiversity metrics. Ecology and Evolution.    
 
+
+### Advanced Topics 
+* Webb et al. 2002. Phylogenies and Community Ecology. Annual Reviews of Ecology and Systematics.   
+* Lu et al. 2018. Evolutionary history of the angiosperm flora of China. Nature.  
+* Pollock et al. 2017. Large conservation gains possible for global biodiversity facets. Nature.  
+* Marx et al. 2017. Riders in the sky (islands): Using a mega‐phylogenetic approach to understand plant species distribution and coexistence at the altitudinal limits of angiosperm plant life. Journal of Biogeography.       
+* Li et al. 2019. For common community phylogenetic analyses, go ahead and use synthesis phylogenies. Ecology.   
+* Tucker et al. 2016. A guide to phylogenetic metrics for conservation, community ecology and macroecology. Biological Reviews.   
+* Mishler et al. 2014. Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian Acacia. Nature Communications.   
+* Miller et al. 2016. Phylogenetic community structure metrics and null models: a review with new methods and software. Ecography.    
+* Rahbek et al. 2019. Building mountain biodiversity: Geological and evolutionary processes. Science.    
+* Körner 2003. Alpine plant life: Functional plant ecology of high mountain ecosystems. Springer. (Book)
+* Figueroa et al. 2021. Alpine, but not montane, seed plants constitute a biogeographically and climatically distinct species pool across the Americas. Alpine Botany.   
+* Swenson. 2011. The role of evolutionary processes in producing biodiversity patterns, and the interrelationships between taxonomic, functional and phylogenetic biodiversity. American Journal of Botany.    
+* Cortez et al. 2021. Is the age of plant communities predicted by the age, stability and soil composition of the underlying landscapes? An investigation of OCBILs. Biological Journal of the Linnean Society.    
+* Hopper, Silveira and Fiedler. 2016. Biodiversity hotspots and Ocbil theory. Plant Soil.    
+* Schut et al. 2014. Rapid characterisation of vegetation structure to predict refugia and climate change impacts across a global biodiversity hotspot. PLOS ONE.   
+* Zappi et al. 2017. Plant biodiversity drivers in Brazilian Campos Rupestres: Insights from phylogenetic structure. Frontiers Plant Science.  
+* Linder. 2001. Plant diversity and endemism in sub-Saharan tropical Africa. Journal of Biogeography.    
+* Bomblies. 2020. When everything changes at once: finding a new normal after genome duplication. Proceedings of the Royal Society B. 
+* Coate and Doyle. 2013. Polyploid and hybrid genomics. (Book)
+* Buggs et al. 2011. Transcriptomic shock generates evolutionary novelty in a newly formed, natural allopolyploid plant. Current Biology. 
+* McCarthy et al. 2017. Related allopolyploids display distinct floral pigment profiles and transgressive pigments. American Journal of Botany. 
+* Van de Peer et al. 2021. Polyploidy: an evolutionary and ecological force in stressful times. The Plant Cell. 
+* Schmickl and Yant. 2021. Adaptive introgression: how polyploidy reshapes gene flow landscapes. New Phytologist. 
+* Glick and Mayrose. 2014. ChromEvo: Assessing the pattern of chromosome number evolution and the inference of polyploidy along a phylogeny. Molecular Biology and Evolution.    
+ 
 
 
 

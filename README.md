@@ -2,6 +2,7 @@
 Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2021      
 See the html:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2021.html      
 
+**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)."
 
 ## Organizers 
 [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), Tal Kinser, Makenzie Mabry, Hector Figueroa, Hannah Marx, Jon Spoelhof, Ryan Folk, CJ Grady, Doug Soltis, and Pam Soltis.     

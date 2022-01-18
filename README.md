@@ -99,6 +99,11 @@ Many people contributted to this material including [Anthony Melton](https://git
 * Glick and Mayrose. 2014. ChromEvo: Assessing the pattern of chromosome number evolution and the inference of polyploidy along a phylogeny. Molecular Biology and Evolution.    
  
 
+## Follow-up
 
+### ENM vs SDM     
+Are Ecological Niche Models (ENMs) and Species Distribution Models (SDMs) the same?   
 
+* [Peterson and Soberon. 2012. Species Distribution Modeling and Ecological Niche Modeling: Getting the concepts right.](https://www.researchgate.net/profile/Jorge-Soberon/publication/255721977_Species_Distribution_Modeling_and_Ecological_Niche_Modeling_Getting_the_Concepts_Right/links/02e7e5358010c83287000000/Species-Distribution-Modeling-and-Ecological-Niche-Modeling-Getting-the-Concepts-Right.pdf)
+*  [Franklin. 2012. Mapping Species Distribution.](https://www.cambridge.org/core/books/mapping-species-distributions/58225AE5693AED8BD812F7CEBE35378A)
 

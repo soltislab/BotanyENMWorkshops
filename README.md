@@ -1,8 +1,8 @@
-# BotanyENMWorkshop2021
-Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 20212      
+# BotanyENMWorkshop2022
+Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2022     
 See the html:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2022.html      
 
-**Workshop will be avaliable at Botany 2022**  
+**Workshop is currently being updated for Botany 2022**  
 
 **How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)."
 

@@ -4,9 +4,9 @@ See last years html here:  https://soltislab.github.io/BotanyENMWorkshops/Demos/
 
 **Workshop is currently being updated for Botany 2022**  
 
-**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." 
+**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." Note, this workshop is related to [another repository](https://github.com/mgaynor1/ENMCrashCourse), which is updated outside of this workshop. This workshop is often done in conjuction with BiotaPhy, therefore this repository contains additional presentation/demos/ect that are not included in the other.  
 
-In Prep Publication: Patten NN, Gaynor ML, Soltis DE, and Soltis PS. Geographic and Taxonomic Occurrence R-Based Scrubbing (gatoRs): An R package and reproducible workflow for processing biodiversity data. In prep.
+If you use functions or scripts from the first half of this workshop, please cite this In-prep publication: Patten NN, Gaynor ML, Soltis DE, and Soltis PS. Geographic and Taxonomic Occurrence R-Based Scrubbing (gatoRs): An R package and reproducible workflow for processing biodiversity data. In prep.
 
 ## Organizers 
 [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), Tal Kinser, Makenzie Mabry, Hector Figueroa, Hannah Marx, Jon Spoelhof, Ryan Folk, CJ Grady, Doug Soltis, and Pam Soltis.     

@@ -3,7 +3,6 @@
 ## N Patten and ML Gaynor
 
 # Load packages
-library(dplyr)
 library(dplyr) # v.0.8.5
 library(tidyr) # v.1.0.2
 library(plyr) # v.1.8.6

@@ -1,15 +1,13 @@
-# Download_Occurrence_Data.R
+# 01_Download_Occurrence_Data.R
 ## Download Occurrence Data
-### Modified and created by ML Gaynor 
+### ML Gaynor 
 
 ### Load packages 
-library(dplyr) 
-library(tidyr) 
-library(plyr) 
+library(tidyverse)
 library(spocc) 
 library(ridigbio) 
-library(tibble) 
 library(rbison)
+library(leaflet)
 
 ### Load functions 
 #### This is a function I created with Natalie Patten.
@@ -20,9 +18,8 @@ source("functions/gators.R")
 #### Search for the species Galax urceolata
 iDigBio_GU <- idig_search_records(rq=list(scientificname="Galax urceolata"))
 
-#### Search for the family ADiapensiaceae
+#### Search for the family Diapensiaceae
 iDigBio_GU_family <- idig_search_records(rq=list(family="Diapensiaceae"), limit=1000)
-
 
 ### What if you want to read in all the points for a family within an extent?
 #### Hint: Use the [iDigBio portal](https://www.idigbio.org/portal/search) to
@@ -40,8 +37,8 @@ rq_input <- list("scientificname"=list("type"="exists"),
 iDigBio_GU_family_USA <- idig_search_records(rq_input, limit=1000)
 
 #### Save as csv files 
-write.csv(iDigBio_GU, "data/download/iDigBio_GU_20210614.csv", row.names = FALSE)
-write.csv(iDigBio_GU_family, "data/download/iDigBio_GU_family_20210614.csv", row.names = FALSE)
+write.csv(iDigBio_GU, "data/download/iDigBio_GU_20220712.csv", row.names = FALSE)
+write.csv(iDigBio_GU_family, "data/download/iDigBio_GU_family_20220712.csv", row.names = FALSE)
 
 ### Data download using spocc_combined
 #### Make synonym lists
@@ -51,8 +48,24 @@ Pyxidanthera_barbulata <- c("Pyxidanthera barbulata","Pyxidanthera barbulata var
 Pyxidanthera_brevifolia <- c("Pyxidanthera brevifolia", "Pyxidanthera barbulata var. brevifolia")
 
 #### Use the spocc_combine function
-spocc_combine(Shortia_galacifolia, "data/download/raw/Shortia_galacifolia_raw_20210614.csv")
-spocc_combine(Galax_urceolata, "data/download/raw/Galax_urceolata_raw_20210614.csv")
-spocc_combine(Pyxidanthera_barbulata, "data/download/raw/Pyxidanthera_barbulata_raw_20210614.csv")
-spocc_combine(Pyxidanthera_brevifolia, "data/download/raw/Pyxidanthera_brevifolia_raw_20210614.csv")
+spocc_combine(Shortia_galacifolia, "data/download/raw/Shortia_galacifolia_raw_20220712.csv")
+spocc_combine(Galax_urceolata, "data/download/raw/Galax_urceolata_raw_20220712.csv")
+spocc_combine(Pyxidanthera_barbulata, "data/download/raw/Pyxidanthera_barbulata_raw_20220712.csv")
+spocc_combine(Pyxidanthera_brevifolia, "data/download/raw/Pyxidanthera_brevifolia_raw_20220712.csv")
+
+### Quick-look at the downloaded files
+rawdf <- read.csv("data/download/raw/Shortia_galacifolia_raw_20220712.csv")
+
+#### Inspect the data frame
+#### What columns are included?
+names(rawdf)
+
+### How many observations do we start with?
+nrow(rawdf)
+
+### Where are these points?
+#### The error message here indicates many points do not have long/lat values (more in 02)
+leaflet(rawdf) %>% 
+  addMarkers(label = paste0(rawdf$Longitude, ", ", rawdf$Latitude)) %>% 
+  addTiles()
 

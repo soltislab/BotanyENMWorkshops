@@ -1,6 +1,6 @@
 # BotanyENMWorkshop2022
 Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2022     
-See last years html here:  https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2021.html      
+HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2022.html      
 
 **Workshop is currently being updated for Botany 2022**  
 

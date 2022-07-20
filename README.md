@@ -4,14 +4,11 @@ HTML version of our R markdown can also be viewed here: https://soltislab.github
 
 **Workshop is currently being updated for Botany 2022**  
 
-**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." Note, this workshop is related to [another repository](https://github.com/mgaynor1/ENMCrashCourse), which is updated outside of this workshop. This workshop is often done in conjuction with BiotaPhy, therefore our workshop repository contains additional presentation/demos/ect that are not included in the other.  
-
-If you use functions or scripts from the first half of this workshop, please cite this In-prep publication: Patten NN, Gaynor ML, Soltis DE, and Soltis PS. Geographic and Taxonomic Occurrence R-Based Scrubbing (gatoRs): An R package and reproducible workflow for processing biodiversity data. In prep.
-
 ## Organizers 
-[Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), Tal Kinser, Makenzie Mabry, Hector Figueroa, Hannah Marx, Jon Spoelhof, Ryan Folk, CJ Grady, Doug Soltis, and Pam Soltis.     
-     
-Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen), and more.  
+Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, and Makenzie Mabry.   
+
+
+Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen),  [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), and more.    
 
 
 ## Additional Resources   
@@ -103,11 +100,16 @@ Many people contributted to this material including [Anthony Melton](https://git
 * Glick and Mayrose. 2014. ChromEvo: Assessing the pattern of chromosome number evolution and the inference of polyploidy along a phylogeny. Molecular Biology and Evolution.    
  
 
-## Follow-up
-
 ### ENM vs SDM     
 Are Ecological Niche Models (ENMs) and Species Distribution Models (SDMs) the same?   
 
 * [Peterson and Soberon. 2012. Species Distribution Modeling and Ecological Niche Modeling: Getting the concepts right.](https://www.researchgate.net/profile/Jorge-Soberon/publication/255721977_Species_Distribution_Modeling_and_Ecological_Niche_Modeling_Getting_the_Concepts_Right/links/02e7e5358010c83287000000/Species-Distribution-Modeling-and-Ecological-Niche-Modeling-Getting-the-Concepts-Right.pdf)
 *  [Franklin. 2012. Mapping Species Distribution.](https://www.cambridge.org/core/books/mapping-species-distributions/58225AE5693AED8BD812F7CEBE35378A)
+
+
+## How to cite   
+
+**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." Note, this workshop is related to [another repository](https://github.com/mgaynor1/ENMCrashCourse), which is updated outside of this workshop. This workshop is often done in conjuction with BiotaPhy, therefore our workshop repository contains additional presentation/demos/ect that are not included in the other.  
+
+If you use functions or scripts from the first half of this workshop, please cite this In-prep publication: Patten NN, Gaynor ML, Soltis DE, and Soltis PS. Geographic and Taxonomic Occurrence R-Based Scrubbing (gatoRs): An R package and reproducible workflow for processing biodiversity data. In prep.
 

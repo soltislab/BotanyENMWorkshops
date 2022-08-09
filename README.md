@@ -2,7 +2,6 @@
 Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2022     
 HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2022.html      
 
-**Workshop is currently being updated for Botany 2022**  
 
 ## Organizers 
 Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, and Makenzie Mabry.   

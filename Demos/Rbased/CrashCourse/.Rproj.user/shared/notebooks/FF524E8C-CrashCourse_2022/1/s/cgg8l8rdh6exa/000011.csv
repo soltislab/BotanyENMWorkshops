@@ -1,4 +1,0 @@
-"0","alldf <- list.files(""data/cleaning_demo/"", full.names = TRUE, "
-"0","                    recursive = FALSE, include.dirs = FALSE, pattern = ""*.csv"")"
-"0","alldf <- lapply(alldf, read.csv)"
-"0","alldf <- do.call(rbind, alldf)"

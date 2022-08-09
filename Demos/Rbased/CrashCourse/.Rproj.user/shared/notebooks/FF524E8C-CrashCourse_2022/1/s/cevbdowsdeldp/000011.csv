@@ -1,3 +1,0 @@
-"0","clippedlist <- list.files(""data/climate_processing/all/"", pattern = ""*.asc"", full.names = TRUE)"
-"0","clippedlist <- mixedsort(sort(clippedlist))"
-"0","clippedstack <- raster::stack(clippedlist)"

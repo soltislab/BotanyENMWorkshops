@@ -4,7 +4,7 @@
 make.binary.map <- function(model, occ.dat){
   
   ###Extract suitability scores
-  SuitabilityScores <- raster::extract(model, occ.dat[,3:2])
+  SuitabilityScores <- raster::extract(model, occ.dat[,2:3])
   ###Get rid of NAs
   SuitabilityScores <- SuitabilityScores[complete.cases(SuitabilityScores)]
   ###Reclassify the raster; set threshold to minimum suitability score at a known occurrence
@@ -23,7 +23,7 @@ get_hypervolume <- function(binary_projection, envt) {
   hv.dat <- raster::extract(envt, dist.points[,1:2]);
   hv.dat <- hv.dat[complete.cases(hv.dat),];
   hv.dat <- scale(hv.dat, center=TRUE, scale=TRUE)
-  hv <- hypervolume(data = hv.dat, method = "box")
+  hv <- hypervolume_box(data = hv.dat)
 }
 
 ##################################ENMTOOLS functions########################################################

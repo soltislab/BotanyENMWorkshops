@@ -1,53 +1,31 @@
-# Set-up for Botany 2022
+# Set-up for Botany 2023
 ## 00_Setup.R
 ## ML Gaynor
 
-
 # Install R packages
 ## Make a list of packages
-list_of_packages <- c("dplyr", 
-                      "tidyr",
-                      "plyr", 
-                      "spocc", 
-                      "ridigbio",
-                      "tibble", 
-                      "tidyverse",
-                      "rbison",
-                      "CoordinateCleaner",
-                      "lubridate",
-                      "ggplot2",
-                      "gtools",
-                      "raster", 
-                      "sp", 
-                      "spatstat", 
-                      "spThin", 
-                      "fields", 
-                      "ggspatial", 
-                      "rgdal", 
-                      "rangeBuilder", 
-                      "sf", 
-                      "dismo", 
-                      "devtools", 
-                      "ENMeval", 
-                      "caret", 
-                      "usdm", 
-                      "stringr", 
-                      "factoextra", 
-                      "FactoMineR", 
-                      "multcompView", 
-                      "ggsci",
-                      "gridExtra", 
-                      "ecospat", 
-                      "rJava", 
-                      "viridis", 
-                      "ENMTools", 
-                      "ape", 
-                      "RStoolbox", 
-                      "hypervolume", 
-                      "phytools",
-                      "picante", 
-                      "leaflet")
-
+list_of_packages <- c("ade4","ape", "biomod2",
+                      "caret", "CoordinateCleaner", 
+                      "devtools","dismo", 
+                      "dplyr", "ecospat", 
+                      "ENMeval",  "ENMTools", 
+                      "fields",  "gatoRs",  
+                      "ggplot2", "ggspatial",
+                      "gridExtra",  "gtools", 
+                      "hypervolume",  "kuenm", 
+                      "lattice", "leaflet",
+                      "magrittr",   "maps",   
+                      "multcompView", "parsedate", 
+                      "phytools", "plyr", 
+                      "rangeBuilder", "raster",
+                      "Rcpp",  "ridigbio",
+                      "rJava","rgbif",
+                      "sf",   "sp",
+                      "spThin","spam",
+                      "spatstat.geom","stringr",
+                      "terra", "tidyr", 
+                      "usdm",  "utils", 
+                      "viridis", "viridisLite")
 
 ## Here we identify which packages are not installed and install these for you
 ### Please do install all package which need compilation
@@ -78,7 +56,7 @@ install_github('johnbaums/rmaxent')
 install_github("marlonecobos/kuenm")
 
 ## Check and make sure all github packages load
-github_packages <- c("rmaxent", "kuenm")
+github_packages <- c("rmaxent", "kuenm", "gatoRs")
 github_loaded <- lapply(github_packages, require, character.only = TRUE)
 ### If anything prints here, then something went wrong and a package did not install
 github_packages[github_loaded == FALSE]

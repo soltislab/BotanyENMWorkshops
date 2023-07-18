@@ -3,16 +3,10 @@
 ### ML Gaynor 
 
 ### Load packages 
-library(tidyverse)
-library(spocc) 
 library(ridigbio) 
-library(rbison)
+library(gatoRs)
 library(leaflet)
 
-### Load functions 
-#### This is a function I created with Natalie Patten.
-#### It will be part of her R package gatoRs (Geographic And Taxonomic Occurrence R-based Scrubbing).
-source("functions/gators.R")
 
 ### Data download from iDigBio
 #### Search for the species Galax urceolata
@@ -37,24 +31,32 @@ rq_input <- list("scientificname"=list("type"="exists"),
 iDigBio_GU_family_USA <- idig_search_records(rq_input, limit=1000)
 
 #### Save as csv files 
-write.csv(iDigBio_GU, "data/download/iDigBio_GU_20220712.csv", row.names = FALSE)
-write.csv(iDigBio_GU_family, "data/download/iDigBio_GU_family_20220712.csv", row.names = FALSE)
+write.csv(iDigBio_GU, "data/download/iDigBio_GU_20230605.csv", row.names = FALSE)
+write.csv(iDigBio_GU_family, "data/download/iDigBio_GU_family_20230605.csv", row.names = FALSE)
 
-### Data download using spocc_combined
+### Data download using gatoRs
 #### Make synonym lists
 Shortia_galacifolia <- c("Shortia galacifolia", "Sherwoodia galacifolia")
 Galax_urceolata <- c("Galax urceolata", "Galax aphylla")
 Pyxidanthera_barbulata <- c("Pyxidanthera barbulata","Pyxidanthera barbulata var. barbulata")
 Pyxidanthera_brevifolia <- c("Pyxidanthera brevifolia", "Pyxidanthera barbulata var. brevifolia")
 
-#### Use the spocc_combine function
-spocc_combine(Shortia_galacifolia, "data/download/raw/Shortia_galacifolia_raw_20220712.csv")
-spocc_combine(Galax_urceolata, "data/download/raw/Galax_urceolata_raw_20220712.csv")
-spocc_combine(Pyxidanthera_barbulata, "data/download/raw/Pyxidanthera_barbulata_raw_20220712.csv")
-spocc_combine(Pyxidanthera_brevifolia, "data/download/raw/Pyxidanthera_brevifolia_raw_20220712.csv")
+#### Use the gators_download function
+gators_download(synonyms.list = Shortia_galacifolia,
+                write.file = TRUE, 
+                filename = "data/download/raw/Shortia_galacifolia_raw_20230605.csv")
+gators_download(synonyms.list = Galax_urceolata, 
+              write.file = TRUE, 
+              filename = "data/download/raw/Galax_urceolata_raw_20230605.csv")
+gators_download(synonyms.list = Pyxidanthera_barbulata, 
+              write.file = TRUE, 
+              filename = "data/download/raw/Pyxidanthera_barbulata_raw_20230605.csv")
+gators_download(synonyms.list = Pyxidanthera_brevifolia, 
+              write.file = TRUE, 
+              filename = "data/download/raw/Pyxidanthera_brevifolia_raw_20230605.csv")
 
 ### Quick-look at the downloaded files
-rawdf <- read.csv("data/download/raw/Shortia_galacifolia_raw_20220712.csv")
+rawdf <- read.csv("data/download/raw/Shortia_galacifolia_raw_20230605.csv")
 
 #### Inspect the data frame
 #### What columns are included?
@@ -66,6 +68,6 @@ nrow(rawdf)
 ### Where are these points?
 #### The error message here indicates many points do not have long/lat values (more in 02)
 leaflet(rawdf) %>% 
-  addMarkers(label = paste0(rawdf$Longitude, ", ", rawdf$Latitude)) %>% 
+  addMarkers(label = paste0(rawdf$longitude, ", ", rawdf$latitude)) %>% 
   addTiles()
 

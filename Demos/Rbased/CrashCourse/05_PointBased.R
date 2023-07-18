@@ -4,16 +4,14 @@
 ## Modified and created by ML Gaynor. 
 
 # Load Packages
+library(gtools)
 library(raster)
+library(plyr)
 library(dplyr)
 library(tidyr)
-library(gtools)
-library(factoextra)
-library(FactoMineR)
-library(multcompView)
-library(ggsci)
-library(gridExtra)
 library(ggplot2)
+library(multcompView)
+library(gridExtra)
 library(ecospat)
 library(dismo)
 library(ade4)
@@ -22,8 +20,7 @@ library(ade4)
 source("functions/ggbiplot_copy.R")
 
 # Load data file
-alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20220712.csv")
-
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20230605.csv")
 
 # Raster layers
 list <- list.files("data/climate_processing/PresentLayers/all", full.names = T, recursive = FALSE) 
@@ -36,18 +33,20 @@ envtStack <- stack(list)
 
 ## For each occurence record, extract the value for each bioclim variables using the package raster.
 ##### Extract value for each point
-ptExtracted <- raster::extract(envtStack, alldf[3:2])
+ptExtracted <- raster::extract(envtStack, alldf[2:3])
 
 #### Convert to data frame
 ptExtracteddf <- as.data.frame(ptExtracted)
 
 #### Add species name
 ptExtracteddf <- ptExtracteddf %>%
-                 dplyr::mutate(name = as.character(alldf$name), x = alldf$long, y = alldf$lat)
+                 dplyr::mutate(name = as.character(alldf$species), 
+                               x = alldf$longitude, 
+                               y = alldf$latitude)
 
 #### Drop any NA
 ptExtracteddf <- ptExtracteddf %>% 
-                 tidyr::drop_na(bio_3, bio_7, bio_8, bio_9, bio_14, bio_15, bio_18, elev)
+                 tidyr::drop_na()
 
 ## PCA 
 ### Create two dataframes.
@@ -88,7 +87,7 @@ theme <- theme(panel.background = element_blank(),
                text = element_text(size = 12))
 
 ##### Set colors
-pal <- pal_locuszoom()(4)
+pal <- c("#D43F3AFF", "#EEA236FF", "#5CB85CFF", "#46B8DAFF")
 
 ##### Next, ggbiplot where obs.scale indicates the scale factor to apply to observation, 
 ##### var.scale indicates the scale factor to apply to variables, 
@@ -119,7 +118,7 @@ stat.test <- function(dataframe,  x = "name", y){
 bio3aovplot <- ggplot(ptExtracteddf, aes(x = name, y = bio_3)) +
                geom_boxplot(aes(fill = name)) +
                scale_color_manual(name = '', values = pal) +
-               geom_text(data = stat.test(dataframe =ptExtracteddf,  y = "bio_3"), 
+               geom_text(data = stat.test(dataframe = ptExtracteddf,  y = "bio_3"), 
                         mapping = aes(x = name,
                                       y = max(ptExtracteddf["bio_3"]+1), 
                                       label = groups), 
@@ -142,9 +141,9 @@ for(i in 1:8){
                     scale_colour_manual(name = 'Species', values = pal) +
                     geom_text(data = statsout[[i]], 
                               mapping = aes(x = name,
-                                            y = y.val, 
+                                            y = (y.val*1.1), 
                                             label = groups), 
-                              size = 5, inherit.aes = FALSE) +
+                              size = 4, inherit.aes = FALSE) +
                     scale_x_discrete(labels = c('G', 'Pba','Pbr', 'S')) +
                     ggtitle(label = vname) +
                     ylab(vname) +

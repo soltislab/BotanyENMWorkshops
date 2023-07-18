@@ -12,6 +12,7 @@ library(ape)
 library(RStoolbox)
 library(hypervolume)
 library(phytools)
+library(terra)
 
 # Load functions
 ## The following command generates a binary predicted occurrence map. This was written by Anthony Melton
@@ -43,13 +44,13 @@ projection(allstack) <- "+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_d
 ## available niche space a species occupies.
 
 ## MaxEnt GUI
-sp1_breadth <- ENMTools::raster.breadth(x = sp1_enm.mx.b)
+sp1_breadth <- ENMTools::raster.breadth(terra::rast(sp1_enm.mx.b))
 sp1_breadth$B2
-sp2_breadth <- ENMTools::raster.breadth(x = sp2_enm.mx.b)
+sp2_breadth <- ENMTools::raster.breadth(terra::rast(sp2_enm.mx.b))
 sp2_breadth$B2
-sp3_breadth <- ENMTools::raster.breadth(x = sp3_enm.mx.b)
+sp3_breadth <- ENMTools::raster.breadth(terra::rast(sp3_enm.mx.b))
 sp3_breadth$B2
-sp4_breadth <- ENMTools::raster.breadth(x = sp4_enm.mx.b)
+sp4_breadth <- ENMTools::raster.breadth(terra::rast(sp4_enm.mx.b))
 sp4_breadth$B2
 
 # ENM Overlap
@@ -78,34 +79,38 @@ plot(tree)
 tree <- drop.tip(tree, "Cyrilla_racemiflora")
 
 # Load data file
-alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20220712.csv")
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20230605.csv")
 
 ## Subset for each species
-Galax_urceolata <- dplyr::filter(alldf, name == "Galax urceolata")
-Pyxidanthera_barbulata <- dplyr::filter(alldf, name == "Pyxidanthera barbulata")
-Pyxidanthera_brevifolia <- dplyr::filter(alldf, name == "Pyxidanthera brevifolia")
-Shortia_galacifolia <- dplyr::filter(alldf, name == "Shortia galacifolia")
+Galax_urceolata <- dplyr::filter(alldf, species == "Galax urceolata")
+Pyxidanthera_barbulata <- dplyr::filter(alldf, species == "Pyxidanthera barbulata")
+Pyxidanthera_brevifolia <- dplyr::filter(alldf, species == "Pyxidanthera brevifolia")
+Shortia_galacifolia <- dplyr::filter(alldf, species == "Shortia galacifolia")
 
 ## Generate species objects for each tree member!
 sp1 <- enmtools.species(species.name = "Galax_urceolata",
-                        presence.points = Galax_urceolata[,3:2])
-sp1$range <- background.raster.buffer(sp1$presence.points, 25000, mask = allstack)
-sp1$background.points = background.points.buffer(points = sp1$presence.points, radius = 5000, n = 10000, mask =  allstack[[1]])
+                        presence.points = vect(Galax_urceolata[,2:3], geom = c("longitude", "latitude")))
+crs(sp1$presence.points) <- crs("+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs")
+sp1$range <- background.raster.buffer(sp1$presence.points, 25000, mask = terra::rast(allstack))
+sp1$background.points = background.points.buffer(points = sp1$presence.points, radius = 5000, n = 10000, mask =  terra::rast(allstack[[1]]))
 ##############################
 sp2 <- enmtools.species(species.name = "Pyxidanthera_barbulata",
-                                        presence.points = Pyxidanthera_barbulata[,3:2])
-sp2$range <- background.raster.buffer(sp2$presence.points, 25000, mask = allstack)
-sp2$background.points = background.points.buffer(points = sp2$presence.points, radius = 5000, n = 10000, mask =  allstack[[1]])
+                        presence.points = vect(Pyxidanthera_barbulata[,2:3], geom = c("longitude", "latitude")))
+crs(sp2$presence.points) <- crs("+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs")
+sp2$range <- background.raster.buffer(sp2$presence.points, 25000, mask = terra::rast(allstack))
+sp2$background.points = background.points.buffer(points = sp2$presence.points, radius = 5000, n = 10000, mask =  terra::rast(allstack[[1]]))
 #############################
 sp3 <- enmtools.species(species.name = "Pyxidanthera_brevifolia",
-                                        presence.points = Pyxidanthera_brevifolia[,3:2])
-sp3$range <- background.raster.buffer(sp3$presence.points, 25000, mask = allstack)
-sp3$background.points = background.points.buffer(points = sp3$presence.points, radius = 5000, n = 10000, mask =  allstack[[1]])
+                        presence.points = vect(Pyxidanthera_brevifolia[,2:3], geom = c("longitude", "latitude")))
+crs(sp3$presence.points) <- crs("+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs")
+sp3$range <- background.raster.buffer(sp3$presence.points, 25000, mask =  terra::rast(allstack))
+sp3$background.points = background.points.buffer(points = sp3$presence.points, radius = 5000, n = 10000, mask =   terra::rast(allstack[[1]]))
 #############################
 sp4 <- enmtools.species(species.name = "Shortia_galacifolia",
-                                          presence.points = Shortia_galacifolia[,3:2])
-sp4$range <- background.raster.buffer(sp4$presence.points, 25000, mask = allstack)
-sp4$background.points = background.points.buffer(points = sp4$presence.points, radius = 5000, n = 10000, mask =  allstack[[1]])
+                        presence.points = vect(Shortia_galacifolia[,2:3], geom = c("longitude", "latitude")))
+crs(sp4$presence.points) <- crs("+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs")
+sp4$range <- background.raster.buffer(sp4$presence.points, 25000, mask =  terra::rast(allstack))
+sp4$background.points = background.points.buffer(points = sp4$presence.points, radius = 5000, n = 10000, mask =   terra::rast(allstack[[1]]))
   
 
 ## Create "clade" object with all the species in the tree
@@ -119,7 +124,7 @@ summary(range.aoc)
 plot(range.aoc)
 
 ## Age-Overlap Correlation Test
-glm.aoc <- enmtools.aoc(clade = clade,  env = allstack, nreps = 10, overlap.source = "glm")
+glm.aoc <- enmtools.aoc(clade = clade,  env = terra::rast(allstack), nreps = 5, overlap.source = "glm")
 summary(glm.aoc)
 plot(glm.aoc)
 

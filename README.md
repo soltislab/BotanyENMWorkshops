@@ -7,10 +7,10 @@ HTML version of our R markdown can also be viewed here: https://soltislab.github
 **This course will be offerred at Botany 2023!** Stay tune for an update!   
 
 ## Organizers 
-Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, Makenzie Mabry, Lauren Gillett, Elizabeth White, JT Miller, and Malu Ore Rengifo.   
+Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, Makenzie Mabry, [Lauren Gillett](https://github.com/laurenwhitehurst21), Elizabeth White, JT Miller, and Malu Ore Rengifo.   
 
 
-Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen),  [Andre Naranjo](https://github.com/aanaranjo), [Lauren Whitehurst](https://github.com/laurenwhitehurst21), and more.    
+Many people contributted to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen),  [Andre Naranjo](https://github.com/aanaranjo), and more.    
 
 
 ## Additional Resources   
@@ -44,12 +44,11 @@ Many people contributted to this material including [Anthony Melton](https://git
 * Zizka et al. 2019. CoordinateCleaner: Standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution.       
 * Aiello-Lammens et al. 2015. spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models. Ecography.              
 * Proosdij et al. 2016. Minimum required number of specimen records to develop accurate species distribution models. Ecography.     
-
        
 ### Climatic layers      
 * Barve et al. 2011. The crucial role of the accessible area in ecological niche modeling and species distribution modeling.  Ecological Modelling.       
 * Cobos et al. 2019. An exhaustive analysis of heuristic methods for variable selection in ecological niche modeling and species distribution modeling. Ecological Informatics.        
-
+* Folk and Gaynor et al. 2023. Identifying climatic drivers of hybridization with a new ancestral niche reconstruction method. Systematic Biology.    
 
 ### ENM methods 
 * Peterson. 2001. Predicting species' geographic distributions based on ecological niche modeling. The Condor.    
@@ -61,7 +60,6 @@ Many people contributted to this material including [Anthony Melton](https://git
 * Brown and Carnaval. 2019. A tale of two niche: methods, concepts, and evolution. Frontiers of Biogeography.    
 * Warren et al. 2021. The effects of climate change on Australia’s only endemic Pokémon: Measuring bias in species distribution models. Methods in Ecology and Evolution. 
  
-
 
 ### Applications of ENMs
 * Allen et al. 2019. Spatial Phylogenetics of Florida Vascular Plants: The Effects of Calibration and Uncertainty on Diversity Estimates. iScience.    

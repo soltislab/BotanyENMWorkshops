@@ -6,11 +6,9 @@
 # Load Packages 
 library(raster)
 library(gtools)
-library(dplyr)
-library(rgdal)
-library(sp)
-library(rangeBuilder)
 library(sf)
+library(rangeBuilder)
+library(dplyr)
 library(caret)
 library(usdm)
 library(dismo)
@@ -29,47 +27,42 @@ biolist <- mixedsort(sort(biolist))
 biostack <- raster::stack(biolist)
 
 # Load occurrence records
-alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20220712.csv")
-alldf$name <- as.character(alldf$name)
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20230605.csv")
+alldf$species <- as.character(alldf$species)
+alldfsp <- st_as_sf(alldf, coords = c("longitude", "latitude"), crs = 4326)
 
 # Present Layers - all
 ## Here we will make the projection layers, or the layers which include shared space. 
 ## First we have to define the accessible space.
-alldfsp <- alldf
-
-## Make into a spatial point data frame
-pts <- cbind(alldf$long, alldf$lat)
-alldfsp <- SpatialPointsDataFrame(pts, data = alldf, proj4string=CRS("EPSG:4326"))
-
-
 ## Create alpha hull
-hull <- rangeBuilder::getDynamicAlphaHull(x = alldfsp@coords, 
-                             fraction = 1, # min. fraction of records we want included
-                             partCount = 1, # number of polygons
-                             initialAlpha = 20, # initial alpha size, 20m
-                             clipToCoast = "terrestrial",
-                             proj = "+proj=longlat +datum=WGS84")
+hull <- rangeBuilder::getDynamicAlphaHull(x = alldf, 
+                                          coordHeaders = c("longitude", "latitude"),
+                                           fraction = 1, # min. fraction of records we want included
+                                           partCount = 1, # number of polygons allowed
+                                           initialAlpha = 20, # initial alpha size, 20m
+                                           clipToCoast = "terrestrial", 
+                                           verbose = TRUE)
 ### Visualize
-plot(hull[[1]], col=transparentColor('gray50', 0.5), border = NA)
-points(x = alldf$long, y = alldf$lat, cex = 0.5, pch = 3)
+plot(hull[[1]], col=rangeBuilder::transparentColor('gray50', 0.5), border = NA)
+points(x = alldf$longitude, y = alldf$latitude, cex = 0.5, pch = 3)
 
 ## Add buffer to hull
-### Transform into CRS related to meters with Equal Area Cylindrical prokection
-hullTrans <- spTransform(hull[[1]], "+proj=cea +lat_ts=0 +lon_0=0")
-alldfspTrans <- spTransform(alldfsp, "+proj=cea +lat_ts=0 +lon_0")
+### Transform into CRS related to meters with Equal Area Cylindrical projection
+hullTrans <- st_transform(hull[[1]], CRS("+proj=cea +lat_ts=0 +lon_0")) 
+alldfspTrans <- st_transform(alldfsp, CRS("+proj=cea +lat_ts=0 +lon_0"))
 
 ### Calculate buffer size
 #### Here we take the 80th quantile of the max distance between points
-buffDist <- quantile(x = (apply(spDists(alldfspTrans), 2, FUN = function(x) sort(x)[2])), 
+buffDist <- quantile(x = (apply(sf::st_distance(alldfspTrans), 2, FUN = function(x) sort(x)[2])), 
                      probs = 0.80, na.rm = TRUE) 
 
 ### Buffer the hull
-buffer_m <- buffer(x = hullTrans, width = buffDist, dissolve = TRUE)
-buffer <- spTransform(buffer_m,  CRS("EPSG:4326"))
+buffer_m <- st_buffer(x = hullTrans, dist = buffDist, dissolve = TRUE)
+buffer <- st_transform(buffer_m,  CRS("+proj=longlat +datum=WGS84"))
 
 ### Visualize
-plot(buffer, col=transparentColor('gray50', 0.5), border = NA)
-points(x = alldf$long, y = alldf$lat, cex = 0.5, pch = 3)
+plot(buffer, col=rangeBuilder::transparentColor('gray50', 0.5), border = NA)
+points(x = alldf$longitude, y = alldf$latitude, cex = 0.5, pch = 3)
 
 ## Mask and crop bioclim layers
 path <- "data/climate_processing/all/"
@@ -82,8 +75,8 @@ for(i in 1:length(biolist)){
     out <- paste0(path, name)
     outfile <- paste0(out, end)
     # Crop and mask
-    c <- crop(rast, extent(buffer))
-    c <- mask(c, buffer)
+    c <- crop(rast, sf::as_Spatial(buffer))
+    c <- mask(c, sf::as_Spatial(buffer))
     # Write raster
     writeRaster(c, outfile, format = "ascii", overwrite = TRUE)
 }
@@ -109,6 +102,7 @@ c <- abs(corr$`pearson correlation coefficient`)
 
 ### Write file and view in excel
 write.csv(c, "data/climate_processing/correlationBioclim.csv", row.names = FALSE)
+
 ## Highly correlated layers (> |0.80|) can impact the statistical significance 
 ## of the niche models and therefore must be removed. 
 
@@ -122,12 +116,13 @@ envtCor
 #### Loop through each species and save permutation importance in list
 set.seed(195)
 m <- c()
-for(i in  1:length(unique(alldf$name))){
-    species <- unique(alldf$name)[i]
+for(i in  1:length(unique(alldf$species))){
+    name <- unique(alldf$species)[i]
     spp_df <-  alldf %>%
-               dplyr::filter(name == species)
-    coordinates(spp_df) <- ~ long + lat
-    model <- maxent(x = clippedstack, p = coordinates(spp_df), progress = "text", silent = FALSE) 
+               dplyr::filter(species == name) %>%
+               dplyr::select(longitude, latitude)
+    model <- dismo::maxent(x = clippedstack, p = spp_df, 
+                           progress = "text", silent = FALSE) 
     m[[i]] <- vimportance(model)
 }
 
@@ -162,38 +157,36 @@ for(i in 1:length(names(selectedlayers))){
 }
 
 # Create Species Training Layers
-
-for(i in 1:length(unique(alldf$name))){
-    species <- unique(alldf$name)[i]
+for(i in 1:length(unique(alldf$species))){
+    sname <- unique(alldf$species)[i]
     # Subset species from data frame
     spp_df <-  alldf %>%
-               dplyr::filter(name == species)
-    # Make spatial
-    pts <- cbind(spp_df$long, spp_df$lat)
-    spp_df <- SpatialPointsDataFrame(pts, data = spp_df, proj4string=CRS("EPSG:4326"))
-    
+               dplyr::filter(species == sname)
+    spp_dfsp <- st_as_sf(spp_df, coords = c("longitude", "latitude"), crs = 4326)
     ## Create alpha hull
-    sphull <- rangeBuilder::getDynamicAlphaHull(x = spp_df@coords, 
-                                fraction = 1, # min. fraction of records we want included
-                                partCount = 1, # number of polygons
-                                initialAlpha = 20, # initial alpha size, 20m
-                                clipToCoast = "terrestrial",
-                                proj = "+proj=longlat +datum=WGS84")
-    
-    ### Transform into CRS related to meters
-    sphullTrans <- spTransform(sphull[[1]], "+proj=cea +lat_ts=0 +lon_0=0")
-    spp_dfTrans <- spTransform(spp_df, "+proj=cea +lat_ts=0 +lon_0")
+    sphull <- rangeBuilder::getDynamicAlphaHull(x = spp_df, 
+                                                coordHeaders = c("longitude", "latitude"),
+                                                fraction = 1, # min. fraction of records we want included
+                                                partCount = 1, # number of polygons allowed
+                                                initialAlpha = 20, # initial alpha size, 20m
+                                                clipToCoast = "terrestrial", 
+                                                verbose = TRUE)
+    ## Add buffer to hull
+    ### Transform into CRS related to meters with Equal Area Cylindrical projection
+    sphullTrans <- st_transform(sphull[[1]], CRS("+proj=cea +lat_ts=0 +lon_0")) 
+    spp_dfTrans <- st_transform(spp_dfsp, CRS("+proj=cea +lat_ts=0 +lon_0"))
     
     ### Calculate buffer size
     #### Here we take the 80th quantile of the max distance between points
-    spbuffDist <- quantile(x = (apply(spDists(spp_dfTrans), 2, FUN = function(x) sort(x)[2])), 
+    spbuffDist <- quantile(x = (apply(sf::st_distance(spp_dfTrans), 2, FUN = function(x) sort(x)[2])), 
                          probs = 0.80, na.rm = TRUE) 
     
     ### Buffer the hull
-    spbuffer_m <- buffer(x = sphullTrans, width = spbuffDist, dissolve = TRUE)
-    spbuffer <- spTransform(spbuffer_m,  CRS("EPSG:4326"))
+    spbuffer_m <- st_buffer(x = sphullTrans, dist = spbuffDist, dissolve = TRUE)
+    spbuffer <- st_transform(spbuffer_m,  CRS("+proj=longlat +datum=WGS84"))
+    
     ### Crop and Mask
-    spec <- gsub(" ", "_", species)
+    spec <- gsub(" ", "_", sname)
     path <- paste0("data/climate_processing/PresentLayers/", spec,"/")
     end <- ".asc"
     for(j in 1:length(names(selectedlayers))){
@@ -204,8 +197,8 @@ for(i in 1:length(unique(alldf$name))){
         out <- paste0(path, name)
         outfile <- paste0(out, end)
         # Crop and mask
-        c <- crop(rast, extent(spbuffer))
-        c <- mask(c, spbuffer)
+        c <- crop(rast, sf::as_Spatial(spbuffer))
+        c <- mask(c, sf::as_Spatial(spbuffer))
         # Write raster
         writeRaster(c, outfile, format = "ascii", overwrite = TRUE)
     }

@@ -9,7 +9,7 @@
 # for the vignette.
 
 # Set up java memory 
-options(java.parameters = "- Xmx16g") # increase memory that can be used
+options(java.parameters = "-Xmx16g") # increase memory that can be used
 
 # Load Packages
 library(raster)
@@ -24,15 +24,14 @@ library(kuenm)
 # Load Function
 source("functions/ENMevaluation.R")
 
-
 # Load data file
-alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20220712.csv")
+alldf <- read.csv("data/cleaning_demo/maxent_ready/diapensiaceae_maxentready_20230605.csv")
 
 ## Subset for each species
-Galax_urceolata <- dplyr::filter(alldf, name == "Galax urceolata")
-Pyxidanthera_barbulata <- dplyr::filter(alldf, name == "Pyxidanthera barbulata")
-Pyxidanthera_brevifolia <- dplyr::filter(alldf, name == "Pyxidanthera brevifolia")
-Shortia_galacifolia <- dplyr::filter(alldf, name == "Shortia galacifolia")
+Galax_urceolata <- dplyr::filter(alldf, species == "Galax urceolata")
+Pyxidanthera_barbulata <- dplyr::filter(alldf, species == "Pyxidanthera barbulata")
+Pyxidanthera_brevifolia <- dplyr::filter(alldf, species == "Pyxidanthera brevifolia")
+Shortia_galacifolia <- dplyr::filter(alldf, species == "Shortia galacifolia")
 
 
 # Raster layers
@@ -57,14 +56,14 @@ projection(sstack) <- "+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_def
 ## dismo Model Generations
 ## Warning: Time intensive on Apple M1 chip!
 ### Match MaxEnt GUI settings (see word document and powerpoint)
-evaldis <- dismo::maxent(x = gstack, p = Galax_urceolata[, c("long", "lat")], nbg = 10000,
+evaldis <- dismo::maxent(x = gstack, p = Galax_urceolata[, c("longitude", "latitude")], nbg = 10000,
                          args = c("projectionlayers=data/climate_processing/PresentLayers/all",
                                   "responsecurves", "jackknife",  "outputformat=logistic",
                                   "randomseed", "randomtestpoints=25",  "replicates=5", 
                                   "replicatetype=subsample",  "maximumiterations=5000", "writebackgroundpredictions",
                                   "responsecurvesexponent", "writeplotdata"), 
                          removeDuplicates = TRUE
-                         #,path = "data/Ecological_Niche_Modeling/enm_output/Galax_urceolata/"
+                         ,path = "data/Ecological_Niche_Modeling/enm_output/Galax_urceolata/"
               )
 
 
@@ -74,7 +73,7 @@ evaldis <- dismo::maxent(x = gstack, p = Galax_urceolata[, c("long", "lat")], nb
 #### class (fm). FC will allow for different shapes in response curves (linear, hinge, 
 #### quadratic, product, and threshold) can be used in the model and RM will influence how 
 #### many parameters are included in the model.
-eval1 <- ENMeval::ENMevaluate(occ = Galax_urceolata[, c("long", "lat")], 
+eval1 <- ENMeval::ENMevaluate(occ = Galax_urceolata[, c("longitude", "latitude")], 
                               env = gstack,
                               tune.args = list(fc = c("L","Q"), rm = 1:2), # test the feature classes L = linear and Q = quadratic
                               partitions = "block",
@@ -131,7 +130,7 @@ p_df <-  as.data.frame(p, xy = TRUE)
 ggplot() +
   geom_raster(data = p_df, aes(x = x, y = y, fill = layer)) +
   geom_point(data= Galax_urceolata, 
-             mapping = aes(x = long, y = lat), 
+             mapping = aes(x = longitude, y = latitude), 
              col='red', cex=0.05) +
   coord_quickmap() +
   theme_bw() + 

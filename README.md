@@ -1,10 +1,7 @@
-🚧 This branch is currently under construction 🚧.  
-
 # BotanyENMWorkshop2023
-Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography at Botany 2023     
-HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2023.html      
+This repository contains material from the Botany 2023 workshop titled 'Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography' which was held in July 2023.
 
-**This course will be offerred at Botany 2023!** Stay tune for an update!   
+HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Demos/Rbased/CrashCourse_2023.html      
 
 ## Organizers 
 Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Maria Cortez, Makenzie Mabry, [Lauren Gillett](https://github.com/laurenwhitehurst21), Elizabeth White, JT Miller, and Malu Ore Rengifo.   
@@ -109,7 +106,7 @@ Are Ecological Niche Models (ENMs) and Species Distribution Models (SDMs) the sa
 
 ## How to cite   
 
-**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." Note, this workshop is related to [another repository](https://github.com/mgaynor1/ENMCrashCourse), which is updated outside of this workshop. This workshop is often done in conjuction with BiotaPhy, therefore our workshop repository contains additional presentation/demos/ect that are not included in the other.  
+**How to cite**: Link the repository in your method section as github.com/soltislab/BotanyENMWorkshops. For example "Models were developed for each species following avaliable scripts (github.com/soltislab/BotanyENMWorkshops)." Note, this workshop is related to [another repository](https://github.com/mgaynor1/ENMCrashCourse)  and [an R package](https://github.com/nataliepatten/gatoRs), which is updated outside of this workshop. This workshop is often done in conjuction with BiotaPhy, therefore our workshop repository contains additional presentation/demos/ect that are not included in the other.  
 
 If you use functions or scripts from the first half of this workshop, please cite this In-prep publication: Patten NN, Gaynor ML, Soltis DE, and Soltis PS. Geographic and Taxonomic Occurrence R-Based Scrubbing (gatoRs): An R package and reproducible workflow for processing biodiversity data. In prep.
 

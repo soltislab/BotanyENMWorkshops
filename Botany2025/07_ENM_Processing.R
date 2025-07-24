@@ -14,7 +14,7 @@
 # Some ENM packages, especially dismo and older ENMeval workflows,
 # may call Java routines that require more RAM.
 # This sets the Java heap space to 8GB.
-options(java.parameters = "-Xmx8g")
+options(java.parameters = "-Xmx30g")
 
 ## ---- Load Required Packages ----
 
@@ -55,39 +55,40 @@ usa <- rnaturalearth::ne_states(country = "United States of America", returnclas
 
 # Loop through each species to project their ENM onto the current climate layers.
 for (species in species_list) {
-  
+
   cat("\nProjecting current climate for:", species, "\n")
-  
+
   # Load the optimal ENM for this species.
   # The object `opt.mod` will be loaded into the workspace.
   mod_file <- paste0("data/05_ENMs/", species, "_opt_mod.RData")
   load(mod_file)  # loads object: opt.mod
-  
+
   # Identify which layers were used to build the ENM.
   # This ensures that your projection uses the same predictor variables
   # as the model was trained on.
   vif_dir <- paste0("data/04_climate_processing/Cropped/", species, "/VIF/")
   species_layers <- list.files(vif_dir, full.names = TRUE)
-  
+
   # Read in those specific rasters
   spec_stack <- terra::rast(species_layers)
   layer_names <- names(spec_stack)
-  
+
   # Subset the full ETF raster stack to only the layers used in the ENM.
   ETF_Rasters <- terra::subset(clim_stack, layer_names)
-  
+  #if error, try: ETF_Rasters <- raster::stack(ETF_Rasters)
+
   # Project the ENM onto the current ETF climate layers.
   proj_file <- paste0("data/06_ENM_processing/", species, "_EFT_Projection.asc")
-  
-  p <- dismo::predict(opt.mod, ETF_Rasters, filename = proj_file, overwrite = TRUE)
-  
+
+  p <- dismo::predict(opt.mod, ETF_Rasters, filename = proj_file, overwrite = TRUE, NAflag = -9999)
+
   # Convert the raster to a data frame for plotting in ggplot.
   p_df <- as.data.frame(p, xy = TRUE)
   colnames(p_df)[3] <- "Habitat_Suitability"
-  
+
   # Get the bounding box coordinates of the raster for plotting.
   bbox_vals <- terra::ext(p)
-  
+
   # Create the habitat suitability map.
   p_plot <- ggplot() +
     geom_sf(data = usa, fill = "grey70") +  # basemap
@@ -108,10 +109,10 @@ for (species in species_list) {
     annotation_north_arrow(location = "tl",
                            height = unit(1, "cm"),
                            width = unit(1, "cm"))
-  
+
   # Save the plot as a PNG file.
   png_file <- paste0("data/06_ENM_processing/", species, "_ETF_Projection_Plot.png")
-  
+
   ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)
 }
 
@@ -120,16 +121,16 @@ for (species in species_list) {
 # For each species, calculate niche breadth across the ETF region.
 # Niche breadth (Levins' B2) indicates whether a species is a generalist (high value) or specialist (low value).
 for (species in species_list) {
-  
+
   cat("\nCalculating niche breadth for:", species, "\n")
-  
+
   proj_file <- paste0("data/06_ENM_processing/", species, "_EFT_Projection.asc")
-  
+
   proj_raster <- terra::rast(proj_file)
-  
+
   # Compute Levins' B2 niche breadth
   breadth <- ENMTools::raster.breadth(proj_raster)
-  
+
   cat("Niche breadth:", round(breadth$B2, 3), "\n")
 }
 
@@ -148,10 +149,11 @@ names(enm_stack) <- c("Galax urceolata",
                       "Pyxidanthera barbulata",
                       "Pyxidanthera brevifolia",
                       "Shortia galacifolia")
+enm_stack_raster <- stack(enm_stack)
 
 # Calculate pairwise Schoener's D overlap between species.
 # Values range from 0 (no overlap) to 1 (identical niches).
-overlap_matrix <- calc.niche.overlap(enm_stack, overlapStat = "D")
+overlap_matrix <- calc.niche.overlap(enm_stack_raster, overlapStat = "D")
 
 print(overlap_matrix)
 
@@ -171,6 +173,7 @@ phylo_dist <- cophenetic(tree)
 
 # Ensure the phylogenetic distance matrix matches the species order in the overlap matrix.
 species_names <- rownames(overlap_matrix)
+species_names <- gsub("\\.", " ", species_names)
 phylo_dist <- phylo_dist[species_names, species_names]
 
 # Initialize vectors to store pairwise values.
@@ -219,14 +222,14 @@ legend("topleft",
        legend = paste(1:length(pair_names), pair_names, sep = ": "),
        bty = "n", cex = 0.7)
 
-# For niche Age Overlap Correlations (AOCs), a high intercept and negative slope 
-# indicate niche conservatism,meaning closely related species tend to occupy 
+# For niche Age Overlap Correlations (AOCs), a high intercept and negative slope
+# indicate niche conservatism,meaning closely related species tend to occupy
 # similar ecological niches. A low intercept combined with a positive slope
 # suggests niche divergence, where closely related species occupy different
-# niches.The results here are pretty meaningless since we're looking at very few, 
-# distantly related species, but it serves the purpose of the demo. A linear 
-# regression indicated no significant relationship between phylogenetic distance 
-# and niche overlap among the four species,suggesting minimal phylogenetic signal 
+# niches.The results here are pretty meaningless since we're looking at very few,
+# distantly related species, but it serves the purpose of the demo. A linear
+# regression indicated no significant relationship between phylogenetic distance
+# and niche overlap among the four species,suggesting minimal phylogenetic signal
 # in ecological niche similarity.
 
 ## ---- E) Project Models onto Future Climate ----
@@ -241,31 +244,32 @@ futurestack <- terra::rast(c(future_files, elev_file))
 
 # Project each species onto future ETF climate conditions.
 for (species in species_list) {
-  
+
   cat("\nProjecting future climate for:", species, "\n")
-  
+
   load(paste0("data/05_ENMs/", species, "_opt_mod.RData"))
-  
+
   vif_dir <- paste0("data/04_climate_processing/Cropped/", species, "/VIF/")
-  
+
   species_layers <- list.files(vif_dir, full.names = TRUE)
   spec_stack <- terra::rast(species_layers)
   layer_names <- names(spec_stack)
-  
+
   FutureETF_Rasters <- terra::subset(futurestack, layer_names)
-  
+  #if error, try: FutureETF_Rasters <- raster::stack(FutureETF_Rasters)
+
   future_file <- paste0("data/06_ENM_processing/", species, "_Future_ETF_Projection.asc")
-  
-  p_future <- dismo::predict(opt.mod, FutureETF_Rasters, filename = future_file, overwrite = TRUE)
-  
+
+  p_future <- dismo::predict(opt.mod, FutureETF_Rasters, filename = future_file, overwrite = TRUE, NAflag = -9999)
+
   save(p_future, file = sub("\\.asc$", ".RData", future_file))
-  
+
   # Plot the future habitat suitability map.
   p_future_df <- as.data.frame(p_future, xy = TRUE)
   colnames(p_future_df)[3] <- "Habitat_Suitability"
-  
+
   bbox_vals <- terra::ext(p_future)
-  
+
   p_plot <- ggplot() +
     geom_sf(data = usa, fill = "grey70") +
     geom_tile(data = p_future_df,
@@ -286,9 +290,9 @@ for (species in species_list) {
     annotation_north_arrow(location = "tl",
                            height = unit(1, "cm"),
                            width = unit(1, "cm"))
-  
+
   png_file <- paste0("data/06_ENM_processing/", species, "_Future_ETF_Projection.png")
-  
+
   ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)
 }
 
@@ -298,34 +302,34 @@ for (species in species_list) {
 all_dfs <- list()
 
 for (species in species_list) {
-  
+
   cat("\nComparing projections for:", species, "\n")
-  
+
   # Load current and future suitability rasters.
   current <- terra::rast(paste0("data/06_ENM_processing/", species, "_EFT_Projection.asc"))
   future <- terra::rast(paste0("data/06_ENM_processing/", species, "_Future_ETF_Projection.asc"))
-  
+
   # Threshold each raster at 0.7 to produce binary presence/absence maps.
   current_binary <- current >= 0.7
   future_binary <- future >= 0.7
-  
+
   # Compute range changes between current and future projections.
   RangeSizeDiff <- BIOMOD_RangeSize(as(current_binary, "Raster"),
                                     as(future_binary, "Raster"))
-  
+
   diff_raster <- RangeSizeDiff$Diff.By.Pixel
-  
+
   df <- as.data.frame(diff_raster, xy = TRUE)
   colnames(df) <- c("x", "y", "change")
-  
+
   # Convert numeric change codes to categorical labels for plotting.
   df$fill <- factor(df$change,
                     levels = c(-2, -1, 0, 1),
                     labels = c("lost", "unchanged", "not occupied", "occupied in future"))
-  
+
   # Add species name for faceting plots.
   df$species <- gsub("_", " ", species)
-  
+
   all_dfs[[species]] <- df
 }
 

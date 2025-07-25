@@ -27,7 +27,7 @@ unique(rawdf$scientificName)
 search <- c("Shortia galacifolia", "Sherwoodia galacifolia")
 
 # Clean names with fuzzy matching
-df <- taxa_clean(df = rawdf, 
+df <- taxa_clean(df = rawdf,
                  synonyms.list = search,
                  taxa.filter = "fuzzy",
                  accepted.name = "Shortia galacifolia")
@@ -90,8 +90,8 @@ simple_map
 
 ## ---- I) Interactive Map with Leaflet ----
 
-leaflet(df_fixed) %>% 
-  addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>% 
+leaflet(df_fixed) %>%
+  addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
   addTiles()
 
 ## ---- J) Save Cleaned CSV ----
@@ -108,16 +108,16 @@ synonymns <- list(
 )
 
 for (i in 1:3) {
-  df <- read.csv(files[3])
-  search <- synonymns[[3]]
-  
+  df <- read.csv(files[i])
+  search <- synonymns[[i]]
+
   df <- taxa_clean(df, synonyms.list = search, taxa.filter = "fuzzy", accepted.name = search[1])
   df <- basic_locality_clean(df, remove.zero = TRUE, precision = TRUE, digits = 2, remove.skewed = TRUE)
   df <- process_flagged(df, interactive = FALSE, scientific.name = "accepted_name") # removing all points for brevifolia
   df <- remove_duplicates(df, remove.unparseable = TRUE)
   df <- one_point_per_pixel(df)
   df <- thin_points(df, distance = 0.002, reps = 100)
-  
+
   outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2025_06_27_cleaned.csv")
   write.csv(df, outfile, row.names = FALSE)
   rm(df, search, outfile)

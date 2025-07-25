@@ -13,7 +13,7 @@ list_of_packages <- c(
   "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
 
   # Spatial / Mapping
-  "sf", "rnaturalearth", "ggspatial", "leaflet", "fields",
+  "sf", "rnaturalearth", "ggspatial", "leaflet", "fields", "rangeBuilder",
 
   # Visualization
   "ggplot2", "viridis", "gridExtra",

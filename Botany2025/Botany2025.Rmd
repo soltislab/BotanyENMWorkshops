@@ -14,6 +14,7 @@ output:
 }
 </style>
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -26,69 +27,184 @@ library(pander)
 
 # Botany 2025 {.tabset .tabset-fade .tabset-pills}
 
----
-title: "01 Data Downloads"
-output: html_document
-author: ML Gaynor
-date: "2025-07-21"
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## 00-Setup
+
+### Purpose: 
+- Install all R packages required for ENM workflows
+- Check that all packages load successfully
+- Install any needed GitHub packages
+
+
+### Install CRAN Packages 
+
+```{r install, eval=FALSE, include=TRUE}
+## ---- Define CRAN Packages ----
+
+list_of_packages <- c(
+  # Core ENM tools
+  "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
+
+  # Spatial / Mapping
+  "sf", "rnaturalearth", "ggspatial", "leaflet",
+  "fields", "rangeBuilder",
+
+  # Visualization
+  "ggplot2", "viridis", "gridExtra",
+
+  # Data manipulation
+  "dplyr", "tidyr", "stringr", "gtools",
+
+  # Phylogenetics
+  "ape", "phytools",
+
+  # Biodiversity data
+  "ridigbio", "gatoRs",
+
+  # Other utilities
+  "multcompView", "usdm", "predicts", "rJava"
+)
 ```
+
+#### Check for missing CRAN Packages 
+```{r install2, eval=FALSE, message=FALSE, warning=FALSE}
+## ---- Install Missing CRAN Packages ----
+
+# Identify any packages from the list not currently installed.
+new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
+
+if (length(new.packages)) {
+  cat("\nInstalling missing CRAN packages:\n")
+  print(new.packages)
+  install.packages(new.packages)
+} else {
+  cat("\nAll required CRAN packages already installed.\n")
+}
+
+## ---- Load All CRAN Packages ----
+
+# Try loading all required CRAN packages.
+loaded <- sapply(list_of_packages, require, character.only = TRUE)
+
+if (any(!loaded)) {
+  cat("\nWARNING: These CRAN packages failed to load:\n")
+  print(list_of_packages[!loaded])
+} else {
+  cat("\nAll CRAN packages loaded successfully.\n")
+}
+```
+
+### Install Github Packages
+
+```{r install3, eval=FALSE, message=FALSE, warning=FALSE}
+## ---- Install GitHub Packages ----
+
+# devtools is required for installing from GitHub.
+if (!require(devtools)) {
+  install.packages("devtools")
+  library(devtools)
+}
+
+# List of GitHub repositories for required packages.
+github_repos <- c(
+  "vqv/ggbiplot"
+)
+
+# Check whether these GitHub packages are installed, and install if not.
+for (repo in github_repos) {
+  pkg <- tail(strsplit(repo, "/")[[1]], 1)
+  if (!pkg %in% installed.packages()[,"Package"]) {
+    cat(paste("\nInstalling GitHub package:", repo, "\n"))
+    devtools::install_github(repo, upgrade = "never")
+  } else {
+    cat(paste("\nGitHub package already installed:", pkg, "\n"))
+  }
+}
+
+# Try loading GitHub packages.
+github_packages <- c("ggbiplot")
+github_loaded <- sapply(github_packages, require, character.only = TRUE)
+
+if (any(!github_loaded)) {
+  cat("\nWARNING: These GitHub packages failed to load:\n")
+  print(github_packages[!github_loaded])
+} else {
+  cat("\nAll GitHub packages loaded successfully.\n")
+}
+
+```
+
+
+
 
 ## 01-Data_Download  
 
 ### Purpose: 
 - Download and preview species occurrence records using iDigBio and gatoRs
 
-Load Required Packages
+### Load Required Packages
 ```{r}
 library(ridigbio)     # Interface to iDigBio API
 library(gatoRs)       # Unified taxonomic/occurrence tools
 library(leaflet)      # Interactive mapping
 ```
 
-#### Retrieving data from iDigBio using ridigbio
-Search the iDigBio API for occurrence record by taxonomic designations
+#### Download from iDigBio
+
+Search the iDigBio API for occurrence record by taxonomic designations.   
+
 ```{r}
 # Search for specific species (Galax urceolata)
 iDigBio_GU <- idig_search_records(rq = list(scientificname = "Galax urceolata"))
 # Search for all Diapensiaceae occurrences (limit to 1000 for example)
 iDigBio_GU_family <- idig_search_records(rq = list(family = "Diapensiaceae"), limit = 1000)
 ```
+
 Search the API with a geographic bounding box (e.g. Eastern USA extent)
+
 ```{r}
 # format a request in the structure of a list
-rq_input <- list(
-  scientificname = list(type = "exists"),
-  family = "Diapensiaceae",
-  geopoint = list(
-    type = "geo_bounding_box",
-    top_left = list(lon = -98.16, lat = 48.92),
-    bottom_right = list(lon = -64.02, lat = 23.06)
-  )
-)
+rq_input <- list(scientificname = list(type = "exists"),
+                 family = "Diapensiaceae",
+                 geopoint = list(type = "geo_bounding_box",
+                                  top_left = list(lon = -98.16, 
+                                                  lat = 48.92),
+                                  bottom_right = list(lon = -64.02, 
+                                                      lat = 23.06)
+                  )
+                )
 # input request into idigbio search fxn
 iDigBio_GU_family_USA <- idig_search_records(rq_input, limit = 1000)
 ```
 
 Save results as a Comma Separated File (.csv)
 ```{r}
-write.csv(iDigBio_GU, "data/01_download/iDigBio_GU_2025_06_27.csv", row.names = FALSE)
-write.csv(iDigBio_GU_family, "data/01_download/iDigBio_GU_family_2025_06_27.csv", row.names = FALSE)
+write.csv(iDigBio_GU, 
+          file = "data/01_download/iDigBio_GU_2025_06_27.csv",
+          row.names = FALSE)
+write.csv(iDigBio_GU_family, 
+          file = "data/01_download/iDigBio_GU_family_2025_06_27.csv", 
+          row.names = FALSE)
 ```
 
-#### Retrieving Data from iDigBio and GBIF using gatoRs
+#### Download Using gatoRs    
+
 Create a synonym vector for species to search by. 
 ```{r}
-Shortia_galacifolia <- c("Shortia galacifolia", "Sherwoodia galacifolia")
-Galax_urceolata <- c("Galax urceolata", "Galax aphylla")
-Pyxidanthera_barbulata <- c("Pyxidanthera barbulata", "Pyxidanthera barbulata var. barbulata")
-Pyxidanthera_brevifolia <- c("Pyxidanthera brevifolia", "Pyxidanthera barbulata var. brevifolia")
-
+Shortia_galacifolia <- c("Shortia galacifolia", 
+                         "Sherwoodia galacifolia")
+Galax_urceolata <- c("Galax urceolata", 
+                     "Galax aphylla")
+Pyxidanthera_barbulata <- c("Pyxidanthera barbulata", 
+                            "Pyxidanthera barbulata var. barbulata")
+Pyxidanthera_brevifolia <- c("Pyxidanthera brevifolia", 
+                             "Pyxidanthera barbulata var. brevifolia")
 ```
+
+
 Use gatoRs to download records species occurrence data for each name vector. Allows us to retrieve all versions of a name as taxonomy has been updated. 
+
+
 ```{r eval=FALSE, include=TRUE}
 gators_download(synonyms.list = Shortia_galacifolia,
                 write.file = TRUE,
@@ -108,8 +224,10 @@ gators_download(synonyms.list = Pyxidanthera_brevifolia,
 
 ```
 
-#### Preview a sample species's occurrence data
-Read in Shortia galacifolia's data we downloaded with gatoRs above
+#### Preview Downloaded Files  
+
+Read in Shortia galacifolia's data we downloaded with gatoRs above.  
+
 ```{r}
 rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
 ```
@@ -123,16 +241,19 @@ Use Leaflet to visualize records interactively - The error message here indicate
 ```{r}
 leaflet(rawdf) %>% 
   addTiles() %>% 
-  addMarkers(label = paste0(rawdf$longitude, ", ", rawdf$latitude))
+  addMarkers(label = paste0(rawdf$longitude,
+                            ", ",
+                            rawdf$latitude))
 ```
 
 ## 02-Data_Cleaning    
 
 
-### Purpose: 
+### Purpose:   
 - Clean and harmonize occurrence records for ecological niche modeling.
 
-Load Required Packages
+### Load Required Packages   
+
 ```{r message=FALSE}
 library(gatoRs)         # Taxonomic and geographic cleaning
 library(fields)         # For calculating spatial distances
@@ -142,15 +263,17 @@ library(ggspatial)      # Scale bars and north arrows
 library(leaflet)        # For interactive mapping
 ```
 
-#### Read in Raw Occurrence Data
+#### Read Raw Occurrence Data
 Read in raw species-specific data downloaded in 01 Data Downloads. Check how many occurrence records we start with in the raw data. 
 ```{r}
 rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
 nrow(rawdf)  # Starting number of records
 ```
 
-#### Taxonomic Harmonization 
-Our initial download includes iDigBio & GBIF's synonym lists in addition to the name vectors we searched. Let's inspect and clean to our taxonomic standard. Note that taxa_clean() contains the argument taxa.filter which allow the options "exact", "fuzzy" or "interactive" to allow us to tighten or loosen the requirements for name matching. Read more by running ?taxa_clean
+#### Taxonomic Harmonization
+
+Our initial download includes iDigBio & GBIF's synonym lists in addition to the name vectors we searched. Let's inspect and clean to our taxonomic standard. Note that taxa_clean() contains the argument taxa.filter which allow the options "exact", "fuzzy" or "interactive" to allow us to tighten or loosen the requirements for name matching. Read more by running `?taxa_clean()`.
+
 ```{r}
 # Inspect unique names
 unique(rawdf$scientificName)
@@ -163,8 +286,11 @@ df <- taxa_clean(df = rawdf,
                  accepted.name = "Shortia galacifolia")
 nrow(df)  # Updated count
 ```
-#### Locality Cleaning 
-Here we remove any records with missing coordinates, impossible coordinates, coordinates at (0,0), and any that are flagged as skewed. We also round the provided latitude and longitude values to a specified number of decimal places.
+
+#### Locality Cleaning     
+
+Here we remove any records with missing coordinates, impossible coordinates, coordinates at (0,0), and any that are flagged as skewed. We also round the provided latitude and longitude values to a specified number of decimal places.   
+
 ```{r}
 # Remove invalid/skewed records and round coordinates
 df <- basic_locality_clean(df = df,
@@ -179,15 +305,18 @@ nrow(df)
 #### Flag and Filter Cultivated Records 
 Remove coordinates in cultivated zones, botanical gardens, and outside our desired range. Here we set interactive = FALSE, however you can visualize the outliers by setting interactive = TRUE. 
 ```{r}
-df <- process_flagged(df, interactive = FALSE, scientific.name = "accepted_name")
+df <- process_flagged(df, 
+                      interactive = FALSE, 
+                      scientific.name = "accepted_name")
 nrow(df)
 ```
 
-#### Remove Duplicates
+#### Duplicate Removal
 Here we identify and remove both (1) specimen duplicates and (2) aggregator duplicates based on each specimens coordinates, occurrenceID, and eventDate. To leverage all date information available, set remove.unparseable = FALSE to manually populate the year, month, and day columns. Here, we also confirm all ID (UUID and key) are unique to remove any within-aggregator duplicates that may accumulate due to processing errors.
 ```{r}
 # Remove duplicate specimens and aggregator artifacts
-df <- remove_duplicates(df, remove.unparseable = TRUE)
+df <- remove_duplicates(df, 
+                        remove.unparseable = TRUE)
 nrow(df)
 ```
 
@@ -199,14 +328,16 @@ df <- one_point_per_pixel(df)
 nrow(df)
 ```
 
-#### Spatial Thinning
+#### Spatial Thinning     
 Oversampled regions/habitats can bias our model. To reduce bias, we can thin occurrence data. <br>
 
 First, lets assess the current minimum distance among your occurrence records. Here, we calculate the minimum nearest neighbor distance in km.
 ```{r}
 # Calculate minimum nearest-neighbor distance
-nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]), miles = FALSE)
-nnDmin <- do.call(rbind, lapply(1:5, function(i) sort(nnDm[, i])[2]))
+nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]),
+                    miles = FALSE)
+nnDmin <- do.call(rbind, 
+                  lapply(1:5, function(i) sort(nnDm[, i])[2]))
 min(nnDmin)  # e.g., 2.22 km
 ```
 Here the current minimum distance is 2.22 km. Based on literature, we find a 2 meters (or 0.002 km) distance was enough to collect unique genets, so we do not need to thin our points. <br>
@@ -215,85 +346,130 @@ However when you do need to thin your records, this is a great function in gatoR
 ```{r}
 # thin if you need
 df <- thin_points(df, 
-                    distance = 0.002, # in km 
-                    reps = 100)
+                  distance = 0.002, # in km 
+                  reps = 100)
 ```
 
-#### Creating a Static Map of Cleaned Occurrences 
+#### Static Map of Cleaned Points
 Make points spatial 
 ```{r}
-df_fixed <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
+df_fixed <- st_as_sf(df, 
+                     coords = c("longitude", "latitude"), 
+                     crs = 4326)
 ```
 
 Set up base maps 
 ```{r}
-USA <- borders(database = "usa", colour = "gray80", fill = "gray80")
-state <- borders(database = "state", colour = "black", fill = NA)
+USA <- borders(database = "usa", 
+               colour = "gray80", 
+               fill = "gray80")
+state <- borders(database = "state", 
+                 colour = "black", 
+                 fill = NA)
 ```
 
 Plot: Use ggplot2 & ggspatial to plot occurrence records. We are using two base maps, USA and State. The geom_sf() fxn adds our cleaned occurrence points as blue based on their lon & lat values. We can also fix coordinate spatial view through coord_sf(). Finally can add a scale and arrow. 
 ```{r}
 simple_map <- ggplot() +
-  USA + state +
-  geom_sf(data = df_fixed, color = "blue") +
-  coord_sf(xlim = c(min(df$longitude) - 3, max(df$longitude) + 3),
-           ylim = c(min(df$latitude) - 3, max(df$latitude) + 3)) +
-  xlab("Longitude") + ylab("Latitude") +
-  annotation_scale(plot_unit = "km") +
-  annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
+                USA + 
+                state +
+                geom_sf(data = df_fixed, 
+                        color = "blue") +
+                coord_sf(xlim = c(min(df$longitude) - 3, 
+                                  max(df$longitude) + 3),
+                         ylim = c(min(df$latitude) - 3,
+                                  max(df$latitude) + 3)) +
+                xlab("Longitude") + 
+                ylab("Latitude") +
+                annotation_scale(plot_unit = "km") +
+                annotation_north_arrow(location = "tl", 
+                                       height = unit(1, "cm"),
+                                       width = unit(1, "cm"))
 
 simple_map
 
 ```
-#### Interactive Mapping
+
+#### Interactive Map with Leaflet   
+
 Another fun way to visualize occurrence data is using leaflet's interactive maps. 
 ```{r}
 leaflet(df_fixed) %>%
   addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
   addTiles()
 ```
-#### Write out the cleaned occurrence data as a .csv file
+
+
+#### Save Cleaned CSV 
 ```{r}
 write.csv(df, "data/02_cleaning/Shortia_galacifolia_2025_06_27_cleaned.csv", row.names = FALSE)
 ```
 
-#### Batch clean all of the species 
+#### Batch Clean for All Species 
 Use a for-loop to iterate through all of the species. 
 ```{r}
 files <- list.files("data/01_download/raw", full.names = TRUE)[1:3]
 synonymns <- list(
-  Galax_urceolata = c("Galax urceolata", "Galax urceolata (Poir.) Brummitt", "Galax urceolata (Poiret) Brummitt", "Galax urceolaa", "Galax aphylla L.", "Galax aphylla"),
-  Pyxidanthera_barbulata = c("Pyxidanthera barbulata", "Pyxidanthera barbulata Michx.", "Pyxidanthera barbulata var. barbulata", "Pyxidenthera barbulata"),
-  Pyxidanthera_brevifolia = c("Pyxidanthera brevifolia", "Pyxidanthera brevifolia Wells", "Pyxidanthera barbulata var. brevifolia (Wells) H.E.Ahles", "Pyxidanthera barbulata var. brevifolia")
+  Galax_urceolata = c("Galax urceolata", 
+                      "Galax urceolata (Poir.) Brummitt", 
+                      "Galax urceolata (Poiret) Brummitt", 
+                      "Galax urceolaa", 
+                      "Galax aphylla L.", 
+                      "Galax aphylla"),
+  Pyxidanthera_barbulata = c("Pyxidanthera barbulata", 
+                             "Pyxidanthera barbulata Michx.",
+                             "Pyxidanthera barbulata var. barbulata",
+                             "Pyxidenthera barbulata"),
+  Pyxidanthera_brevifolia = c("Pyxidanthera brevifolia", 
+                              "Pyxidanthera brevifolia Wells",
+                              "Pyxidanthera barbulata var. brevifolia (Wells) H.E.Ahles",
+                              "Pyxidanthera barbulata var. brevifolia")
 )
 
 for (i in 1:3) { # for loop just allows us to iterate through each species
   df <- read.csv(files[3])
   search <- synonymns[[3]]
 
-  df <- taxa_clean(df, synonyms.list = search, taxa.filter = "fuzzy", accepted.name = search[1])
-  df <- basic_locality_clean(df, remove.zero = TRUE, precision = TRUE, digits = 2, remove.skewed = TRUE)
-  df <- process_flagged(df, interactive = FALSE, scientific.name = "accepted_name") # removing all points for brevifolia
-  df <- remove_duplicates(df, remove.unparseable = TRUE)
+  df <- taxa_clean(df,
+                   synonyms.list = search, 
+                   taxa.filter = "fuzzy",
+                   accepted.name = search[1])
+  df <- basic_locality_clean(df, 
+                             remove.zero = TRUE, 
+                             precision = TRUE, 
+                             digits = 2, 
+                             remove.skewed = TRUE)
+  df <- process_flagged(df, 
+                        interactive = FALSE, 
+                        scientific.name = "accepted_name") # removing all points for brevifolia
+  df <- remove_duplicates(df, 
+                          remove.unparseable = TRUE)
   df <- one_point_per_pixel(df)
-  df <- thin_points(df, distance = 0.002, reps = 100)
+  df <- thin_points(df, 
+                    distance = 0.002, 
+                    reps = 100)
 
   outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2025_06_27_cleaned.csv")
-  write.csv(df, outfile, row.names = FALSE)
+  write.csv(df, 
+            outfile, 
+            row.names = FALSE)
   rm(df, search, outfile)
 }
 
 ```
+
 #### Merge Cleaned Files for Maxent
 ```{r}
-alldf <- list.files("data/02_cleaning", pattern = "*.csv", full.names = TRUE)
+alldf <- list.files("data/02_cleaning", 
+                    pattern = "*.csv", 
+                    full.names = TRUE)
 alldf <- lapply(alldf, read.csv)
 alldf <- do.call(rbind, alldf)
 write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv", row.names = FALSE)
 
 ```
 
-#### Map all records 
+#### Map All Records
 ```{r}
 alldf_fixed <- st_as_sf(alldf, coords = c("longitude", "latitude"), crs = 4326)
 
@@ -310,7 +486,7 @@ all_map <- ggplot() +
 all_map
 ```
 
-#### Prep Geolocate Batch file
+#### Prepare GeoLocate Batch File
 Some records do not contain lat/lon info, but do have useful information in the locality field that can give us a reasonable estimate of location + some error. Here we'll use the gatoRs fxn need_to_georeference() to isolate these records for batch processing on the georeferencing platform GeoLocate. <br> 
 
 Read in _raw_ data and check what needs to be georeferenced
@@ -322,17 +498,15 @@ Format the columns/fields for GeoLocate's standards, then write out for batch pr
 ```{r}
 # Format columns for GeoLocate submission
 rawdf_GeoRef <- rawdf_GeoRef %>%
-  dplyr::select(
-    "locality string" = locality,
-    country,
-    state = stateProvince,
-    county,
-    latitude,
-    longitude,
-    ID,
-    name = scientificName,
-    basis = basisOfRecord
-  )
+  dplyr::select("locality string" = locality,
+                country,
+                state = stateProvince,
+                county,
+                latitude,
+                longitude,
+                ID,
+                name = scientificName,
+                basis = basisOfRecord)
 
 # Add required empty columns
 rawdf_GeoRef$'correction status' <- ""
@@ -341,12 +515,17 @@ rawdf_GeoRef$'error polygon' <- ""
 rawdf_GeoRef$'multiple results' <- ""
 
 # Reorder columns
-rawdf_GeoRef2 <- rawdf_GeoRef[, c("locality string", "country", "state", "county", "latitude", "longitude",
-                                  "correction status", "precision", "error polygon", "multiple results",
-                                  "ID", "name", "basis")]
+rawdf_GeoRef2 <- rawdf_GeoRef[, c("locality string", "country", 
+                                  "state", "county", "latitude", 
+                                  "longitude","correction status", 
+                                  "precision", "error polygon", 
+                                  "multiple results","ID", 
+                                  "name", "basis")]
 
 # write out csv
-write.csv(rawdf_GeoRef2, "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2025_06_27.csv", row.names = FALSE)
+write.csv(rawdf_GeoRef2, 
+          "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2025_06_27.csv", 
+          row.names = FALSE)
 
 ```
 
@@ -356,7 +535,8 @@ write.csv(rawdf_GeoRef2, "data/03_georeferencing/Shortia_galacifolia_Needing_Geo
 - Analyze climatic variables associated with species occurrences using PCA and ANOVA.
 - plot top contributors to PC1 and PC2.
 
-Load Packages
+### Load Required Packages   
+
 ```{r message=FALSE}
 library(gtools)         # For mixedsort of file names
 library(terra)          # For raster and spatial extraction
@@ -368,17 +548,19 @@ library(multcompView)   # For compact letter display (Tukey HSD)
 library(gridExtra)      # For combining plots
 ```
 
-#### Load in Cleaned Occurrence Data
+#### Load Cleaned Data
 ```{r}
 # Read in cleaned occurrence data with geographic coordinates and species ID
 alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
 ```
 
-#### Load in and stack bioclim layers
+#### Load and Stack Climatic Variables from WorldClim  
+
 Raster files provided by WorldClim 
 ```{r}
 # List and sort all .tif files in the WorldClim directory
-list <- list.files("data/04_climate_processing/BioClim/", full.names = TRUE)
+list <- list.files("data/04_climate_processing/BioClim/", 
+                   full.names = TRUE)
 list <- gtools::mixedsort(sort(list))
 
 # Stack the raster files
@@ -390,7 +572,8 @@ envtStack <- terra::rast(list)
 Extract climatic variable from raster cell where occurrence pts sit 
 ```{r}
 # Extract values of environmental rasters at occurrence points
-ptExtracted <- terra::extract(envtStack, alldf[, c("longitude", "latitude")])
+ptExtracted <- terra::extract(envtStack,
+                              alldf[, c("longitude", "latitude")])
 ```
 
 Organize these data to have species information
@@ -410,7 +593,7 @@ ptExtracteddf <- ptExtracteddf %>% tidyr::drop_na()
 ```
 
 #### Perform PCA on Climatic Variables
-Subset the climatic variables, assumed to be columns 2 to 21
+Subset the climatic variables, assumed to be columns 2 to 21.
 ```{r}
 data.bioclim <- ptExtracteddf[, 2:21]
 data.species <- ptExtracteddf[, "name"]
@@ -431,23 +614,23 @@ Calculate relative contributions of each variable to each PC
 ```{r}
 loadings_relative <- sweep(abs(loadings), 2, colSums(abs(loadings)), "/") * 100
 ```
-#### Visualize the PCA
+
+#### Visualize PCA
 Set up a nice custom theme for plotting aesthetics 
 ```{r}
 # Customize theme
-custom_theme <- theme(
-  panel.background = element_blank(),
-  panel.border = element_rect(fill = NA),
-  panel.grid.major = element_blank(),
-  panel.grid.minor = element_blank(),
-  strip.background = element_blank(),
-  axis.ticks = element_line(colour = "black"),
-  plot.margin = unit(c(1, 1, 1, 1), "line"),
-  axis.text = element_text(size = 12),
-  legend.text = element_text(size = 12),
-  legend.title = element_text(size = 12),
-  text = element_text(size = 12)
-)
+custom_theme <- theme(panel.background = element_blank(),
+                      panel.border = element_rect(fill = NA),
+                      panel.grid.major = element_blank(),
+                      panel.grid.minor = element_blank(),
+                      strip.background = element_blank(),
+                      axis.ticks = element_line(colour = "black"),
+                      plot.margin = unit(c(1, 1, 1, 1), "line"),
+                      axis.text = element_text(size = 12),
+                      legend.text = element_text(size = 12),
+                      legend.title = element_text(size = 12),
+                      text = element_text(size = 12))
+
 # Define color palette for species
 pal <- c("#D43F3AFF", "#EEA236FF", "#5CB85CFF", "#46B8DAFF")
 
@@ -457,26 +640,34 @@ Create a species biplot. obs.scale indicates the scale factor to apply to observ
 This is all basically to show how our data clusters across the top 2 PCs per species!
 ```{r}
 # PCA Biplot
-pca_plot <- ggbiplot(pca_result, obs.scale = 1, var.scale = 1,
-                     groups = data.species, ellipse = TRUE, circle = TRUE) +
-  scale_color_manual(name = '', values = pal) +
-  theme(legend.direction = 'vertical', legend.position = 'bottom',
-        legend.text = element_text(size = 12, face = "italic")) +
-  custom_theme
+pca_plot <- ggbiplot(pca_result, 
+                     obs.scale = 1, 
+                     var.scale = 1,
+                     groups = data.species,
+                     ellipse = TRUE, 
+                     circle = TRUE) +
+            scale_color_manual(name = '',
+                               values = pal) +
+            theme(legend.direction = 'vertical', 
+                  legend.position = 'bottom',
+                  legend.text = element_text(size = 12, face = "italic")) +
+            custom_theme
 
 print(pca_plot)
 ```
 
-#### Identify the top contributors to PC1 and PC2
+#### Identify Top Contributors to PC1 and PC2
 Pull out the bioclim layers that comprise PC1 and PC2
 ```{r}
 # Top 2 contributing variables to PC1 and PC2
-top_PC1_vars <- rownames(loadings)[order(abs(loadings[, "PC1"]), decreasing = TRUE)][1:2]
-top_PC2_vars <- rownames(loadings)[order(abs(loadings[, "PC2"]), decreasing = TRUE)][1:2]
+top_PC1_vars <- rownames(loadings)[order(abs(loadings[, "PC1"]), 
+                                         decreasing = TRUE)][1:2]
+top_PC2_vars <- rownames(loadings)[order(abs(loadings[, "PC2"]),
+                                         decreasing = TRUE)][1:2]
 selected_vars <- unique(c(top_PC1_vars, top_PC2_vars))  # remove duplicates
 ```
 
-#### ANOVA + Tukey HSD + Plotting for Top Variables
+#### ANOVA + Tukey HSD + Plotting for Top Variables 
 We can run an ANOVA (Analysis of Variance) and a Tukey HSD (a comparison test) Post-hoc to test whether there are statistically significant differences in the average values of specific climatic variables between the species. <br> 
 
 Broken down, the ANOVA evaluates the difference of the mean value for a climatic variable across all species, and tests for a significant difference. <br>
@@ -493,36 +684,48 @@ for (i in seq_along(selected_vars)) {
   varname <- selected_vars[i]
   
   # Run ANOVA
-  model <- aov(as.formula(paste0(varname, " ~ name")), data = ptExtracteddf)
+  model <- aov(as.formula(paste0(varname, " ~ name")), 
+               data = ptExtracteddf)
   tukey <- TukeyHSD(model)
   pvals <- tukey$`name`[, 4]
   
   # Convert p-values to significance letters
   letters_out <- multcompLetters(pvals)
-  groups_df <- data.frame(
-    name = names(letters_out$Letters),
-    groups = letters_out$Letters
-  )
+  groups_df <- data.frame(name = names(letters_out$Letters),
+                          groups = letters_out$Letters)
+  
   
   # Set y position for labels
-  max_y <- max(ptExtracteddf[[varname]], na.rm = TRUE)
+  max_y <- max(ptExtracteddf[[varname]], 
+               na.rm = TRUE)
   groups_df$y_position <- max_y * 1.1
   
   # Create plot
-  plotlist[[i]] <- ggplot(ptExtracteddf, aes(x = name, y = .data[[varname]])) +
-    geom_jitter(aes(color = name), width = 0.3, alpha = 0.5, size = 1) +
-    geom_boxplot(fill = NA, color = "black", size = 0.6) +
-    geom_text(data = groups_df,
-              aes(x = name, y = y_position, label = groups),
-              inherit.aes = FALSE, size = 4) +
-    scale_fill_manual(values = pal) +
-    scale_color_manual(values = pal) +
-    ggtitle(paste0(varname)) +
-    ylab(varname) +
-    theme_classic() +
-    theme(legend.position = "none", 
-          axis.text.x = element_text(angle = 45, hjust = 1, face = "italic")) +
-    ylim(0, max_y * 1.3)
+  plotlist[[i]] <- ggplot(ptExtracteddf, aes(x = name, 
+                                             y = .data[[varname]])) +
+                      geom_jitter(aes(color = name), 
+                                  width = 0.3, 
+                                  alpha = 0.5,
+                                  size = 1) +
+                      geom_boxplot(fill = NA, 
+                                   color = "black", 
+                                   size = 0.6) +
+                      geom_text(data = groups_df,
+                                aes(x = name, 
+                                    y = y_position, 
+                                    label = groups),
+                                inherit.aes = FALSE, 
+                                size = 4) +
+                      scale_fill_manual(values = pal) +
+                      scale_color_manual(values = pal) +
+                      ggtitle(paste0(varname)) +
+                      ylab(varname) +
+                      theme_classic() +
+                      theme(legend.position = "none", 
+                            axis.text.x = element_text(angle = 45, 
+                                                       hjust = 1,
+                                                       face = "italic")) +
+                      ylim(0, max_y * 1.3)
 }
 
 # Combine plots
@@ -536,7 +739,7 @@ gridExtra::grid.arrange(grobs = plotlist, ncol = 2)
 ### Purpose: 
 - Process climatic raster data and occurrence records for Diapensiaceae SDMs.
 
-Load Packages
+### Load Required Packages   
 ```{r message=FALSE}
 library(terra)        # For raster handling
 library(sf)           # For vector spatial operations
@@ -546,7 +749,9 @@ library(usdm)         # For VIF calculations
 library(stringr)      # For string operations
 library(gridExtra)    # For plotting
 ```
-#### Set-up
+
+
+#### Load Cleaned Occurrence Data
 Load cleaned occurrence data & convert it to spatial data. 
 ```{r}
 # Read in cleaned occurrence data with geographic coordinates and species ID
@@ -558,6 +763,7 @@ alldfsp <- st_as_sf(alldf,
                     crs = 4326)
 ```
 
+#### Load and Stack Climatic Variables
 Load and stack climatic variable raster data 
 ```{r}
 # List and sort all .tif files in the BioClim directory
@@ -569,7 +775,8 @@ biolist <- list.files("data/04_climate_processing/BioClim/",
 biostack <- terra::rast(biolist)
 ```
 
-#### Build an Accessible Area (AA), then crop climatic layers to it
+#### Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species
+
 We need to define the accessible space per species, done commonly using an alpha hull approach. Once we have defined each species AA, we can crop & mask climatic layers to these. <br> 
 
 To do this, we'll run a for-loop that processes each species AA using the package rangeBuilder's getDynamicAlphaHull(), crops + masks the climatic raster layers to these AA shapes, then deposits them in a directory called Cropped. 
@@ -593,14 +800,16 @@ for (species in unique(alldf$accepted_name)) {
                          crs = 4326)
   
   # Run alpha hull via rangeBuilder
-  hull <- rangeBuilder::getDynamicAlphaHull(
-    x = species_df,
-    coordHeaders = c("longitude", "latitude"),
-    fraction = 1, # min. fraction of records we want included 
-    partCount = 1, # number of polygons allowed
-    initialAlpha = 20, # initial alpha size, 20m, scales up from here. 
-    clipToCoast = "terrestrial",
-    verbose = FALSE
+  hull <- rangeBuilder::getDynamicAlphaHull(x = species_df,
+                                            coordHeaders = c("longitude", 
+                                                             "latitude"),
+                                            fraction = 1, # min. fraction of 
+                                                          ## records we want included 
+                                            partCount = 1, # number of polygons
+                                            initialAlpha = 20, # initial alpha size,
+                                                               ## 20m, scales up from here. 
+                                            clipToCoast = "terrestrial",
+                                            verbose = FALSE
   )
   
   # Convert hull to sf
@@ -608,37 +817,54 @@ for (species in unique(alldf$accepted_name)) {
   
   # Transform hull and points to equal-area projection
   proj <- "+proj=cea +lat_ts=0 +lon_0=0"
-  hull_sf_proj <- st_transform(hull_sf, crs = proj)
-  species_sf_proj <- st_transform(species_sf, crs = proj)
+  hull_sf_proj <- st_transform(hull_sf, 
+                               crs = proj)
+  species_sf_proj <- st_transform(species_sf,
+                                  crs = proj)
   
   # Calculate nearest-neighbor distances
   dist_matrix <- st_distance(species_sf_proj)
   nearest_neighbor_dists <- apply(dist_matrix, 2, function(x) sort(x)[2])
-  buffer_distance <- quantile(nearest_neighbor_dists, probs = 0.80, na.rm = TRUE)
+  buffer_distance <- quantile(nearest_neighbor_dists, 
+                              probs = 0.80, 
+                              na.rm = TRUE)
   
   # Buffer the hull
-  buffer_proj <- st_buffer(hull_sf_proj, dist = buffer_distance)
+  buffer_proj <- st_buffer(hull_sf_proj, 
+                           dist = buffer_distance)
   
   # Union polygons in case of multiple pieces
   buffer_proj <- st_union(buffer_proj)
   
   # Transform both hull and buffered hull back to WGS84 for plotting
-  hull_sf_wgs84 <- st_transform(hull_sf_proj, crs = 4326)
-  buffer_wgs84 <- st_transform(buffer_proj, crs = 4326)
+  hull_sf_wgs84 <- st_transform(hull_sf_proj, 
+                                crs = 4326)
+  buffer_wgs84 <- st_transform(buffer_proj,
+                               crs = 4326)
   
   # plot hull before buffering
   p_before <- ggplot() +
-    geom_sf(data = hull_sf_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
-    geom_sf(data = species_sf, color = "black", size = 0.5) +
-    theme_minimal() +
-    ggtitle(paste("Alpha Hull (No Buffer) -", species))
+              geom_sf(data = hull_sf_wgs84, 
+                      fill = "gray70", 
+                      alpha = 0.5, 
+                      color = NA) +
+              geom_sf(data = species_sf, 
+                      color = "black", 
+                      size = 0.5) +
+              theme_minimal() +
+              ggtitle(paste("Alpha Hull (No Buffer) -", species))
   
   # plot after buffering alpha hull
   p_after <- ggplot() +
-    geom_sf(data = buffer_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
-    geom_sf(data = species_sf, color = "red", size = 0.5) +
-    theme_minimal() +
-    ggtitle(paste("Buffered Hull -", species))
+              geom_sf(data = buffer_wgs84, 
+                      fill = "gray70", 
+                      alpha = 0.5,
+                      color = NA) +
+              geom_sf(data = species_sf, 
+                      color = "red", 
+                      size = 0.5) +
+              theme_minimal() +
+              ggtitle(paste("Buffered Hull -", species))
   
   gridExtra::grid.arrange(p_before, p_after, ncol = 2)
   
@@ -674,7 +900,7 @@ for (species in unique(alldf$accepted_name)) {
 ```
 Note that for defining AA, you can customize arguments to make more sense for your species of interest. Consider partCount for example, you can increase it to allow for individual polygons of AA per point cluster if you believe that populations are truly separated by some geographic boundary. 
 
-#### VIF Selection for Each Species 
+#### VIF Selection for Each Species
 Variable Inflation Factor (VIF) can detect for multicollinearity in a set of multiple regression variables. We can compute this using usdm's vifstep() to test which variables should be excluded due to collinearity. 
 ```{r message=FALSE}
 # Loop through each species
@@ -715,7 +941,7 @@ for (species in unique(alldf$accepted_name)) {
 }
 ```
 
-#### Correlation Matrix of Cropped BioClim Layers for each Species 
+####Correlation Matrix of Cropped Bioclim Layers for Each Species
 We also check the overall correlation between climatic variables using a matrix. 
 ```{r message=FALSE}
 # List species folders in the cropped directory
@@ -752,10 +978,10 @@ for (species_dir in species_dirs) {
 
 ## 05-Ecological_Niche_Modeling
 
-# Purpose: 
+### Purpose: 
 - Build ecological niche models for Diapensiaceae species using ENMeval with VIF-selected environmental variables.
 
-Load Packages 
+### Load Required Packages   
 ```{r message=FALSE}
 library(terra)         # For raster data
 library(ENMeval)       # For ENM evaluation and tuning
@@ -767,42 +993,41 @@ library(rnaturalearth) # For downloading shapefiles of countries and states
 library(ggspatial)     # Scale bars and north arrows
 ```
 
-#### Setup
+####  Load Cleaned Occurrence Data 
 Read in cleaned occurrence data, then subset to a sample species to demo modeling. 
 ```{r}
 # Load occurrence data
 alldf <- read.csv("./data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
-
-# Example species: Galax urceolata
-Galax_urceolata <- alldf %>%
-  filter(accepted_name == "Galax urceolata")
 ```
 
-#### Load VIF-selected Climatic Layers
+#### Subset for Single Species 
+```{r}
+# Example species: Galax urceolata
+Galax_urceolata <- alldf %>%
+                    filter(accepted_name == "Galax urceolata")
+```
+
+#### Load VIF-Selected Climate Layers
 
 ```{r}
 # List environmental layers
-vif_list <- list.files(
-  "./data/04_climate_processing/Cropped/Galax_urceolata/VIF/",
-  full.names = TRUE,
-  recursive = FALSE
-)
+vif_list <- list.files("./data/04_climate_processing/Cropped/Galax_urceolata/VIF/",
+                        full.names = TRUE,
+                        recursive = FALSE)
 # Load as raster stack
 vifStack <- terra::rast(vif_list)
 ```
 
-#### Run ENMeval to Generate Models 
+#### Run ENMeval to Generate Models
 ENMeval will generate multiple models and test them per the specified test method. Two important variables here are the regularization multiplier (RM) value and the feature class (FC). FC will allow for different shapes in response curves (linear, hinge, quadratic, product, and threshold) to be used in the model and RM will influence how many parameters are included in the model. 
 ```{r}
-eval <- ENMevaluate(
-  occs = Galax_urceolata[, c("longitude", "latitude")],
-  envs = vifStack,
-  tune.args = list(fc = c("L", "Q"), rm = 1:2),
-  partitions = "block",
-  n.bg = 10000,
-  parallel = FALSE,
-  algorithm = 'maxent.jar',
-)
+eval <- ENMevaluate(occs = Galax_urceolata[, c("longitude", "latitude")],
+                    envs = vifStack,
+                    tune.args = list(fc = c("L", "Q"), rm = 1:2),
+                    partitions = "block",
+                    n.bg = 10000,
+                    parallel = FALSE,
+                    algorithm = 'maxent.jar')
 
 # Save ENMeval object
 save(eval, file = "./data/05_ENMs/Galax_urceolata_ENM_eval.RData")
@@ -823,7 +1048,8 @@ terra::plot(maps,
 Compares how similar the niche recovery is between the models produced by ENMeval. 
 ```{r}
 # Calculate Schoener's D among all models
-mod_overlap <- calc.niche.overlap(maps, overlapStat = "D")
+mod_overlap <- calc.niche.overlap(maps, 
+                                  overlapStat = "D")
 print(mod_overlap)
 ```
 
@@ -846,21 +1072,19 @@ evalplot.stats(
 We want to select the model that has the smallest AICc score, has the lowest omission (model that drops the least number of species occurrence points in constructed niche), and maximum AUC (Area Under Curve).
 ```{r}
 opt.seq <- results %>%
-  filter(!is.na(AICc)) %>%                      # Exclude models with NA AICc
-  filter(AICc == min(AICc)) %>%                 # Minimum AICc
-  filter(or.10p.avg != 0) %>%                   # Exclude zero omission
-  filter(or.10p.avg == min(or.10p.avg)) %>%     # Minimum omission
-  filter(auc.val.avg == max(auc.val.avg))       # Maximum AUC
+            filter(!is.na(AICc)) %>%        # Exclude models with NA AICc
+            filter(AICc == min(AICc)) %>%   # Minimum AICc
+            filter(or.10p.avg != 0) %>%     # Exclude zero omission
+            filter(or.10p.avg == min(or.10p.avg)) %>%     # Minimum omission
+            filter(auc.val.avg == max(auc.val.avg))       # Maximum AUC
 
 opt.seq
 
 # Save optimal model summary
-write.table(
-  opt.seq,
-  file = "./data/05_ENMs/Galax_urceolata_OptModel.txt",
-  sep = "\t",
-  row.names = FALSE
-)
+write.table(opt.seq,
+            file = "./data/05_ENMs/Galax_urceolata_OptModel.txt",
+            sep = "\t",
+            row.names = FALSE)
 ```
 
 #### Visualize the Variable Contributions
@@ -910,25 +1134,32 @@ usa <- ne_states(country = "United States of America", returnclass = "sf")
 
 # Plot
 p <- ggplot() +
-  geom_tile(data = r_df, aes(x = x, y = y, fill = suitability)) +
-  scale_fill_viridis_c(name = "Suitability") +
-  geom_sf(data = occ_sf, color = "red", size = 0.1) +
-  geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-  coord_sf(
-    xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
-    ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
-    expand = FALSE) +
-  labs(
-    title = "Predicted Suitability (Optimal ENMeval Model)",
-    x = "Longitude",
-    y = "Latitude")+
-  theme_bw()+
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.background = element_rect(fill = "grey80", color = NA),
-    plot.background = element_rect(fill = "white", color = NA)) +
-  annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
+      geom_tile(data = r_df, 
+                aes(x = x, 
+                    y = y, 
+                    fill = suitability)) +
+      scale_fill_viridis_c(name = "Suitability") +
+      geom_sf(data = occ_sf,
+              color = "red", 
+              size = 0.1) +
+      geom_sf(data = usa, 
+              fill = NA, color = "white", linewidth = 0.5) +
+      coord_sf(xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
+               ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
+               expand = FALSE) +
+      labs(title = "Predicted Suitability (Optimal ENMeval Model)",
+           x = "Longitude",
+           y = "Latitude")+
+      theme_bw()+
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_rect(fill = "grey80", 
+                                            color = NA),
+            plot.background = element_rect(fill = "white", 
+                                           color = NA)) +
+      annotation_north_arrow(location = "tl",
+                             height = unit(1, "cm"), 
+                             width = unit(1, "cm"))
 
 print(p)
 
@@ -946,7 +1177,7 @@ terra::writeRaster(x = opt.pred,
 
 ```
 
-#### Loop Through Other Species
+#### Loop Through Other Species    
 ```{r}
 # List all unique species
 species_list <- unique(alldf$accepted_name)
@@ -960,53 +1191,45 @@ for (sp in species_list) {
 
   ## Subset occurrence data
   sp_df <- alldf %>%
-    filter(accepted_name == sp)
+           filter(accepted_name == sp)
 
   ## List VIF-selected rasters for this species
-  sp_vif_path <- paste0(
-    "./data/04_climate_processing/Cropped/",
-    gsub(" ", "_", sp),
-    "/VIF/"
-  )
+  sp_vif_path <- paste0("./data/04_climate_processing/Cropped/",
+                    gsub(" ", "_", sp),
+                    "/VIF/")
 
-  vif_list <- list.files(
-    sp_vif_path,
-    full.names = TRUE,
-    recursive = FALSE
-  )
+  vif_list <- list.files(sp_vif_path,
+                         full.names = TRUE,
+                         recursive = FALSE)
 
   ## Load rasters
   vifStack <- terra::rast(vif_list)
 
   ## Run ENMevaluate
-  eval <- ENMevaluate(
-    occs = sp_df[, c("longitude", "latitude")],
-    envs = vifStack,
-    tune.args = list(fc = c("L", "Q"), rm = 1:2),
-    partitions = "block",
-    n.bg = 10000,
-    parallel = FALSE,
-    algorithm = 'maxent.jar'
-  )
+  eval <- ENMevaluate(occs = sp_df[, c("longitude", "latitude")],
+                      envs = vifStack,
+                      tune.args = list(fc = c("L", "Q"), rm = 1:2),
+                      partitions = "block",
+                      n.bg = 10000,
+                      parallel = FALSE,
+                      algorithm = 'maxent.jar')
 
   ## Save ENMeval object
   save(eval, file = paste0("./data/05_ENMs/", gsub(" ", "_", sp), "_ENM_eval.RData"))
 
   ## Identify optimal model
   opt.seq <- results %>%
-    filter(!is.na(AICc)) %>%
-    filter(AICc == min(AICc)) %>%
-    filter(or.10p.avg != 0) %>%
-    filter(or.10p.avg == min(or.10p.avg)) %>%
-    filter(auc.val.avg == max(auc.val.avg))
+              filter(!is.na(AICc)) %>%
+              filter(AICc == min(AICc)) %>%
+              filter(or.10p.avg != 0) %>%
+              filter(or.10p.avg == min(or.10p.avg)) %>%
+              filter(auc.val.avg == max(auc.val.avg))
 
   ## Save optimal model summary
-  write.table(
-    opt.seq,
+  write.table(opt.seq,
     file = paste0("./data/05_ENMs/", gsub(" ", "_", sp), "_OptModel.txt"),
     sep = "\t",
-    row.names = FALSE
-  )
+    row.names = FALSE)
 
   ## Plot variable contributions
   opt.mod <- eval.models(eval)[[opt.seq$tune.args]]
@@ -1088,20 +1311,21 @@ for (sp in species_list) {
 ### Purpose: 
 - Assess performance of niche models using null models
 
-Load Packages
+### Load Required Packages   
 ```{r message=FALSE}
 library(ENMeval)
 library(ggplot2)
 library(dplyr)
 ```
 
-#### Setup
+#### Load Cleaned Occurrence Data 
 Load Occurrence Data
 ```{r}
 # Load all occurrence records
 alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
 ```
-Load Optimal Model Info
+
+#### Load Optimal Model Parameters   
 ```{r}
 # Load optimal feature class (fc) and regularization multiplier (rm)
 opt.seq <- read.delim("data/05_ENMs/Galax_urceolata_OptModel.txt")
@@ -1110,13 +1334,15 @@ opt.seq <- read.delim("data/05_ENMs/Galax_urceolata_OptModel.txt")
 fc <- opt.seq$fc
 rm <- opt.seq$rm
 ```
-Load ENMeval Object
+
+#### Load ENMeval Object   
+
 ```{r}
 # Load saved ENMeval object for Galax urceolata
 load("data/05_ENMs/Galax_urceolata_ENM_eval.RData")
 ```
 
-#### Run NULL Model Simulations
+#### Run Null Model Simulations
 
 ```{r}
 # Run ENMnulls with optimal parameters and 100 iterations
@@ -1127,7 +1353,7 @@ spec.mod.null <- ENMnulls(
 )
 ```
 
-#### Save Null Model Comparison Results
+#### Save Null Model Comparison Results 
 
 ```{r}
 # Extract comparison results between empirical and null models
@@ -1176,14 +1402,16 @@ ggsave(
 
 #### Setup
 Increase Java memory limit to avoid OutOfMemoryError. Some ENM packages, especially dismo and older ENMeval workflows, may call Java routines that require more RAM. This sets the Java heap space to 8GB.
-```{r}
+```{r eval = FALSE, include = TRUE}
 options(java.parameters = "-Xmx30g")
 ```
 
-Load Packages
+### Load Required Packages   
 ```{r message=FALSE}
-library(terra)            # For reading and manipulating raster data (modern replacement for raster package)
-library(dismo)            # For predicting from ENMs and compatibility with Maxent models
+library(terra)            # For reading and manipulating raster 
+                          ## data (modern replacement for raster package)
+library(dismo)            # For predicting from ENMs and 
+                          ## compatibility with Maxent models
 library(ENMeval)          # For calculating niche overlap statistics
 library(ENMTools)         # For calculating niche breadth (Levins' B2)
 library(ggplot2)          # For creating publication-quality plots
@@ -1192,16 +1420,19 @@ library(viridis)          # For colorblind-friendly color scales
 library(ggspatial)        # For adding north arrows to plots
 library(dplyr)            # For data manipulation
 library(ape)              # For reading and processing phylogenetic trees
-library(biomod2)          # For range size change calculations between binary rasters
+library(biomod2)          # For range size change calculations 
+                          ## between binary rasters
 ```
 
 #### Project Models onto Current Climate (Eastern Temperate Forests)
 
 Load in climate files for the Eastern Temperate Forest Region
-```{r}
+```{r eval = FALSE, include = TRUE}
 # List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.
 # These will be used as environmental predictors for projecting the ENMs.
-clim_files <- list.files("./data/04_climate_processing/CurrentEasternTemperateForests",pattern = "\\.asc$", full.names = TRUE)
+clim_files <- list.files("./data/04_climate_processing/CurrentEasternTemperateForests", 
+                         pattern = "\\.asc$", 
+                         full.names = TRUE)
 
 # Read all climate rasters into a single SpatRaster object for efficient processing.
 clim_stack <- terra::rast(clim_files)
@@ -1212,7 +1443,7 @@ plot(clim_stack[[1:4]])
 ```
 
 For a set of species, project where in the Eastern Temperate Forest Region they have suitable niche space given our model. 
-```{r}
+```{r eval = FALSE, include = TRUE}
 # Define a vector of the species you want to process.
 # Each species has an ENM already built and saved to disk.
 species_list <- c("Galax_urceolata",
@@ -1222,7 +1453,8 @@ species_list <- c("Galax_urceolata",
 
 # Load the USA state boundaries as an sf object.
 # This will be used as a basemap for plotting projections.
-usa <- rnaturalearth::ne_states(country = "United States of America", returnclass = "sf")
+usa <- rnaturalearth::ne_states(country = "United States of America",
+                                returnclass = "sf")
 
 # Loop through each species to project their ENM onto the current climate layers.
 for (species in species_list) {
@@ -1238,20 +1470,28 @@ for (species in species_list) {
   # This ensures that your projection uses the same predictor variables
   # as the model was trained on.
   vif_dir <- paste0("data/04_climate_processing/Cropped/", species, "/VIF/")
-  species_layers <- list.files(vif_dir, full.names = TRUE)
+  species_layers <- list.files(vif_dir, 
+                               full.names = TRUE)
 
   # Read in those specific rasters
   spec_stack <- terra::rast(species_layers)
   layer_names <- names(spec_stack)
 
   # Subset the full ETF raster stack to only the layers used in the ENM.
-  ETF_Rasters <- terra::subset(clim_stack, layer_names)
+  ETF_Rasters <- terra::subset(clim_stack,
+                               layer_names)
   #if error, try: ETF_Rasters <- raster::stack(ETF_Rasters)
 
   # Project the ENM onto the current ETF climate layers.
-  proj_file <- paste0("data/06_ENM_processing/", species, "_EFT_Projection.asc")
+  proj_file <- paste0("data/06_ENM_processing/", 
+                      species,
+                      "_EFT_Projection.asc")
 
-  p <- dismo::predict(opt.mod, ETF_Rasters, filename = proj_file, overwrite = TRUE, NAflag = -9999)
+  p <- dismo::predict(opt.mod,
+                      ETF_Rasters, 
+                      filename = proj_file,
+                      overwrite = TRUE, 
+                      NAflag = -9999)
 
   # Convert the raster to a data frame for plotting in ggplot.
   p_df <- as.data.frame(p, xy = TRUE)
@@ -1262,36 +1502,52 @@ for (species in species_list) {
 
   # Create the habitat suitability map.
   p_plot <- ggplot() +
-    geom_sf(data = usa, fill = "grey70") +  # basemap
-    geom_tile(data = p_df, aes(x = x, y = y, fill = Habitat_Suitability)) +
-    geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-    coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),
-             ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),
-             expand = FALSE) +
-    scale_fill_viridis_c(name = "Suitability") +
-    labs(title = paste0(gsub("_", " ", species), " - Eastern Temperate Forest Habitat Suitability"),
-         x = "Longitude",
-         y = "Latitude") +
-    theme_bw() +
-    theme(panel.grid = element_blank(),
-          axis.text = element_text(size = 8),
-          axis.title = element_text(size = 8),
-          plot.title = element_text(size = 10)) +
-    annotation_north_arrow(location = "tl",
-                           height = unit(1, "cm"),
-                           width = unit(1, "cm"))
+            geom_sf(data = usa, 
+                    fill = "grey70") +  # basemap
+            geom_tile(data = p_df, aes(x = x, 
+                                       y = y, 
+                                       fill = Habitat_Suitability)) +
+            geom_sf(data = usa, 
+                    fill = NA, 
+                    color = "white", 
+                    linewidth = 0.5) +
+            coord_sf(xlim = c(bbox_vals$xmin - 2, 
+                              bbox_vals$xmax + 2),
+                     ylim = c(bbox_vals$ymin - 2, 
+                              bbox_vals$ymax + 2),
+                     expand = FALSE) +
+            scale_fill_viridis_c(name = "Suitability") +
+            labs(title = paste0(gsub("_", " ", species),
+                 " - Eastern Temperate Forest Habitat Suitability"),
+                 x = "Longitude",
+                 y = "Latitude") +
+            theme_bw() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 8),
+                  axis.title = element_text(size = 8),
+                  plot.title = element_text(size = 10)) +
+            annotation_north_arrow(location = "tl",
+                                   height = unit(1, "cm"),
+                                   width = unit(1, "cm"))
 
   # Save the plot as a PNG file.
-  png_file <- paste0("data/06_ENM_processing/", species, "_ETF_Projection_Plot.png")
+  png_file <- paste0("data/06_ENM_processing/", 
+                     species,
+                     "_ETF_Projection_Plot.png")
 
-  ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)
+  ggsave(filename = png_file, 
+         plot = p_plot, 
+         width = 7, 
+         height = 5, 
+         dpi = 300)
 }
 ```
 
 #### Calculate Niche Breadth
+
 For each species, calculate niche breadth across the ETF region. Niche breadth (Levins' B2) indicates whether a species is a generalist (high value) or specialist (low value).
 
-```{r}
+```{r eval = FALSE, include = TRUE}
 for (species in species_list) {
 
   cat("\nCalculating niche breadth for:", species, "\n")
@@ -1310,7 +1566,7 @@ for (species in species_list) {
 
 #### Calculate Niche Overlap
 We can stack all of the species niche models to evaluate how much they overlap
-```{r}
+```{r eval = FALSE, include = TRUE}
 # Stack all species projections into a single SpatRaster object.
 # This allows calculation of pairwise niche overlap (Schoener's D).
 enm_stack <- c(terra::rast("data/06_ENM_processing/Galax_urceolata_EFT_Projection.asc"),
@@ -1328,13 +1584,14 @@ enm_stack_raster <- stack(enm_stack)
 
 # Calculate pairwise Schoener's D overlap between species.
 # Values range from 0 (no overlap) to 1 (identical niches).
-overlap_matrix <- calc.niche.overlap(enm_stack_raster, overlapStat = "D")
+overlap_matrix <- calc.niche.overlap(enm_stack_raster, 
+                                     overlapStat = "D")
 
 print(overlap_matrix)
 ```
 
 #### Test Phylogenetic Signal in Niche Overlap
-```{r}
+```{r eval = FALSE, include = TRUE}
 # Read the phylogenetic tree of the species.
 tree <- ape::read.tree("data/06_ENM_processing/diapensiaceae_subset.tre")
 
@@ -1361,9 +1618,11 @@ overlap_vals <- NULL
 for (i in 2:length(species_names)) {
   for (j in 1:(i - 1)) {
     pair_names <- c(pair_names,
-                    paste(species_names[i], species_names[j], sep = " - "))
+                    paste(species_names[i], 
+                          species_names[j], sep = " - "))
     phylo_vals <- c(phylo_vals, phylo_dist[i, j])
-    overlap_vals <- c(overlap_vals, overlap_matrix[i, j])
+    overlap_vals <- c(overlap_vals, 
+                      overlap_matrix[i, j])
   }
 }
 
@@ -1403,12 +1662,16 @@ legend("topleft",
 For niche Age Overlap Correlations (AOCs), a high intercept and negative slope indicate niche conservatism, meaning closely related species tend to occupy similar ecological niches. A low intercept combined with a positive slope suggests niche divergence, where closely related species occupy different niches.The results here are pretty meaningless since we're looking at very few, distantly related species, but it serves the purpose of the demo. A linear regression indicated no significant relationship between phylogenetic distance and niche overlap among the four species, suggesting minimal phylogenetic signal in ecological niche similarity.
 
 #### Project Models onto Future Climate
-```{r}
+```{r eval = FALSE, include = TRUE}
 # List future climate layers under the SSP370 scenario for 2081-2100.
-future_files <- list.files("data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/", pattern = "\\.asc$", full.names = TRUE)
+future_files <- list.files("data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/", 
+                           pattern = "\\.asc$", 
+                           full.names = TRUE)
 
 # Add the current elevation layer to the future stack, since elevation remains constant.
-elev_file <- list.files("data/04_climate_processing/CurrentEasternTemperateForests/", pattern = "elev\\.asc$", full.names = TRUE)
+elev_file <- list.files("data/04_climate_processing/CurrentEasternTemperateForests", 
+                        pattern = "elev\\.asc$", 
+                        full.names = TRUE)
 
 futurestack <- terra::rast(c(future_files, elev_file))
 
@@ -1469,7 +1732,7 @@ for (species in species_list) {
 ```
 
 #### Compare Current and Future Projections
-```{r}
+```{r eval = FALSE, include = TRUE}
 # Initialize a list to hold change maps for each species.
 all_dfs <- list()
 

@@ -2,9 +2,9 @@
   <PAMRasterBand band="1">
     <Description>fc.L_rm.1</Description>
     <Metadata>
-      <MDI key="STATISTICS_MAXIMUM">0.99155426025391</MDI>
+      <MDI key="STATISTICS_MAXIMUM">0.98989307880402</MDI>
       <MDI key="STATISTICS_MEAN">-9999</MDI>
-      <MDI key="STATISTICS_MINIMUM">0.016453335061669</MDI>
+      <MDI key="STATISTICS_MINIMUM">0.016358628869057</MDI>
       <MDI key="STATISTICS_STDDEV">-9999</MDI>
     </Metadata>
   </PAMRasterBand>

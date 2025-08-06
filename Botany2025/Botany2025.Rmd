@@ -134,6 +134,69 @@ if (any(!github_loaded)) {
 
 ```
 
+#### Troubleshooting
+This exercise requires the package **rJava**. This package requires Java (and the Oracle Java JDK) is installed on your system. 
+
+**Step 1: Do you have Java installed?**
+
+```{r eval=FALSE}
+system("java -version")
+```
+
+If yes, is it version 17 or 20? CRAN currently recommends that you use these version.
+
+**Step 2: Install Java**
+
+CRAN says the easiest way to install Java with [Adoptium](https://adoptium.net/) and into /usr/bin/java (on a Mac). 
+Alternatively, other versions of OpenJDK can be [found here](https://www.azul.com/downloads/zulu-community/?os=macos&architecture=arm-64-bit&package=jdk) and [here](https://jdk.java.net/). More information can be found on [CRAN here](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Java-_0028macOS_0029).
+
+For rJava, the newest package requires R >= 3.6.0 and can be downloaded [here](https://cran.r-project.org/src/contrib/Archive/rJava/). Note: We found that homebrew was the best way to install rJava on Macs M1-M4 Chip during the 2025 workshop. 
+
+**Step 3 and beyond: Debugging options that have worked in the past!**
+
+If you are experiencing errors with rJava:
+
+```{r eval=FALSE}
+## Remove rJava
+remove.packages(rJava)
+## Update your R Java configuration 
+system("sudo R CMD javareconf")
+## Restart R and check to see if the path matches
+Sys.getenv("DYLD_FALLBACK_LIBRARY_PATH")
+## Reinstall rJava
+install.packages("rJava")
+library(rJava)
+```
+
+If you are **still** having issues with rJava - check to see if you are using Java 12 (this should be included in the error message):
+
+```{r eval=FALSE}
+system("java -version")
+```
+
+The initial release of java 12 does not work - install an old version instead.
+To install an old version, navigate to the Oracle website or use homebrew.
+
+```{r eval=FALSE}
+system("brew cask install homebrew/cask-versions/java11")
+```
+
+Restart R and redo the previous steps. Required: uninstall the newer versions of java prior to repeating and restart R after.
+
+```{r eval=FALSE}
+## Uninstall Java 12, then repeat the following
+## Remove rJava
+remove.packages(rJava)
+## Update your R Java configuration 
+system("sudo R CMD javareconf")
+## Restart R and check to see if the path matches
+Sys.getenv("DYLD_FALLBACK_LIBRARY_PATH")
+## Reinstall rJava
+install.packages("rJava")
+library(rJava)
+```
+
+More debugging: Check out [jerrybreak's comment from 12/30/2021](https://github.com/rstudio/rstudio/issues/2254#issuecomment-580886272).       
 
 
 
@@ -389,7 +452,7 @@ simple_map <- ggplot() +
                                   max(df$latitude) + 3)) +
                 xlab("Longitude") + 
                 ylab("Latitude") +
-                annotation_scale(plot_unit = "km") +
+                annotation_scale() +
                 annotation_north_arrow(location = "tl", 
                                        height = unit(1, "cm"),
                                        width = unit(1, "cm"))
@@ -488,7 +551,7 @@ all_map <- ggplot() +
            ylim = c(min(alldf$latitude) - 3, max(alldf$latitude) + 3)) +
   xlab("Longitude") + ylab("Latitude") +
   labs(color = "Scientific name") +
-  annotation_scale(plot_unit = "km") +
+  annotation_scale() +
   annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
 
 all_map
@@ -1125,7 +1188,7 @@ dev.off()
 
 #### [Visualize Response Curves]{style="color: blue;"}
 How does the species niche respond to the variable elevation: 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval = FALSE}
 # Plot response curves for optimal model
 predicts::partialResponse(eval@models[[opt.seq$tune.args]], var = "elev")
 

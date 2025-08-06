@@ -83,7 +83,7 @@ simple_map <- ggplot() +
   coord_sf(xlim = c(min(df$longitude) - 3, max(df$longitude) + 3),
            ylim = c(min(df$latitude) - 3, max(df$latitude) + 3)) +
   xlab("Longitude") + ylab("Latitude") +
-  annotation_scale(plot_unit = "km") +
+  annotation_scale() +
   annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
 
 simple_map
@@ -142,7 +142,7 @@ all_map <- ggplot() +
            ylim = c(min(alldf$latitude) - 3, max(alldf$latitude) + 3)) +
   xlab("Longitude") + ylab("Latitude") +
   labs(color = "Scientific name") +
-  annotation_scale(plot_unit = "km") +
+  annotation_scale() +
   annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
 
 all_map

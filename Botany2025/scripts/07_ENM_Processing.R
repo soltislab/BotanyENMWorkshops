@@ -149,11 +149,10 @@ names(enm_stack) <- c("Galax urceolata",
                       "Pyxidanthera barbulata",
                       "Pyxidanthera brevifolia",
                       "Shortia galacifolia")
-enm_stack_raster <- stack(enm_stack)
 
 # Calculate pairwise Schoener's D overlap between species.
 # Values range from 0 (no overlap) to 1 (identical niches).
-overlap_matrix <- calc.niche.overlap(enm_stack_raster, overlapStat = "D")
+overlap_matrix <- calc.niche.overlap(enm_stack, overlapStat = "D")
 
 print(overlap_matrix)
 

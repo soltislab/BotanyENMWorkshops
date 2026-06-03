@@ -1,4 +1,6 @@
 # BotanyENMWorkshop2025
+**Stay tuned for the Botany 2026 update!**
+
 This repository contains material from the Botany 2025 workshop titled 'Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography' which was held in July 2025.
 
 HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Botany2025/Botany2025.html

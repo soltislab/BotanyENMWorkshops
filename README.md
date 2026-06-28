@@ -1,7 +1,7 @@
-# BotanyENMWorkshop2025
+# BotanyENMWorkshop2026
 **Stay tuned for the Botany 2026 update!**
 
-This repository contains material from the Botany 2025 workshop titled 'Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography' which was held in July 2025.
+This repository contains material from the Botany 2026 workshop titled 'Using Digitized Collections-Based Data in Research: Applications for Ecology, Phylogenetics, and Biogeography' which was held in August 2026.
 
 HTML version of our R markdown can also be viewed here: https://soltislab.github.io/BotanyENMWorkshops/Botany2025/Botany2025.html
 
@@ -9,7 +9,8 @@ HTML version of our R markdown can also be viewed here: https://soltislab.github
 Pam Soltis, Doug Soltis, [Shelly Gaynor](https://github.com/mgaynor1), Makenzie Mabry, Elizabeth White, JT Miller, Sarah Ellen Strickland, Sebastian Fernandez, Sydney Barfus, and Tyler Radtke.
 
 
-Many people contributed to this material including [Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen),  [Andre Naranjo](https://github.com/aanaranjo), Maria Cortez, Malu Ore Rengifo, [Lauren Gillett](https://github.com/laurenwhitehurst21), and more.
+Many people contributed to this material including  Sebastian Fernandez, Sydney Barfus, Tyler Radtke, 
+[Anthony Melton](https://github.com/meltonae), [Johanna Jantzen](https://github.com/jjantzen),  [Andre Naranjo](https://github.com/aanaranjo), Maria Cortez, Malu Ore Rengifo, [Lauren Gillett](https://github.com/laurenwhitehurst21), and more.
 
 ## How to use this repository
 The data for this workshop has been moved to Zenodo. Please download the data folder from Zenodo: [doi.org/10.5281/zenodo.16755492](https://zenodo.org/records/16755492) 

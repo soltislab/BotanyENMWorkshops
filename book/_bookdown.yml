@@ -1,4 +1,8 @@
 book_filename: "Botany2026"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
 
 rmd_files:
   - index.Rmd

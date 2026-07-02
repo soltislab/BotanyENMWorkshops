@@ -111,18 +111,20 @@ convert_script <- function(infile, outfile){
   writeLines(out, outfile)
 }
 
+dir.create(file.path("book", "chapters"), recursive = TRUE, showWarnings = FALSE)
+
 files <- list.files(
-  "scripts",
-  "\\.R$",
+  "Botany2026/scripts",
+  pattern = "\\.R$",
   full.names = TRUE
 )
 
-for(f in files){
-
+for (f in files) {
   convert_script(
     infile = f,
     outfile = file.path(
       "book",
+      "chapters",
       paste0(
         tools::file_path_sans_ext(basename(f)),
         ".Rmd"

@@ -46,7 +46,6 @@ jobs:
 
           git worktree add publish bookdown || \
             git worktree add -b bookdown publish
-
           rm -rf publish/*
           cp -R book/_book/* publish/
 

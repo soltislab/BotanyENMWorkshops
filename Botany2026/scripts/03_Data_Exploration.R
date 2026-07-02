@@ -40,7 +40,7 @@ ptExtracteddf <- ptExtracted %>%
 # Remove any rows with missing climate values
 ptExtracteddf <- ptExtracteddf %>% tidyr::drop_na()
 
-##D) Perform PCA on Climatic Variables ----
+## D) Perform PCA on Climatic Variables ----
 
 # Subset climate variables (assumed to be columns 2 to 21)
 data.bioclim <- ptExtracteddf[, 2:21]
@@ -55,7 +55,7 @@ loadings <- pca_result$rotation
 # Calculate relative contributions of each variable to each PC
 loadings_relative <- sweep(abs(loadings), 2, colSums(abs(loadings)), "/") * 100
 
-##E) Visualize PCA ----
+## E) Visualize PCA ----
 
 # Customize theme
 custom_theme <- theme(
@@ -92,7 +92,7 @@ top_PC1_vars <- rownames(loadings)[order(abs(loadings[, "PC1"]), decreasing = TR
 top_PC2_vars <- rownames(loadings)[order(abs(loadings[, "PC2"]), decreasing = TRUE)][1:2]
 selected_vars <- unique(c(top_PC1_vars, top_PC2_vars))  # remove duplicates
 
-##G) ANOVA + Tukey HSD + Plotting for Top Variables ----
+## G) ANOVA + Tukey HSD + Plotting for Top Variables ----
 
 plotlist <- list()
 

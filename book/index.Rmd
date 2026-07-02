@@ -5,8 +5,9 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 output:
-  html_document:
-    df_print: paged
+  bookdown::gitbook:
+    css: style.css
+
 ---
 
 # Welcome {-}

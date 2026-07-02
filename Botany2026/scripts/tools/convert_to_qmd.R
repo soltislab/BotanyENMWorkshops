@@ -165,7 +165,7 @@ convert_script <- function(infile, outdir = "../website") {
 }
 
 files <- list.files(
-  "Botany2026/scripts",
+  "scripts/",
   pattern = "\\.R$",
   full.names = TRUE
 )

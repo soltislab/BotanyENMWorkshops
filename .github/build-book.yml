@@ -2,7 +2,9 @@ name: Build Bookdown
 
 on:
   push:
-    branches: [main] [MLG]
+    branches:
+      - main
+      - MLG
     paths:
       - "Botany2026/scripts/**"
       - "Botany2026/scripts/tools/**"

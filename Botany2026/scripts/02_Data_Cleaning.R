@@ -1,10 +1,11 @@
-# Occurrence_Data_Cleaning_Updated.R
-# ---------------------------------------------------------------
-# Purpose: Clean and harmonize occurrence records for ecological niche modeling.
+# Occurrence Data Cleaning
+#
+# Purpose:
+#   - Clean and harmonize occurrence records for ecological niche modeling.
+#
 # Created and modified by ML Gaynor
-# ---------------------------------------------------------------
 
-## ---- Load Required Packages ----
+## Load Required Packages ----
 library(gatoRs)         # Taxonomic and geographic cleaning
 library(fields)         # For calculating spatial distances
 library(sf)             # For spatial operations and visualization
@@ -12,13 +13,13 @@ library(ggplot2)        # For plotting
 library(ggspatial)      # Scale bars and north arrows
 library(leaflet)        # For interactive mapping
 
-## ---- A) Read Raw Occurrence Data ----
+## A) Read Raw Occurrence Data ----
 
 # Read species-specific raw data
 rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
 nrow(rawdf)  # Starting number of records
 
-## ---- B) Taxonomic Harmonization ----
+## B) Taxonomic Harmonization ----
 
 # Inspect unique names
 unique(rawdf$scientificName)
@@ -33,7 +34,7 @@ df <- taxa_clean(df = rawdf,
                  accepted.name = "Shortia galacifolia")
 nrow(df)  # Updated count
 
-## ---- C) Locality Cleaning ----
+## C) Locality Cleaning ----
 
 # Remove invalid/skewed records and round coordinates
 df <- basic_locality_clean(df = df,
@@ -43,24 +44,24 @@ df <- basic_locality_clean(df = df,
                            remove.skewed = TRUE)
 nrow(df)
 
-## ---- D) Flag and Filter Cultivated Coordinates ----
+## D) Flag and Filter Cultivated Coordinates ----
 
 df <- process_flagged(df, interactive = FALSE, scientific.name = "accepted_name")
 nrow(df)
 
-## ---- E) Duplicate Removal ----
+## E) Duplicate Removal ----
 
 # Remove duplicate specimens and aggregator artifacts
 df <- remove_duplicates(df, remove.unparseable = TRUE)
 nrow(df)
 
-## ---- F) Spatial Deduplication ----
+## F) Spatial Deduplication ----
 
 # Retain one point per raster pixel (30 arc-sec default)
 df <- one_point_per_pixel(df)
 nrow(df)
 
-## ---- G) Spatial Thinning ----
+## G) Spatial Thinning ----
 
 # Calculate minimum nearest-neighbor distance
 nnDm <- rdist.earth(as.matrix(df[, c("longitude", "latitude")]), miles = FALSE)
@@ -71,7 +72,7 @@ min(nnDmin)  # e.g., 2.22 km
 df <- thin_points(df, distance = 0.002, reps = 100)
 nrow(df)
 
-## ---- H) Static Map of Cleaned Points ----
+## H) Static Map of Cleaned Points ----
 
 df_fixed <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
 USA <- borders(database = "usa", colour = "gray80", fill = "gray80")
@@ -88,17 +89,17 @@ simple_map <- ggplot() +
 
 simple_map
 
-## ---- I) Interactive Map with Leaflet ----
+## I) Interactive Map with Leaflet ----
 
 leaflet(df_fixed) %>%
   addMarkers(label = paste0(df$longitude, ", ", df$latitude)) %>%
   addTiles()
 
-## ---- J) Save Cleaned CSV ----
+## J) Save Cleaned CSV ----
 
 write.csv(df, "data/02_cleaning/Shortia_galacifolia_2025_06_27_cleaned.csv", row.names = FALSE)
 
-## ---- K) Batch Clean for All Species ----
+## K) Batch Clean for All Species ----
 
 files <- list.files("data/01_download/raw", full.names = TRUE)[1:3]
 synonymns <- list(
@@ -123,7 +124,7 @@ for (i in 1:3) {
   rm(df, search, outfile)
 }
 
-## ---- L) Merge Cleaned Files for Maxent ----
+## L) Merge Cleaned Files for Maxent ----
 
 alldf <- list.files("data/02_cleaning", pattern = "*.csv", full.names = TRUE)
 alldf <- lapply(alldf, read.csv)
@@ -131,7 +132,7 @@ alldf <- do.call(rbind, alldf)
 
 write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv", row.names = FALSE)
 
-## ---- M) Map All Records ----
+## M) Map All Records ----
 
 alldf_fixed <- st_as_sf(alldf, coords = c("longitude", "latitude"), crs = 4326)
 
@@ -147,7 +148,7 @@ all_map <- ggplot() +
 
 all_map
 
-## ---- N) Prepare GeoLocate Batch File ----
+## N) Prepare GeoLocate Batch File ----
 
 rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
 rawdf_GeoRef <- need_to_georeference(rawdf)

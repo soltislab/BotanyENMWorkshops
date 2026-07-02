@@ -1,5 +1,5 @@
-# ENM_Processing.R
-# ---------------------------------------------------------------
+# ENM Processing
+#
 # Purpose:
 #   - Project ecological niche models (ENMs) for four species onto
 #     current and future climate layers (Eastern Temperate Forests)
@@ -8,7 +8,8 @@
 #   - Calculate pairwise niche overlap
 #   - Test for phylogenetic signal in niche overlap
 #   - Compare current vs future projections to assess range shifts
-# ---------------------------------------------------------------
+#
+
 
 # Increase Java memory limit to avoid OutOfMemoryError
 # Some ENM packages, especially dismo and older ENMeval workflows,
@@ -16,7 +17,7 @@
 # This sets the Java heap space to 8GB.
 options(java.parameters = "-Xmx30g")
 
-## ---- Load Required Packages ----
+## Load Required Packages ----
 
 library(terra)            # For reading and manipulating raster data (modern replacement for raster package)
 library(dismo)            # For predicting from ENMs and compatibility with Maxent models
@@ -30,7 +31,7 @@ library(dplyr)            # For data manipulation
 library(ape)              # For reading and processing phylogenetic trees
 library(biomod2)          # For range size change calculations between binary rasters
 
-## ---- A) Project Models onto Current Climate (Eastern Temperate Forests) ----
+## A) Project Models onto Current Climate (Eastern Temperate Forests) ----
 
 # List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.
 # These will be used as environmental predictors for projecting the ENMs.
@@ -116,7 +117,7 @@ for (species in species_list) {
   ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)
 }
 
-## ---- B) Calculate Niche Breadth ----
+## B) Calculate Niche Breadth ----
 
 # For each species, calculate niche breadth across the ETF region.
 # Niche breadth (Levins' B2) indicates whether a species is a generalist (high value) or specialist (low value).
@@ -134,7 +135,7 @@ for (species in species_list) {
   cat("Niche breadth:", round(breadth$B2, 3), "\n")
 }
 
-## ---- C) Calculate Niche Overlap ----
+## C) Calculate Niche Overlap ----
 
 # Stack all species projections into a single SpatRaster object.
 # This allows calculation of pairwise niche overlap (Schoener's D).
@@ -156,7 +157,7 @@ overlap_matrix <- calc.niche.overlap(enm_stack, overlapStat = "D")
 
 print(overlap_matrix)
 
-## ---- D) Test Phylogenetic Signal in Niche Overlap ----
+## D) Test Phylogenetic Signal in Niche Overlap ----
 
 # Read the phylogenetic tree of the species.
 tree <- ape::read.tree("data/06_ENM_processing/diapensiaceae_subset.tre")
@@ -231,7 +232,7 @@ legend("topleft",
 # and niche overlap among the four species,suggesting minimal phylogenetic signal
 # in ecological niche similarity.
 
-## ---- E) Project Models onto Future Climate ----
+## E) Project Models onto Future Climate ----
 
 # List future climate layers under the SSP370 scenario for 2081-2100.
 future_files <- list.files("data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/", pattern = "\\.asc$", full.names = TRUE)
@@ -295,7 +296,7 @@ for (species in species_list) {
   ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)
 }
 
-## ---- F) Compare Current and Future Projections ----
+## F) Compare Current and Future Projections ----
 
 # Initialize a list to hold change maps for each species.
 all_dfs <- list()

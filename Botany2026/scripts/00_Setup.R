@@ -1,13 +1,12 @@
-# 00_Setup.R
-# ---------------------------------------------------------------
+#  Setup
+#
 # Purpose:
-#   - Install all R packages required for ENM workflows
-#   - Check that all packages load successfully
-#   - Install any needed GitHub packages
-# ---------------------------------------------------------------
+#  - Install all R packages required for ENM workflows
+#  - Check that all packages load successfully
+#  - Install any needed GitHub packages
 
-## ---- Define CRAN Packages ----
-
+## Install required CRAN packages ----
+## Define CRAN Packages ----
 list_of_packages <- c(
   # Core ENM tools
   "terra", "dismo", "ENMeval", "ENMTools", "biomod2",
@@ -32,7 +31,6 @@ list_of_packages <- c(
 )
 
 ## ---- Install Missing CRAN Packages ----
-
 # Identify any packages from the list not currently installed.
 new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
 
@@ -44,7 +42,7 @@ if (length(new.packages)) {
   cat("\nAll required CRAN packages already installed.\n")
 }
 
-## ---- Load All CRAN Packages ----
+## Load All CRAN Packages ----
 
 # Try loading all required CRAN packages.
 loaded <- sapply(list_of_packages, require, character.only = TRUE)
@@ -56,7 +54,7 @@ if (any(!loaded)) {
   cat("\nAll CRAN packages loaded successfully.\n")
 }
 
-## ---- Install GitHub Packages ----
+## Install required GitHub packages ----
 
 # devtools is required for installing from GitHub.
 if (!require(devtools)) {

@@ -1,10 +1,9 @@
-# Ecological_Niche_Modeling.R
-# ---------------------------------------------------------------
-# Purpose: Build ecological niche models for Diapensiaceae species
-# using ENMeval and Maxent with VIF-selected environmental variables.
-# ---------------------------------------------------------------
-
-## ---- Load Required Packages ----
+# Ecological Niche Modeling
+#
+# Purpose:
+#  - Build ecological niche models for Diapensiaceae species using ENMeval and Maxent with VIF-selected environmental variables.
+#
+## Load Required Packages ----
 library(terra)         # For raster data
 library(ENMeval)       # For ENM evaluation and tuning
 library(predicts)      # For niche modeling tools
@@ -14,18 +13,18 @@ library(sf)            # For vector spatial operations
 library(rnaturalearth) # For downloading shapefiles of countries and states
 library(ggspatial)     # Scale bars and north arrows
 
-## ---- A) Load Cleaned Occurrence Data ----
+## A) Load Cleaned Occurrence Data ----
 
 # Load occurrence data
 alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
 
-## ---- B) Subset for Single Species ----
+## B) Subset for Single Species ----
 
 # Example species: Galax urceolata
 Galax_urceolata <- alldf %>%
   filter(accepted_name == "Galax urceolata")
 
-## ---- C) Load VIF-Selected Climate Layers ----
+## C) Load VIF-Selected Climate Layers ----
 
 # List environmental layers
 vif_list <- list.files(
@@ -37,7 +36,7 @@ vif_list <- list.files(
 # Load as raster stack
 vifStack <- terra::rast(vif_list)
 
-## ---- D) Run ENMeval to Generate Models ----
+## D) Run ENMeval to Generate Models ----
 
 # ENMeval model generation:
 # - Tests combinations of feature classes (FC)
@@ -56,7 +55,7 @@ eval <- ENMevaluate(
 # Save ENMeval object
 save(eval, file = "data/05_ENMs/Galax_urceolata_ENM_eval.RData")
 
-## ---- E) Visualize Model Predictions ----
+## E) Visualize Model Predictions ----
 
 # Extract predictions from ENMeval object
 maps <- eval@predictions
@@ -66,13 +65,13 @@ terra::plot(maps,
             nc = 2,
             main = names(maps))
 
-## ---- F) Calculate Niche Overlap Between Models ----
+## F) Calculate Niche Overlap Between Models ----
 
 # Calculate Schoener's D among all models
 mod_overlap <- calc.niche.overlap(maps, overlapStat = "D")
 print(mod_overlap)
 
-## ---- G) Examine Overall Tuning Results ----
+## G) Examine Overall Tuning Results ----
 
 # Retrieve summary table
 results <- eval.results(eval)
@@ -85,7 +84,7 @@ evalplot.stats(
   color = "fc",
   x.var = "rm")
 
-## ---- H) Select Optimal Model Based on Criteria ----
+## H) Select Optimal Model Based on Criteria ----
 opt.seq <- results %>%
   filter(!is.na(AICc)) %>%                      # Exclude models with NA AICc
   filter(AICc == min(AICc)) %>%                 # Minimum AICc
@@ -103,7 +102,7 @@ write.table(
   row.names = FALSE
 )
 
-## ---- I) Visualize the variable contributions  ----
+## I) Visualize the variable contributions  ----
 
 # Retrieve the optimal model from ENMeval object
 opt.mod <- eval.models(eval)[[opt.seq$tune.args]]
@@ -122,12 +121,12 @@ dismo::plot(opt.mod, main = "Variable Contribution - Optimal Model")
 
 dev.off()
 
-## ---- J) Visualize Response Curves ----
+## J) Visualize Response Curves ----
 
 # Plot response curves for optimal model
 predicts::partialResponse(eval@models[[opt.seq$tune.args]], var = "elev")
 
-## ---- K) Plot Optimal Model ----
+## K) Plot Optimal Model ----
 opt.pred <- eval.predictions(eval)[[as.character(opt.seq$tune.args)]]
 
 r_df <- as.data.frame(opt.pred, xy = TRUE)
@@ -179,7 +178,7 @@ writeRaster(x = opt.pred,
             NAflag = -9999)
 
 
-## ---- L) Loop Through Other Species ----
+## L) Loop Through Other Species ----
 
 # List all unique species
 species_list <- unique(alldf$accepted_name)

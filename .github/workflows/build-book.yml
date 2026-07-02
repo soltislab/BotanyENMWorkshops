@@ -6,6 +6,7 @@ on:
     paths:
       - "Botany2026/scripts/**"
       - "Botany2026/scripts/tools/**"
+      - "book/**"
 
 permissions:
   contents: write
@@ -41,7 +42,7 @@ jobs:
 
       - name: Publish to bookdown branch
         run: |
-          git fetch origin bookdown || true
+          git fetch origin bookdown:bookdown || true
 
           git worktree add publish bookdown || \
             git worktree add -b bookdown publish

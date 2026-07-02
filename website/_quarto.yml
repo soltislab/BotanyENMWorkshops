@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Botany ENM Workshops"
+
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - index.qmd
+      - 00_Setupqmd
+      - 01_Data_Downloadsqmd
+      - 02_Data_Cleaningqmd
+      - 03_Data_Explorationqmd
+      - 04_AccessibleArea_VariableSelectionqmd
+      - 05_Ecological_Niche_Modelingqmd
+      - 06_Null_ENMsqmd
+      - 07_ENM_Processingqmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true
+    code-fold: false

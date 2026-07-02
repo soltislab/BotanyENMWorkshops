@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Climate Processing | Botany ENM Workshops 2026</title>
+  <meta name="description" content="5 Climate Processing | Botany ENM Workshops 2026" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Climate Processing | Botany ENM Workshops 2026" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Climate Processing | Botany ENM Workshops 2026" />
+  
+  
+  
+
+<meta name="author" content="Soltis Lab" />
+
+
+<meta name="date" content="2026-07-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-exploration.html"/>
+<link rel="next" href="ecological-niche-modeling.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#install-required-cran-packages"><i class="fa fa-check"></i><b>1.1</b> Install required CRAN packages</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#define-cran-packages"><i class="fa fa-check"></i><b>1.2</b> Define CRAN Packages</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#install-missing-cran-packages"><i class="fa fa-check"></i><b>1.3</b> —- Install Missing CRAN Packages</a></li>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#load-all-cran-packages"><i class="fa fa-check"></i><b>1.4</b> Load All CRAN Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="setup.html"><a href="setup.html#install-required-github-packages"><i class="fa fa-check"></i><b>1.5</b> Install required GitHub packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html"><i class="fa fa-check"></i><b>2</b> Download Occurrence Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html#load-required-packages"><i class="fa fa-check"></i><b>2.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="2.2" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html#a-download-from-idigbio"><i class="fa fa-check"></i><b>2.2</b> A) Download from iDigBio</a></li>
+<li class="chapter" data-level="2.3" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html#b-download-using-gators"><i class="fa fa-check"></i><b>2.3</b> B) Download Using gatoRs</a></li>
+<li class="chapter" data-level="2.4" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html#c-preview-downloaded-files"><i class="fa fa-check"></i><b>2.4</b> C) Preview Downloaded Files</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html"><i class="fa fa-check"></i><b>3</b> Occurrence Data Cleaning</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#load-required-packages-1"><i class="fa fa-check"></i><b>3.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="3.2" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#a-read-raw-occurrence-data"><i class="fa fa-check"></i><b>3.2</b> A) Read Raw Occurrence Data</a></li>
+<li class="chapter" data-level="3.3" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#b-taxonomic-harmonization"><i class="fa fa-check"></i><b>3.3</b> B) Taxonomic Harmonization</a></li>
+<li class="chapter" data-level="3.4" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#c-locality-cleaning"><i class="fa fa-check"></i><b>3.4</b> C) Locality Cleaning</a></li>
+<li class="chapter" data-level="3.5" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#d-flag-and-filter-cultivated-coordinates"><i class="fa fa-check"></i><b>3.5</b> D) Flag and Filter Cultivated Coordinates</a></li>
+<li class="chapter" data-level="3.6" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#e-duplicate-removal"><i class="fa fa-check"></i><b>3.6</b> E) Duplicate Removal</a></li>
+<li class="chapter" data-level="3.7" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#f-spatial-deduplication"><i class="fa fa-check"></i><b>3.7</b> F) Spatial Deduplication</a></li>
+<li class="chapter" data-level="3.8" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#g-spatial-thinning"><i class="fa fa-check"></i><b>3.8</b> G) Spatial Thinning</a></li>
+<li class="chapter" data-level="3.9" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#h-static-map-of-cleaned-points"><i class="fa fa-check"></i><b>3.9</b> H) Static Map of Cleaned Points</a></li>
+<li class="chapter" data-level="3.10" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#i-interactive-map-with-leaflet"><i class="fa fa-check"></i><b>3.10</b> I) Interactive Map with Leaflet</a></li>
+<li class="chapter" data-level="3.11" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#j-save-cleaned-csv"><i class="fa fa-check"></i><b>3.11</b> J) Save Cleaned CSV</a></li>
+<li class="chapter" data-level="3.12" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#k-batch-clean-for-all-species"><i class="fa fa-check"></i><b>3.12</b> K) Batch Clean for All Species</a></li>
+<li class="chapter" data-level="3.13" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#l-merge-cleaned-files-for-maxent"><i class="fa fa-check"></i><b>3.13</b> L) Merge Cleaned Files for Maxent</a></li>
+<li class="chapter" data-level="3.14" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#m-map-all-records"><i class="fa fa-check"></i><b>3.14</b> M) Map All Records</a></li>
+<li class="chapter" data-level="3.15" data-path="occurrence-data-cleaning.html"><a href="occurrence-data-cleaning.html#n-prepare-geolocate-batch-file"><i class="fa fa-check"></i><b>3.15</b> N) Prepare GeoLocate Batch File</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>4</b> Data Exploration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-exploration.html"><a href="data-exploration.html#load-required-packages-2"><i class="fa fa-check"></i><b>4.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="4.2" data-path="data-exploration.html"><a href="data-exploration.html#a-load-cleaned-data"><i class="fa fa-check"></i><b>4.2</b> A) Load Cleaned Data</a></li>
+<li class="chapter" data-level="4.3" data-path="data-exploration.html"><a href="data-exploration.html#b-load-and-stack-climatic-variables-from-worldclim"><i class="fa fa-check"></i><b>4.3</b> B) Load and Stack Climatic Variables from WorldClim</a></li>
+<li class="chapter" data-level="4.4" data-path="data-exploration.html"><a href="data-exploration.html#c-extract-climatic-variables-at-occurrence-points"><i class="fa fa-check"></i><b>4.4</b> C) Extract Climatic Variables at Occurrence Points</a></li>
+<li class="chapter" data-level="4.5" data-path="data-exploration.html"><a href="data-exploration.html#d-perform-pca-on-climatic-variables"><i class="fa fa-check"></i><b>4.5</b> D) Perform PCA on Climatic Variables</a></li>
+<li class="chapter" data-level="4.6" data-path="data-exploration.html"><a href="data-exploration.html#e-visualize-pca"><i class="fa fa-check"></i><b>4.6</b> E) Visualize PCA</a></li>
+<li class="chapter" data-level="4.7" data-path="data-exploration.html"><a href="data-exploration.html#f-identify-top-contributors-to-pc1-and-pc2"><i class="fa fa-check"></i><b>4.7</b> F) Identify Top Contributors to PC1 and PC2</a></li>
+<li class="chapter" data-level="4.8" data-path="data-exploration.html"><a href="data-exploration.html#g-anova-tukey-hsd-plotting-for-top-variables"><i class="fa fa-check"></i><b>4.8</b> G) ANOVA + Tukey HSD + Plotting for Top Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="climate-processing.html"><a href="climate-processing.html"><i class="fa fa-check"></i><b>5</b> Climate Processing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="climate-processing.html"><a href="climate-processing.html#load-required-packages-3"><i class="fa fa-check"></i><b>5.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="5.2" data-path="climate-processing.html"><a href="climate-processing.html#a-load-cleaned-occurrence-data"><i class="fa fa-check"></i><b>5.2</b> A) Load Cleaned Occurrence Data</a></li>
+<li class="chapter" data-level="5.3" data-path="climate-processing.html"><a href="climate-processing.html#b-load-and-stack-climatic-variables"><i class="fa fa-check"></i><b>5.3</b> B) Load and Stack Climatic Variables</a></li>
+<li class="chapter" data-level="5.4" data-path="climate-processing.html"><a href="climate-processing.html#c-crop-and-mask-bioclim-layers-to-accessible-area-m-for-each-species"><i class="fa fa-check"></i><b>5.4</b> C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species</a></li>
+<li class="chapter" data-level="5.5" data-path="climate-processing.html"><a href="climate-processing.html#d-vif-selection-for-each-species"><i class="fa fa-check"></i><b>5.5</b> D) VIF Selection for Each Species</a></li>
+<li class="chapter" data-level="5.6" data-path="climate-processing.html"><a href="climate-processing.html#e-correlation-matrix-of-cropped-bioclim-layers-for-each-species"><i class="fa fa-check"></i><b>5.6</b> E) Correlation Matrix of Cropped Bioclim Layers for Each Species</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ecological-niche-modeling.html"><a href="ecological-niche-modeling.html"><i class="fa fa-check"></i><b>6</b> Ecological Niche Modeling</a></li>
+<li class="chapter" data-level="7" data-path="load-required-packages--.html"><a href="load-required-packages--.html"><i class="fa fa-check"></i><b>7</b> Load Required Packages —-</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="load-required-packages--.html"><a href="load-required-packages--.html#a-load-cleaned-occurrence-data-1"><i class="fa fa-check"></i><b>7.1</b> A) Load Cleaned Occurrence Data</a></li>
+<li class="chapter" data-level="7.2" data-path="load-required-packages--.html"><a href="load-required-packages--.html#b-subset-for-single-species"><i class="fa fa-check"></i><b>7.2</b> B) Subset for Single Species</a></li>
+<li class="chapter" data-level="7.3" data-path="load-required-packages--.html"><a href="load-required-packages--.html#c-load-vif-selected-climate-layers"><i class="fa fa-check"></i><b>7.3</b> C) Load VIF-Selected Climate Layers</a></li>
+<li class="chapter" data-level="7.4" data-path="load-required-packages--.html"><a href="load-required-packages--.html#d-run-enmeval-to-generate-models"><i class="fa fa-check"></i><b>7.4</b> D) Run ENMeval to Generate Models</a></li>
+<li class="chapter" data-level="7.5" data-path="load-required-packages--.html"><a href="load-required-packages--.html#e-visualize-model-predictions"><i class="fa fa-check"></i><b>7.5</b> E) Visualize Model Predictions</a></li>
+<li class="chapter" data-level="7.6" data-path="load-required-packages--.html"><a href="load-required-packages--.html#f-calculate-niche-overlap-between-models"><i class="fa fa-check"></i><b>7.6</b> F) Calculate Niche Overlap Between Models</a></li>
+<li class="chapter" data-level="7.7" data-path="load-required-packages--.html"><a href="load-required-packages--.html#g-examine-overall-tuning-results"><i class="fa fa-check"></i><b>7.7</b> G) Examine Overall Tuning Results</a></li>
+<li class="chapter" data-level="7.8" data-path="load-required-packages--.html"><a href="load-required-packages--.html#h-select-optimal-model-based-on-criteria"><i class="fa fa-check"></i><b>7.8</b> H) Select Optimal Model Based on Criteria</a></li>
+<li class="chapter" data-level="7.9" data-path="load-required-packages--.html"><a href="load-required-packages--.html#i-visualize-the-variable-contributions"><i class="fa fa-check"></i><b>7.9</b> I) Visualize the variable contributions</a></li>
+<li class="chapter" data-level="7.10" data-path="load-required-packages--.html"><a href="load-required-packages--.html#j-visualize-response-curves"><i class="fa fa-check"></i><b>7.10</b> J) Visualize Response Curves</a></li>
+<li class="chapter" data-level="7.11" data-path="load-required-packages--.html"><a href="load-required-packages--.html#k-plot-optimal-model"><i class="fa fa-check"></i><b>7.11</b> K) Plot Optimal Model</a></li>
+<li class="chapter" data-level="7.12" data-path="load-required-packages--.html"><a href="load-required-packages--.html#l-loop-through-other-species"><i class="fa fa-check"></i><b>7.12</b> L) Loop Through Other Species</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="null-models.html"><a href="null-models.html"><i class="fa fa-check"></i><b>8</b> Null Models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="null-models.html"><a href="null-models.html#load-required-packages-4"><i class="fa fa-check"></i><b>8.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="8.2" data-path="null-models.html"><a href="null-models.html#a-load-cleaned-occurrence-data-2"><i class="fa fa-check"></i><b>8.2</b> A) Load Cleaned Occurrence Data</a></li>
+<li class="chapter" data-level="8.3" data-path="null-models.html"><a href="null-models.html#b-load-optimal-model-parameters"><i class="fa fa-check"></i><b>8.3</b> B) Load Optimal Model Parameters</a></li>
+<li class="chapter" data-level="8.4" data-path="null-models.html"><a href="null-models.html#c-load-enmeval-object"><i class="fa fa-check"></i><b>8.4</b> C) Load ENMeval Object</a></li>
+<li class="chapter" data-level="8.5" data-path="null-models.html"><a href="null-models.html#d-run-null-model-simulations"><i class="fa fa-check"></i><b>8.5</b> D) Run Null Model Simulations</a></li>
+<li class="chapter" data-level="8.6" data-path="null-models.html"><a href="null-models.html#e-save-null-model-comparison-results"><i class="fa fa-check"></i><b>8.6</b> E) Save Null Model Comparison Results</a></li>
+<li class="chapter" data-level="8.7" data-path="null-models.html"><a href="null-models.html#f-plot-null-model-results"><i class="fa fa-check"></i><b>8.7</b> F) Plot Null Model Results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="enm-processing.html"><a href="enm-processing.html"><i class="fa fa-check"></i><b>9</b> ENM Processing</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="enm-processing.html"><a href="enm-processing.html#load-required-packages-5"><i class="fa fa-check"></i><b>9.1</b> Load Required Packages</a></li>
+<li class="chapter" data-level="9.2" data-path="enm-processing.html"><a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests"><i class="fa fa-check"></i><b>9.2</b> A) Project Models onto Current Climate (Eastern Temperate Forests)</a></li>
+<li class="chapter" data-level="9.3" data-path="enm-processing.html"><a href="enm-processing.html#b-calculate-niche-breadth"><i class="fa fa-check"></i><b>9.3</b> B) Calculate Niche Breadth</a></li>
+<li class="chapter" data-level="9.4" data-path="enm-processing.html"><a href="enm-processing.html#c-calculate-niche-overlap"><i class="fa fa-check"></i><b>9.4</b> C) Calculate Niche Overlap</a></li>
+<li class="chapter" data-level="9.5" data-path="enm-processing.html"><a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap"><i class="fa fa-check"></i><b>9.5</b> D) Test Phylogenetic Signal in Niche Overlap</a></li>
+<li class="chapter" data-level="9.6" data-path="enm-processing.html"><a href="enm-processing.html#e-project-models-onto-future-climate"><i class="fa fa-check"></i><b>9.6</b> E) Project Models onto Future Climate</a></li>
+<li class="chapter" data-level="9.7" data-path="enm-processing.html"><a href="enm-processing.html#f-compare-current-and-future-projections"><i class="fa fa-check"></i><b>9.7</b> F) Compare Current and Future Projections</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Botany ENM Workshops 2026</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="climate-processing" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Climate Processing<a href="climate-processing.html#climate-processing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Purpose:
+- Process climatic raster data and occurrence records for Diapensiaceae SDMs.
+- Includes alpha hull generation, raster cropping, VIF selection, and correlation analysis.</p>
+<div id="load-required-packages-3" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Load Required Packages<a href="climate-processing.html#load-required-packages-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="climate-processing.html#cb32-1" tabindex="-1"></a><span class="fu">library</span>(terra)        <span class="co"># For raster handling</span></span>
+<span id="cb32-2"><a href="climate-processing.html#cb32-2" tabindex="-1"></a><span class="fu">library</span>(sf)           <span class="co"># For vector spatial operations</span></span>
+<span id="cb32-3"><a href="climate-processing.html#cb32-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)      <span class="co"># For plotting</span></span>
+<span id="cb32-4"><a href="climate-processing.html#cb32-4" tabindex="-1"></a><span class="fu">library</span>(rangeBuilder) <span class="co"># For creating alpha hull</span></span>
+<span id="cb32-5"><a href="climate-processing.html#cb32-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)        <span class="co"># For data manipulation</span></span>
+<span id="cb32-6"><a href="climate-processing.html#cb32-6" tabindex="-1"></a><span class="fu">library</span>(usdm)         <span class="co"># For VIF calculations</span></span>
+<span id="cb32-7"><a href="climate-processing.html#cb32-7" tabindex="-1"></a><span class="fu">library</span>(stringr)      <span class="co"># For string operations</span></span>
+<span id="cb32-8"><a href="climate-processing.html#cb32-8" tabindex="-1"></a><span class="fu">library</span>(gridExtra)    <span class="co"># For plotting</span></span></code></pre></div>
+</div>
+<div id="a-load-cleaned-occurrence-data" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> A) Load Cleaned Occurrence Data<a href="climate-processing.html#a-load-cleaned-occurrence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="climate-processing.html#cb33-1" tabindex="-1"></a><span class="co"># Read in cleaned occurrence data with geographic coordinates and species ID</span></span>
+<span id="cb33-2"><a href="climate-processing.html#cb33-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span>
+<span id="cb33-3"><a href="climate-processing.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="climate-processing.html#cb33-4" tabindex="-1"></a><span class="co"># Convert occurrence data to an sf object</span></span>
+<span id="cb33-5"><a href="climate-processing.html#cb33-5" tabindex="-1"></a>alldfsp <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(alldf,</span>
+<span id="cb33-6"><a href="climate-processing.html#cb33-6" tabindex="-1"></a>                    <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>),</span>
+<span id="cb33-7"><a href="climate-processing.html#cb33-7" tabindex="-1"></a>                    <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+</div>
+<div id="b-load-and-stack-climatic-variables" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> B) Load and Stack Climatic Variables<a href="climate-processing.html#b-load-and-stack-climatic-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="climate-processing.html#cb34-1" tabindex="-1"></a><span class="co"># List and sort all .tif files in the BioClim directory</span></span>
+<span id="cb34-2"><a href="climate-processing.html#cb34-2" tabindex="-1"></a>biolist <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/BioClim/&quot;</span>,</span>
+<span id="cb34-3"><a href="climate-processing.html#cb34-3" tabindex="-1"></a>                      <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.tif$&quot;</span>,</span>
+<span id="cb34-4"><a href="climate-processing.html#cb34-4" tabindex="-1"></a>                      <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-5"><a href="climate-processing.html#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="climate-processing.html#cb34-6" tabindex="-1"></a><span class="co"># Stack the raster files into a SpatRaster</span></span>
+<span id="cb34-7"><a href="climate-processing.html#cb34-7" tabindex="-1"></a>biostack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(biolist)</span></code></pre></div>
+</div>
+<div id="c-crop-and-mask-bioclim-layers-to-accessible-area-m-for-each-species" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species<a href="climate-processing.html#c-crop-and-mask-bioclim-layers-to-accessible-area-m-for-each-species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="climate-processing.html#cb35-1" tabindex="-1"></a><span class="co"># Define base output directory for cropped rasters</span></span>
+<span id="cb35-2"><a href="climate-processing.html#cb35-2" tabindex="-1"></a>dir  <span class="ot">&lt;-</span> <span class="st">&quot;data/04_climate_processing/Cropped&quot;</span></span>
+<span id="cb35-3"><a href="climate-processing.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="climate-processing.html#cb35-4" tabindex="-1"></a><span class="co"># Loop through each unique species in the occurrence data</span></span>
+<span id="cb35-5"><a href="climate-processing.html#cb35-5" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> <span class="fu">unique</span>(alldf<span class="sc">$</span>accepted_name)) {</span>
+<span id="cb35-6"><a href="climate-processing.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="climate-processing.html#cb35-7" tabindex="-1"></a>  <span class="co"># Print current species for progress tracking</span></span>
+<span id="cb35-8"><a href="climate-processing.html#cb35-8" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;Processing species: &quot;</span>, species)</span>
+<span id="cb35-9"><a href="climate-processing.html#cb35-9" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="climate-processing.html#cb35-10" tabindex="-1"></a>  <span class="co"># Subset occurrence data for this species</span></span>
+<span id="cb35-11"><a href="climate-processing.html#cb35-11" tabindex="-1"></a>  species_df <span class="ot">&lt;-</span> alldf <span class="sc">%&gt;%</span></span>
+<span id="cb35-12"><a href="climate-processing.html#cb35-12" tabindex="-1"></a>    <span class="fu">filter</span>(accepted_name <span class="sc">==</span> species)</span>
+<span id="cb35-13"><a href="climate-processing.html#cb35-13" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="climate-processing.html#cb35-14" tabindex="-1"></a>  <span class="co"># Convert species occurrences to sf</span></span>
+<span id="cb35-15"><a href="climate-processing.html#cb35-15" tabindex="-1"></a>  species_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(species_df,</span>
+<span id="cb35-16"><a href="climate-processing.html#cb35-16" tabindex="-1"></a>                         <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>),</span>
+<span id="cb35-17"><a href="climate-processing.html#cb35-17" tabindex="-1"></a>                         <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb35-18"><a href="climate-processing.html#cb35-18" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="climate-processing.html#cb35-19" tabindex="-1"></a>  <span class="co"># Run alpha hull via rangeBuilder</span></span>
+<span id="cb35-20"><a href="climate-processing.html#cb35-20" tabindex="-1"></a>  hull <span class="ot">&lt;-</span> rangeBuilder<span class="sc">::</span><span class="fu">getDynamicAlphaHull</span>(</span>
+<span id="cb35-21"><a href="climate-processing.html#cb35-21" tabindex="-1"></a>    <span class="at">x =</span> species_df,</span>
+<span id="cb35-22"><a href="climate-processing.html#cb35-22" tabindex="-1"></a>    <span class="at">coordHeaders =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>),</span>
+<span id="cb35-23"><a href="climate-processing.html#cb35-23" tabindex="-1"></a>    <span class="at">fraction =</span> <span class="dv">1</span>,</span>
+<span id="cb35-24"><a href="climate-processing.html#cb35-24" tabindex="-1"></a>    <span class="at">partCount =</span> <span class="dv">1</span>,</span>
+<span id="cb35-25"><a href="climate-processing.html#cb35-25" tabindex="-1"></a>    <span class="at">initialAlpha =</span> <span class="dv">20</span>,</span>
+<span id="cb35-26"><a href="climate-processing.html#cb35-26" tabindex="-1"></a>    <span class="at">clipToCoast =</span> <span class="st">&quot;terrestrial&quot;</span>,</span>
+<span id="cb35-27"><a href="climate-processing.html#cb35-27" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb35-28"><a href="climate-processing.html#cb35-28" tabindex="-1"></a>  )</span>
+<span id="cb35-29"><a href="climate-processing.html#cb35-29" tabindex="-1"></a></span>
+<span id="cb35-30"><a href="climate-processing.html#cb35-30" tabindex="-1"></a>  <span class="co"># Convert hull to sf</span></span>
+<span id="cb35-31"><a href="climate-processing.html#cb35-31" tabindex="-1"></a>  hull_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(hull[[<span class="dv">1</span>]])</span>
+<span id="cb35-32"><a href="climate-processing.html#cb35-32" tabindex="-1"></a></span>
+<span id="cb35-33"><a href="climate-processing.html#cb35-33" tabindex="-1"></a>  <span class="co"># Transform hull and points to equal-area projection</span></span>
+<span id="cb35-34"><a href="climate-processing.html#cb35-34" tabindex="-1"></a>  proj <span class="ot">&lt;-</span> <span class="st">&quot;+proj=cea +lat_ts=0 +lon_0=0&quot;</span></span>
+<span id="cb35-35"><a href="climate-processing.html#cb35-35" tabindex="-1"></a>  hull_sf_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(hull_sf, <span class="at">crs =</span> proj)</span>
+<span id="cb35-36"><a href="climate-processing.html#cb35-36" tabindex="-1"></a>  species_sf_proj <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(species_sf, <span class="at">crs =</span> proj)</span>
+<span id="cb35-37"><a href="climate-processing.html#cb35-37" tabindex="-1"></a></span>
+<span id="cb35-38"><a href="climate-processing.html#cb35-38" tabindex="-1"></a>  <span class="co"># Calculate nearest-neighbor distances</span></span>
+<span id="cb35-39"><a href="climate-processing.html#cb35-39" tabindex="-1"></a>  dist_matrix <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(species_sf_proj)</span>
+<span id="cb35-40"><a href="climate-processing.html#cb35-40" tabindex="-1"></a>  nearest_neighbor_dists <span class="ot">&lt;-</span> <span class="fu">apply</span>(dist_matrix, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">sort</span>(x)[<span class="dv">2</span>])</span>
+<span id="cb35-41"><a href="climate-processing.html#cb35-41" tabindex="-1"></a>  buffer_distance <span class="ot">&lt;-</span> <span class="fu">quantile</span>(nearest_neighbor_dists, <span class="at">probs =</span> <span class="fl">0.80</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-42"><a href="climate-processing.html#cb35-42" tabindex="-1"></a></span>
+<span id="cb35-43"><a href="climate-processing.html#cb35-43" tabindex="-1"></a>  <span class="co"># Buffer the hull</span></span>
+<span id="cb35-44"><a href="climate-processing.html#cb35-44" tabindex="-1"></a>  buffer_proj <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(hull_sf_proj, <span class="at">dist =</span> buffer_distance)</span>
+<span id="cb35-45"><a href="climate-processing.html#cb35-45" tabindex="-1"></a></span>
+<span id="cb35-46"><a href="climate-processing.html#cb35-46" tabindex="-1"></a>  <span class="co"># Union polygons in case of multiple pieces</span></span>
+<span id="cb35-47"><a href="climate-processing.html#cb35-47" tabindex="-1"></a>  buffer_proj <span class="ot">&lt;-</span> <span class="fu">st_union</span>(buffer_proj)</span>
+<span id="cb35-48"><a href="climate-processing.html#cb35-48" tabindex="-1"></a></span>
+<span id="cb35-49"><a href="climate-processing.html#cb35-49" tabindex="-1"></a>  <span class="co"># Transform both hull and buffered hull back to WGS84 for plotting</span></span>
+<span id="cb35-50"><a href="climate-processing.html#cb35-50" tabindex="-1"></a>  hull_sf_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(hull_sf_proj, <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb35-51"><a href="climate-processing.html#cb35-51" tabindex="-1"></a>  buffer_wgs84 <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(buffer_proj, <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb35-52"><a href="climate-processing.html#cb35-52" tabindex="-1"></a></span>
+<span id="cb35-53"><a href="climate-processing.html#cb35-53" tabindex="-1"></a>  <span class="co"># plot hull before buffering</span></span>
+<span id="cb35-54"><a href="climate-processing.html#cb35-54" tabindex="-1"></a>  p_before <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-55"><a href="climate-processing.html#cb35-55" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hull_sf_wgs84, <span class="at">fill =</span> <span class="st">&quot;gray70&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb35-56"><a href="climate-processing.html#cb35-56" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> species_sf, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb35-57"><a href="climate-processing.html#cb35-57" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb35-58"><a href="climate-processing.html#cb35-58" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;Alpha Hull (No Buffer) -&quot;</span>, species))</span>
+<span id="cb35-59"><a href="climate-processing.html#cb35-59" tabindex="-1"></a></span>
+<span id="cb35-60"><a href="climate-processing.html#cb35-60" tabindex="-1"></a>  <span class="co"># plot after buffering alpha hull</span></span>
+<span id="cb35-61"><a href="climate-processing.html#cb35-61" tabindex="-1"></a>  p_after <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-62"><a href="climate-processing.html#cb35-62" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> buffer_wgs84, <span class="at">fill =</span> <span class="st">&quot;gray70&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb35-63"><a href="climate-processing.html#cb35-63" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> species_sf, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb35-64"><a href="climate-processing.html#cb35-64" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb35-65"><a href="climate-processing.html#cb35-65" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;Buffered Hull -&quot;</span>, species))</span>
+<span id="cb35-66"><a href="climate-processing.html#cb35-66" tabindex="-1"></a></span>
+<span id="cb35-67"><a href="climate-processing.html#cb35-67" tabindex="-1"></a>  gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p_before, p_after, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb35-68"><a href="climate-processing.html#cb35-68" tabindex="-1"></a></span>
+<span id="cb35-69"><a href="climate-processing.html#cb35-69" tabindex="-1"></a>  <span class="co"># Convert buffered area to terra SpatVector</span></span>
+<span id="cb35-70"><a href="climate-processing.html#cb35-70" tabindex="-1"></a>  buffer_vect <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">vect</span>(buffer_wgs84)</span>
+<span id="cb35-71"><a href="climate-processing.html#cb35-71" tabindex="-1"></a></span>
+<span id="cb35-72"><a href="climate-processing.html#cb35-72" tabindex="-1"></a>  <span class="co"># Define output directory for this species</span></span>
+<span id="cb35-73"><a href="climate-processing.html#cb35-73" tabindex="-1"></a>  spec <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, species)</span>
+<span id="cb35-74"><a href="climate-processing.html#cb35-74" tabindex="-1"></a>  species_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(dir, spec)</span>
+<span id="cb35-75"><a href="climate-processing.html#cb35-75" tabindex="-1"></a>  <span class="fu">dir.create</span>(species_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb35-76"><a href="climate-processing.html#cb35-76" tabindex="-1"></a></span>
+<span id="cb35-77"><a href="climate-processing.html#cb35-77" tabindex="-1"></a>  <span class="co"># Loop through each raster layer and crop/mask to buffered area</span></span>
+<span id="cb35-78"><a href="climate-processing.html#cb35-78" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(biolist)) {</span>
+<span id="cb35-79"><a href="climate-processing.html#cb35-79" tabindex="-1"></a></span>
+<span id="cb35-80"><a href="climate-processing.html#cb35-80" tabindex="-1"></a>    rast <span class="ot">&lt;-</span> biostack[[i]]</span>
+<span id="cb35-81"><a href="climate-processing.html#cb35-81" tabindex="-1"></a></span>
+<span id="cb35-82"><a href="climate-processing.html#cb35-82" tabindex="-1"></a>    <span class="co"># Crop raster to extent</span></span>
+<span id="cb35-83"><a href="climate-processing.html#cb35-83" tabindex="-1"></a>    rast_crop <span class="ot">&lt;-</span> <span class="fu">crop</span>(rast, buffer_vect)</span>
+<span id="cb35-84"><a href="climate-processing.html#cb35-84" tabindex="-1"></a></span>
+<span id="cb35-85"><a href="climate-processing.html#cb35-85" tabindex="-1"></a>    <span class="co"># Mask raster to buffered hull shape</span></span>
+<span id="cb35-86"><a href="climate-processing.html#cb35-86" tabindex="-1"></a>    rast_mask <span class="ot">&lt;-</span> <span class="fu">mask</span>(rast_crop, buffer_vect)</span>
+<span id="cb35-87"><a href="climate-processing.html#cb35-87" tabindex="-1"></a></span>
+<span id="cb35-88"><a href="climate-processing.html#cb35-88" tabindex="-1"></a>    <span class="co"># Define output file name</span></span>
+<span id="cb35-89"><a href="climate-processing.html#cb35-89" tabindex="-1"></a>    layer_name <span class="ot">&lt;-</span> <span class="fu">names</span>(rast)</span>
+<span id="cb35-90"><a href="climate-processing.html#cb35-90" tabindex="-1"></a>    outfile <span class="ot">&lt;-</span> <span class="fu">file.path</span>(species_dir, <span class="fu">paste0</span>(layer_name, <span class="st">&quot;.tif&quot;</span>))</span>
+<span id="cb35-91"><a href="climate-processing.html#cb35-91" tabindex="-1"></a></span>
+<span id="cb35-92"><a href="climate-processing.html#cb35-92" tabindex="-1"></a>    <span class="co"># Write cropped raster</span></span>
+<span id="cb35-93"><a href="climate-processing.html#cb35-93" tabindex="-1"></a>    <span class="fu">writeRaster</span>(rast_mask,outfile,<span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-94"><a href="climate-processing.html#cb35-94" tabindex="-1"></a></span>
+<span id="cb35-95"><a href="climate-processing.html#cb35-95" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;  Cropped and saved: &quot;</span>, outfile)</span>
+<span id="cb35-96"><a href="climate-processing.html#cb35-96" tabindex="-1"></a>  }</span>
+<span id="cb35-97"><a href="climate-processing.html#cb35-97" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="d-vif-selection-for-each-species" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> D) VIF Selection for Each Species<a href="climate-processing.html#d-vif-selection-for-each-species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="climate-processing.html#cb36-1" tabindex="-1"></a><span class="co"># Loop through each species</span></span>
+<span id="cb36-2"><a href="climate-processing.html#cb36-2" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> <span class="fu">unique</span>(alldf<span class="sc">$</span>accepted_name)) {</span>
+<span id="cb36-3"><a href="climate-processing.html#cb36-3" tabindex="-1"></a>  spec <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, species)</span>
+<span id="cb36-4"><a href="climate-processing.html#cb36-4" tabindex="-1"></a>  spec_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(dir, spec)</span>
+<span id="cb36-5"><a href="climate-processing.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="climate-processing.html#cb36-6" tabindex="-1"></a>  <span class="co"># Read in species cropped rasters and stack them</span></span>
+<span id="cb36-7"><a href="climate-processing.html#cb36-7" tabindex="-1"></a>  cropped_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(spec_dir,</span>
+<span id="cb36-8"><a href="climate-processing.html#cb36-8" tabindex="-1"></a>                              <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.tif$&quot;</span>,</span>
+<span id="cb36-9"><a href="climate-processing.html#cb36-9" tabindex="-1"></a>                              <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-10"><a href="climate-processing.html#cb36-10" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="climate-processing.html#cb36-11" tabindex="-1"></a>  species_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(cropped_files)</span>
+<span id="cb36-12"><a href="climate-processing.html#cb36-12" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="climate-processing.html#cb36-13" tabindex="-1"></a>  <span class="co"># Calculate VIF and exclude collinear variables</span></span>
+<span id="cb36-14"><a href="climate-processing.html#cb36-14" tabindex="-1"></a>  vif_result <span class="ot">&lt;-</span> usdm<span class="sc">::</span><span class="fu">vifstep</span>(species_stack, <span class="at">th =</span> <span class="dv">10</span>)</span>
+<span id="cb36-15"><a href="climate-processing.html#cb36-15" tabindex="-1"></a>  <span class="fu">message</span>(<span class="st">&quot;VIF calculated for species: &quot;</span>, species)</span>
+<span id="cb36-16"><a href="climate-processing.html#cb36-16" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="climate-processing.html#cb36-17" tabindex="-1"></a>  reduced_stack <span class="ot">&lt;-</span> <span class="fu">exclude</span>(species_stack, vif_result)</span>
+<span id="cb36-18"><a href="climate-processing.html#cb36-18" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="climate-processing.html#cb36-19" tabindex="-1"></a>  <span class="co"># Create a folder for VIF-selected layers</span></span>
+<span id="cb36-20"><a href="climate-processing.html#cb36-20" tabindex="-1"></a>  vif_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(spec_dir, <span class="st">&quot;VIF&quot;</span>)</span>
+<span id="cb36-21"><a href="climate-processing.html#cb36-21" tabindex="-1"></a>  <span class="fu">dir.create</span>(vif_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb36-22"><a href="climate-processing.html#cb36-22" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="climate-processing.html#cb36-23" tabindex="-1"></a>  <span class="co"># Save each retained raster layer</span></span>
+<span id="cb36-24"><a href="climate-processing.html#cb36-24" tabindex="-1"></a>  <span class="cf">for</span> (layer_name <span class="cf">in</span> <span class="fu">names</span>(reduced_stack)) {</span>
+<span id="cb36-25"><a href="climate-processing.html#cb36-25" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="climate-processing.html#cb36-26" tabindex="-1"></a>    r_layer <span class="ot">&lt;-</span> reduced_stack[[layer_name]]</span>
+<span id="cb36-27"><a href="climate-processing.html#cb36-27" tabindex="-1"></a></span>
+<span id="cb36-28"><a href="climate-processing.html#cb36-28" tabindex="-1"></a>    out_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(vif_dir, <span class="fu">paste0</span>(layer_name, <span class="st">&quot;.tif&quot;</span>))</span>
+<span id="cb36-29"><a href="climate-processing.html#cb36-29" tabindex="-1"></a></span>
+<span id="cb36-30"><a href="climate-processing.html#cb36-30" tabindex="-1"></a>    terra<span class="sc">::</span><span class="fu">writeRaster</span>(r_layer,</span>
+<span id="cb36-31"><a href="climate-processing.html#cb36-31" tabindex="-1"></a>                       out_file,</span>
+<span id="cb36-32"><a href="climate-processing.html#cb36-32" tabindex="-1"></a>                       <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-33"><a href="climate-processing.html#cb36-33" tabindex="-1"></a></span>
+<span id="cb36-34"><a href="climate-processing.html#cb36-34" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Saved layer: &quot;</span>, out_file)</span>
+<span id="cb36-35"><a href="climate-processing.html#cb36-35" tabindex="-1"></a>  }</span>
+<span id="cb36-36"><a href="climate-processing.html#cb36-36" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="e-correlation-matrix-of-cropped-bioclim-layers-for-each-species" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> E) Correlation Matrix of Cropped Bioclim Layers for Each Species<a href="climate-processing.html#e-correlation-matrix-of-cropped-bioclim-layers-for-each-species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="climate-processing.html#cb37-1" tabindex="-1"></a><span class="co"># List species folders in the cropped directory</span></span>
+<span id="cb37-2"><a href="climate-processing.html#cb37-2" tabindex="-1"></a>species_dirs <span class="ot">&lt;-</span> <span class="fu">list.dirs</span>(dir, <span class="at">recursive =</span> <span class="cn">FALSE</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-3"><a href="climate-processing.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="climate-processing.html#cb37-4" tabindex="-1"></a><span class="co"># Loop through each species folder</span></span>
+<span id="cb37-5"><a href="climate-processing.html#cb37-5" tabindex="-1"></a><span class="cf">for</span> (species_dir <span class="cf">in</span> species_dirs) {</span>
+<span id="cb37-6"><a href="climate-processing.html#cb37-6" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="climate-processing.html#cb37-7" tabindex="-1"></a>  <span class="co"># Extract species name from folder path</span></span>
+<span id="cb37-8"><a href="climate-processing.html#cb37-8" tabindex="-1"></a>  species_name <span class="ot">&lt;-</span> <span class="fu">basename</span>(species_dir)</span>
+<span id="cb37-9"><a href="climate-processing.html#cb37-9" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="climate-processing.html#cb37-10" tabindex="-1"></a>  <span class="co"># List all cropped raster files for this species</span></span>
+<span id="cb37-11"><a href="climate-processing.html#cb37-11" tabindex="-1"></a>  cropped_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(species_dir,</span>
+<span id="cb37-12"><a href="climate-processing.html#cb37-12" tabindex="-1"></a>                              <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.tif$&quot;</span>,</span>
+<span id="cb37-13"><a href="climate-processing.html#cb37-13" tabindex="-1"></a>                              <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-14"><a href="climate-processing.html#cb37-14" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="climate-processing.html#cb37-15" tabindex="-1"></a>  <span class="co"># Stack the rasters for this species</span></span>
+<span id="cb37-16"><a href="climate-processing.html#cb37-16" tabindex="-1"></a>  cropped_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(cropped_files)</span>
+<span id="cb37-17"><a href="climate-processing.html#cb37-17" tabindex="-1"></a></span>
+<span id="cb37-18"><a href="climate-processing.html#cb37-18" tabindex="-1"></a>  <span class="co"># Calculate correlation matrix</span></span>
+<span id="cb37-19"><a href="climate-processing.html#cb37-19" tabindex="-1"></a>  corr <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">layerCor</span>(cropped_stack, <span class="at">fun =</span> <span class="st">&quot;cor&quot;</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-20"><a href="climate-processing.html#cb37-20" tabindex="-1"></a></span>
+<span id="cb37-21"><a href="climate-processing.html#cb37-21" tabindex="-1"></a>  <span class="co"># Extract absolute Pearson correlation values</span></span>
+<span id="cb37-22"><a href="climate-processing.html#cb37-22" tabindex="-1"></a>  cor_abs <span class="ot">&lt;-</span> <span class="fu">abs</span>(corr<span class="sc">$</span>correlation)</span>
+<span id="cb37-23"><a href="climate-processing.html#cb37-23" tabindex="-1"></a></span>
+<span id="cb37-24"><a href="climate-processing.html#cb37-24" tabindex="-1"></a>  <span class="co"># Define output CSV path</span></span>
+<span id="cb37-25"><a href="climate-processing.html#cb37-25" tabindex="-1"></a>  corr_outfile <span class="ot">&lt;-</span> <span class="fu">file.path</span>(species_dir,<span class="fu">paste0</span>(<span class="st">&quot;correlationBioclim_&quot;</span>, species_name, <span class="st">&quot;.csv&quot;</span>))</span>
+<span id="cb37-26"><a href="climate-processing.html#cb37-26" tabindex="-1"></a></span>
+<span id="cb37-27"><a href="climate-processing.html#cb37-27" tabindex="-1"></a>  <span class="co"># Write correlation matrix to CSV</span></span>
+<span id="cb37-28"><a href="climate-processing.html#cb37-28" tabindex="-1"></a>  <span class="fu">write.csv</span>(cor_abs,corr_outfile,<span class="at">row.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-29"><a href="climate-processing.html#cb37-29" tabindex="-1"></a></span>
+<span id="cb37-30"><a href="climate-processing.html#cb37-30" tabindex="-1"></a>}</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-exploration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ecological-niche-modeling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

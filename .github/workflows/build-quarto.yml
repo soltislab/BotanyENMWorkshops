@@ -26,6 +26,10 @@ jobs:
         run: |
           install.packages(c("stringr"))
 
+      - name: Install WebR
+        run: |
+          quarto add coatless/quarto-webr --no-prompt
+
       - name: Convert scripts
         shell: Rscript {0}
         run: |

@@ -6,6 +6,14 @@ convert_script <- function(infile, outfile){
 
   in_chunk <- FALSE
   chunk <- 1
+  chunk_prefix <- paste0(
+    "script_",
+    gsub(
+      "[^A-Za-z0-9]+",
+      "_",
+      tools::file_path_sans_ext(basename(infile))
+    )
+  )
 
   open_chunk <- function(label){
     c(
@@ -91,7 +99,7 @@ convert_script <- function(infile, outfile){
 
     if(!in_chunk){
 
-      label <- paste0("chunk", chunk)
+      label <- paste0(chunk_prefix, "_chunk", chunk)
 
       out <- c(out, open_chunk(label))
 

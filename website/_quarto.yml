@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: _site
 
+filters:
+  - webr
+
 website:
   title: "Botany ENM Workshops"
 

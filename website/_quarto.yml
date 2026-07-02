@@ -10,14 +10,14 @@ website:
     search: true
     contents:
       - index.qmd
-      - 00_Setupqmd
-      - 01_Data_Downloadsqmd
-      - 02_Data_Cleaningqmd
-      - 03_Data_Explorationqmd
-      - 04_AccessibleArea_VariableSelectionqmd
-      - 05_Ecological_Niche_Modelingqmd
-      - 06_Null_ENMsqmd
-      - 07_ENM_Processingqmd
+      - 00_Setup.qmd
+      - 01_Data_Downloads.qmd
+      - 02_Data_Cleaning.qmd
+      - 03_Data_Exploration.qmd
+      - 04_AccessibleArea_VariableSelection.qmd
+      - 05_Ecological_Niche_Modeling.qmd
+      - 06_Null_ENMs.qmd
+      - 07_ENM_Processing.qmd
 
 format:
   html:

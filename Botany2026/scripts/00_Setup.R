@@ -30,7 +30,7 @@ list_of_packages <- c(
   "multcompView", "usdm", "predicts", "rJava"
 )
 
-## ---- Install Missing CRAN Packages ----
+## Install Missing CRAN Packages ----
 # Identify any packages from the list not currently installed.
 new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
 
@@ -78,7 +78,7 @@ for (repo in github_repos) {
   }
 }
 
-# Try loading GitHub packages.
+## Try loading GitHub packages
 github_packages <- c("ggbiplot")
 github_loaded <- sapply(github_packages, require, character.only = TRUE)
 

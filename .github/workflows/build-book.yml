@@ -38,7 +38,8 @@ jobs:
       - name: Build book
         shell: Rscript {0}
         run: |
-          bookdown::render_book("book/index.Rmd")
+          setwd("book")
+          bookdown::render_book("index.Rmd")
 
       - name: Publish to bookdown branch
         run: |

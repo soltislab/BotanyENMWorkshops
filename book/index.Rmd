@@ -7,7 +7,6 @@ documentclass: book
 output:
   bookdown::gitbook:
     css: style.css
-output: bookdown::gitbook
 ---
 
 # Welcome {-}

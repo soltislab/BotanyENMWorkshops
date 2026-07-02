@@ -1,0 +1,12 @@
+book_filename: "Botany2026"
+
+rmd_files:
+  - index.Rmd
+  - chapters/00_Setup.Rmd
+  - chapters/01_*.Rmd
+  - chapters/02_*.Rmd
+  - chapters/03_*.Rmd
+  - chapters/04_*.Rmd
+  - chapters/05_*.Rmd
+  - chapters/06_*.Rmd
+  - chapters/07_*.Rmd

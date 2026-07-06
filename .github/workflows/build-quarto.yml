@@ -27,6 +27,7 @@ jobs:
           install.packages(c("stringr"))
 
       - name: Install WebR
+        working-directory: website
         run: |
           quarto add coatless/quarto-webr --no-prompt
 

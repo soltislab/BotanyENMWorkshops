@@ -1,8 +1,8 @@
 # Data Exploration
 #
-# Purpose:
-#   - Analyze climatic variables associated with species occurrences using PCA and ANOVA.
-#   - Includes PCA loadings extraction and plots for top contributors to PC1 and PC2.
+### Purpose:
+###   - Analyze climatic variables associated with species occurrences using PCA and ANOVA.
+###   - Includes PCA loadings extraction and plots for top contributors to PC1 and PC2.
 
 
 ## Load Required Packages ----
@@ -16,7 +16,7 @@ library(multcompView)   # For compact letter display (Tukey HSD)
 library(gridExtra)      # For combining plots
 
 ## A) Load Cleaned Data ----
-# Read in cleaned occurrence data with geographic coordinates and species ID
+### Read in cleaned occurrence data with geographic coordinates and species ID
 alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
 
 ## B) Load and Stack Climatic Variables from WorldClim ----

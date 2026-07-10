@@ -28,14 +28,14 @@ convert_script <- function(infile, outfile){
   }
 
   ## ---------------------------------------------
-  ## Convert comment lines to Markdown
+  ## Convert ### comments to Markdown
   ## ---------------------------------------------
 
   comment_to_md <- function(x){
 
-    txt <- sub("^# ?", "", x)
+    txt <- sub("^### ?", "", x)
 
-    # blank comment
+    # blank documentation line
     if(grepl("^\\s*$", txt))
       return("")
 
@@ -60,12 +60,14 @@ convert_script <- function(infile, outfile){
 
     if(i == 1 && grepl("^# ", line)){
 
-      out <- c(out, paste0("# ", sub("^# ", "", line)), "")
+      out <- c(out,
+               paste0("# ", sub("^# ", "", line)),
+               "")
 
       i <- i + 1
 
       while(i <= length(lines) &&
-            grepl("^#", lines[i])){
+            grepl("^###", lines[i])){
 
         out <- c(out, comment_to_md(lines[i]))
 
@@ -100,7 +102,7 @@ convert_script <- function(infile, outfile){
       i <- i + 1
 
       while(i <= length(lines) &&
-            grepl("^#", lines[i])){
+            grepl("^###", lines[i])){
 
         out <- c(out, comment_to_md(lines[i]))
 

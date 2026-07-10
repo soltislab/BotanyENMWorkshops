@@ -1,9 +1,9 @@
 # Download Occurrence Data
 #
-# Purpose:
-#   - Download and preview species occurrence records using iDigBio and gatoRs.
-#
-# Created by ML Gaynor.
+### Purpose:
+###   - Download and preview species occurrence records using iDigBio and gatoRs.
+
+### Created by ML Gaynor.
 
 ## Load Required Packages ----
 library(ridigbio)     # Interface to iDigBio API
@@ -11,13 +11,16 @@ library(gatoRs)       # Unified taxonomic/occurrence tools
 library(leaflet)      # Interactive mapping
 
 ## A) Download from iDigBio ----
-# Here we use `ridigbio` to download data.
+# here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.
 
 # Search for specific species (Galax urceolata)
 iDigBio_GU <- idig_search_records(rq = list(scientificname = "Galax urceolata"))
 
 # Search for all Diapensiaceae occurrences (limit to 1000 for example)
 iDigBio_GU_family <- idig_search_records(rq = list(family = "Diapensiaceae"), limit = 1000)
+
+
+# search the API with a geographic bounding box (e.g. Eastern USA extent)
 
 # Search with a geographic bounding box (e.g., eastern USA extent)
 rq_input <- list(

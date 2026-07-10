@@ -1,10 +1,9 @@
 #  Setup
-#
-# Purpose:
 
-# -Install all R packages required for ENM workflows.
-# -Check that all packages load successfully.
-# -Install any needed GitHub packages.
+### Purpose:
+### - install all R packages required for ENM workflows.
+### - check that all packages load successfully.
+### - install any needed GitHub packages.
 
 ## Download Zenodo Data ----
 source("scripts/tools/ZenodoDownload.R")
@@ -84,7 +83,7 @@ for (repo in github_repos) {
   }
 }
 
-## Try loading GitHub packages
+# Try loading GitHub packages
 github_packages <- c("ggbiplot")
 github_loaded <- sapply(github_packages, require, character.only = TRUE)
 

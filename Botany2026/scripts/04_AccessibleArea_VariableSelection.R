@@ -1,10 +1,10 @@
-# ClimateProcessing_Updated.R
-# ---------------------------------------------------------------
-# Purpose: Process climatic raster data and occurrence records for Diapensiaceae SDMs.
-# Includes alpha hull generation, raster cropping, VIF selection, and correlation analysis.
-# ---------------------------------------------------------------
+# Climate Processing
+#
+### Purpose:
+### - Process climatic raster data and occurrence records for Diapensiaceae SDMs.
+### - Includes alpha hull generation, raster cropping, VIF selection, and correlation analysis.
 
-## ---- Load Required Packages ----
+##  Load Required Packages ----
 library(terra)        # For raster handling
 library(sf)           # For vector spatial operations
 library(ggplot2)      # For plotting
@@ -14,7 +14,7 @@ library(usdm)         # For VIF calculations
 library(stringr)      # For string operations
 library(gridExtra)    # For plotting
 
-## ---- A) Load Cleaned Occurrence Data ----
+## A) Load Cleaned Occurrence Data ----
 
 # Read in cleaned occurrence data with geographic coordinates and species ID
 alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
@@ -24,7 +24,7 @@ alldfsp <- st_as_sf(alldf,
                     coords = c("longitude", "latitude"),
                     crs = 4326)
 
-## ---- B) Load and Stack Climatic Variables ----
+## B) Load and Stack Climatic Variables ----
 
 # List and sort all .tif files in the BioClim directory
 biolist <- list.files("data/04_climate_processing/BioClim/",
@@ -34,7 +34,7 @@ biolist <- list.files("data/04_climate_processing/BioClim/",
 # Stack the raster files into a SpatRaster
 biostack <- terra::rast(biolist)
 
-## ---- C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species ----
+## C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species ----
 
 # Define base output directory for cropped rasters
 dir  <- "data/04_climate_processing/Cropped"
@@ -134,7 +134,7 @@ for (species in unique(alldf$accepted_name)) {
   }
 }
 
-## ---- D) VIF Selection for Each Species ----
+## D) VIF Selection for Each Species ----
 
 # Loop through each species
 for (species in unique(alldf$accepted_name)) {
@@ -173,7 +173,7 @@ for (species in unique(alldf$accepted_name)) {
   }
 }
 
-## ---- E) Correlation Matrix of Cropped Bioclim Layers for Each Species ----
+## E) Correlation Matrix of Cropped Bioclim Layers for Each Species ----
 
 # List species folders in the cropped directory
 species_dirs <- list.dirs(dir, recursive = FALSE, full.names = TRUE)

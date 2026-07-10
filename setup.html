@@ -251,11 +251,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="setup" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Setup<a href="setup.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Purpose:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1" tabindex="-1"></a><span class="co">#  - Install all R packages required for ENM workflows.</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1" tabindex="-1"></a><span class="co"># - Install all R packages required for ENM workflows.</span></span>
 <span id="cb1-2"><a href="setup.html#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="setup.html#cb1-3" tabindex="-1"></a><span class="co">#  - Check that all packages load successfully.</span></span>
+<span id="cb1-3"><a href="setup.html#cb1-3" tabindex="-1"></a><span class="co"># - Check that all packages load successfully.</span></span>
 <span id="cb1-4"><a href="setup.html#cb1-4" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="setup.html#cb1-5" tabindex="-1"></a><span class="co">#  - Install any needed GitHub packages.</span></span></code></pre></div>
+<span id="cb1-5"><a href="setup.html#cb1-5" tabindex="-1"></a><span class="co"># - Install any needed GitHub packages.</span></span>
+<span id="cb1-6"><a href="setup.html#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="setup.html#cb1-7" tabindex="-1"></a><span class="do">## Download Zenodo Data</span></span>
+<span id="cb1-8"><a href="setup.html#cb1-8" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;scripts/tools/ZenodoDownload.R&quot;</span>)</span>
+<span id="cb1-9"><a href="setup.html#cb1-9" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="fu">c</span>(<span class="st">&quot;tools&quot;</span>, <span class="st">&quot;httr2&quot;</span>, <span class="st">&quot;utils&quot;</span>, <span class="st">&quot;magrittr&quot;</span>))</span>
+<span id="cb1-10"><a href="setup.html#cb1-10" tabindex="-1"></a><span class="fu">ZenodoDownload</span>()</span></code></pre></div>
 <div id="install-required-cran-packages" class="section level2 hasAnchor" number="1.1">
 <h2><span class="header-section-number">1.1</span> Install required CRAN packages<a href="setup.html#install-required-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>

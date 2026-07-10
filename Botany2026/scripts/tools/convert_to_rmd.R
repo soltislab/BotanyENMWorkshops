@@ -6,6 +6,7 @@ convert_script <- function(infile, outfile){
 
   in_chunk <- FALSE
   chunk <- 1
+
   chunk_prefix <- paste0(
     "script_",
     gsub(
@@ -26,29 +27,47 @@ convert_script <- function(infile, outfile){
     c("", "```", "")
   }
 
+  ## ---------------------------------------------
+  ## Convert comment lines to Markdown
+  ## ---------------------------------------------
+
+  comment_to_md <- function(x){
+
+    txt <- sub("^# ?", "", x)
+
+    # blank comment
+    if(grepl("^\\s*$", txt))
+      return("")
+
+    # bullet list
+    txt <- sub("^\\s*-\\s+", "- ", txt)
+
+    # numbered list
+    txt <- sub("^\\s*([0-9]+\\.)\\s+", "\\1 ", txt)
+
+    txt
+  }
+
   i <- 1
 
   while(i <= length(lines)){
 
     line <- lines[i]
 
-    ## -------------------------------------------------
+    ## ---------------------------------------------
     ## First title
-    ## -------------------------------------------------
+    ## ---------------------------------------------
 
     if(i == 1 && grepl("^# ", line)){
 
-      out <- c(out, sub("^# ", "# ", line))
-      out <- c(out, "")
+      out <- c(out, paste0("# ", sub("^# ", "", line)), "")
 
       i <- i + 1
 
       while(i <= length(lines) &&
-            grepl("^# ?", lines[i])){
+            grepl("^#", lines[i])){
 
-        txt <- sub("^# ?", "", lines[i])
-
-        out <- c(out, txt)
+        out <- c(out, comment_to_md(lines[i]))
 
         i <- i + 1
       }
@@ -58,15 +77,16 @@ convert_script <- function(infile, outfile){
       next
     }
 
-    ## -------------------------------------------------
-    ## Section heading
-    ## -------------------------------------------------
+    ## ---------------------------------------------
+    ## Section headings
+    ## ---------------------------------------------
 
     if(grepl("^## .*----$", line)){
 
       if(in_chunk){
 
         out <- c(out, close_chunk())
+
         in_chunk <- FALSE
       }
 
@@ -80,10 +100,9 @@ convert_script <- function(infile, outfile){
       i <- i + 1
 
       while(i <= length(lines) &&
-            grepl("^# ", lines[i])){
+            grepl("^#", lines[i])){
 
-        out <- c(out,
-                 sub("^# ?", "", lines[i]))
+        out <- c(out, comment_to_md(lines[i]))
 
         i <- i + 1
       }
@@ -93,9 +112,9 @@ convert_script <- function(infile, outfile){
       next
     }
 
-    ## -------------------------------------------------
-    ## Code
-    ## -------------------------------------------------
+    ## ---------------------------------------------
+    ## R code
+    ## ---------------------------------------------
 
     if(!in_chunk){
 
@@ -119,7 +138,11 @@ convert_script <- function(infile, outfile){
   writeLines(out, outfile)
 }
 
-dir.create(file.path("book", "chapters"), recursive = TRUE, showWarnings = FALSE)
+dir.create(
+  file.path("book", "chapters"),
+  recursive = TRUE,
+  showWarnings = FALSE
+)
 
 files <- list.files(
   "Botany2026/scripts",
@@ -127,7 +150,8 @@ files <- list.files(
   full.names = TRUE
 )
 
-for (f in files) {
+for(f in files){
+
   convert_script(
     infile = f,
     outfile = file.path(

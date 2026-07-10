@@ -1,9 +1,0 @@
----
-title: "Botany ENM Workshops"
----
-
-# Welcome
-
-This website accompanies the Botany ENM workshops.
-
-The pages are generated automatically from the workshop R scripts.

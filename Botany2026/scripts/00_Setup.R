@@ -2,13 +2,13 @@
 #
 # Purpose:
 
-# - Install all R packages required for ENM workflows.
+# Install all R packages required for ENM workflows.
 
-# - Check that all packages load successfully.
+# Check that all packages load successfully.
 
-# - Install any needed GitHub packages.
+# Install any needed GitHub packages.
 
-## Download Zenodo Data
+## Download Zenodo Data ----
 source("scripts/tools/ZenodoDownload.R")
 download.packages(c("tools", "httr2", "utils", "magrittr"))
 ZenodoDownload()

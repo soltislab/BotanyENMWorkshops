@@ -138,7 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>0.1</b> Contributors</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#install-required-cran-packages"><i class="fa fa-check"></i><b>1.1</b> Install required CRAN packages</a></li>
@@ -249,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> Download Occurrence Data<a href="download-occurrence-data.html#download-occurrence-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Purpose:
 - Download and preview species occurrence records using iDigBio and gatoRs.</p>
-<p>Created by ML Gaynor</p>
+<p>Created by ML Gaynor.</p>
 <div id="load-required-packages" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Load Required Packages<a href="download-occurrence-data.html#load-required-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="download-occurrence-data.html#cb5-1" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
@@ -258,6 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="a-download-from-idigbio" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> A) Download from iDigBio<a href="download-occurrence-data.html#a-download-from-idigbio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here we use <code>ridigbio</code> to download data.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="download-occurrence-data.html#cb6-1" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
 <span id="cb6-2"><a href="download-occurrence-data.html#cb6-2" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">&quot;Galax urceolata&quot;</span>))</span>
 <span id="cb6-3"><a href="download-occurrence-data.html#cb6-3" tabindex="-1"></a></span>

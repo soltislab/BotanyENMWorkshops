@@ -1,3 +1,4 @@
+contributors
 setup
 install-required-cran-packages
 define-cran-packages

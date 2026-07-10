@@ -224,13 +224,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="enm-processing.html"><a href="enm-processing.html"><i class="fa fa-check"></i><b>8</b> ENM Processing</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="enm-processing.html"><a href="enm-processing.html#load-required-packages-6"><i class="fa fa-check"></i><b>8.1</b> Load Required Packages</a></li>
-<li class="chapter" data-level="8.2" data-path="enm-processing.html"><a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests"><i class="fa fa-check"></i><b>8.2</b> A) Project Models onto Current Climate (Eastern Temperate Forests)</a></li>
-<li class="chapter" data-level="8.3" data-path="enm-processing.html"><a href="enm-processing.html#b-calculate-niche-breadth"><i class="fa fa-check"></i><b>8.3</b> B) Calculate Niche Breadth</a></li>
-<li class="chapter" data-level="8.4" data-path="enm-processing.html"><a href="enm-processing.html#c-calculate-niche-overlap"><i class="fa fa-check"></i><b>8.4</b> C) Calculate Niche Overlap</a></li>
-<li class="chapter" data-level="8.5" data-path="enm-processing.html"><a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap"><i class="fa fa-check"></i><b>8.5</b> D) Test Phylogenetic Signal in Niche Overlap</a></li>
-<li class="chapter" data-level="8.6" data-path="enm-processing.html"><a href="enm-processing.html#e-project-models-onto-future-climate"><i class="fa fa-check"></i><b>8.6</b> E) Project Models onto Future Climate</a></li>
-<li class="chapter" data-level="8.7" data-path="enm-processing.html"><a href="enm-processing.html#f-compare-current-and-future-projections"><i class="fa fa-check"></i><b>8.7</b> F) Compare Current and Future Projections</a></li>
+<li class="chapter" data-level="8.1" data-path="enm-processing.html"><a href="enm-processing.html#setup-1"><i class="fa fa-check"></i><b>8.1</b> Setup</a></li>
+<li class="chapter" data-level="8.2" data-path="enm-processing.html"><a href="enm-processing.html#load-required-packages-6"><i class="fa fa-check"></i><b>8.2</b> Load Required Packages</a></li>
+<li class="chapter" data-level="8.3" data-path="enm-processing.html"><a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests"><i class="fa fa-check"></i><b>8.3</b> A) Project Models onto Current Climate (Eastern Temperate Forests)</a></li>
+<li class="chapter" data-level="8.4" data-path="enm-processing.html"><a href="enm-processing.html#b-calculate-niche-breadth"><i class="fa fa-check"></i><b>8.4</b> B) Calculate Niche Breadth</a></li>
+<li class="chapter" data-level="8.5" data-path="enm-processing.html"><a href="enm-processing.html#c-calculate-niche-overlap"><i class="fa fa-check"></i><b>8.5</b> C) Calculate Niche Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="enm-processing.html"><a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap"><i class="fa fa-check"></i><b>8.6</b> D) Test Phylogenetic Signal in Niche Overlap</a></li>
+<li class="chapter" data-level="8.7" data-path="enm-processing.html"><a href="enm-processing.html#e-project-models-onto-future-climate"><i class="fa fa-check"></i><b>8.7</b> E) Project Models onto Future Climate</a></li>
+<li class="chapter" data-level="8.8" data-path="enm-processing.html"><a href="enm-processing.html#f-compare-current-and-future-projections"><i class="fa fa-check"></i><b>8.8</b> F) Compare Current and Future Projections</a></li>
 </ul></li>
 </ul>
 
@@ -251,142 +252,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-exploration" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Data Exploration<a href="data-exploration.html#data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-exploration.html#cb28-1" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb28-2"><a href="data-exploration.html#cb28-2" tabindex="-1"></a><span class="do">### Purpose:</span></span>
-<span id="cb28-3"><a href="data-exploration.html#cb28-3" tabindex="-1"></a><span class="do">###   - Analyze climatic variables associated with species occurrences using PCA and ANOVA.</span></span>
-<span id="cb28-4"><a href="data-exploration.html#cb28-4" tabindex="-1"></a><span class="do">###   - Includes PCA loadings extraction and plots for top contributors to PC1 and PC2.</span></span></code></pre></div>
+<p>Purpose:</p>
+<ul>
+<li>Analyze climatic variables associated with species occurrences using PCA and ANOVA.</li>
+<li>Includes PCA loadings extraction and plots for top contributors to PC1 and PC2.</li>
+</ul>
 <div id="load-required-packages-2" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Load Required Packages<a href="data-exploration.html#load-required-packages-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-exploration.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(gtools)         <span class="co"># For mixedsort of file names</span></span>
-<span id="cb29-2"><a href="data-exploration.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(terra)          <span class="co"># For raster and spatial extraction</span></span>
-<span id="cb29-3"><a href="data-exploration.html#cb29-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)          <span class="co"># For data wrangling</span></span>
-<span id="cb29-4"><a href="data-exploration.html#cb29-4" tabindex="-1"></a><span class="fu">library</span>(tidyr)          <span class="co"># For handling NAs and reshaping</span></span>
-<span id="cb29-5"><a href="data-exploration.html#cb29-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)        <span class="co"># For plotting</span></span>
-<span id="cb29-6"><a href="data-exploration.html#cb29-6" tabindex="-1"></a><span class="fu">library</span>(ggbiplot)       <span class="co"># For PCA biplot visualization</span></span>
-<span id="cb29-7"><a href="data-exploration.html#cb29-7" tabindex="-1"></a><span class="fu">library</span>(multcompView)   <span class="co"># For compact letter display (Tukey HSD)</span></span>
-<span id="cb29-8"><a href="data-exploration.html#cb29-8" tabindex="-1"></a><span class="fu">library</span>(gridExtra)      <span class="co"># For combining plots</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-exploration.html#cb25-1" tabindex="-1"></a><span class="fu">library</span>(gtools)         <span class="co"># For mixedsort of file names</span></span>
+<span id="cb25-2"><a href="data-exploration.html#cb25-2" tabindex="-1"></a><span class="fu">library</span>(terra)          <span class="co"># For raster and spatial extraction</span></span>
+<span id="cb25-3"><a href="data-exploration.html#cb25-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)          <span class="co"># For data wrangling</span></span>
+<span id="cb25-4"><a href="data-exploration.html#cb25-4" tabindex="-1"></a><span class="fu">library</span>(tidyr)          <span class="co"># For handling NAs and reshaping</span></span>
+<span id="cb25-5"><a href="data-exploration.html#cb25-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)        <span class="co"># For plotting</span></span>
+<span id="cb25-6"><a href="data-exploration.html#cb25-6" tabindex="-1"></a><span class="fu">library</span>(ggbiplot)       <span class="co"># For PCA biplot visualization</span></span>
+<span id="cb25-7"><a href="data-exploration.html#cb25-7" tabindex="-1"></a><span class="fu">library</span>(multcompView)   <span class="co"># For compact letter display (Tukey HSD)</span></span>
+<span id="cb25-8"><a href="data-exploration.html#cb25-8" tabindex="-1"></a><span class="fu">library</span>(gridExtra)      <span class="co"># For combining plots</span></span></code></pre></div>
 </div>
 <div id="a-load-cleaned-data" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> A) Load Cleaned Data<a href="data-exploration.html#a-load-cleaned-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Read in cleaned occurrence data with geographic coordinates and species ID</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration.html#cb30-1" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-exploration.html#cb26-1" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="b-load-and-stack-climatic-variables-from-worldclim" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> B) Load and Stack Climatic Variables from WorldClim<a href="data-exploration.html#b-load-and-stack-climatic-variables-from-worldclim" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1" tabindex="-1"></a><span class="co"># List and sort all .tif files in the WorldClim directory</span></span>
-<span id="cb31-2"><a href="data-exploration.html#cb31-2" tabindex="-1"></a>list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/BioClim/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-3"><a href="data-exploration.html#cb31-3" tabindex="-1"></a>list <span class="ot">&lt;-</span> gtools<span class="sc">::</span><span class="fu">mixedsort</span>(<span class="fu">sort</span>(list))</span>
-<span id="cb31-4"><a href="data-exploration.html#cb31-4" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="data-exploration.html#cb31-5" tabindex="-1"></a><span class="co"># Stack the raster files</span></span>
-<span id="cb31-6"><a href="data-exploration.html#cb31-6" tabindex="-1"></a>envtStack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(list)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-exploration.html#cb27-1" tabindex="-1"></a><span class="co"># List and sort all .tif files in the WorldClim directory</span></span>
+<span id="cb27-2"><a href="data-exploration.html#cb27-2" tabindex="-1"></a>list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/BioClim/&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-3"><a href="data-exploration.html#cb27-3" tabindex="-1"></a>list <span class="ot">&lt;-</span> gtools<span class="sc">::</span><span class="fu">mixedsort</span>(<span class="fu">sort</span>(list))</span>
+<span id="cb27-4"><a href="data-exploration.html#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="data-exploration.html#cb27-5" tabindex="-1"></a><span class="co"># Stack the raster files</span></span>
+<span id="cb27-6"><a href="data-exploration.html#cb27-6" tabindex="-1"></a>envtStack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(list)</span></code></pre></div>
 </div>
 <div id="c-extract-climatic-variables-at-occurrence-points" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> C) Extract Climatic Variables at Occurrence Points<a href="data-exploration.html#c-extract-climatic-variables-at-occurrence-points" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration.html#cb32-1" tabindex="-1"></a><span class="co"># Extract values of environmental rasters at occurrence points</span></span>
-<span id="cb32-2"><a href="data-exploration.html#cb32-2" tabindex="-1"></a>ptExtracted <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(envtStack, alldf[, <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>)])</span>
-<span id="cb32-3"><a href="data-exploration.html#cb32-3" tabindex="-1"></a><span class="co"># Combine with species names and coordinates</span></span>
-<span id="cb32-4"><a href="data-exploration.html#cb32-4" tabindex="-1"></a>ptExtracteddf <span class="ot">&lt;-</span> ptExtracted <span class="sc">%&gt;%</span></span>
-<span id="cb32-5"><a href="data-exploration.html#cb32-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">as.character</span>(alldf<span class="sc">$</span>accepted_name),</span>
-<span id="cb32-6"><a href="data-exploration.html#cb32-6" tabindex="-1"></a>                <span class="at">x =</span> alldf<span class="sc">$</span>longitude,</span>
-<span id="cb32-7"><a href="data-exploration.html#cb32-7" tabindex="-1"></a>                <span class="at">y =</span> alldf<span class="sc">$</span>latitude)</span>
-<span id="cb32-8"><a href="data-exploration.html#cb32-8" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="data-exploration.html#cb32-9" tabindex="-1"></a><span class="co"># Remove any rows with missing climate values</span></span>
-<span id="cb32-10"><a href="data-exploration.html#cb32-10" tabindex="-1"></a>ptExtracteddf <span class="ot">&lt;-</span> ptExtracteddf <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-exploration.html#cb28-1" tabindex="-1"></a><span class="co"># Extract values of environmental rasters at occurrence points</span></span>
+<span id="cb28-2"><a href="data-exploration.html#cb28-2" tabindex="-1"></a>ptExtracted <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(envtStack, alldf[, <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>)])</span>
+<span id="cb28-3"><a href="data-exploration.html#cb28-3" tabindex="-1"></a><span class="co"># Combine with species names and coordinates</span></span>
+<span id="cb28-4"><a href="data-exploration.html#cb28-4" tabindex="-1"></a>ptExtracteddf <span class="ot">&lt;-</span> ptExtracted <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="data-exploration.html#cb28-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">as.character</span>(alldf<span class="sc">$</span>accepted_name),</span>
+<span id="cb28-6"><a href="data-exploration.html#cb28-6" tabindex="-1"></a>                <span class="at">x =</span> alldf<span class="sc">$</span>longitude,</span>
+<span id="cb28-7"><a href="data-exploration.html#cb28-7" tabindex="-1"></a>                <span class="at">y =</span> alldf<span class="sc">$</span>latitude)</span>
+<span id="cb28-8"><a href="data-exploration.html#cb28-8" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="data-exploration.html#cb28-9" tabindex="-1"></a><span class="co"># Remove any rows with missing climate values</span></span>
+<span id="cb28-10"><a href="data-exploration.html#cb28-10" tabindex="-1"></a>ptExtracteddf <span class="ot">&lt;-</span> ptExtracteddf <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code></pre></div>
 </div>
 <div id="d-perform-pca-on-climatic-variables" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> D) Perform PCA on Climatic Variables<a href="data-exploration.html#d-perform-pca-on-climatic-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-exploration.html#cb33-1" tabindex="-1"></a><span class="co"># Subset climate variables (assumed to be columns 2 to 21)</span></span>
-<span id="cb33-2"><a href="data-exploration.html#cb33-2" tabindex="-1"></a>data.bioclim <span class="ot">&lt;-</span> ptExtracteddf[, <span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>]</span>
-<span id="cb33-3"><a href="data-exploration.html#cb33-3" tabindex="-1"></a>data.species <span class="ot">&lt;-</span> ptExtracteddf[, <span class="st">&quot;name&quot;</span>]</span>
-<span id="cb33-4"><a href="data-exploration.html#cb33-4" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="data-exploration.html#cb33-5" tabindex="-1"></a><span class="co"># Scale and run PCA</span></span>
-<span id="cb33-6"><a href="data-exploration.html#cb33-6" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(data.bioclim, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-7"><a href="data-exploration.html#cb33-7" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="data-exploration.html#cb33-8" tabindex="-1"></a><span class="co"># Extract variable loadings</span></span>
-<span id="cb33-9"><a href="data-exploration.html#cb33-9" tabindex="-1"></a>loadings <span class="ot">&lt;-</span> pca_result<span class="sc">$</span>rotation</span>
-<span id="cb33-10"><a href="data-exploration.html#cb33-10" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="data-exploration.html#cb33-11" tabindex="-1"></a><span class="co"># Calculate relative contributions of each variable to each PC</span></span>
-<span id="cb33-12"><a href="data-exploration.html#cb33-12" tabindex="-1"></a>loadings_relative <span class="ot">&lt;-</span> <span class="fu">sweep</span>(<span class="fu">abs</span>(loadings), <span class="dv">2</span>, <span class="fu">colSums</span>(<span class="fu">abs</span>(loadings)), <span class="st">&quot;/&quot;</span>) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-exploration.html#cb29-1" tabindex="-1"></a><span class="co"># Subset climate variables (assumed to be columns 2 to 21)</span></span>
+<span id="cb29-2"><a href="data-exploration.html#cb29-2" tabindex="-1"></a>data.bioclim <span class="ot">&lt;-</span> ptExtracteddf[, <span class="dv">2</span><span class="sc">:</span><span class="dv">21</span>]</span>
+<span id="cb29-3"><a href="data-exploration.html#cb29-3" tabindex="-1"></a>data.species <span class="ot">&lt;-</span> ptExtracteddf[, <span class="st">&quot;name&quot;</span>]</span>
+<span id="cb29-4"><a href="data-exploration.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="data-exploration.html#cb29-5" tabindex="-1"></a><span class="co"># Scale and run PCA</span></span>
+<span id="cb29-6"><a href="data-exploration.html#cb29-6" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(data.bioclim, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-7"><a href="data-exploration.html#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="data-exploration.html#cb29-8" tabindex="-1"></a><span class="co"># Extract variable loadings</span></span>
+<span id="cb29-9"><a href="data-exploration.html#cb29-9" tabindex="-1"></a>loadings <span class="ot">&lt;-</span> pca_result<span class="sc">$</span>rotation</span>
+<span id="cb29-10"><a href="data-exploration.html#cb29-10" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="data-exploration.html#cb29-11" tabindex="-1"></a><span class="co"># Calculate relative contributions of each variable to each PC</span></span>
+<span id="cb29-12"><a href="data-exploration.html#cb29-12" tabindex="-1"></a>loadings_relative <span class="ot">&lt;-</span> <span class="fu">sweep</span>(<span class="fu">abs</span>(loadings), <span class="dv">2</span>, <span class="fu">colSums</span>(<span class="fu">abs</span>(loadings)), <span class="st">&quot;/&quot;</span>) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
 </div>
 <div id="e-visualize-pca" class="section level2 hasAnchor" number="4.6">
 <h2><span class="header-section-number">4.6</span> E) Visualize PCA<a href="data-exploration.html#e-visualize-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-exploration.html#cb34-1" tabindex="-1"></a><span class="co"># Customize theme</span></span>
-<span id="cb34-2"><a href="data-exploration.html#cb34-2" tabindex="-1"></a>custom_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
-<span id="cb34-3"><a href="data-exploration.html#cb34-3" tabindex="-1"></a>  <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb34-4"><a href="data-exploration.html#cb34-4" tabindex="-1"></a>  <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>),</span>
-<span id="cb34-5"><a href="data-exploration.html#cb34-5" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb34-6"><a href="data-exploration.html#cb34-6" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb34-7"><a href="data-exploration.html#cb34-7" tabindex="-1"></a>  <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb34-8"><a href="data-exploration.html#cb34-8" tabindex="-1"></a>  <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb34-9"><a href="data-exploration.html#cb34-9" tabindex="-1"></a>  <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">&quot;line&quot;</span>),</span>
-<span id="cb34-10"><a href="data-exploration.html#cb34-10" tabindex="-1"></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb34-11"><a href="data-exploration.html#cb34-11" tabindex="-1"></a>  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb34-12"><a href="data-exploration.html#cb34-12" tabindex="-1"></a>  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb34-13"><a href="data-exploration.html#cb34-13" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb34-14"><a href="data-exploration.html#cb34-14" tabindex="-1"></a>)</span>
-<span id="cb34-15"><a href="data-exploration.html#cb34-15" tabindex="-1"></a></span>
-<span id="cb34-16"><a href="data-exploration.html#cb34-16" tabindex="-1"></a><span class="co"># Define color palette for species</span></span>
-<span id="cb34-17"><a href="data-exploration.html#cb34-17" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#D43F3AFF&quot;</span>, <span class="st">&quot;#EEA236FF&quot;</span>, <span class="st">&quot;#5CB85CFF&quot;</span>, <span class="st">&quot;#46B8DAFF&quot;</span>)</span>
-<span id="cb34-18"><a href="data-exploration.html#cb34-18" tabindex="-1"></a></span>
-<span id="cb34-19"><a href="data-exploration.html#cb34-19" tabindex="-1"></a><span class="co"># PCA Biplot</span></span>
-<span id="cb34-20"><a href="data-exploration.html#cb34-20" tabindex="-1"></a>pca_plot <span class="ot">&lt;-</span> <span class="fu">ggbiplot</span>(pca_result, <span class="at">obs.scale =</span> <span class="dv">1</span>, <span class="at">var.scale =</span> <span class="dv">1</span>,</span>
-<span id="cb34-21"><a href="data-exploration.html#cb34-21" tabindex="-1"></a>                     <span class="at">groups =</span> data.species, <span class="at">ellipse =</span> <span class="cn">TRUE</span>, <span class="at">circle =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb34-22"><a href="data-exploration.html#cb34-22" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&#39;&#39;</span>, <span class="at">values =</span> pal) <span class="sc">+</span></span>
-<span id="cb34-23"><a href="data-exploration.html#cb34-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.direction =</span> <span class="st">&#39;vertical&#39;</span>, <span class="at">legend.position =</span> <span class="st">&#39;bottom&#39;</span>,</span>
-<span id="cb34-24"><a href="data-exploration.html#cb34-24" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb34-25"><a href="data-exploration.html#cb34-25" tabindex="-1"></a>  custom_theme</span>
-<span id="cb34-26"><a href="data-exploration.html#cb34-26" tabindex="-1"></a></span>
-<span id="cb34-27"><a href="data-exploration.html#cb34-27" tabindex="-1"></a><span class="fu">print</span>(pca_plot)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration.html#cb30-1" tabindex="-1"></a><span class="co"># Customize theme</span></span>
+<span id="cb30-2"><a href="data-exploration.html#cb30-2" tabindex="-1"></a>custom_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb30-3"><a href="data-exploration.html#cb30-3" tabindex="-1"></a>  <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-4"><a href="data-exploration.html#cb30-4" tabindex="-1"></a>  <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="cn">NA</span>),</span>
+<span id="cb30-5"><a href="data-exploration.html#cb30-5" tabindex="-1"></a>  <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-6"><a href="data-exploration.html#cb30-6" tabindex="-1"></a>  <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-7"><a href="data-exploration.html#cb30-7" tabindex="-1"></a>  <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-8"><a href="data-exploration.html#cb30-8" tabindex="-1"></a>  <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb30-9"><a href="data-exploration.html#cb30-9" tabindex="-1"></a>  <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb30-10"><a href="data-exploration.html#cb30-10" tabindex="-1"></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb30-11"><a href="data-exploration.html#cb30-11" tabindex="-1"></a>  <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb30-12"><a href="data-exploration.html#cb30-12" tabindex="-1"></a>  <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb30-13"><a href="data-exploration.html#cb30-13" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
+<span id="cb30-14"><a href="data-exploration.html#cb30-14" tabindex="-1"></a>)</span>
+<span id="cb30-15"><a href="data-exploration.html#cb30-15" tabindex="-1"></a></span>
+<span id="cb30-16"><a href="data-exploration.html#cb30-16" tabindex="-1"></a><span class="co"># Define color palette for species</span></span>
+<span id="cb30-17"><a href="data-exploration.html#cb30-17" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#D43F3AFF&quot;</span>, <span class="st">&quot;#EEA236FF&quot;</span>, <span class="st">&quot;#5CB85CFF&quot;</span>, <span class="st">&quot;#46B8DAFF&quot;</span>)</span>
+<span id="cb30-18"><a href="data-exploration.html#cb30-18" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="data-exploration.html#cb30-19" tabindex="-1"></a><span class="co"># PCA Biplot</span></span>
+<span id="cb30-20"><a href="data-exploration.html#cb30-20" tabindex="-1"></a>pca_plot <span class="ot">&lt;-</span> <span class="fu">ggbiplot</span>(pca_result, <span class="at">obs.scale =</span> <span class="dv">1</span>, <span class="at">var.scale =</span> <span class="dv">1</span>,</span>
+<span id="cb30-21"><a href="data-exploration.html#cb30-21" tabindex="-1"></a>                     <span class="at">groups =</span> data.species, <span class="at">ellipse =</span> <span class="cn">TRUE</span>, <span class="at">circle =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb30-22"><a href="data-exploration.html#cb30-22" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">&#39;&#39;</span>, <span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb30-23"><a href="data-exploration.html#cb30-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.direction =</span> <span class="st">&#39;vertical&#39;</span>, <span class="at">legend.position =</span> <span class="st">&#39;bottom&#39;</span>,</span>
+<span id="cb30-24"><a href="data-exploration.html#cb30-24" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb30-25"><a href="data-exploration.html#cb30-25" tabindex="-1"></a>  custom_theme</span>
+<span id="cb30-26"><a href="data-exploration.html#cb30-26" tabindex="-1"></a></span>
+<span id="cb30-27"><a href="data-exploration.html#cb30-27" tabindex="-1"></a><span class="fu">print</span>(pca_plot)</span></code></pre></div>
 </div>
 <div id="f-identify-top-contributors-to-pc1-and-pc2" class="section level2 hasAnchor" number="4.7">
 <h2><span class="header-section-number">4.7</span> F) Identify Top Contributors to PC1 and PC2<a href="data-exploration.html#f-identify-top-contributors-to-pc1-and-pc2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration.html#cb35-1" tabindex="-1"></a><span class="co"># Top 2 contributing variables to PC1 and PC2</span></span>
-<span id="cb35-2"><a href="data-exploration.html#cb35-2" tabindex="-1"></a>top_PC1_vars <span class="ot">&lt;-</span> <span class="fu">rownames</span>(loadings)[<span class="fu">order</span>(<span class="fu">abs</span>(loadings[, <span class="st">&quot;PC1&quot;</span>]), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)][<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb35-3"><a href="data-exploration.html#cb35-3" tabindex="-1"></a>top_PC2_vars <span class="ot">&lt;-</span> <span class="fu">rownames</span>(loadings)[<span class="fu">order</span>(<span class="fu">abs</span>(loadings[, <span class="st">&quot;PC2&quot;</span>]), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)][<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb35-4"><a href="data-exploration.html#cb35-4" tabindex="-1"></a>selected_vars <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(top_PC1_vars, top_PC2_vars))  <span class="co"># remove duplicates</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1" tabindex="-1"></a><span class="co"># Top 2 contributing variables to PC1 and PC2</span></span>
+<span id="cb31-2"><a href="data-exploration.html#cb31-2" tabindex="-1"></a>top_PC1_vars <span class="ot">&lt;-</span> <span class="fu">rownames</span>(loadings)[<span class="fu">order</span>(<span class="fu">abs</span>(loadings[, <span class="st">&quot;PC1&quot;</span>]), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)][<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb31-3"><a href="data-exploration.html#cb31-3" tabindex="-1"></a>top_PC2_vars <span class="ot">&lt;-</span> <span class="fu">rownames</span>(loadings)[<span class="fu">order</span>(<span class="fu">abs</span>(loadings[, <span class="st">&quot;PC2&quot;</span>]), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)][<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb31-4"><a href="data-exploration.html#cb31-4" tabindex="-1"></a>selected_vars <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(top_PC1_vars, top_PC2_vars))  <span class="co"># remove duplicates</span></span></code></pre></div>
 </div>
 <div id="g-anova-tukey-hsd-plotting-for-top-variables" class="section level2 hasAnchor" number="4.8">
 <h2><span class="header-section-number">4.8</span> G) ANOVA + Tukey HSD + Plotting for Top Variables<a href="data-exploration.html#g-anova-tukey-hsd-plotting-for-top-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-exploration.html#cb36-1" tabindex="-1"></a>plotlist <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb36-2"><a href="data-exploration.html#cb36-2" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="data-exploration.html#cb36-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(selected_vars)) {</span>
-<span id="cb36-4"><a href="data-exploration.html#cb36-4" tabindex="-1"></a>  varname <span class="ot">&lt;-</span> selected_vars[i]</span>
-<span id="cb36-5"><a href="data-exploration.html#cb36-5" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="data-exploration.html#cb36-6" tabindex="-1"></a>  <span class="co"># Run ANOVA</span></span>
-<span id="cb36-7"><a href="data-exploration.html#cb36-7" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(varname, <span class="st">&quot; ~ name&quot;</span>)), <span class="at">data =</span> ptExtracteddf)</span>
-<span id="cb36-8"><a href="data-exploration.html#cb36-8" tabindex="-1"></a>  tukey <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(model)</span>
-<span id="cb36-9"><a href="data-exploration.html#cb36-9" tabindex="-1"></a>  pvals <span class="ot">&lt;-</span> tukey<span class="sc">$</span><span class="st">`</span><span class="at">name</span><span class="st">`</span>[, <span class="dv">4</span>]</span>
-<span id="cb36-10"><a href="data-exploration.html#cb36-10" tabindex="-1"></a></span>
-<span id="cb36-11"><a href="data-exploration.html#cb36-11" tabindex="-1"></a>  <span class="co"># Convert p-values to significance letters</span></span>
-<span id="cb36-12"><a href="data-exploration.html#cb36-12" tabindex="-1"></a>  letters_out <span class="ot">&lt;-</span> <span class="fu">multcompLetters</span>(pvals)</span>
-<span id="cb36-13"><a href="data-exploration.html#cb36-13" tabindex="-1"></a>  groups_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb36-14"><a href="data-exploration.html#cb36-14" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">names</span>(letters_out<span class="sc">$</span>Letters),</span>
-<span id="cb36-15"><a href="data-exploration.html#cb36-15" tabindex="-1"></a>    <span class="at">groups =</span> letters_out<span class="sc">$</span>Letters</span>
-<span id="cb36-16"><a href="data-exploration.html#cb36-16" tabindex="-1"></a>  )</span>
-<span id="cb36-17"><a href="data-exploration.html#cb36-17" tabindex="-1"></a></span>
-<span id="cb36-18"><a href="data-exploration.html#cb36-18" tabindex="-1"></a>  <span class="co"># Set y position for labels</span></span>
-<span id="cb36-19"><a href="data-exploration.html#cb36-19" tabindex="-1"></a>  max_y <span class="ot">&lt;-</span> <span class="fu">max</span>(ptExtracteddf[[varname]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-20"><a href="data-exploration.html#cb36-20" tabindex="-1"></a>  groups_df<span class="sc">$</span>y_position <span class="ot">&lt;-</span> max_y <span class="sc">*</span> <span class="fl">1.1</span></span>
-<span id="cb36-21"><a href="data-exploration.html#cb36-21" tabindex="-1"></a></span>
-<span id="cb36-22"><a href="data-exploration.html#cb36-22" tabindex="-1"></a>  <span class="co"># Create plot</span></span>
-<span id="cb36-23"><a href="data-exploration.html#cb36-23" tabindex="-1"></a>  plotlist[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ptExtracteddf, <span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> .data[[varname]])) <span class="sc">+</span></span>
-<span id="cb36-24"><a href="data-exploration.html#cb36-24" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> name), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb36-25"><a href="data-exploration.html#cb36-25" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb36-26"><a href="data-exploration.html#cb36-26" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> groups_df,</span>
-<span id="cb36-27"><a href="data-exploration.html#cb36-27" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> y_position, <span class="at">label =</span> groups),</span>
-<span id="cb36-28"><a href="data-exploration.html#cb36-28" tabindex="-1"></a>              <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb36-29"><a href="data-exploration.html#cb36-29" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
-<span id="cb36-30"><a href="data-exploration.html#cb36-30" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
-<span id="cb36-31"><a href="data-exploration.html#cb36-31" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(varname)) <span class="sc">+</span></span>
-<span id="cb36-32"><a href="data-exploration.html#cb36-32" tabindex="-1"></a>    <span class="fu">ylab</span>(varname) <span class="sc">+</span></span>
-<span id="cb36-33"><a href="data-exploration.html#cb36-33" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb36-34"><a href="data-exploration.html#cb36-34" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb36-35"><a href="data-exploration.html#cb36-35" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb36-36"><a href="data-exploration.html#cb36-36" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, max_y <span class="sc">*</span> <span class="fl">1.3</span>)</span>
-<span id="cb36-37"><a href="data-exploration.html#cb36-37" tabindex="-1"></a>}</span>
-<span id="cb36-38"><a href="data-exploration.html#cb36-38" tabindex="-1"></a></span>
-<span id="cb36-39"><a href="data-exploration.html#cb36-39" tabindex="-1"></a><span class="co"># Combine plots</span></span>
-<span id="cb36-40"><a href="data-exploration.html#cb36-40" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> plotlist, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration.html#cb32-1" tabindex="-1"></a>plotlist <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb32-2"><a href="data-exploration.html#cb32-2" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="data-exploration.html#cb32-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(selected_vars)) {</span>
+<span id="cb32-4"><a href="data-exploration.html#cb32-4" tabindex="-1"></a>  varname <span class="ot">&lt;-</span> selected_vars[i]</span>
+<span id="cb32-5"><a href="data-exploration.html#cb32-5" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="data-exploration.html#cb32-6" tabindex="-1"></a>  <span class="co"># Run ANOVA</span></span>
+<span id="cb32-7"><a href="data-exploration.html#cb32-7" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">aov</span>(<span class="fu">as.formula</span>(<span class="fu">paste0</span>(varname, <span class="st">&quot; ~ name&quot;</span>)), <span class="at">data =</span> ptExtracteddf)</span>
+<span id="cb32-8"><a href="data-exploration.html#cb32-8" tabindex="-1"></a>  tukey <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(model)</span>
+<span id="cb32-9"><a href="data-exploration.html#cb32-9" tabindex="-1"></a>  pvals <span class="ot">&lt;-</span> tukey<span class="sc">$</span><span class="st">`</span><span class="at">name</span><span class="st">`</span>[, <span class="dv">4</span>]</span>
+<span id="cb32-10"><a href="data-exploration.html#cb32-10" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="data-exploration.html#cb32-11" tabindex="-1"></a>  <span class="co"># Convert p-values to significance letters</span></span>
+<span id="cb32-12"><a href="data-exploration.html#cb32-12" tabindex="-1"></a>  letters_out <span class="ot">&lt;-</span> <span class="fu">multcompLetters</span>(pvals)</span>
+<span id="cb32-13"><a href="data-exploration.html#cb32-13" tabindex="-1"></a>  groups_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb32-14"><a href="data-exploration.html#cb32-14" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">names</span>(letters_out<span class="sc">$</span>Letters),</span>
+<span id="cb32-15"><a href="data-exploration.html#cb32-15" tabindex="-1"></a>    <span class="at">groups =</span> letters_out<span class="sc">$</span>Letters</span>
+<span id="cb32-16"><a href="data-exploration.html#cb32-16" tabindex="-1"></a>  )</span>
+<span id="cb32-17"><a href="data-exploration.html#cb32-17" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="data-exploration.html#cb32-18" tabindex="-1"></a>  <span class="co"># Set y position for labels</span></span>
+<span id="cb32-19"><a href="data-exploration.html#cb32-19" tabindex="-1"></a>  max_y <span class="ot">&lt;-</span> <span class="fu">max</span>(ptExtracteddf[[varname]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-20"><a href="data-exploration.html#cb32-20" tabindex="-1"></a>  groups_df<span class="sc">$</span>y_position <span class="ot">&lt;-</span> max_y <span class="sc">*</span> <span class="fl">1.1</span></span>
+<span id="cb32-21"><a href="data-exploration.html#cb32-21" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="data-exploration.html#cb32-22" tabindex="-1"></a>  <span class="co"># Create plot</span></span>
+<span id="cb32-23"><a href="data-exploration.html#cb32-23" tabindex="-1"></a>  plotlist[[i]] <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ptExtracteddf, <span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> .data[[varname]])) <span class="sc">+</span></span>
+<span id="cb32-24"><a href="data-exploration.html#cb32-24" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> name), <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-25"><a href="data-exploration.html#cb32-25" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb32-26"><a href="data-exploration.html#cb32-26" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> groups_df,</span>
+<span id="cb32-27"><a href="data-exploration.html#cb32-27" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> y_position, <span class="at">label =</span> groups),</span>
+<span id="cb32-28"><a href="data-exploration.html#cb32-28" tabindex="-1"></a>              <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb32-29"><a href="data-exploration.html#cb32-29" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb32-30"><a href="data-exploration.html#cb32-30" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> pal) <span class="sc">+</span></span>
+<span id="cb32-31"><a href="data-exploration.html#cb32-31" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(varname)) <span class="sc">+</span></span>
+<span id="cb32-32"><a href="data-exploration.html#cb32-32" tabindex="-1"></a>    <span class="fu">ylab</span>(varname) <span class="sc">+</span></span>
+<span id="cb32-33"><a href="data-exploration.html#cb32-33" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb32-34"><a href="data-exploration.html#cb32-34" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb32-35"><a href="data-exploration.html#cb32-35" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb32-36"><a href="data-exploration.html#cb32-36" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, max_y <span class="sc">*</span> <span class="fl">1.3</span>)</span>
+<span id="cb32-37"><a href="data-exploration.html#cb32-37" tabindex="-1"></a>}</span>
+<span id="cb32-38"><a href="data-exploration.html#cb32-38" tabindex="-1"></a></span>
+<span id="cb32-39"><a href="data-exploration.html#cb32-39" tabindex="-1"></a><span class="co"># Combine plots</span></span>
+<span id="cb32-40"><a href="data-exploration.html#cb32-40" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> plotlist, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 
 </div>
 </div>

@@ -224,13 +224,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="enm-processing.html"><a href="enm-processing.html"><i class="fa fa-check"></i><b>8</b> ENM Processing</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="enm-processing.html"><a href="enm-processing.html#load-required-packages-6"><i class="fa fa-check"></i><b>8.1</b> Load Required Packages</a></li>
-<li class="chapter" data-level="8.2" data-path="enm-processing.html"><a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests"><i class="fa fa-check"></i><b>8.2</b> A) Project Models onto Current Climate (Eastern Temperate Forests)</a></li>
-<li class="chapter" data-level="8.3" data-path="enm-processing.html"><a href="enm-processing.html#b-calculate-niche-breadth"><i class="fa fa-check"></i><b>8.3</b> B) Calculate Niche Breadth</a></li>
-<li class="chapter" data-level="8.4" data-path="enm-processing.html"><a href="enm-processing.html#c-calculate-niche-overlap"><i class="fa fa-check"></i><b>8.4</b> C) Calculate Niche Overlap</a></li>
-<li class="chapter" data-level="8.5" data-path="enm-processing.html"><a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap"><i class="fa fa-check"></i><b>8.5</b> D) Test Phylogenetic Signal in Niche Overlap</a></li>
-<li class="chapter" data-level="8.6" data-path="enm-processing.html"><a href="enm-processing.html#e-project-models-onto-future-climate"><i class="fa fa-check"></i><b>8.6</b> E) Project Models onto Future Climate</a></li>
-<li class="chapter" data-level="8.7" data-path="enm-processing.html"><a href="enm-processing.html#f-compare-current-and-future-projections"><i class="fa fa-check"></i><b>8.7</b> F) Compare Current and Future Projections</a></li>
+<li class="chapter" data-level="8.1" data-path="enm-processing.html"><a href="enm-processing.html#setup-1"><i class="fa fa-check"></i><b>8.1</b> Setup</a></li>
+<li class="chapter" data-level="8.2" data-path="enm-processing.html"><a href="enm-processing.html#load-required-packages-6"><i class="fa fa-check"></i><b>8.2</b> Load Required Packages</a></li>
+<li class="chapter" data-level="8.3" data-path="enm-processing.html"><a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests"><i class="fa fa-check"></i><b>8.3</b> A) Project Models onto Current Climate (Eastern Temperate Forests)</a></li>
+<li class="chapter" data-level="8.4" data-path="enm-processing.html"><a href="enm-processing.html#b-calculate-niche-breadth"><i class="fa fa-check"></i><b>8.4</b> B) Calculate Niche Breadth</a></li>
+<li class="chapter" data-level="8.5" data-path="enm-processing.html"><a href="enm-processing.html#c-calculate-niche-overlap"><i class="fa fa-check"></i><b>8.5</b> C) Calculate Niche Overlap</a></li>
+<li class="chapter" data-level="8.6" data-path="enm-processing.html"><a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap"><i class="fa fa-check"></i><b>8.6</b> D) Test Phylogenetic Signal in Niche Overlap</a></li>
+<li class="chapter" data-level="8.7" data-path="enm-processing.html"><a href="enm-processing.html#e-project-models-onto-future-climate"><i class="fa fa-check"></i><b>8.7</b> E) Project Models onto Future Climate</a></li>
+<li class="chapter" data-level="8.8" data-path="enm-processing.html"><a href="enm-processing.html#f-compare-current-and-future-projections"><i class="fa fa-check"></i><b>8.8</b> F) Compare Current and Future Projections</a></li>
 </ul></li>
 </ul>
 
@@ -251,84 +252,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="download-occurrence-data" class="section level1 hasAnchor" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Download Occurrence Data<a href="download-occurrence-data.html#download-occurrence-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="download-occurrence-data.html#cb7-1" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb7-2"><a href="download-occurrence-data.html#cb7-2" tabindex="-1"></a><span class="do">### Purpose:</span></span>
-<span id="cb7-3"><a href="download-occurrence-data.html#cb7-3" tabindex="-1"></a><span class="do">###   - Download and preview species occurrence records using iDigBio and gatoRs.</span></span>
-<span id="cb7-4"><a href="download-occurrence-data.html#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="download-occurrence-data.html#cb7-5" tabindex="-1"></a><span class="do">### Created by ML Gaynor.</span></span></code></pre></div>
+<p>Purpose:</p>
+<ul>
+<li>Download and preview species occurrence records using iDigBio and gatoRs.</li>
+</ul>
+<p>Created by ML Gaynor.</p>
 <div id="load-required-packages" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Load Required Packages<a href="download-occurrence-data.html#load-required-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="download-occurrence-data.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
-<span id="cb8-2"><a href="download-occurrence-data.html#cb8-2" tabindex="-1"></a><span class="fu">library</span>(gatoRs)       <span class="co"># Unified taxonomic/occurrence tools</span></span>
-<span id="cb8-3"><a href="download-occurrence-data.html#cb8-3" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Interactive mapping</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="download-occurrence-data.html#cb6-1" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
+<span id="cb6-2"><a href="download-occurrence-data.html#cb6-2" tabindex="-1"></a><span class="fu">library</span>(gatoRs)       <span class="co"># Unified taxonomic/occurrence tools</span></span>
+<span id="cb6-3"><a href="download-occurrence-data.html#cb6-3" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Interactive mapping</span></span></code></pre></div>
 </div>
 <div id="a-download-from-idigbio" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> A) Download from iDigBio<a href="download-occurrence-data.html#a-download-from-idigbio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="download-occurrence-data.html#cb9-1" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
-<span id="cb9-2"><a href="download-occurrence-data.html#cb9-2" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="download-occurrence-data.html#cb9-3" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
-<span id="cb9-4"><a href="download-occurrence-data.html#cb9-4" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">&quot;Galax urceolata&quot;</span>))</span>
-<span id="cb9-5"><a href="download-occurrence-data.html#cb9-5" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="download-occurrence-data.html#cb9-6" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
-<span id="cb9-7"><a href="download-occurrence-data.html#cb9-7" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
-<span id="cb9-8"><a href="download-occurrence-data.html#cb9-8" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="download-occurrence-data.html#cb9-9" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="download-occurrence-data.html#cb9-10" tabindex="-1"></a><span class="co"># search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
-<span id="cb9-11"><a href="download-occurrence-data.html#cb9-11" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="download-occurrence-data.html#cb9-12" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
-<span id="cb9-13"><a href="download-occurrence-data.html#cb9-13" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-14"><a href="download-occurrence-data.html#cb9-14" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;exists&quot;</span>),</span>
-<span id="cb9-15"><a href="download-occurrence-data.html#cb9-15" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>,</span>
-<span id="cb9-16"><a href="download-occurrence-data.html#cb9-16" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
-<span id="cb9-17"><a href="download-occurrence-data.html#cb9-17" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;geo_bounding_box&quot;</span>,</span>
-<span id="cb9-18"><a href="download-occurrence-data.html#cb9-18" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
-<span id="cb9-19"><a href="download-occurrence-data.html#cb9-19" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
-<span id="cb9-20"><a href="download-occurrence-data.html#cb9-20" tabindex="-1"></a>  )</span>
-<span id="cb9-21"><a href="download-occurrence-data.html#cb9-21" tabindex="-1"></a>)</span>
-<span id="cb9-22"><a href="download-occurrence-data.html#cb9-22" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
-<span id="cb9-23"><a href="download-occurrence-data.html#cb9-23" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="download-occurrence-data.html#cb9-24" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
-<span id="cb9-25"><a href="download-occurrence-data.html#cb9-25" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">&quot;data/01_download/iDigBio_GU_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-26"><a href="download-occurrence-data.html#cb9-26" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">&quot;data/01_download/iDigBio_GU_family_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="download-occurrence-data.html#cb7-1" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
+<span id="cb7-2"><a href="download-occurrence-data.html#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="download-occurrence-data.html#cb7-3" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
+<span id="cb7-4"><a href="download-occurrence-data.html#cb7-4" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">&quot;Galax urceolata&quot;</span>))</span>
+<span id="cb7-5"><a href="download-occurrence-data.html#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="download-occurrence-data.html#cb7-6" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
+<span id="cb7-7"><a href="download-occurrence-data.html#cb7-7" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-8"><a href="download-occurrence-data.html#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="download-occurrence-data.html#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="download-occurrence-data.html#cb7-10" tabindex="-1"></a><span class="co"># search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
+<span id="cb7-11"><a href="download-occurrence-data.html#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="download-occurrence-data.html#cb7-12" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
+<span id="cb7-13"><a href="download-occurrence-data.html#cb7-13" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-14"><a href="download-occurrence-data.html#cb7-14" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;exists&quot;</span>),</span>
+<span id="cb7-15"><a href="download-occurrence-data.html#cb7-15" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>,</span>
+<span id="cb7-16"><a href="download-occurrence-data.html#cb7-16" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
+<span id="cb7-17"><a href="download-occurrence-data.html#cb7-17" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;geo_bounding_box&quot;</span>,</span>
+<span id="cb7-18"><a href="download-occurrence-data.html#cb7-18" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
+<span id="cb7-19"><a href="download-occurrence-data.html#cb7-19" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
+<span id="cb7-20"><a href="download-occurrence-data.html#cb7-20" tabindex="-1"></a>  )</span>
+<span id="cb7-21"><a href="download-occurrence-data.html#cb7-21" tabindex="-1"></a>)</span>
+<span id="cb7-22"><a href="download-occurrence-data.html#cb7-22" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-23"><a href="download-occurrence-data.html#cb7-23" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="download-occurrence-data.html#cb7-24" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
+<span id="cb7-25"><a href="download-occurrence-data.html#cb7-25" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">&quot;data/01_download/iDigBio_GU_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-26"><a href="download-occurrence-data.html#cb7-26" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">&quot;data/01_download/iDigBio_GU_family_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="b-download-using-gators" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> B) Download Using gatoRs<a href="download-occurrence-data.html#b-download-using-gators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="download-occurrence-data.html#cb10-1" tabindex="-1"></a><span class="co"># Define synonym lists for each focal species</span></span>
-<span id="cb10-2"><a href="download-occurrence-data.html#cb10-2" tabindex="-1"></a>Shortia_galacifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Shortia galacifolia&quot;</span>, <span class="st">&quot;Sherwoodia galacifolia&quot;</span>)</span>
-<span id="cb10-3"><a href="download-occurrence-data.html#cb10-3" tabindex="-1"></a>Galax_urceolata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax urceolata&quot;</span>, <span class="st">&quot;Galax aphylla&quot;</span>)</span>
-<span id="cb10-4"><a href="download-occurrence-data.html#cb10-4" tabindex="-1"></a>Pyxidanthera_barbulata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Pyxidanthera barbulata&quot;</span>, <span class="st">&quot;Pyxidanthera barbulata var. barbulata&quot;</span>)</span>
-<span id="cb10-5"><a href="download-occurrence-data.html#cb10-5" tabindex="-1"></a>Pyxidanthera_brevifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Pyxidanthera brevifolia&quot;</span>, <span class="st">&quot;Pyxidanthera barbulata var. brevifolia&quot;</span>)</span>
-<span id="cb10-6"><a href="download-occurrence-data.html#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="download-occurrence-data.html#cb10-7" tabindex="-1"></a><span class="co"># Use gatoRs to download records with resolved synonyms</span></span>
-<span id="cb10-8"><a href="download-occurrence-data.html#cb10-8" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Shortia_galacifolia,</span>
-<span id="cb10-9"><a href="download-occurrence-data.html#cb10-9" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-10"><a href="download-occurrence-data.html#cb10-10" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
-<span id="cb10-11"><a href="download-occurrence-data.html#cb10-11" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="download-occurrence-data.html#cb10-12" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Galax_urceolata,</span>
-<span id="cb10-13"><a href="download-occurrence-data.html#cb10-13" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-14"><a href="download-occurrence-data.html#cb10-14" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv&quot;</span>)</span>
-<span id="cb10-15"><a href="download-occurrence-data.html#cb10-15" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="download-occurrence-data.html#cb10-16" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_barbulata,</span>
-<span id="cb10-17"><a href="download-occurrence-data.html#cb10-17" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-18"><a href="download-occurrence-data.html#cb10-18" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv&quot;</span>)</span>
-<span id="cb10-19"><a href="download-occurrence-data.html#cb10-19" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="download-occurrence-data.html#cb10-20" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_brevifolia,</span>
-<span id="cb10-21"><a href="download-occurrence-data.html#cb10-21" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-22"><a href="download-occurrence-data.html#cb10-22" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="download-occurrence-data.html#cb8-1" tabindex="-1"></a><span class="co"># Define synonym lists for each focal species</span></span>
+<span id="cb8-2"><a href="download-occurrence-data.html#cb8-2" tabindex="-1"></a>Shortia_galacifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Shortia galacifolia&quot;</span>, <span class="st">&quot;Sherwoodia galacifolia&quot;</span>)</span>
+<span id="cb8-3"><a href="download-occurrence-data.html#cb8-3" tabindex="-1"></a>Galax_urceolata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax urceolata&quot;</span>, <span class="st">&quot;Galax aphylla&quot;</span>)</span>
+<span id="cb8-4"><a href="download-occurrence-data.html#cb8-4" tabindex="-1"></a>Pyxidanthera_barbulata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Pyxidanthera barbulata&quot;</span>, <span class="st">&quot;Pyxidanthera barbulata var. barbulata&quot;</span>)</span>
+<span id="cb8-5"><a href="download-occurrence-data.html#cb8-5" tabindex="-1"></a>Pyxidanthera_brevifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Pyxidanthera brevifolia&quot;</span>, <span class="st">&quot;Pyxidanthera barbulata var. brevifolia&quot;</span>)</span>
+<span id="cb8-6"><a href="download-occurrence-data.html#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="download-occurrence-data.html#cb8-7" tabindex="-1"></a><span class="co"># Use gatoRs to download records with resolved synonyms</span></span>
+<span id="cb8-8"><a href="download-occurrence-data.html#cb8-8" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Shortia_galacifolia,</span>
+<span id="cb8-9"><a href="download-occurrence-data.html#cb8-9" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-10"><a href="download-occurrence-data.html#cb8-10" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-11"><a href="download-occurrence-data.html#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="download-occurrence-data.html#cb8-12" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Galax_urceolata,</span>
+<span id="cb8-13"><a href="download-occurrence-data.html#cb8-13" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-14"><a href="download-occurrence-data.html#cb8-14" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-15"><a href="download-occurrence-data.html#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="download-occurrence-data.html#cb8-16" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_barbulata,</span>
+<span id="cb8-17"><a href="download-occurrence-data.html#cb8-17" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-18"><a href="download-occurrence-data.html#cb8-18" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-19"><a href="download-occurrence-data.html#cb8-19" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="download-occurrence-data.html#cb8-20" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_brevifolia,</span>
+<span id="cb8-21"><a href="download-occurrence-data.html#cb8-21" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-22"><a href="download-occurrence-data.html#cb8-22" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="c-preview-downloaded-files" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> C) Preview Downloaded Files<a href="download-occurrence-data.html#c-preview-downloaded-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="download-occurrence-data.html#cb11-1" tabindex="-1"></a><span class="co"># Read one downloaded file</span></span>
-<span id="cb11-2"><a href="download-occurrence-data.html#cb11-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
-<span id="cb11-3"><a href="download-occurrence-data.html#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="download-occurrence-data.html#cb11-4" tabindex="-1"></a><span class="co"># Preview columns and dimensions</span></span>
-<span id="cb11-5"><a href="download-occurrence-data.html#cb11-5" tabindex="-1"></a><span class="fu">names</span>(rawdf)</span>
-<span id="cb11-6"><a href="download-occurrence-data.html#cb11-6" tabindex="-1"></a><span class="fu">nrow</span>(rawdf)</span>
-<span id="cb11-7"><a href="download-occurrence-data.html#cb11-7" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="download-occurrence-data.html#cb11-8" tabindex="-1"></a><span class="co"># Visualize records interactively - The error message here indicates many points do not have long/lat values</span></span>
-<span id="cb11-9"><a href="download-occurrence-data.html#cb11-9" tabindex="-1"></a><span class="fu">leaflet</span>(rawdf) <span class="sc">%&gt;%</span></span>
-<span id="cb11-10"><a href="download-occurrence-data.html#cb11-10" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-11"><a href="download-occurrence-data.html#cb11-11" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">label =</span> <span class="fu">paste0</span>(rawdf<span class="sc">$</span>longitude, <span class="st">&quot;, &quot;</span>, rawdf<span class="sc">$</span>latitude))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="download-occurrence-data.html#cb9-1" tabindex="-1"></a><span class="co"># Read one downloaded file</span></span>
+<span id="cb9-2"><a href="download-occurrence-data.html#cb9-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb9-3"><a href="download-occurrence-data.html#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="download-occurrence-data.html#cb9-4" tabindex="-1"></a><span class="co"># Preview columns and dimensions</span></span>
+<span id="cb9-5"><a href="download-occurrence-data.html#cb9-5" tabindex="-1"></a><span class="fu">names</span>(rawdf)</span>
+<span id="cb9-6"><a href="download-occurrence-data.html#cb9-6" tabindex="-1"></a><span class="fu">nrow</span>(rawdf)</span>
+<span id="cb9-7"><a href="download-occurrence-data.html#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="download-occurrence-data.html#cb9-8" tabindex="-1"></a><span class="co"># Visualize records interactively - The error message here indicates many points do not have long/lat values</span></span>
+<span id="cb9-9"><a href="download-occurrence-data.html#cb9-9" tabindex="-1"></a><span class="fu">leaflet</span>(rawdf) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="download-occurrence-data.html#cb9-10" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="download-occurrence-data.html#cb9-11" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">label =</span> <span class="fu">paste0</span>(rawdf<span class="sc">$</span>longitude, <span class="st">&quot;, &quot;</span>, rawdf<span class="sc">$</span>latitude))</span></code></pre></div>
 
 </div>
 </div>

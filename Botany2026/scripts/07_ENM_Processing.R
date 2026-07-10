@@ -1,20 +1,22 @@
 # ENM Processing
-#
-# Purpose:
-#   - Project ecological niche models (ENMs) for four species onto
-#     current and future climate layers (Eastern Temperate Forests)
-#   - Visualize habitat suitability maps
-#   - Calculate niche breadth for each species
-#   - Calculate pairwise niche overlap
-#   - Test for phylogenetic signal in niche overlap
-#   - Compare current vs future projections to assess range shifts
-#
+
+### Purpose:
+###
+### - Project ecological niche models (ENMs) for four species onto current and future climate layers (Eastern Temperate Forests)
+### - Visualize habitat suitability maps
+### - Calculate niche breadth for each species
+### - Calculate pairwise niche overlap
+### - Test for phylogenetic signal in niche overlap
+### -  Compare current vs future projections to assess range shifts
 
 
-# Increase Java memory limit to avoid OutOfMemoryError
-# Some ENM packages, especially dismo and older ENMeval workflows,
-# may call Java routines that require more RAM.
-# This sets the Java heap space to 8GB.
+## Setup ----
+###
+### Increase Java memory limit to avoid OutOfMemoryError
+### Some ENM packages, especially dismo and older ENMeval workflows,
+### may call Java routines that require more RAM.
+### This sets the Java heap space to 8GB.
+
 options(java.parameters = "-Xmx30g")
 
 ## Load Required Packages ----

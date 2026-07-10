@@ -1,8 +1,8 @@
 # Climate Processing
 #
-# Purpose:
-#  - Process climatic raster data and occurrence records for Diapensiaceae SDMs.
-#  - Includes alpha hull generation, raster cropping, VIF selection, and correlation analysis.
+### Purpose:
+### - Process climatic raster data and occurrence records for Diapensiaceae SDMs.
+### - Includes alpha hull generation, raster cropping, VIF selection, and correlation analysis.
 
 ##  Load Required Packages ----
 library(terra)        # For raster handling

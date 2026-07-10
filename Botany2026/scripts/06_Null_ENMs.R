@@ -1,9 +1,9 @@
 # Null Models
-#
-# Purpose:
-#   - Assess performance of niche models using null models
-#
-# Authors: Tyler Radtke and Sebastian Fernandez
+
+### Purpose:
+### - Assess performance of niche models using null models
+###
+### Authors: Tyler Radtke and Sebastian Fernandez
 
 ## Load Required Packages ----
 library(ENMeval)

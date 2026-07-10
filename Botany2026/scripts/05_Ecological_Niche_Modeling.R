@@ -1,8 +1,9 @@
 # Ecological Niche Modeling
-#
-# Purpose:
-#  - Build ecological niche models for Diapensiaceae species using ENMeval and Maxent with VIF-selected environmental variables.
-#
+
+### Purpose:
+###
+### - Build ecological niche models for Diapensiaceae species using ENMeval and Maxent with VIF-selected environmental variables.
+###
 
 
 ## Load Required Packages ----

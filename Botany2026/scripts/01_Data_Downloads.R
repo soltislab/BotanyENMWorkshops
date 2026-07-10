@@ -1,8 +1,9 @@
 # Download Occurrence Data
-#
-### Purpose:
-###   - Download and preview species occurrence records using iDigBio and gatoRs.
 
+### Purpose:
+###
+### - Download and preview species occurrence records using iDigBio and gatoRs.
+###
 ### Created by ML Gaynor.
 
 ## Load Required Packages ----

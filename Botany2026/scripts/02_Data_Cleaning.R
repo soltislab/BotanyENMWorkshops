@@ -1,9 +1,10 @@
 # Occurrence Data Cleaning
-#
-# Purpose:
-#   - Clean and harmonize occurrence records for ecological niche modeling.
-#
-# Created and modified by ML Gaynor
+
+### Purpose:
+###
+### - Clean and harmonize occurrence records for ecological niche modeling.
+###
+### Created and modified by ML Gaynor
 
 ## Load Required Packages ----
 library(gatoRs)         # Taxonomic and geographic cleaning

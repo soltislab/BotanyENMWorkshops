@@ -27,22 +27,17 @@ convert_script <- function(infile, outfile){
     c("", "```", "")
   }
 
-  ## ---------------------------------------------
-  ## Convert ### comments to Markdown
-  ## ---------------------------------------------
-
   comment_to_md <- function(x){
 
-    txt <- sub("^### ?", "", x)
+    txt <- sub("^###\\s?", "", x)
 
-    # blank documentation line
     if(grepl("^\\s*$", txt))
       return("")
 
-    # bullet list
+    # bullets
     txt <- sub("^\\s*-\\s+", "- ", txt)
 
-    # numbered list
+    # numbered lists
     txt <- sub("^\\s*([0-9]+\\.)\\s+", "\\1 ", txt)
 
     txt
@@ -54,20 +49,29 @@ convert_script <- function(infile, outfile){
 
     line <- lines[i]
 
-    ## ---------------------------------------------
-    ## First title
-    ## ---------------------------------------------
+    ## -------------------------------------------------
+    ## Title (first line only)
+    ## -------------------------------------------------
 
     if(i == 1 && grepl("^# ", line)){
 
-      out <- c(out,
-               paste0("# ", sub("^# ", "", line)),
-               "")
+      out <- c(
+        out,
+        paste0("# ", sub("^# ", "", line)),
+        ""
+      )
 
       i <- i + 1
 
+      # skip blank lines after title
       while(i <= length(lines) &&
-            grepl("^###", lines[i])){
+            grepl("^\\s*$", lines[i])) {
+        i <- i + 1
+      }
+
+      # documentation block
+      while(i <= length(lines) &&
+            grepl("^###", lines[i])) {
 
         out <- c(out, comment_to_md(lines[i]))
 
@@ -79,9 +83,9 @@ convert_script <- function(infile, outfile){
       next
     }
 
-    ## ---------------------------------------------
-    ## Section headings
-    ## ---------------------------------------------
+    ## -------------------------------------------------
+    ## Section heading
+    ## -------------------------------------------------
 
     if(grepl("^## .*----$", line)){
 
@@ -95,14 +99,23 @@ convert_script <- function(infile, outfile){
       heading <- sub("^##\\s*", "", line)
       heading <- sub("\\s*----$", "", heading)
 
-      out <- c(out,
-               paste0("## ", heading),
-               "")
+      out <- c(
+        out,
+        paste0("## ", heading),
+        ""
+      )
 
       i <- i + 1
 
+      # skip blank lines after heading
       while(i <= length(lines) &&
-            grepl("^###", lines[i])){
+            grepl("^\\s*$", lines[i])) {
+        i <- i + 1
+      }
+
+      # documentation block
+      while(i <= length(lines) &&
+            grepl("^###", lines[i])) {
 
         out <- c(out, comment_to_md(lines[i]))
 
@@ -114,13 +127,17 @@ convert_script <- function(infile, outfile){
       next
     }
 
-    ## ---------------------------------------------
-    ## R code
-    ## ---------------------------------------------
+    ## -------------------------------------------------
+    ## Code
+    ## -------------------------------------------------
 
     if(!in_chunk){
 
-      label <- paste0(chunk_prefix, "_chunk", chunk)
+      label <- paste0(
+        chunk_prefix,
+        "_chunk",
+        chunk
+      )
 
       out <- c(out, open_chunk(label))
 
@@ -160,9 +177,12 @@ for(f in files){
       "book",
       "chapters",
       paste0(
-        tools::file_path_sans_ext(basename(f)),
+        tools::file_path_sans_ext(
+          basename(f)
+        ),
         ".Rmd"
       )
     )
   )
 }
+

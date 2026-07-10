@@ -1,5 +1,6 @@
 contributors
 setup
+download-zenodo-data
 install-required-cran-packages
 define-cran-packages
 install-missing-cran-packages

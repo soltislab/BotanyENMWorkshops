@@ -144,11 +144,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> Setup</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#install-required-cran-packages"><i class="fa fa-check"></i><b>1.1</b> Install required CRAN packages</a></li>
-<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#define-cran-packages"><i class="fa fa-check"></i><b>1.2</b> Define CRAN Packages</a></li>
-<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#install-missing-cran-packages"><i class="fa fa-check"></i><b>1.3</b> Install Missing CRAN Packages</a></li>
-<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#load-all-cran-packages"><i class="fa fa-check"></i><b>1.4</b> Load All CRAN Packages</a></li>
-<li class="chapter" data-level="1.5" data-path="setup.html"><a href="setup.html#install-required-github-packages"><i class="fa fa-check"></i><b>1.5</b> Install required GitHub packages</a></li>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#download-zenodo-data"><i class="fa fa-check"></i><b>1.1</b> Download Zenodo Data</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#install-required-cran-packages"><i class="fa fa-check"></i><b>1.2</b> Install required CRAN packages</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#define-cran-packages"><i class="fa fa-check"></i><b>1.3</b> Define CRAN Packages</a></li>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#install-missing-cran-packages"><i class="fa fa-check"></i><b>1.4</b> Install Missing CRAN Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="setup.html"><a href="setup.html#load-all-cran-packages"><i class="fa fa-check"></i><b>1.5</b> Load All CRAN Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="setup.html"><a href="setup.html#install-required-github-packages"><i class="fa fa-check"></i><b>1.6</b> Install required GitHub packages</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="download-occurrence-data.html"><a href="download-occurrence-data.html"><i class="fa fa-check"></i><b>2</b> Download Occurrence Data</a>
 <ul>
@@ -251,103 +252,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="setup" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Setup<a href="setup.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Purpose:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1" tabindex="-1"></a><span class="co"># - Install all R packages required for ENM workflows.</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="setup.html#cb1-1" tabindex="-1"></a><span class="co"># Install all R packages required for ENM workflows.</span></span>
 <span id="cb1-2"><a href="setup.html#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="setup.html#cb1-3" tabindex="-1"></a><span class="co"># - Check that all packages load successfully.</span></span>
+<span id="cb1-3"><a href="setup.html#cb1-3" tabindex="-1"></a><span class="co"># Check that all packages load successfully.</span></span>
 <span id="cb1-4"><a href="setup.html#cb1-4" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="setup.html#cb1-5" tabindex="-1"></a><span class="co"># - Install any needed GitHub packages.</span></span>
-<span id="cb1-6"><a href="setup.html#cb1-6" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="setup.html#cb1-7" tabindex="-1"></a><span class="do">## Download Zenodo Data</span></span>
-<span id="cb1-8"><a href="setup.html#cb1-8" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;scripts/tools/ZenodoDownload.R&quot;</span>)</span>
-<span id="cb1-9"><a href="setup.html#cb1-9" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="fu">c</span>(<span class="st">&quot;tools&quot;</span>, <span class="st">&quot;httr2&quot;</span>, <span class="st">&quot;utils&quot;</span>, <span class="st">&quot;magrittr&quot;</span>))</span>
-<span id="cb1-10"><a href="setup.html#cb1-10" tabindex="-1"></a><span class="fu">ZenodoDownload</span>()</span></code></pre></div>
-<div id="install-required-cran-packages" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Install required CRAN packages<a href="setup.html#install-required-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<span id="cb1-5"><a href="setup.html#cb1-5" tabindex="-1"></a><span class="co"># Install any needed GitHub packages.</span></span></code></pre></div>
+<div id="download-zenodo-data" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Download Zenodo Data<a href="setup.html#download-zenodo-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;scripts/tools/ZenodoDownload.R&quot;</span>)</span>
+<span id="cb2-2"><a href="setup.html#cb2-2" tabindex="-1"></a><span class="fu">download.packages</span>(<span class="fu">c</span>(<span class="st">&quot;tools&quot;</span>, <span class="st">&quot;httr2&quot;</span>, <span class="st">&quot;utils&quot;</span>, <span class="st">&quot;magrittr&quot;</span>))</span>
+<span id="cb2-3"><a href="setup.html#cb2-3" tabindex="-1"></a><span class="fu">ZenodoDownload</span>()</span></code></pre></div>
 </div>
-<div id="define-cran-packages" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Define CRAN Packages<a href="setup.html#define-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="setup.html#cb2-1" tabindex="-1"></a>list_of_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-2"><a href="setup.html#cb2-2" tabindex="-1"></a>  <span class="co"># Core ENM tools</span></span>
-<span id="cb2-3"><a href="setup.html#cb2-3" tabindex="-1"></a>  <span class="st">&quot;terra&quot;</span>, <span class="st">&quot;dismo&quot;</span>, <span class="st">&quot;ENMeval&quot;</span>, <span class="st">&quot;ENMTools&quot;</span>, <span class="st">&quot;biomod2&quot;</span>,</span>
-<span id="cb2-4"><a href="setup.html#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="setup.html#cb2-5" tabindex="-1"></a>  <span class="co"># Spatial / Mapping</span></span>
-<span id="cb2-6"><a href="setup.html#cb2-6" tabindex="-1"></a>  <span class="st">&quot;sf&quot;</span>, <span class="st">&quot;rnaturalearth&quot;</span>, <span class="st">&quot;ggspatial&quot;</span>, <span class="st">&quot;leaflet&quot;</span>, <span class="st">&quot;fields&quot;</span>, <span class="st">&quot;rangeBuilder&quot;</span>,</span>
-<span id="cb2-7"><a href="setup.html#cb2-7" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="setup.html#cb2-8" tabindex="-1"></a>  <span class="co"># Visualization</span></span>
-<span id="cb2-9"><a href="setup.html#cb2-9" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;viridis&quot;</span>, <span class="st">&quot;gridExtra&quot;</span>,</span>
-<span id="cb2-10"><a href="setup.html#cb2-10" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="setup.html#cb2-11" tabindex="-1"></a>  <span class="co"># Data manipulation</span></span>
-<span id="cb2-12"><a href="setup.html#cb2-12" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;gtools&quot;</span>,</span>
-<span id="cb2-13"><a href="setup.html#cb2-13" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="setup.html#cb2-14" tabindex="-1"></a>  <span class="co"># Phylogenetics</span></span>
-<span id="cb2-15"><a href="setup.html#cb2-15" tabindex="-1"></a>  <span class="st">&quot;ape&quot;</span>, <span class="st">&quot;phytools&quot;</span>,</span>
-<span id="cb2-16"><a href="setup.html#cb2-16" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="setup.html#cb2-17" tabindex="-1"></a>  <span class="co"># Biodiversity data</span></span>
-<span id="cb2-18"><a href="setup.html#cb2-18" tabindex="-1"></a>  <span class="st">&quot;ridigbio&quot;</span>, <span class="st">&quot;gatoRs&quot;</span>,</span>
-<span id="cb2-19"><a href="setup.html#cb2-19" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="setup.html#cb2-20" tabindex="-1"></a>  <span class="co"># Other utilities</span></span>
-<span id="cb2-21"><a href="setup.html#cb2-21" tabindex="-1"></a>  <span class="st">&quot;multcompView&quot;</span>, <span class="st">&quot;usdm&quot;</span>, <span class="st">&quot;predicts&quot;</span>, <span class="st">&quot;rJava&quot;</span></span>
-<span id="cb2-22"><a href="setup.html#cb2-22" tabindex="-1"></a>)</span></code></pre></div>
+<div id="install-required-cran-packages" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Install required CRAN packages<a href="setup.html#install-required-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 </div>
-<div id="install-missing-cran-packages" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Install Missing CRAN Packages<a href="setup.html#install-missing-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="define-cran-packages" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Define CRAN Packages<a href="setup.html#define-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" tabindex="-1"></a>list_of_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-2"><a href="setup.html#cb3-2" tabindex="-1"></a>  <span class="co"># Core ENM tools</span></span>
+<span id="cb3-3"><a href="setup.html#cb3-3" tabindex="-1"></a>  <span class="st">&quot;terra&quot;</span>, <span class="st">&quot;dismo&quot;</span>, <span class="st">&quot;ENMeval&quot;</span>, <span class="st">&quot;ENMTools&quot;</span>, <span class="st">&quot;biomod2&quot;</span>,</span>
+<span id="cb3-4"><a href="setup.html#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="setup.html#cb3-5" tabindex="-1"></a>  <span class="co"># Spatial / Mapping</span></span>
+<span id="cb3-6"><a href="setup.html#cb3-6" tabindex="-1"></a>  <span class="st">&quot;sf&quot;</span>, <span class="st">&quot;rnaturalearth&quot;</span>, <span class="st">&quot;ggspatial&quot;</span>, <span class="st">&quot;leaflet&quot;</span>, <span class="st">&quot;fields&quot;</span>, <span class="st">&quot;rangeBuilder&quot;</span>,</span>
+<span id="cb3-7"><a href="setup.html#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="setup.html#cb3-8" tabindex="-1"></a>  <span class="co"># Visualization</span></span>
+<span id="cb3-9"><a href="setup.html#cb3-9" tabindex="-1"></a>  <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;viridis&quot;</span>, <span class="st">&quot;gridExtra&quot;</span>,</span>
+<span id="cb3-10"><a href="setup.html#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="setup.html#cb3-11" tabindex="-1"></a>  <span class="co"># Data manipulation</span></span>
+<span id="cb3-12"><a href="setup.html#cb3-12" tabindex="-1"></a>  <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;stringr&quot;</span>, <span class="st">&quot;gtools&quot;</span>,</span>
+<span id="cb3-13"><a href="setup.html#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="setup.html#cb3-14" tabindex="-1"></a>  <span class="co"># Phylogenetics</span></span>
+<span id="cb3-15"><a href="setup.html#cb3-15" tabindex="-1"></a>  <span class="st">&quot;ape&quot;</span>, <span class="st">&quot;phytools&quot;</span>,</span>
+<span id="cb3-16"><a href="setup.html#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="setup.html#cb3-17" tabindex="-1"></a>  <span class="co"># Biodiversity data</span></span>
+<span id="cb3-18"><a href="setup.html#cb3-18" tabindex="-1"></a>  <span class="st">&quot;ridigbio&quot;</span>, <span class="st">&quot;gatoRs&quot;</span>,</span>
+<span id="cb3-19"><a href="setup.html#cb3-19" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="setup.html#cb3-20" tabindex="-1"></a>  <span class="co"># Other utilities</span></span>
+<span id="cb3-21"><a href="setup.html#cb3-21" tabindex="-1"></a>  <span class="st">&quot;multcompView&quot;</span>, <span class="st">&quot;usdm&quot;</span>, <span class="st">&quot;predicts&quot;</span>, <span class="st">&quot;rJava&quot;</span></span>
+<span id="cb3-22"><a href="setup.html#cb3-22" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="install-missing-cran-packages" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Install Missing CRAN Packages<a href="setup.html#install-missing-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Identify any packages from the list not currently installed.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup.html#cb3-1" tabindex="-1"></a>new.packages <span class="ot">&lt;-</span> list_of_packages[<span class="sc">!</span>(list_of_packages <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>])]</span>
-<span id="cb3-2"><a href="setup.html#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="setup.html#cb3-3" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(new.packages)) {</span>
-<span id="cb3-4"><a href="setup.html#cb3-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Installing missing CRAN packages:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb3-5"><a href="setup.html#cb3-5" tabindex="-1"></a>  <span class="fu">print</span>(new.packages)</span>
-<span id="cb3-6"><a href="setup.html#cb3-6" tabindex="-1"></a>  <span class="fu">install.packages</span>(new.packages)</span>
-<span id="cb3-7"><a href="setup.html#cb3-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb3-8"><a href="setup.html#cb3-8" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All required CRAN packages already installed.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb3-9"><a href="setup.html#cb3-9" tabindex="-1"></a>}</span></code></pre></div>
-</div>
-<div id="load-all-cran-packages" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Load All CRAN Packages<a href="setup.html#load-all-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" tabindex="-1"></a><span class="co"># Try loading all required CRAN packages.</span></span>
-<span id="cb4-2"><a href="setup.html#cb4-2" tabindex="-1"></a>loaded <span class="ot">&lt;-</span> <span class="fu">sapply</span>(list_of_packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-3"><a href="setup.html#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="setup.html#cb4-4" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span>loaded)) {</span>
-<span id="cb4-5"><a href="setup.html#cb4-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">WARNING: These CRAN packages failed to load:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb4-6"><a href="setup.html#cb4-6" tabindex="-1"></a>  <span class="fu">print</span>(list_of_packages[<span class="sc">!</span>loaded])</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup.html#cb4-1" tabindex="-1"></a>new.packages <span class="ot">&lt;-</span> list_of_packages[<span class="sc">!</span>(list_of_packages <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>])]</span>
+<span id="cb4-2"><a href="setup.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="setup.html#cb4-3" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(new.packages)) {</span>
+<span id="cb4-4"><a href="setup.html#cb4-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Installing missing CRAN packages:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb4-5"><a href="setup.html#cb4-5" tabindex="-1"></a>  <span class="fu">print</span>(new.packages)</span>
+<span id="cb4-6"><a href="setup.html#cb4-6" tabindex="-1"></a>  <span class="fu">install.packages</span>(new.packages)</span>
 <span id="cb4-7"><a href="setup.html#cb4-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb4-8"><a href="setup.html#cb4-8" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All CRAN packages loaded successfully.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb4-8"><a href="setup.html#cb4-8" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All required CRAN packages already installed.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
 <span id="cb4-9"><a href="setup.html#cb4-9" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="install-required-github-packages" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Install required GitHub packages<a href="setup.html#install-required-github-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1" tabindex="-1"></a><span class="co"># devtools is required for installing from GitHub.</span></span>
-<span id="cb5-2"><a href="setup.html#cb5-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(devtools)) {</span>
-<span id="cb5-3"><a href="setup.html#cb5-3" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb5-4"><a href="setup.html#cb5-4" tabindex="-1"></a>  <span class="fu">library</span>(devtools)</span>
-<span id="cb5-5"><a href="setup.html#cb5-5" tabindex="-1"></a>}</span>
-<span id="cb5-6"><a href="setup.html#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="setup.html#cb5-7" tabindex="-1"></a><span class="co"># List of GitHub repositories for required packages.</span></span>
-<span id="cb5-8"><a href="setup.html#cb5-8" tabindex="-1"></a>github_repos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb5-9"><a href="setup.html#cb5-9" tabindex="-1"></a>  <span class="st">&quot;vqv/ggbiplot&quot;</span></span>
-<span id="cb5-10"><a href="setup.html#cb5-10" tabindex="-1"></a>)</span>
-<span id="cb5-11"><a href="setup.html#cb5-11" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="setup.html#cb5-12" tabindex="-1"></a><span class="co"># Check whether these GitHub packages are installed, and install if not.</span></span>
-<span id="cb5-13"><a href="setup.html#cb5-13" tabindex="-1"></a><span class="cf">for</span> (repo <span class="cf">in</span> github_repos) {</span>
-<span id="cb5-14"><a href="setup.html#cb5-14" tabindex="-1"></a>  pkg <span class="ot">&lt;-</span> <span class="fu">tail</span>(<span class="fu">strsplit</span>(repo, <span class="st">&quot;/&quot;</span>)[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
-<span id="cb5-15"><a href="setup.html#cb5-15" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>]) {</span>
-<span id="cb5-16"><a href="setup.html#cb5-16" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Installing GitHub package:&quot;</span>, repo, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
-<span id="cb5-17"><a href="setup.html#cb5-17" tabindex="-1"></a>    devtools<span class="sc">::</span><span class="fu">install_github</span>(repo, <span class="at">upgrade =</span> <span class="st">&quot;never&quot;</span>)</span>
-<span id="cb5-18"><a href="setup.html#cb5-18" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb5-19"><a href="setup.html#cb5-19" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">GitHub package already installed:&quot;</span>, pkg, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
-<span id="cb5-20"><a href="setup.html#cb5-20" tabindex="-1"></a>  }</span>
-<span id="cb5-21"><a href="setup.html#cb5-21" tabindex="-1"></a>}</span>
-<span id="cb5-22"><a href="setup.html#cb5-22" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="setup.html#cb5-23" tabindex="-1"></a><span class="do">## Try loading GitHub packages</span></span>
-<span id="cb5-24"><a href="setup.html#cb5-24" tabindex="-1"></a>github_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ggbiplot&quot;</span>)</span>
-<span id="cb5-25"><a href="setup.html#cb5-25" tabindex="-1"></a>github_loaded <span class="ot">&lt;-</span> <span class="fu">sapply</span>(github_packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-26"><a href="setup.html#cb5-26" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="setup.html#cb5-27" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span>github_loaded)) {</span>
-<span id="cb5-28"><a href="setup.html#cb5-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">WARNING: These GitHub packages failed to load:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb5-29"><a href="setup.html#cb5-29" tabindex="-1"></a>  <span class="fu">print</span>(github_packages[<span class="sc">!</span>github_loaded])</span>
-<span id="cb5-30"><a href="setup.html#cb5-30" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb5-31"><a href="setup.html#cb5-31" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All GitHub packages loaded successfully.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb5-32"><a href="setup.html#cb5-32" tabindex="-1"></a>}</span></code></pre></div>
+<div id="load-all-cran-packages" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Load All CRAN Packages<a href="setup.html#load-all-cran-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup.html#cb5-1" tabindex="-1"></a><span class="co"># Try loading all required CRAN packages.</span></span>
+<span id="cb5-2"><a href="setup.html#cb5-2" tabindex="-1"></a>loaded <span class="ot">&lt;-</span> <span class="fu">sapply</span>(list_of_packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a href="setup.html#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="setup.html#cb5-4" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span>loaded)) {</span>
+<span id="cb5-5"><a href="setup.html#cb5-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">WARNING: These CRAN packages failed to load:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-6"><a href="setup.html#cb5-6" tabindex="-1"></a>  <span class="fu">print</span>(list_of_packages[<span class="sc">!</span>loaded])</span>
+<span id="cb5-7"><a href="setup.html#cb5-7" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb5-8"><a href="setup.html#cb5-8" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All CRAN packages loaded successfully.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb5-9"><a href="setup.html#cb5-9" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="install-required-github-packages" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Install required GitHub packages<a href="setup.html#install-required-github-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="setup.html#cb6-1" tabindex="-1"></a><span class="co"># devtools is required for installing from GitHub.</span></span>
+<span id="cb6-2"><a href="setup.html#cb6-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(devtools)) {</span>
+<span id="cb6-3"><a href="setup.html#cb6-3" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb6-4"><a href="setup.html#cb6-4" tabindex="-1"></a>  <span class="fu">library</span>(devtools)</span>
+<span id="cb6-5"><a href="setup.html#cb6-5" tabindex="-1"></a>}</span>
+<span id="cb6-6"><a href="setup.html#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="setup.html#cb6-7" tabindex="-1"></a><span class="co"># List of GitHub repositories for required packages.</span></span>
+<span id="cb6-8"><a href="setup.html#cb6-8" tabindex="-1"></a>github_repos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb6-9"><a href="setup.html#cb6-9" tabindex="-1"></a>  <span class="st">&quot;vqv/ggbiplot&quot;</span></span>
+<span id="cb6-10"><a href="setup.html#cb6-10" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="setup.html#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="setup.html#cb6-12" tabindex="-1"></a><span class="co"># Check whether these GitHub packages are installed, and install if not.</span></span>
+<span id="cb6-13"><a href="setup.html#cb6-13" tabindex="-1"></a><span class="cf">for</span> (repo <span class="cf">in</span> github_repos) {</span>
+<span id="cb6-14"><a href="setup.html#cb6-14" tabindex="-1"></a>  pkg <span class="ot">&lt;-</span> <span class="fu">tail</span>(<span class="fu">strsplit</span>(repo, <span class="st">&quot;/&quot;</span>)[[<span class="dv">1</span>]], <span class="dv">1</span>)</span>
+<span id="cb6-15"><a href="setup.html#cb6-15" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">&quot;Package&quot;</span>]) {</span>
+<span id="cb6-16"><a href="setup.html#cb6-16" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Installing GitHub package:&quot;</span>, repo, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
+<span id="cb6-17"><a href="setup.html#cb6-17" tabindex="-1"></a>    devtools<span class="sc">::</span><span class="fu">install_github</span>(repo, <span class="at">upgrade =</span> <span class="st">&quot;never&quot;</span>)</span>
+<span id="cb6-18"><a href="setup.html#cb6-18" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-19"><a href="setup.html#cb6-19" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">GitHub package already installed:&quot;</span>, pkg, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span>
+<span id="cb6-20"><a href="setup.html#cb6-20" tabindex="-1"></a>  }</span>
+<span id="cb6-21"><a href="setup.html#cb6-21" tabindex="-1"></a>}</span>
+<span id="cb6-22"><a href="setup.html#cb6-22" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="setup.html#cb6-23" tabindex="-1"></a><span class="do">## Try loading GitHub packages</span></span>
+<span id="cb6-24"><a href="setup.html#cb6-24" tabindex="-1"></a>github_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ggbiplot&quot;</span>)</span>
+<span id="cb6-25"><a href="setup.html#cb6-25" tabindex="-1"></a>github_loaded <span class="ot">&lt;-</span> <span class="fu">sapply</span>(github_packages, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-26"><a href="setup.html#cb6-26" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="setup.html#cb6-27" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span>github_loaded)) {</span>
+<span id="cb6-28"><a href="setup.html#cb6-28" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">WARNING: These GitHub packages failed to load:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-29"><a href="setup.html#cb6-29" tabindex="-1"></a>  <span class="fu">print</span>(github_packages[<span class="sc">!</span>github_loaded])</span>
+<span id="cb6-30"><a href="setup.html#cb6-30" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-31"><a href="setup.html#cb6-31" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">All GitHub packages loaded successfully.</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-32"><a href="setup.html#cb6-32" tabindex="-1"></a>}</span></code></pre></div>
 
 </div>
 </div>

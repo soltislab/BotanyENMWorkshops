@@ -3,7 +3,7 @@
 # Purpose:
 #   - Download and preview species occurrence records using iDigBio and gatoRs.
 #
-# Created by ML Gaynor
+# Created by ML Gaynor.
 
 ## Load Required Packages ----
 library(ridigbio)     # Interface to iDigBio API
@@ -11,6 +11,7 @@ library(gatoRs)       # Unified taxonomic/occurrence tools
 library(leaflet)      # Interactive mapping
 
 ## A) Download from iDigBio ----
+# Here we use `ridigbio` to download data.
 
 # Search for specific species (Galax urceolata)
 iDigBio_GU <- idig_search_records(rq = list(scientificname = "Galax urceolata"))

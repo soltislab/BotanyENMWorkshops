@@ -1,8 +1,11 @@
 #  Setup
 #
 # Purpose:
+
 #  - Install all R packages required for ENM workflows.
+
 #  - Check that all packages load successfully.
+
 #  - Install any needed GitHub packages.
 
 ## Install required CRAN packages ----

@@ -258,366 +258,366 @@ current and future climate layers (Eastern Temperate Forests)
 - Calculate pairwise niche overlap
 - Test for phylogenetic signal in niche overlap
 - Compare current vs future projections to assess range shifts</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="enm-processing.html#cb58-1" tabindex="-1"></a><span class="co"># Increase Java memory limit to avoid OutOfMemoryError</span></span>
-<span id="cb58-2"><a href="enm-processing.html#cb58-2" tabindex="-1"></a><span class="co"># Some ENM packages, especially dismo and older ENMeval workflows,</span></span>
-<span id="cb58-3"><a href="enm-processing.html#cb58-3" tabindex="-1"></a><span class="co"># may call Java routines that require more RAM.</span></span>
-<span id="cb58-4"><a href="enm-processing.html#cb58-4" tabindex="-1"></a><span class="co"># This sets the Java heap space to 8GB.</span></span>
-<span id="cb58-5"><a href="enm-processing.html#cb58-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">java.parameters =</span> <span class="st">&quot;-Xmx30g&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="enm-processing.html#cb59-1" tabindex="-1"></a><span class="co"># Increase Java memory limit to avoid OutOfMemoryError</span></span>
+<span id="cb59-2"><a href="enm-processing.html#cb59-2" tabindex="-1"></a><span class="co"># Some ENM packages, especially dismo and older ENMeval workflows,</span></span>
+<span id="cb59-3"><a href="enm-processing.html#cb59-3" tabindex="-1"></a><span class="co"># may call Java routines that require more RAM.</span></span>
+<span id="cb59-4"><a href="enm-processing.html#cb59-4" tabindex="-1"></a><span class="co"># This sets the Java heap space to 8GB.</span></span>
+<span id="cb59-5"><a href="enm-processing.html#cb59-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">java.parameters =</span> <span class="st">&quot;-Xmx30g&quot;</span>)</span></code></pre></div>
 <div id="load-required-packages-6" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Load Required Packages<a href="enm-processing.html#load-required-packages-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="enm-processing.html#cb59-1" tabindex="-1"></a><span class="fu">library</span>(terra)            <span class="co"># For reading and manipulating raster data (modern replacement for raster package)</span></span>
-<span id="cb59-2"><a href="enm-processing.html#cb59-2" tabindex="-1"></a><span class="fu">library</span>(dismo)            <span class="co"># For predicting from ENMs and compatibility with Maxent models</span></span>
-<span id="cb59-3"><a href="enm-processing.html#cb59-3" tabindex="-1"></a><span class="fu">library</span>(ENMeval)          <span class="co"># For calculating niche overlap statistics</span></span>
-<span id="cb59-4"><a href="enm-processing.html#cb59-4" tabindex="-1"></a><span class="fu">library</span>(ENMTools)         <span class="co"># For calculating niche breadth (Levins&#39; B2)</span></span>
-<span id="cb59-5"><a href="enm-processing.html#cb59-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)          <span class="co"># For creating publication-quality plots</span></span>
-<span id="cb59-6"><a href="enm-processing.html#cb59-6" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)    <span class="co"># For downloading shapefiles of countries and states</span></span>
-<span id="cb59-7"><a href="enm-processing.html#cb59-7" tabindex="-1"></a><span class="fu">library</span>(viridis)          <span class="co"># For colorblind-friendly color scales</span></span>
-<span id="cb59-8"><a href="enm-processing.html#cb59-8" tabindex="-1"></a><span class="fu">library</span>(ggspatial)        <span class="co"># For adding north arrows to plots</span></span>
-<span id="cb59-9"><a href="enm-processing.html#cb59-9" tabindex="-1"></a><span class="fu">library</span>(dplyr)            <span class="co"># For data manipulation</span></span>
-<span id="cb59-10"><a href="enm-processing.html#cb59-10" tabindex="-1"></a><span class="fu">library</span>(ape)              <span class="co"># For reading and processing phylogenetic trees</span></span>
-<span id="cb59-11"><a href="enm-processing.html#cb59-11" tabindex="-1"></a><span class="fu">library</span>(biomod2)          <span class="co"># For range size change calculations between binary rasters</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="enm-processing.html#cb60-1" tabindex="-1"></a><span class="fu">library</span>(terra)            <span class="co"># For reading and manipulating raster data (modern replacement for raster package)</span></span>
+<span id="cb60-2"><a href="enm-processing.html#cb60-2" tabindex="-1"></a><span class="fu">library</span>(dismo)            <span class="co"># For predicting from ENMs and compatibility with Maxent models</span></span>
+<span id="cb60-3"><a href="enm-processing.html#cb60-3" tabindex="-1"></a><span class="fu">library</span>(ENMeval)          <span class="co"># For calculating niche overlap statistics</span></span>
+<span id="cb60-4"><a href="enm-processing.html#cb60-4" tabindex="-1"></a><span class="fu">library</span>(ENMTools)         <span class="co"># For calculating niche breadth (Levins&#39; B2)</span></span>
+<span id="cb60-5"><a href="enm-processing.html#cb60-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)          <span class="co"># For creating publication-quality plots</span></span>
+<span id="cb60-6"><a href="enm-processing.html#cb60-6" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)    <span class="co"># For downloading shapefiles of countries and states</span></span>
+<span id="cb60-7"><a href="enm-processing.html#cb60-7" tabindex="-1"></a><span class="fu">library</span>(viridis)          <span class="co"># For colorblind-friendly color scales</span></span>
+<span id="cb60-8"><a href="enm-processing.html#cb60-8" tabindex="-1"></a><span class="fu">library</span>(ggspatial)        <span class="co"># For adding north arrows to plots</span></span>
+<span id="cb60-9"><a href="enm-processing.html#cb60-9" tabindex="-1"></a><span class="fu">library</span>(dplyr)            <span class="co"># For data manipulation</span></span>
+<span id="cb60-10"><a href="enm-processing.html#cb60-10" tabindex="-1"></a><span class="fu">library</span>(ape)              <span class="co"># For reading and processing phylogenetic trees</span></span>
+<span id="cb60-11"><a href="enm-processing.html#cb60-11" tabindex="-1"></a><span class="fu">library</span>(biomod2)          <span class="co"># For range size change calculations between binary rasters</span></span></code></pre></div>
 </div>
 <div id="a-project-models-onto-current-climate-eastern-temperate-forests" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> A) Project Models onto Current Climate (Eastern Temperate Forests)<a href="enm-processing.html#a-project-models-onto-current-climate-eastern-temperate-forests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="enm-processing.html#cb60-1" tabindex="-1"></a><span class="co"># List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.</span></span>
-<span id="cb60-2"><a href="enm-processing.html#cb60-2" tabindex="-1"></a><span class="co"># These will be used as environmental predictors for projecting the ENMs.</span></span>
-<span id="cb60-3"><a href="enm-processing.html#cb60-3" tabindex="-1"></a>clim_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/CurrentEasternTemperateForests&quot;</span>,<span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb60-4"><a href="enm-processing.html#cb60-4" tabindex="-1"></a></span>
-<span id="cb60-5"><a href="enm-processing.html#cb60-5" tabindex="-1"></a><span class="co"># Read all climate rasters into a single SpatRaster object for efficient processing.</span></span>
-<span id="cb60-6"><a href="enm-processing.html#cb60-6" tabindex="-1"></a>clim_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(clim_files)</span>
-<span id="cb60-7"><a href="enm-processing.html#cb60-7" tabindex="-1"></a></span>
-<span id="cb60-8"><a href="enm-processing.html#cb60-8" tabindex="-1"></a><span class="co"># Plot a quick preview of the first four layers to check that rasters loaded correctly.</span></span>
-<span id="cb60-9"><a href="enm-processing.html#cb60-9" tabindex="-1"></a><span class="fu">plot</span>(clim_stack[[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]])</span>
-<span id="cb60-10"><a href="enm-processing.html#cb60-10" tabindex="-1"></a></span>
-<span id="cb60-11"><a href="enm-processing.html#cb60-11" tabindex="-1"></a><span class="co"># Define a vector of the species you want to process.</span></span>
-<span id="cb60-12"><a href="enm-processing.html#cb60-12" tabindex="-1"></a><span class="co"># Each species has an ENM already built and saved to disk.</span></span>
-<span id="cb60-13"><a href="enm-processing.html#cb60-13" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax_urceolata&quot;</span>,</span>
-<span id="cb60-14"><a href="enm-processing.html#cb60-14" tabindex="-1"></a>                  <span class="st">&quot;Pyxidanthera_barbulata&quot;</span>,</span>
-<span id="cb60-15"><a href="enm-processing.html#cb60-15" tabindex="-1"></a>                  <span class="st">&quot;Pyxidanthera_brevifolia&quot;</span>,</span>
-<span id="cb60-16"><a href="enm-processing.html#cb60-16" tabindex="-1"></a>                  <span class="st">&quot;Shortia_galacifolia&quot;</span>)</span>
-<span id="cb60-17"><a href="enm-processing.html#cb60-17" tabindex="-1"></a></span>
-<span id="cb60-18"><a href="enm-processing.html#cb60-18" tabindex="-1"></a><span class="co"># Load the USA state boundaries as an sf object.</span></span>
-<span id="cb60-19"><a href="enm-processing.html#cb60-19" tabindex="-1"></a><span class="co"># This will be used as a basemap for plotting projections.</span></span>
-<span id="cb60-20"><a href="enm-processing.html#cb60-20" tabindex="-1"></a>usa <span class="ot">&lt;-</span> rnaturalearth<span class="sc">::</span><span class="fu">ne_states</span>(<span class="at">country =</span> <span class="st">&quot;United States of America&quot;</span>, <span class="at">returnclass =</span> <span class="st">&quot;sf&quot;</span>)</span>
-<span id="cb60-21"><a href="enm-processing.html#cb60-21" tabindex="-1"></a></span>
-<span id="cb60-22"><a href="enm-processing.html#cb60-22" tabindex="-1"></a><span class="co"># Loop through each species to project their ENM onto the current climate layers.</span></span>
-<span id="cb60-23"><a href="enm-processing.html#cb60-23" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
-<span id="cb60-24"><a href="enm-processing.html#cb60-24" tabindex="-1"></a></span>
-<span id="cb60-25"><a href="enm-processing.html#cb60-25" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Projecting current climate for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb60-26"><a href="enm-processing.html#cb60-26" tabindex="-1"></a></span>
-<span id="cb60-27"><a href="enm-processing.html#cb60-27" tabindex="-1"></a>  <span class="co"># Load the optimal ENM for this species.</span></span>
-<span id="cb60-28"><a href="enm-processing.html#cb60-28" tabindex="-1"></a>  <span class="co"># The object `opt.mod` will be loaded into the workspace.</span></span>
-<span id="cb60-29"><a href="enm-processing.html#cb60-29" tabindex="-1"></a>  mod_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/05_ENMs/&quot;</span>, species, <span class="st">&quot;_opt_mod.RData&quot;</span>)</span>
-<span id="cb60-30"><a href="enm-processing.html#cb60-30" tabindex="-1"></a>  <span class="fu">load</span>(mod_file)  <span class="co"># loads object: opt.mod</span></span>
-<span id="cb60-31"><a href="enm-processing.html#cb60-31" tabindex="-1"></a></span>
-<span id="cb60-32"><a href="enm-processing.html#cb60-32" tabindex="-1"></a>  <span class="co"># Identify which layers were used to build the ENM.</span></span>
-<span id="cb60-33"><a href="enm-processing.html#cb60-33" tabindex="-1"></a>  <span class="co"># This ensures that your projection uses the same predictor variables</span></span>
-<span id="cb60-34"><a href="enm-processing.html#cb60-34" tabindex="-1"></a>  <span class="co"># as the model was trained on.</span></span>
-<span id="cb60-35"><a href="enm-processing.html#cb60-35" tabindex="-1"></a>  vif_dir <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/04_climate_processing/Cropped/&quot;</span>, species, <span class="st">&quot;/VIF/&quot;</span>)</span>
-<span id="cb60-36"><a href="enm-processing.html#cb60-36" tabindex="-1"></a>  species_layers <span class="ot">&lt;-</span> <span class="fu">list.files</span>(vif_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb60-37"><a href="enm-processing.html#cb60-37" tabindex="-1"></a></span>
-<span id="cb60-38"><a href="enm-processing.html#cb60-38" tabindex="-1"></a>  <span class="co"># Read in those specific rasters</span></span>
-<span id="cb60-39"><a href="enm-processing.html#cb60-39" tabindex="-1"></a>  spec_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(species_layers)</span>
-<span id="cb60-40"><a href="enm-processing.html#cb60-40" tabindex="-1"></a>  layer_names <span class="ot">&lt;-</span> <span class="fu">names</span>(spec_stack)</span>
-<span id="cb60-41"><a href="enm-processing.html#cb60-41" tabindex="-1"></a></span>
-<span id="cb60-42"><a href="enm-processing.html#cb60-42" tabindex="-1"></a>  <span class="co"># Subset the full ETF raster stack to only the layers used in the ENM.</span></span>
-<span id="cb60-43"><a href="enm-processing.html#cb60-43" tabindex="-1"></a>  ETF_Rasters <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">subset</span>(clim_stack, layer_names)</span>
-<span id="cb60-44"><a href="enm-processing.html#cb60-44" tabindex="-1"></a>  <span class="co">#if error, try: ETF_Rasters &lt;- raster::stack(ETF_Rasters)</span></span>
-<span id="cb60-45"><a href="enm-processing.html#cb60-45" tabindex="-1"></a></span>
-<span id="cb60-46"><a href="enm-processing.html#cb60-46" tabindex="-1"></a>  <span class="co"># Project the ENM onto the current ETF climate layers.</span></span>
-<span id="cb60-47"><a href="enm-processing.html#cb60-47" tabindex="-1"></a>  proj_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>)</span>
-<span id="cb60-48"><a href="enm-processing.html#cb60-48" tabindex="-1"></a></span>
-<span id="cb60-49"><a href="enm-processing.html#cb60-49" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(opt.mod, ETF_Rasters, <span class="at">filename =</span> proj_file, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">NAflag =</span> <span class="sc">-</span><span class="dv">9999</span>)</span>
-<span id="cb60-50"><a href="enm-processing.html#cb60-50" tabindex="-1"></a></span>
-<span id="cb60-51"><a href="enm-processing.html#cb60-51" tabindex="-1"></a>  <span class="co"># Convert the raster to a data frame for plotting in ggplot.</span></span>
-<span id="cb60-52"><a href="enm-processing.html#cb60-52" tabindex="-1"></a>  p_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(p, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb60-53"><a href="enm-processing.html#cb60-53" tabindex="-1"></a>  <span class="fu">colnames</span>(p_df)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Habitat_Suitability&quot;</span></span>
-<span id="cb60-54"><a href="enm-processing.html#cb60-54" tabindex="-1"></a></span>
-<span id="cb60-55"><a href="enm-processing.html#cb60-55" tabindex="-1"></a>  <span class="co"># Get the bounding box coordinates of the raster for plotting.</span></span>
-<span id="cb60-56"><a href="enm-processing.html#cb60-56" tabindex="-1"></a>  bbox_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">ext</span>(p)</span>
-<span id="cb60-57"><a href="enm-processing.html#cb60-57" tabindex="-1"></a></span>
-<span id="cb60-58"><a href="enm-processing.html#cb60-58" tabindex="-1"></a>  <span class="co"># Create the habitat suitability map.</span></span>
-<span id="cb60-59"><a href="enm-processing.html#cb60-59" tabindex="-1"></a>  p_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb60-60"><a href="enm-processing.html#cb60-60" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span>  <span class="co"># basemap</span></span>
-<span id="cb60-61"><a href="enm-processing.html#cb60-61" tabindex="-1"></a>    <span class="fu">geom_tile</span>(<span class="at">data =</span> p_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> Habitat_Suitability)) <span class="sc">+</span></span>
-<span id="cb60-62"><a href="enm-processing.html#cb60-62" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb60-63"><a href="enm-processing.html#cb60-63" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb60-64"><a href="enm-processing.html#cb60-64" tabindex="-1"></a>             <span class="at">ylim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb60-65"><a href="enm-processing.html#cb60-65" tabindex="-1"></a>             <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb60-66"><a href="enm-processing.html#cb60-66" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Suitability&quot;</span>) <span class="sc">+</span></span>
-<span id="cb60-67"><a href="enm-processing.html#cb60-67" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species), <span class="st">&quot; - Eastern Temperate Forest Habitat Suitability&quot;</span>),</span>
-<span id="cb60-68"><a href="enm-processing.html#cb60-68" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
-<span id="cb60-69"><a href="enm-processing.html#cb60-69" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
-<span id="cb60-70"><a href="enm-processing.html#cb60-70" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb60-71"><a href="enm-processing.html#cb60-71" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb60-72"><a href="enm-processing.html#cb60-72" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb60-73"><a href="enm-processing.html#cb60-73" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb60-74"><a href="enm-processing.html#cb60-74" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb60-75"><a href="enm-processing.html#cb60-75" tabindex="-1"></a>    <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
-<span id="cb60-76"><a href="enm-processing.html#cb60-76" tabindex="-1"></a>                           <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
-<span id="cb60-77"><a href="enm-processing.html#cb60-77" tabindex="-1"></a>                           <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
-<span id="cb60-78"><a href="enm-processing.html#cb60-78" tabindex="-1"></a></span>
-<span id="cb60-79"><a href="enm-processing.html#cb60-79" tabindex="-1"></a>  <span class="co"># Save the plot as a PNG file.</span></span>
-<span id="cb60-80"><a href="enm-processing.html#cb60-80" tabindex="-1"></a>  png_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_ETF_Projection_Plot.png&quot;</span>)</span>
-<span id="cb60-81"><a href="enm-processing.html#cb60-81" tabindex="-1"></a></span>
-<span id="cb60-82"><a href="enm-processing.html#cb60-82" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">filename =</span> png_file, <span class="at">plot =</span> p_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb60-83"><a href="enm-processing.html#cb60-83" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="enm-processing.html#cb61-1" tabindex="-1"></a><span class="co"># List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.</span></span>
+<span id="cb61-2"><a href="enm-processing.html#cb61-2" tabindex="-1"></a><span class="co"># These will be used as environmental predictors for projecting the ENMs.</span></span>
+<span id="cb61-3"><a href="enm-processing.html#cb61-3" tabindex="-1"></a>clim_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/CurrentEasternTemperateForests&quot;</span>,<span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-4"><a href="enm-processing.html#cb61-4" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="enm-processing.html#cb61-5" tabindex="-1"></a><span class="co"># Read all climate rasters into a single SpatRaster object for efficient processing.</span></span>
+<span id="cb61-6"><a href="enm-processing.html#cb61-6" tabindex="-1"></a>clim_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(clim_files)</span>
+<span id="cb61-7"><a href="enm-processing.html#cb61-7" tabindex="-1"></a></span>
+<span id="cb61-8"><a href="enm-processing.html#cb61-8" tabindex="-1"></a><span class="co"># Plot a quick preview of the first four layers to check that rasters loaded correctly.</span></span>
+<span id="cb61-9"><a href="enm-processing.html#cb61-9" tabindex="-1"></a><span class="fu">plot</span>(clim_stack[[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]])</span>
+<span id="cb61-10"><a href="enm-processing.html#cb61-10" tabindex="-1"></a></span>
+<span id="cb61-11"><a href="enm-processing.html#cb61-11" tabindex="-1"></a><span class="co"># Define a vector of the species you want to process.</span></span>
+<span id="cb61-12"><a href="enm-processing.html#cb61-12" tabindex="-1"></a><span class="co"># Each species has an ENM already built and saved to disk.</span></span>
+<span id="cb61-13"><a href="enm-processing.html#cb61-13" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax_urceolata&quot;</span>,</span>
+<span id="cb61-14"><a href="enm-processing.html#cb61-14" tabindex="-1"></a>                  <span class="st">&quot;Pyxidanthera_barbulata&quot;</span>,</span>
+<span id="cb61-15"><a href="enm-processing.html#cb61-15" tabindex="-1"></a>                  <span class="st">&quot;Pyxidanthera_brevifolia&quot;</span>,</span>
+<span id="cb61-16"><a href="enm-processing.html#cb61-16" tabindex="-1"></a>                  <span class="st">&quot;Shortia_galacifolia&quot;</span>)</span>
+<span id="cb61-17"><a href="enm-processing.html#cb61-17" tabindex="-1"></a></span>
+<span id="cb61-18"><a href="enm-processing.html#cb61-18" tabindex="-1"></a><span class="co"># Load the USA state boundaries as an sf object.</span></span>
+<span id="cb61-19"><a href="enm-processing.html#cb61-19" tabindex="-1"></a><span class="co"># This will be used as a basemap for plotting projections.</span></span>
+<span id="cb61-20"><a href="enm-processing.html#cb61-20" tabindex="-1"></a>usa <span class="ot">&lt;-</span> rnaturalearth<span class="sc">::</span><span class="fu">ne_states</span>(<span class="at">country =</span> <span class="st">&quot;United States of America&quot;</span>, <span class="at">returnclass =</span> <span class="st">&quot;sf&quot;</span>)</span>
+<span id="cb61-21"><a href="enm-processing.html#cb61-21" tabindex="-1"></a></span>
+<span id="cb61-22"><a href="enm-processing.html#cb61-22" tabindex="-1"></a><span class="co"># Loop through each species to project their ENM onto the current climate layers.</span></span>
+<span id="cb61-23"><a href="enm-processing.html#cb61-23" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
+<span id="cb61-24"><a href="enm-processing.html#cb61-24" tabindex="-1"></a></span>
+<span id="cb61-25"><a href="enm-processing.html#cb61-25" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Projecting current climate for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb61-26"><a href="enm-processing.html#cb61-26" tabindex="-1"></a></span>
+<span id="cb61-27"><a href="enm-processing.html#cb61-27" tabindex="-1"></a>  <span class="co"># Load the optimal ENM for this species.</span></span>
+<span id="cb61-28"><a href="enm-processing.html#cb61-28" tabindex="-1"></a>  <span class="co"># The object `opt.mod` will be loaded into the workspace.</span></span>
+<span id="cb61-29"><a href="enm-processing.html#cb61-29" tabindex="-1"></a>  mod_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/05_ENMs/&quot;</span>, species, <span class="st">&quot;_opt_mod.RData&quot;</span>)</span>
+<span id="cb61-30"><a href="enm-processing.html#cb61-30" tabindex="-1"></a>  <span class="fu">load</span>(mod_file)  <span class="co"># loads object: opt.mod</span></span>
+<span id="cb61-31"><a href="enm-processing.html#cb61-31" tabindex="-1"></a></span>
+<span id="cb61-32"><a href="enm-processing.html#cb61-32" tabindex="-1"></a>  <span class="co"># Identify which layers were used to build the ENM.</span></span>
+<span id="cb61-33"><a href="enm-processing.html#cb61-33" tabindex="-1"></a>  <span class="co"># This ensures that your projection uses the same predictor variables</span></span>
+<span id="cb61-34"><a href="enm-processing.html#cb61-34" tabindex="-1"></a>  <span class="co"># as the model was trained on.</span></span>
+<span id="cb61-35"><a href="enm-processing.html#cb61-35" tabindex="-1"></a>  vif_dir <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/04_climate_processing/Cropped/&quot;</span>, species, <span class="st">&quot;/VIF/&quot;</span>)</span>
+<span id="cb61-36"><a href="enm-processing.html#cb61-36" tabindex="-1"></a>  species_layers <span class="ot">&lt;-</span> <span class="fu">list.files</span>(vif_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-37"><a href="enm-processing.html#cb61-37" tabindex="-1"></a></span>
+<span id="cb61-38"><a href="enm-processing.html#cb61-38" tabindex="-1"></a>  <span class="co"># Read in those specific rasters</span></span>
+<span id="cb61-39"><a href="enm-processing.html#cb61-39" tabindex="-1"></a>  spec_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(species_layers)</span>
+<span id="cb61-40"><a href="enm-processing.html#cb61-40" tabindex="-1"></a>  layer_names <span class="ot">&lt;-</span> <span class="fu">names</span>(spec_stack)</span>
+<span id="cb61-41"><a href="enm-processing.html#cb61-41" tabindex="-1"></a></span>
+<span id="cb61-42"><a href="enm-processing.html#cb61-42" tabindex="-1"></a>  <span class="co"># Subset the full ETF raster stack to only the layers used in the ENM.</span></span>
+<span id="cb61-43"><a href="enm-processing.html#cb61-43" tabindex="-1"></a>  ETF_Rasters <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">subset</span>(clim_stack, layer_names)</span>
+<span id="cb61-44"><a href="enm-processing.html#cb61-44" tabindex="-1"></a>  <span class="co">#if error, try: ETF_Rasters &lt;- raster::stack(ETF_Rasters)</span></span>
+<span id="cb61-45"><a href="enm-processing.html#cb61-45" tabindex="-1"></a></span>
+<span id="cb61-46"><a href="enm-processing.html#cb61-46" tabindex="-1"></a>  <span class="co"># Project the ENM onto the current ETF climate layers.</span></span>
+<span id="cb61-47"><a href="enm-processing.html#cb61-47" tabindex="-1"></a>  proj_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>)</span>
+<span id="cb61-48"><a href="enm-processing.html#cb61-48" tabindex="-1"></a></span>
+<span id="cb61-49"><a href="enm-processing.html#cb61-49" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(opt.mod, ETF_Rasters, <span class="at">filename =</span> proj_file, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">NAflag =</span> <span class="sc">-</span><span class="dv">9999</span>)</span>
+<span id="cb61-50"><a href="enm-processing.html#cb61-50" tabindex="-1"></a></span>
+<span id="cb61-51"><a href="enm-processing.html#cb61-51" tabindex="-1"></a>  <span class="co"># Convert the raster to a data frame for plotting in ggplot.</span></span>
+<span id="cb61-52"><a href="enm-processing.html#cb61-52" tabindex="-1"></a>  p_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(p, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-53"><a href="enm-processing.html#cb61-53" tabindex="-1"></a>  <span class="fu">colnames</span>(p_df)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Habitat_Suitability&quot;</span></span>
+<span id="cb61-54"><a href="enm-processing.html#cb61-54" tabindex="-1"></a></span>
+<span id="cb61-55"><a href="enm-processing.html#cb61-55" tabindex="-1"></a>  <span class="co"># Get the bounding box coordinates of the raster for plotting.</span></span>
+<span id="cb61-56"><a href="enm-processing.html#cb61-56" tabindex="-1"></a>  bbox_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">ext</span>(p)</span>
+<span id="cb61-57"><a href="enm-processing.html#cb61-57" tabindex="-1"></a></span>
+<span id="cb61-58"><a href="enm-processing.html#cb61-58" tabindex="-1"></a>  <span class="co"># Create the habitat suitability map.</span></span>
+<span id="cb61-59"><a href="enm-processing.html#cb61-59" tabindex="-1"></a>  p_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb61-60"><a href="enm-processing.html#cb61-60" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span>  <span class="co"># basemap</span></span>
+<span id="cb61-61"><a href="enm-processing.html#cb61-61" tabindex="-1"></a>    <span class="fu">geom_tile</span>(<span class="at">data =</span> p_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> Habitat_Suitability)) <span class="sc">+</span></span>
+<span id="cb61-62"><a href="enm-processing.html#cb61-62" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb61-63"><a href="enm-processing.html#cb61-63" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb61-64"><a href="enm-processing.html#cb61-64" tabindex="-1"></a>             <span class="at">ylim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb61-65"><a href="enm-processing.html#cb61-65" tabindex="-1"></a>             <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-66"><a href="enm-processing.html#cb61-66" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Suitability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb61-67"><a href="enm-processing.html#cb61-67" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species), <span class="st">&quot; - Eastern Temperate Forest Habitat Suitability&quot;</span>),</span>
+<span id="cb61-68"><a href="enm-processing.html#cb61-68" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
+<span id="cb61-69"><a href="enm-processing.html#cb61-69" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
+<span id="cb61-70"><a href="enm-processing.html#cb61-70" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb61-71"><a href="enm-processing.html#cb61-71" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb61-72"><a href="enm-processing.html#cb61-72" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb61-73"><a href="enm-processing.html#cb61-73" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb61-74"><a href="enm-processing.html#cb61-74" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb61-75"><a href="enm-processing.html#cb61-75" tabindex="-1"></a>    <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
+<span id="cb61-76"><a href="enm-processing.html#cb61-76" tabindex="-1"></a>                           <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb61-77"><a href="enm-processing.html#cb61-77" tabindex="-1"></a>                           <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
+<span id="cb61-78"><a href="enm-processing.html#cb61-78" tabindex="-1"></a></span>
+<span id="cb61-79"><a href="enm-processing.html#cb61-79" tabindex="-1"></a>  <span class="co"># Save the plot as a PNG file.</span></span>
+<span id="cb61-80"><a href="enm-processing.html#cb61-80" tabindex="-1"></a>  png_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_ETF_Projection_Plot.png&quot;</span>)</span>
+<span id="cb61-81"><a href="enm-processing.html#cb61-81" tabindex="-1"></a></span>
+<span id="cb61-82"><a href="enm-processing.html#cb61-82" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">filename =</span> png_file, <span class="at">plot =</span> p_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb61-83"><a href="enm-processing.html#cb61-83" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="b-calculate-niche-breadth" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> B) Calculate Niche Breadth<a href="enm-processing.html#b-calculate-niche-breadth" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="enm-processing.html#cb61-1" tabindex="-1"></a><span class="co"># For each species, calculate niche breadth across the ETF region.</span></span>
-<span id="cb61-2"><a href="enm-processing.html#cb61-2" tabindex="-1"></a><span class="co"># Niche breadth (Levins&#39; B2) indicates whether a species is a generalist (high value) or specialist (low value).</span></span>
-<span id="cb61-3"><a href="enm-processing.html#cb61-3" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
-<span id="cb61-4"><a href="enm-processing.html#cb61-4" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="enm-processing.html#cb61-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Calculating niche breadth for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb61-6"><a href="enm-processing.html#cb61-6" tabindex="-1"></a></span>
-<span id="cb61-7"><a href="enm-processing.html#cb61-7" tabindex="-1"></a>  proj_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>)</span>
-<span id="cb61-8"><a href="enm-processing.html#cb61-8" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="enm-processing.html#cb61-9" tabindex="-1"></a>  proj_raster <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(proj_file)</span>
-<span id="cb61-10"><a href="enm-processing.html#cb61-10" tabindex="-1"></a></span>
-<span id="cb61-11"><a href="enm-processing.html#cb61-11" tabindex="-1"></a>  <span class="co"># Compute Levins&#39; B2 niche breadth</span></span>
-<span id="cb61-12"><a href="enm-processing.html#cb61-12" tabindex="-1"></a>  breadth <span class="ot">&lt;-</span> ENMTools<span class="sc">::</span><span class="fu">raster.breadth</span>(proj_raster)</span>
-<span id="cb61-13"><a href="enm-processing.html#cb61-13" tabindex="-1"></a></span>
-<span id="cb61-14"><a href="enm-processing.html#cb61-14" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Niche breadth:&quot;</span>, <span class="fu">round</span>(breadth<span class="sc">$</span>B2, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb61-15"><a href="enm-processing.html#cb61-15" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="enm-processing.html#cb62-1" tabindex="-1"></a><span class="co"># For each species, calculate niche breadth across the ETF region.</span></span>
+<span id="cb62-2"><a href="enm-processing.html#cb62-2" tabindex="-1"></a><span class="co"># Niche breadth (Levins&#39; B2) indicates whether a species is a generalist (high value) or specialist (low value).</span></span>
+<span id="cb62-3"><a href="enm-processing.html#cb62-3" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
+<span id="cb62-4"><a href="enm-processing.html#cb62-4" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="enm-processing.html#cb62-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Calculating niche breadth for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb62-6"><a href="enm-processing.html#cb62-6" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="enm-processing.html#cb62-7" tabindex="-1"></a>  proj_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>)</span>
+<span id="cb62-8"><a href="enm-processing.html#cb62-8" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="enm-processing.html#cb62-9" tabindex="-1"></a>  proj_raster <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(proj_file)</span>
+<span id="cb62-10"><a href="enm-processing.html#cb62-10" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="enm-processing.html#cb62-11" tabindex="-1"></a>  <span class="co"># Compute Levins&#39; B2 niche breadth</span></span>
+<span id="cb62-12"><a href="enm-processing.html#cb62-12" tabindex="-1"></a>  breadth <span class="ot">&lt;-</span> ENMTools<span class="sc">::</span><span class="fu">raster.breadth</span>(proj_raster)</span>
+<span id="cb62-13"><a href="enm-processing.html#cb62-13" tabindex="-1"></a></span>
+<span id="cb62-14"><a href="enm-processing.html#cb62-14" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Niche breadth:&quot;</span>, <span class="fu">round</span>(breadth<span class="sc">$</span>B2, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb62-15"><a href="enm-processing.html#cb62-15" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="c-calculate-niche-overlap" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> C) Calculate Niche Overlap<a href="enm-processing.html#c-calculate-niche-overlap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="enm-processing.html#cb62-1" tabindex="-1"></a><span class="co"># Stack all species projections into a single SpatRaster object.</span></span>
-<span id="cb62-2"><a href="enm-processing.html#cb62-2" tabindex="-1"></a><span class="co"># This allows calculation of pairwise niche overlap (Schoener&#39;s D).</span></span>
-<span id="cb62-3"><a href="enm-processing.html#cb62-3" tabindex="-1"></a>enm_stack <span class="ot">&lt;-</span> <span class="fu">c</span>(terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Galax_urceolata_EFT_Projection.asc&quot;</span>),</span>
-<span id="cb62-4"><a href="enm-processing.html#cb62-4" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Pyxidanthera_barbulata_EFT_Projection.asc&quot;</span>),</span>
-<span id="cb62-5"><a href="enm-processing.html#cb62-5" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Pyxidanthera_brevifolia_EFT_Projection.asc&quot;</span>),</span>
-<span id="cb62-6"><a href="enm-processing.html#cb62-6" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Shortia_galacifolia_EFT_Projection.asc&quot;</span>)</span>
-<span id="cb62-7"><a href="enm-processing.html#cb62-7" tabindex="-1"></a>)</span>
-<span id="cb62-8"><a href="enm-processing.html#cb62-8" tabindex="-1"></a></span>
-<span id="cb62-9"><a href="enm-processing.html#cb62-9" tabindex="-1"></a><span class="co"># Assign species names as layer names in the raster stack.</span></span>
-<span id="cb62-10"><a href="enm-processing.html#cb62-10" tabindex="-1"></a><span class="fu">names</span>(enm_stack) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax urceolata&quot;</span>,</span>
-<span id="cb62-11"><a href="enm-processing.html#cb62-11" tabindex="-1"></a>                      <span class="st">&quot;Pyxidanthera barbulata&quot;</span>,</span>
-<span id="cb62-12"><a href="enm-processing.html#cb62-12" tabindex="-1"></a>                      <span class="st">&quot;Pyxidanthera brevifolia&quot;</span>,</span>
-<span id="cb62-13"><a href="enm-processing.html#cb62-13" tabindex="-1"></a>                      <span class="st">&quot;Shortia galacifolia&quot;</span>)</span>
-<span id="cb62-14"><a href="enm-processing.html#cb62-14" tabindex="-1"></a></span>
-<span id="cb62-15"><a href="enm-processing.html#cb62-15" tabindex="-1"></a><span class="co"># Calculate pairwise Schoener&#39;s D overlap between species.</span></span>
-<span id="cb62-16"><a href="enm-processing.html#cb62-16" tabindex="-1"></a><span class="co"># Values range from 0 (no overlap) to 1 (identical niches).</span></span>
-<span id="cb62-17"><a href="enm-processing.html#cb62-17" tabindex="-1"></a>overlap_matrix <span class="ot">&lt;-</span> <span class="fu">calc.niche.overlap</span>(enm_stack, <span class="at">overlapStat =</span> <span class="st">&quot;D&quot;</span>)</span>
-<span id="cb62-18"><a href="enm-processing.html#cb62-18" tabindex="-1"></a></span>
-<span id="cb62-19"><a href="enm-processing.html#cb62-19" tabindex="-1"></a><span class="fu">print</span>(overlap_matrix)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="enm-processing.html#cb63-1" tabindex="-1"></a><span class="co"># Stack all species projections into a single SpatRaster object.</span></span>
+<span id="cb63-2"><a href="enm-processing.html#cb63-2" tabindex="-1"></a><span class="co"># This allows calculation of pairwise niche overlap (Schoener&#39;s D).</span></span>
+<span id="cb63-3"><a href="enm-processing.html#cb63-3" tabindex="-1"></a>enm_stack <span class="ot">&lt;-</span> <span class="fu">c</span>(terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Galax_urceolata_EFT_Projection.asc&quot;</span>),</span>
+<span id="cb63-4"><a href="enm-processing.html#cb63-4" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Pyxidanthera_barbulata_EFT_Projection.asc&quot;</span>),</span>
+<span id="cb63-5"><a href="enm-processing.html#cb63-5" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Pyxidanthera_brevifolia_EFT_Projection.asc&quot;</span>),</span>
+<span id="cb63-6"><a href="enm-processing.html#cb63-6" tabindex="-1"></a>               terra<span class="sc">::</span><span class="fu">rast</span>(<span class="st">&quot;data/06_ENM_processing/Shortia_galacifolia_EFT_Projection.asc&quot;</span>)</span>
+<span id="cb63-7"><a href="enm-processing.html#cb63-7" tabindex="-1"></a>)</span>
+<span id="cb63-8"><a href="enm-processing.html#cb63-8" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="enm-processing.html#cb63-9" tabindex="-1"></a><span class="co"># Assign species names as layer names in the raster stack.</span></span>
+<span id="cb63-10"><a href="enm-processing.html#cb63-10" tabindex="-1"></a><span class="fu">names</span>(enm_stack) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Galax urceolata&quot;</span>,</span>
+<span id="cb63-11"><a href="enm-processing.html#cb63-11" tabindex="-1"></a>                      <span class="st">&quot;Pyxidanthera barbulata&quot;</span>,</span>
+<span id="cb63-12"><a href="enm-processing.html#cb63-12" tabindex="-1"></a>                      <span class="st">&quot;Pyxidanthera brevifolia&quot;</span>,</span>
+<span id="cb63-13"><a href="enm-processing.html#cb63-13" tabindex="-1"></a>                      <span class="st">&quot;Shortia galacifolia&quot;</span>)</span>
+<span id="cb63-14"><a href="enm-processing.html#cb63-14" tabindex="-1"></a></span>
+<span id="cb63-15"><a href="enm-processing.html#cb63-15" tabindex="-1"></a><span class="co"># Calculate pairwise Schoener&#39;s D overlap between species.</span></span>
+<span id="cb63-16"><a href="enm-processing.html#cb63-16" tabindex="-1"></a><span class="co"># Values range from 0 (no overlap) to 1 (identical niches).</span></span>
+<span id="cb63-17"><a href="enm-processing.html#cb63-17" tabindex="-1"></a>overlap_matrix <span class="ot">&lt;-</span> <span class="fu">calc.niche.overlap</span>(enm_stack, <span class="at">overlapStat =</span> <span class="st">&quot;D&quot;</span>)</span>
+<span id="cb63-18"><a href="enm-processing.html#cb63-18" tabindex="-1"></a></span>
+<span id="cb63-19"><a href="enm-processing.html#cb63-19" tabindex="-1"></a><span class="fu">print</span>(overlap_matrix)</span></code></pre></div>
 </div>
 <div id="d-test-phylogenetic-signal-in-niche-overlap" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> D) Test Phylogenetic Signal in Niche Overlap<a href="enm-processing.html#d-test-phylogenetic-signal-in-niche-overlap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="enm-processing.html#cb63-1" tabindex="-1"></a><span class="co"># Read the phylogenetic tree of the species.</span></span>
-<span id="cb63-2"><a href="enm-processing.html#cb63-2" tabindex="-1"></a>tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">read.tree</span>(<span class="st">&quot;data/06_ENM_processing/diapensiaceae_subset.tre&quot;</span>)</span>
-<span id="cb63-3"><a href="enm-processing.html#cb63-3" tabindex="-1"></a></span>
-<span id="cb63-4"><a href="enm-processing.html#cb63-4" tabindex="-1"></a><span class="co"># Drop the outgroup so only focal species remain.</span></span>
-<span id="cb63-5"><a href="enm-processing.html#cb63-5" tabindex="-1"></a>tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">drop.tip</span>(tree, <span class="st">&quot;Cyrilla_racemiflora&quot;</span>)</span>
-<span id="cb63-6"><a href="enm-processing.html#cb63-6" tabindex="-1"></a></span>
-<span id="cb63-7"><a href="enm-processing.html#cb63-7" tabindex="-1"></a><span class="co"># Replace underscores with spaces to match overlap matrix species names.</span></span>
-<span id="cb63-8"><a href="enm-processing.html#cb63-8" tabindex="-1"></a>tree<span class="sc">$</span>tip.label <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, tree<span class="sc">$</span>tip.label)</span>
-<span id="cb63-9"><a href="enm-processing.html#cb63-9" tabindex="-1"></a></span>
-<span id="cb63-10"><a href="enm-processing.html#cb63-10" tabindex="-1"></a><span class="co"># Calculate pairwise phylogenetic distances between species.</span></span>
-<span id="cb63-11"><a href="enm-processing.html#cb63-11" tabindex="-1"></a>phylo_dist <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(tree)</span>
-<span id="cb63-12"><a href="enm-processing.html#cb63-12" tabindex="-1"></a></span>
-<span id="cb63-13"><a href="enm-processing.html#cb63-13" tabindex="-1"></a><span class="co"># Ensure the phylogenetic distance matrix matches the species order in the overlap matrix.</span></span>
-<span id="cb63-14"><a href="enm-processing.html#cb63-14" tabindex="-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">rownames</span>(overlap_matrix)</span>
-<span id="cb63-15"><a href="enm-processing.html#cb63-15" tabindex="-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="st">&quot; &quot;</span>, species_names)</span>
-<span id="cb63-16"><a href="enm-processing.html#cb63-16" tabindex="-1"></a>phylo_dist <span class="ot">&lt;-</span> phylo_dist[species_names, species_names]</span>
-<span id="cb63-17"><a href="enm-processing.html#cb63-17" tabindex="-1"></a></span>
-<span id="cb63-18"><a href="enm-processing.html#cb63-18" tabindex="-1"></a><span class="co"># Initialize vectors to store pairwise values.</span></span>
-<span id="cb63-19"><a href="enm-processing.html#cb63-19" tabindex="-1"></a>pair_names <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb63-20"><a href="enm-processing.html#cb63-20" tabindex="-1"></a>phylo_vals <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb63-21"><a href="enm-processing.html#cb63-21" tabindex="-1"></a>overlap_vals <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb63-22"><a href="enm-processing.html#cb63-22" tabindex="-1"></a></span>
-<span id="cb63-23"><a href="enm-processing.html#cb63-23" tabindex="-1"></a><span class="co"># Loop through the lower triangle of the matrices to extract pairwise comparisons.</span></span>
-<span id="cb63-24"><a href="enm-processing.html#cb63-24" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(species_names)) {</span>
-<span id="cb63-25"><a href="enm-processing.html#cb63-25" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(i <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb63-26"><a href="enm-processing.html#cb63-26" tabindex="-1"></a>    pair_names <span class="ot">&lt;-</span> <span class="fu">c</span>(pair_names,</span>
-<span id="cb63-27"><a href="enm-processing.html#cb63-27" tabindex="-1"></a>                    <span class="fu">paste</span>(species_names[i], species_names[j], <span class="at">sep =</span> <span class="st">&quot; - &quot;</span>))</span>
-<span id="cb63-28"><a href="enm-processing.html#cb63-28" tabindex="-1"></a>    phylo_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(phylo_vals, phylo_dist[i, j])</span>
-<span id="cb63-29"><a href="enm-processing.html#cb63-29" tabindex="-1"></a>    overlap_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(overlap_vals, overlap_matrix[i, j])</span>
-<span id="cb63-30"><a href="enm-processing.html#cb63-30" tabindex="-1"></a>  }</span>
-<span id="cb63-31"><a href="enm-processing.html#cb63-31" tabindex="-1"></a>}</span>
-<span id="cb63-32"><a href="enm-processing.html#cb63-32" tabindex="-1"></a></span>
-<span id="cb63-33"><a href="enm-processing.html#cb63-33" tabindex="-1"></a><span class="co"># Fit a linear regression between phylogenetic distance and niche overlap.</span></span>
-<span id="cb63-34"><a href="enm-processing.html#cb63-34" tabindex="-1"></a>lm_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(overlap_vals <span class="sc">~</span> phylo_vals)</span>
-<span id="cb63-35"><a href="enm-processing.html#cb63-35" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_res)</span>
-<span id="cb63-36"><a href="enm-processing.html#cb63-36" tabindex="-1"></a><span class="fu">print</span>(s)</span>
-<span id="cb63-37"><a href="enm-processing.html#cb63-37" tabindex="-1"></a></span>
-<span id="cb63-38"><a href="enm-processing.html#cb63-38" tabindex="-1"></a><span class="co"># Format regression statistics for display on the plot.</span></span>
-<span id="cb63-39"><a href="enm-processing.html#cb63-39" tabindex="-1"></a>label_text <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Intercept = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">coef</span>(lm_res)[<span class="dv">1</span>], <span class="dv">3</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb63-40"><a href="enm-processing.html#cb63-40" tabindex="-1"></a>                     <span class="st">&quot;Slope = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">coef</span>(lm_res)[<span class="dv">2</span>], <span class="dv">5</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb63-41"><a href="enm-processing.html#cb63-41" tabindex="-1"></a>                     <span class="st">&quot;P-value = &quot;</span>, <span class="fu">format</span>(<span class="fu">signif</span>(s<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">4</span>], <span class="dv">3</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb63-42"><a href="enm-processing.html#cb63-42" tabindex="-1"></a>                     <span class="st">&quot;R² = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(s<span class="sc">$</span>r.squared, <span class="dv">3</span>)))</span>
-<span id="cb63-43"><a href="enm-processing.html#cb63-43" tabindex="-1"></a></span>
-<span id="cb63-44"><a href="enm-processing.html#cb63-44" tabindex="-1"></a><span class="co"># Plot the relationship between phylogenetic distance and niche overlap.</span></span>
-<span id="cb63-45"><a href="enm-processing.html#cb63-45" tabindex="-1"></a><span class="fu">plot</span>(phylo_vals, overlap_vals,</span>
-<span id="cb63-46"><a href="enm-processing.html#cb63-46" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Phylogenetic Distance&quot;</span>,</span>
-<span id="cb63-47"><a href="enm-processing.html#cb63-47" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Niche Overlap (Schoener&#39;s D)&quot;</span>,</span>
-<span id="cb63-48"><a href="enm-processing.html#cb63-48" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb63-49"><a href="enm-processing.html#cb63-49" tabindex="-1"></a><span class="fu">abline</span>(lm_res, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb63-50"><a href="enm-processing.html#cb63-50" tabindex="-1"></a><span class="fu">text</span>(phylo_vals <span class="sc">-</span> <span class="dv">3</span>,</span>
-<span id="cb63-51"><a href="enm-processing.html#cb63-51" tabindex="-1"></a>     overlap_vals <span class="sc">-</span> <span class="fl">0.02</span>,</span>
-<span id="cb63-52"><a href="enm-processing.html#cb63-52" tabindex="-1"></a>     <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pair_names),</span>
-<span id="cb63-53"><a href="enm-processing.html#cb63-53" tabindex="-1"></a>     <span class="at">pos =</span> <span class="dv">3</span>,</span>
-<span id="cb63-54"><a href="enm-processing.html#cb63-54" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
-<span id="cb63-55"><a href="enm-processing.html#cb63-55" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fu">max</span>(phylo_vals) <span class="sc">*</span> <span class="fl">0.7</span>,</span>
-<span id="cb63-56"><a href="enm-processing.html#cb63-56" tabindex="-1"></a>     <span class="at">y =</span> <span class="fu">max</span>(overlap_vals) <span class="sc">*</span> <span class="fl">0.9</span>,</span>
-<span id="cb63-57"><a href="enm-processing.html#cb63-57" tabindex="-1"></a>     <span class="at">labels =</span> label_text,</span>
-<span id="cb63-58"><a href="enm-processing.html#cb63-58" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb63-59"><a href="enm-processing.html#cb63-59" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span>
-<span id="cb63-60"><a href="enm-processing.html#cb63-60" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
-<span id="cb63-61"><a href="enm-processing.html#cb63-61" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pair_names), pair_names, <span class="at">sep =</span> <span class="st">&quot;: &quot;</span>),</span>
-<span id="cb63-62"><a href="enm-processing.html#cb63-62" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
-<span id="cb63-63"><a href="enm-processing.html#cb63-63" tabindex="-1"></a></span>
-<span id="cb63-64"><a href="enm-processing.html#cb63-64" tabindex="-1"></a><span class="co"># For niche Age Overlap Correlations (AOCs), a high intercept and negative slope</span></span>
-<span id="cb63-65"><a href="enm-processing.html#cb63-65" tabindex="-1"></a><span class="co"># indicate niche conservatism,meaning closely related species tend to occupy</span></span>
-<span id="cb63-66"><a href="enm-processing.html#cb63-66" tabindex="-1"></a><span class="co"># similar ecological niches. A low intercept combined with a positive slope</span></span>
-<span id="cb63-67"><a href="enm-processing.html#cb63-67" tabindex="-1"></a><span class="co"># suggests niche divergence, where closely related species occupy different</span></span>
-<span id="cb63-68"><a href="enm-processing.html#cb63-68" tabindex="-1"></a><span class="co"># niches.The results here are pretty meaningless since we&#39;re looking at very few,</span></span>
-<span id="cb63-69"><a href="enm-processing.html#cb63-69" tabindex="-1"></a><span class="co"># distantly related species, but it serves the purpose of the demo. A linear</span></span>
-<span id="cb63-70"><a href="enm-processing.html#cb63-70" tabindex="-1"></a><span class="co"># regression indicated no significant relationship between phylogenetic distance</span></span>
-<span id="cb63-71"><a href="enm-processing.html#cb63-71" tabindex="-1"></a><span class="co"># and niche overlap among the four species,suggesting minimal phylogenetic signal</span></span>
-<span id="cb63-72"><a href="enm-processing.html#cb63-72" tabindex="-1"></a><span class="co"># in ecological niche similarity.</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="enm-processing.html#cb64-1" tabindex="-1"></a><span class="co"># Read the phylogenetic tree of the species.</span></span>
+<span id="cb64-2"><a href="enm-processing.html#cb64-2" tabindex="-1"></a>tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">read.tree</span>(<span class="st">&quot;data/06_ENM_processing/diapensiaceae_subset.tre&quot;</span>)</span>
+<span id="cb64-3"><a href="enm-processing.html#cb64-3" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="enm-processing.html#cb64-4" tabindex="-1"></a><span class="co"># Drop the outgroup so only focal species remain.</span></span>
+<span id="cb64-5"><a href="enm-processing.html#cb64-5" tabindex="-1"></a>tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">drop.tip</span>(tree, <span class="st">&quot;Cyrilla_racemiflora&quot;</span>)</span>
+<span id="cb64-6"><a href="enm-processing.html#cb64-6" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="enm-processing.html#cb64-7" tabindex="-1"></a><span class="co"># Replace underscores with spaces to match overlap matrix species names.</span></span>
+<span id="cb64-8"><a href="enm-processing.html#cb64-8" tabindex="-1"></a>tree<span class="sc">$</span>tip.label <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, tree<span class="sc">$</span>tip.label)</span>
+<span id="cb64-9"><a href="enm-processing.html#cb64-9" tabindex="-1"></a></span>
+<span id="cb64-10"><a href="enm-processing.html#cb64-10" tabindex="-1"></a><span class="co"># Calculate pairwise phylogenetic distances between species.</span></span>
+<span id="cb64-11"><a href="enm-processing.html#cb64-11" tabindex="-1"></a>phylo_dist <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(tree)</span>
+<span id="cb64-12"><a href="enm-processing.html#cb64-12" tabindex="-1"></a></span>
+<span id="cb64-13"><a href="enm-processing.html#cb64-13" tabindex="-1"></a><span class="co"># Ensure the phylogenetic distance matrix matches the species order in the overlap matrix.</span></span>
+<span id="cb64-14"><a href="enm-processing.html#cb64-14" tabindex="-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">rownames</span>(overlap_matrix)</span>
+<span id="cb64-15"><a href="enm-processing.html#cb64-15" tabindex="-1"></a>species_names <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="st">&quot; &quot;</span>, species_names)</span>
+<span id="cb64-16"><a href="enm-processing.html#cb64-16" tabindex="-1"></a>phylo_dist <span class="ot">&lt;-</span> phylo_dist[species_names, species_names]</span>
+<span id="cb64-17"><a href="enm-processing.html#cb64-17" tabindex="-1"></a></span>
+<span id="cb64-18"><a href="enm-processing.html#cb64-18" tabindex="-1"></a><span class="co"># Initialize vectors to store pairwise values.</span></span>
+<span id="cb64-19"><a href="enm-processing.html#cb64-19" tabindex="-1"></a>pair_names <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb64-20"><a href="enm-processing.html#cb64-20" tabindex="-1"></a>phylo_vals <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb64-21"><a href="enm-processing.html#cb64-21" tabindex="-1"></a>overlap_vals <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb64-22"><a href="enm-processing.html#cb64-22" tabindex="-1"></a></span>
+<span id="cb64-23"><a href="enm-processing.html#cb64-23" tabindex="-1"></a><span class="co"># Loop through the lower triangle of the matrices to extract pairwise comparisons.</span></span>
+<span id="cb64-24"><a href="enm-processing.html#cb64-24" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(species_names)) {</span>
+<span id="cb64-25"><a href="enm-processing.html#cb64-25" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(i <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb64-26"><a href="enm-processing.html#cb64-26" tabindex="-1"></a>    pair_names <span class="ot">&lt;-</span> <span class="fu">c</span>(pair_names,</span>
+<span id="cb64-27"><a href="enm-processing.html#cb64-27" tabindex="-1"></a>                    <span class="fu">paste</span>(species_names[i], species_names[j], <span class="at">sep =</span> <span class="st">&quot; - &quot;</span>))</span>
+<span id="cb64-28"><a href="enm-processing.html#cb64-28" tabindex="-1"></a>    phylo_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(phylo_vals, phylo_dist[i, j])</span>
+<span id="cb64-29"><a href="enm-processing.html#cb64-29" tabindex="-1"></a>    overlap_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(overlap_vals, overlap_matrix[i, j])</span>
+<span id="cb64-30"><a href="enm-processing.html#cb64-30" tabindex="-1"></a>  }</span>
+<span id="cb64-31"><a href="enm-processing.html#cb64-31" tabindex="-1"></a>}</span>
+<span id="cb64-32"><a href="enm-processing.html#cb64-32" tabindex="-1"></a></span>
+<span id="cb64-33"><a href="enm-processing.html#cb64-33" tabindex="-1"></a><span class="co"># Fit a linear regression between phylogenetic distance and niche overlap.</span></span>
+<span id="cb64-34"><a href="enm-processing.html#cb64-34" tabindex="-1"></a>lm_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(overlap_vals <span class="sc">~</span> phylo_vals)</span>
+<span id="cb64-35"><a href="enm-processing.html#cb64-35" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_res)</span>
+<span id="cb64-36"><a href="enm-processing.html#cb64-36" tabindex="-1"></a><span class="fu">print</span>(s)</span>
+<span id="cb64-37"><a href="enm-processing.html#cb64-37" tabindex="-1"></a></span>
+<span id="cb64-38"><a href="enm-processing.html#cb64-38" tabindex="-1"></a><span class="co"># Format regression statistics for display on the plot.</span></span>
+<span id="cb64-39"><a href="enm-processing.html#cb64-39" tabindex="-1"></a>label_text <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Intercept = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">coef</span>(lm_res)[<span class="dv">1</span>], <span class="dv">3</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb64-40"><a href="enm-processing.html#cb64-40" tabindex="-1"></a>                     <span class="st">&quot;Slope = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(<span class="fu">coef</span>(lm_res)[<span class="dv">2</span>], <span class="dv">5</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb64-41"><a href="enm-processing.html#cb64-41" tabindex="-1"></a>                     <span class="st">&quot;P-value = &quot;</span>, <span class="fu">format</span>(<span class="fu">signif</span>(s<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">4</span>], <span class="dv">3</span>)), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb64-42"><a href="enm-processing.html#cb64-42" tabindex="-1"></a>                     <span class="st">&quot;R² = &quot;</span>, <span class="fu">format</span>(<span class="fu">round</span>(s<span class="sc">$</span>r.squared, <span class="dv">3</span>)))</span>
+<span id="cb64-43"><a href="enm-processing.html#cb64-43" tabindex="-1"></a></span>
+<span id="cb64-44"><a href="enm-processing.html#cb64-44" tabindex="-1"></a><span class="co"># Plot the relationship between phylogenetic distance and niche overlap.</span></span>
+<span id="cb64-45"><a href="enm-processing.html#cb64-45" tabindex="-1"></a><span class="fu">plot</span>(phylo_vals, overlap_vals,</span>
+<span id="cb64-46"><a href="enm-processing.html#cb64-46" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Phylogenetic Distance&quot;</span>,</span>
+<span id="cb64-47"><a href="enm-processing.html#cb64-47" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Niche Overlap (Schoener&#39;s D)&quot;</span>,</span>
+<span id="cb64-48"><a href="enm-processing.html#cb64-48" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb64-49"><a href="enm-processing.html#cb64-49" tabindex="-1"></a><span class="fu">abline</span>(lm_res, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb64-50"><a href="enm-processing.html#cb64-50" tabindex="-1"></a><span class="fu">text</span>(phylo_vals <span class="sc">-</span> <span class="dv">3</span>,</span>
+<span id="cb64-51"><a href="enm-processing.html#cb64-51" tabindex="-1"></a>     overlap_vals <span class="sc">-</span> <span class="fl">0.02</span>,</span>
+<span id="cb64-52"><a href="enm-processing.html#cb64-52" tabindex="-1"></a>     <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pair_names),</span>
+<span id="cb64-53"><a href="enm-processing.html#cb64-53" tabindex="-1"></a>     <span class="at">pos =</span> <span class="dv">3</span>,</span>
+<span id="cb64-54"><a href="enm-processing.html#cb64-54" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb64-55"><a href="enm-processing.html#cb64-55" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fu">max</span>(phylo_vals) <span class="sc">*</span> <span class="fl">0.7</span>,</span>
+<span id="cb64-56"><a href="enm-processing.html#cb64-56" tabindex="-1"></a>     <span class="at">y =</span> <span class="fu">max</span>(overlap_vals) <span class="sc">*</span> <span class="fl">0.9</span>,</span>
+<span id="cb64-57"><a href="enm-processing.html#cb64-57" tabindex="-1"></a>     <span class="at">labels =</span> label_text,</span>
+<span id="cb64-58"><a href="enm-processing.html#cb64-58" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb64-59"><a href="enm-processing.html#cb64-59" tabindex="-1"></a>     <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span>
+<span id="cb64-60"><a href="enm-processing.html#cb64-60" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb64-61"><a href="enm-processing.html#cb64-61" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pair_names), pair_names, <span class="at">sep =</span> <span class="st">&quot;: &quot;</span>),</span>
+<span id="cb64-62"><a href="enm-processing.html#cb64-62" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb64-63"><a href="enm-processing.html#cb64-63" tabindex="-1"></a></span>
+<span id="cb64-64"><a href="enm-processing.html#cb64-64" tabindex="-1"></a><span class="co"># For niche Age Overlap Correlations (AOCs), a high intercept and negative slope</span></span>
+<span id="cb64-65"><a href="enm-processing.html#cb64-65" tabindex="-1"></a><span class="co"># indicate niche conservatism,meaning closely related species tend to occupy</span></span>
+<span id="cb64-66"><a href="enm-processing.html#cb64-66" tabindex="-1"></a><span class="co"># similar ecological niches. A low intercept combined with a positive slope</span></span>
+<span id="cb64-67"><a href="enm-processing.html#cb64-67" tabindex="-1"></a><span class="co"># suggests niche divergence, where closely related species occupy different</span></span>
+<span id="cb64-68"><a href="enm-processing.html#cb64-68" tabindex="-1"></a><span class="co"># niches.The results here are pretty meaningless since we&#39;re looking at very few,</span></span>
+<span id="cb64-69"><a href="enm-processing.html#cb64-69" tabindex="-1"></a><span class="co"># distantly related species, but it serves the purpose of the demo. A linear</span></span>
+<span id="cb64-70"><a href="enm-processing.html#cb64-70" tabindex="-1"></a><span class="co"># regression indicated no significant relationship between phylogenetic distance</span></span>
+<span id="cb64-71"><a href="enm-processing.html#cb64-71" tabindex="-1"></a><span class="co"># and niche overlap among the four species,suggesting minimal phylogenetic signal</span></span>
+<span id="cb64-72"><a href="enm-processing.html#cb64-72" tabindex="-1"></a><span class="co"># in ecological niche similarity.</span></span></code></pre></div>
 </div>
 <div id="e-project-models-onto-future-climate" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> E) Project Models onto Future Climate<a href="enm-processing.html#e-project-models-onto-future-climate" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="enm-processing.html#cb64-1" tabindex="-1"></a><span class="co"># List future climate layers under the SSP370 scenario for 2081-2100.</span></span>
-<span id="cb64-2"><a href="enm-processing.html#cb64-2" tabindex="-1"></a>future_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb64-3"><a href="enm-processing.html#cb64-3" tabindex="-1"></a></span>
-<span id="cb64-4"><a href="enm-processing.html#cb64-4" tabindex="-1"></a><span class="co"># Add the current elevation layer to the future stack, since elevation remains constant.</span></span>
-<span id="cb64-5"><a href="enm-processing.html#cb64-5" tabindex="-1"></a>elev_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/CurrentEasternTemperateForests/&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;elev</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb64-6"><a href="enm-processing.html#cb64-6" tabindex="-1"></a></span>
-<span id="cb64-7"><a href="enm-processing.html#cb64-7" tabindex="-1"></a>futurestack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">c</span>(future_files, elev_file))</span>
-<span id="cb64-8"><a href="enm-processing.html#cb64-8" tabindex="-1"></a></span>
-<span id="cb64-9"><a href="enm-processing.html#cb64-9" tabindex="-1"></a><span class="co"># Project each species onto future ETF climate conditions.</span></span>
-<span id="cb64-10"><a href="enm-processing.html#cb64-10" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
-<span id="cb64-11"><a href="enm-processing.html#cb64-11" tabindex="-1"></a></span>
-<span id="cb64-12"><a href="enm-processing.html#cb64-12" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Projecting future climate for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb64-13"><a href="enm-processing.html#cb64-13" tabindex="-1"></a></span>
-<span id="cb64-14"><a href="enm-processing.html#cb64-14" tabindex="-1"></a>  <span class="fu">load</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/05_ENMs/&quot;</span>, species, <span class="st">&quot;_opt_mod.RData&quot;</span>))</span>
-<span id="cb64-15"><a href="enm-processing.html#cb64-15" tabindex="-1"></a></span>
-<span id="cb64-16"><a href="enm-processing.html#cb64-16" tabindex="-1"></a>  vif_dir <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/04_climate_processing/Cropped/&quot;</span>, species, <span class="st">&quot;/VIF/&quot;</span>)</span>
-<span id="cb64-17"><a href="enm-processing.html#cb64-17" tabindex="-1"></a></span>
-<span id="cb64-18"><a href="enm-processing.html#cb64-18" tabindex="-1"></a>  species_layers <span class="ot">&lt;-</span> <span class="fu">list.files</span>(vif_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb64-19"><a href="enm-processing.html#cb64-19" tabindex="-1"></a>  spec_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(species_layers)</span>
-<span id="cb64-20"><a href="enm-processing.html#cb64-20" tabindex="-1"></a>  layer_names <span class="ot">&lt;-</span> <span class="fu">names</span>(spec_stack)</span>
-<span id="cb64-21"><a href="enm-processing.html#cb64-21" tabindex="-1"></a></span>
-<span id="cb64-22"><a href="enm-processing.html#cb64-22" tabindex="-1"></a>  FutureETF_Rasters <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">subset</span>(futurestack, layer_names)</span>
-<span id="cb64-23"><a href="enm-processing.html#cb64-23" tabindex="-1"></a>  <span class="co">#if error, try: FutureETF_Rasters &lt;- raster::stack(FutureETF_Rasters)</span></span>
-<span id="cb64-24"><a href="enm-processing.html#cb64-24" tabindex="-1"></a></span>
-<span id="cb64-25"><a href="enm-processing.html#cb64-25" tabindex="-1"></a>  future_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.asc&quot;</span>)</span>
-<span id="cb64-26"><a href="enm-processing.html#cb64-26" tabindex="-1"></a></span>
-<span id="cb64-27"><a href="enm-processing.html#cb64-27" tabindex="-1"></a>  p_future <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(opt.mod, FutureETF_Rasters, <span class="at">filename =</span> future_file, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">NAflag =</span> <span class="sc">-</span><span class="dv">9999</span>)</span>
-<span id="cb64-28"><a href="enm-processing.html#cb64-28" tabindex="-1"></a></span>
-<span id="cb64-29"><a href="enm-processing.html#cb64-29" tabindex="-1"></a>  <span class="fu">save</span>(p_future, <span class="at">file =</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="st">&quot;.RData&quot;</span>, future_file))</span>
-<span id="cb64-30"><a href="enm-processing.html#cb64-30" tabindex="-1"></a></span>
-<span id="cb64-31"><a href="enm-processing.html#cb64-31" tabindex="-1"></a>  <span class="co"># Plot the future habitat suitability map.</span></span>
-<span id="cb64-32"><a href="enm-processing.html#cb64-32" tabindex="-1"></a>  p_future_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(p_future, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb64-33"><a href="enm-processing.html#cb64-33" tabindex="-1"></a>  <span class="fu">colnames</span>(p_future_df)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Habitat_Suitability&quot;</span></span>
-<span id="cb64-34"><a href="enm-processing.html#cb64-34" tabindex="-1"></a></span>
-<span id="cb64-35"><a href="enm-processing.html#cb64-35" tabindex="-1"></a>  bbox_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">ext</span>(p_future)</span>
-<span id="cb64-36"><a href="enm-processing.html#cb64-36" tabindex="-1"></a></span>
-<span id="cb64-37"><a href="enm-processing.html#cb64-37" tabindex="-1"></a>  p_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb64-38"><a href="enm-processing.html#cb64-38" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
-<span id="cb64-39"><a href="enm-processing.html#cb64-39" tabindex="-1"></a>    <span class="fu">geom_tile</span>(<span class="at">data =</span> p_future_df,</span>
-<span id="cb64-40"><a href="enm-processing.html#cb64-40" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> Habitat_Suitability)) <span class="sc">+</span></span>
-<span id="cb64-41"><a href="enm-processing.html#cb64-41" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb64-42"><a href="enm-processing.html#cb64-42" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb64-43"><a href="enm-processing.html#cb64-43" tabindex="-1"></a>             <span class="at">ylim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb64-44"><a href="enm-processing.html#cb64-44" tabindex="-1"></a>             <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb64-45"><a href="enm-processing.html#cb64-45" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Future Suitability&quot;</span>) <span class="sc">+</span></span>
-<span id="cb64-46"><a href="enm-processing.html#cb64-46" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species), <span class="st">&quot; - Future Habitat Suitability&quot;</span>),</span>
-<span id="cb64-47"><a href="enm-processing.html#cb64-47" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
-<span id="cb64-48"><a href="enm-processing.html#cb64-48" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
-<span id="cb64-49"><a href="enm-processing.html#cb64-49" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb64-50"><a href="enm-processing.html#cb64-50" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb64-51"><a href="enm-processing.html#cb64-51" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb64-52"><a href="enm-processing.html#cb64-52" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb64-53"><a href="enm-processing.html#cb64-53" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb64-54"><a href="enm-processing.html#cb64-54" tabindex="-1"></a>    <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
-<span id="cb64-55"><a href="enm-processing.html#cb64-55" tabindex="-1"></a>                           <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
-<span id="cb64-56"><a href="enm-processing.html#cb64-56" tabindex="-1"></a>                           <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
-<span id="cb64-57"><a href="enm-processing.html#cb64-57" tabindex="-1"></a></span>
-<span id="cb64-58"><a href="enm-processing.html#cb64-58" tabindex="-1"></a>  png_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.png&quot;</span>)</span>
-<span id="cb64-59"><a href="enm-processing.html#cb64-59" tabindex="-1"></a></span>
-<span id="cb64-60"><a href="enm-processing.html#cb64-60" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">filename =</span> png_file, <span class="at">plot =</span> p_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
-<span id="cb64-61"><a href="enm-processing.html#cb64-61" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="enm-processing.html#cb65-1" tabindex="-1"></a><span class="co"># List future climate layers under the SSP370 scenario for 2081-2100.</span></span>
+<span id="cb65-2"><a href="enm-processing.html#cb65-2" tabindex="-1"></a>future_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-3"><a href="enm-processing.html#cb65-3" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="enm-processing.html#cb65-4" tabindex="-1"></a><span class="co"># Add the current elevation layer to the future stack, since elevation remains constant.</span></span>
+<span id="cb65-5"><a href="enm-processing.html#cb65-5" tabindex="-1"></a>elev_file <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/04_climate_processing/CurrentEasternTemperateForests/&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;elev</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-6"><a href="enm-processing.html#cb65-6" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="enm-processing.html#cb65-7" tabindex="-1"></a>futurestack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">c</span>(future_files, elev_file))</span>
+<span id="cb65-8"><a href="enm-processing.html#cb65-8" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="enm-processing.html#cb65-9" tabindex="-1"></a><span class="co"># Project each species onto future ETF climate conditions.</span></span>
+<span id="cb65-10"><a href="enm-processing.html#cb65-10" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
+<span id="cb65-11"><a href="enm-processing.html#cb65-11" tabindex="-1"></a></span>
+<span id="cb65-12"><a href="enm-processing.html#cb65-12" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Projecting future climate for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb65-13"><a href="enm-processing.html#cb65-13" tabindex="-1"></a></span>
+<span id="cb65-14"><a href="enm-processing.html#cb65-14" tabindex="-1"></a>  <span class="fu">load</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/05_ENMs/&quot;</span>, species, <span class="st">&quot;_opt_mod.RData&quot;</span>))</span>
+<span id="cb65-15"><a href="enm-processing.html#cb65-15" tabindex="-1"></a></span>
+<span id="cb65-16"><a href="enm-processing.html#cb65-16" tabindex="-1"></a>  vif_dir <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/04_climate_processing/Cropped/&quot;</span>, species, <span class="st">&quot;/VIF/&quot;</span>)</span>
+<span id="cb65-17"><a href="enm-processing.html#cb65-17" tabindex="-1"></a></span>
+<span id="cb65-18"><a href="enm-processing.html#cb65-18" tabindex="-1"></a>  species_layers <span class="ot">&lt;-</span> <span class="fu">list.files</span>(vif_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-19"><a href="enm-processing.html#cb65-19" tabindex="-1"></a>  spec_stack <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(species_layers)</span>
+<span id="cb65-20"><a href="enm-processing.html#cb65-20" tabindex="-1"></a>  layer_names <span class="ot">&lt;-</span> <span class="fu">names</span>(spec_stack)</span>
+<span id="cb65-21"><a href="enm-processing.html#cb65-21" tabindex="-1"></a></span>
+<span id="cb65-22"><a href="enm-processing.html#cb65-22" tabindex="-1"></a>  FutureETF_Rasters <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">subset</span>(futurestack, layer_names)</span>
+<span id="cb65-23"><a href="enm-processing.html#cb65-23" tabindex="-1"></a>  <span class="co">#if error, try: FutureETF_Rasters &lt;- raster::stack(FutureETF_Rasters)</span></span>
+<span id="cb65-24"><a href="enm-processing.html#cb65-24" tabindex="-1"></a></span>
+<span id="cb65-25"><a href="enm-processing.html#cb65-25" tabindex="-1"></a>  future_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.asc&quot;</span>)</span>
+<span id="cb65-26"><a href="enm-processing.html#cb65-26" tabindex="-1"></a></span>
+<span id="cb65-27"><a href="enm-processing.html#cb65-27" tabindex="-1"></a>  p_future <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(opt.mod, FutureETF_Rasters, <span class="at">filename =</span> future_file, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">NAflag =</span> <span class="sc">-</span><span class="dv">9999</span>)</span>
+<span id="cb65-28"><a href="enm-processing.html#cb65-28" tabindex="-1"></a></span>
+<span id="cb65-29"><a href="enm-processing.html#cb65-29" tabindex="-1"></a>  <span class="fu">save</span>(p_future, <span class="at">file =</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">.asc$&quot;</span>, <span class="st">&quot;.RData&quot;</span>, future_file))</span>
+<span id="cb65-30"><a href="enm-processing.html#cb65-30" tabindex="-1"></a></span>
+<span id="cb65-31"><a href="enm-processing.html#cb65-31" tabindex="-1"></a>  <span class="co"># Plot the future habitat suitability map.</span></span>
+<span id="cb65-32"><a href="enm-processing.html#cb65-32" tabindex="-1"></a>  p_future_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(p_future, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb65-33"><a href="enm-processing.html#cb65-33" tabindex="-1"></a>  <span class="fu">colnames</span>(p_future_df)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Habitat_Suitability&quot;</span></span>
+<span id="cb65-34"><a href="enm-processing.html#cb65-34" tabindex="-1"></a></span>
+<span id="cb65-35"><a href="enm-processing.html#cb65-35" tabindex="-1"></a>  bbox_vals <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">ext</span>(p_future)</span>
+<span id="cb65-36"><a href="enm-processing.html#cb65-36" tabindex="-1"></a></span>
+<span id="cb65-37"><a href="enm-processing.html#cb65-37" tabindex="-1"></a>  p_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb65-38"><a href="enm-processing.html#cb65-38" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-39"><a href="enm-processing.html#cb65-39" tabindex="-1"></a>    <span class="fu">geom_tile</span>(<span class="at">data =</span> p_future_df,</span>
+<span id="cb65-40"><a href="enm-processing.html#cb65-40" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> Habitat_Suitability)) <span class="sc">+</span></span>
+<span id="cb65-41"><a href="enm-processing.html#cb65-41" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb65-42"><a href="enm-processing.html#cb65-42" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb65-43"><a href="enm-processing.html#cb65-43" tabindex="-1"></a>             <span class="at">ylim =</span> <span class="fu">c</span>(bbox_vals<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, bbox_vals<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb65-44"><a href="enm-processing.html#cb65-44" tabindex="-1"></a>             <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb65-45"><a href="enm-processing.html#cb65-45" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Future Suitability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-46"><a href="enm-processing.html#cb65-46" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species), <span class="st">&quot; - Future Habitat Suitability&quot;</span>),</span>
+<span id="cb65-47"><a href="enm-processing.html#cb65-47" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
+<span id="cb65-48"><a href="enm-processing.html#cb65-48" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-49"><a href="enm-processing.html#cb65-49" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb65-50"><a href="enm-processing.html#cb65-50" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb65-51"><a href="enm-processing.html#cb65-51" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb65-52"><a href="enm-processing.html#cb65-52" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb65-53"><a href="enm-processing.html#cb65-53" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb65-54"><a href="enm-processing.html#cb65-54" tabindex="-1"></a>    <span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
+<span id="cb65-55"><a href="enm-processing.html#cb65-55" tabindex="-1"></a>                           <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb65-56"><a href="enm-processing.html#cb65-56" tabindex="-1"></a>                           <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
+<span id="cb65-57"><a href="enm-processing.html#cb65-57" tabindex="-1"></a></span>
+<span id="cb65-58"><a href="enm-processing.html#cb65-58" tabindex="-1"></a>  png_file <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.png&quot;</span>)</span>
+<span id="cb65-59"><a href="enm-processing.html#cb65-59" tabindex="-1"></a></span>
+<span id="cb65-60"><a href="enm-processing.html#cb65-60" tabindex="-1"></a>  <span class="fu">ggsave</span>(<span class="at">filename =</span> png_file, <span class="at">plot =</span> p_plot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb65-61"><a href="enm-processing.html#cb65-61" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="f-compare-current-and-future-projections" class="section level2 hasAnchor" number="8.7">
 <h2><span class="header-section-number">8.7</span> F) Compare Current and Future Projections<a href="enm-processing.html#f-compare-current-and-future-projections" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="enm-processing.html#cb65-1" tabindex="-1"></a><span class="co"># Initialize a list to hold change maps for each species.</span></span>
-<span id="cb65-2"><a href="enm-processing.html#cb65-2" tabindex="-1"></a>all_dfs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb65-3"><a href="enm-processing.html#cb65-3" tabindex="-1"></a></span>
-<span id="cb65-4"><a href="enm-processing.html#cb65-4" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
-<span id="cb65-5"><a href="enm-processing.html#cb65-5" tabindex="-1"></a></span>
-<span id="cb65-6"><a href="enm-processing.html#cb65-6" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Comparing projections for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb65-7"><a href="enm-processing.html#cb65-7" tabindex="-1"></a></span>
-<span id="cb65-8"><a href="enm-processing.html#cb65-8" tabindex="-1"></a>  <span class="co"># Load current and future suitability rasters.</span></span>
-<span id="cb65-9"><a href="enm-processing.html#cb65-9" tabindex="-1"></a>  current <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>))</span>
-<span id="cb65-10"><a href="enm-processing.html#cb65-10" tabindex="-1"></a>  future <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.asc&quot;</span>))</span>
-<span id="cb65-11"><a href="enm-processing.html#cb65-11" tabindex="-1"></a></span>
-<span id="cb65-12"><a href="enm-processing.html#cb65-12" tabindex="-1"></a>  <span class="co"># Threshold each raster at 0.7 to produce binary presence/absence maps.</span></span>
-<span id="cb65-13"><a href="enm-processing.html#cb65-13" tabindex="-1"></a>  current_binary <span class="ot">&lt;-</span> current <span class="sc">&gt;=</span> <span class="fl">0.7</span></span>
-<span id="cb65-14"><a href="enm-processing.html#cb65-14" tabindex="-1"></a>  future_binary <span class="ot">&lt;-</span> future <span class="sc">&gt;=</span> <span class="fl">0.7</span></span>
-<span id="cb65-15"><a href="enm-processing.html#cb65-15" tabindex="-1"></a></span>
-<span id="cb65-16"><a href="enm-processing.html#cb65-16" tabindex="-1"></a>  <span class="co"># Compute range changes between current and future projections.</span></span>
-<span id="cb65-17"><a href="enm-processing.html#cb65-17" tabindex="-1"></a>  RangeSizeDiff <span class="ot">&lt;-</span> <span class="fu">BIOMOD_RangeSize</span>(<span class="fu">as</span>(current_binary, <span class="st">&quot;Raster&quot;</span>),</span>
-<span id="cb65-18"><a href="enm-processing.html#cb65-18" tabindex="-1"></a>                                    <span class="fu">as</span>(future_binary, <span class="st">&quot;Raster&quot;</span>))</span>
-<span id="cb65-19"><a href="enm-processing.html#cb65-19" tabindex="-1"></a></span>
-<span id="cb65-20"><a href="enm-processing.html#cb65-20" tabindex="-1"></a>  diff_raster <span class="ot">&lt;-</span> RangeSizeDiff<span class="sc">$</span>Diff.By.Pixel</span>
-<span id="cb65-21"><a href="enm-processing.html#cb65-21" tabindex="-1"></a></span>
-<span id="cb65-22"><a href="enm-processing.html#cb65-22" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(diff_raster, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb65-23"><a href="enm-processing.html#cb65-23" tabindex="-1"></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;change&quot;</span>)</span>
-<span id="cb65-24"><a href="enm-processing.html#cb65-24" tabindex="-1"></a></span>
-<span id="cb65-25"><a href="enm-processing.html#cb65-25" tabindex="-1"></a>  <span class="co"># Convert numeric change codes to categorical labels for plotting.</span></span>
-<span id="cb65-26"><a href="enm-processing.html#cb65-26" tabindex="-1"></a>  df<span class="sc">$</span>fill <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>change,</span>
-<span id="cb65-27"><a href="enm-processing.html#cb65-27" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb65-28"><a href="enm-processing.html#cb65-28" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;lost&quot;</span>, <span class="st">&quot;unchanged&quot;</span>, <span class="st">&quot;not occupied&quot;</span>, <span class="st">&quot;occupied in future&quot;</span>))</span>
-<span id="cb65-29"><a href="enm-processing.html#cb65-29" tabindex="-1"></a></span>
-<span id="cb65-30"><a href="enm-processing.html#cb65-30" tabindex="-1"></a>  <span class="co"># Add species name for faceting plots.</span></span>
-<span id="cb65-31"><a href="enm-processing.html#cb65-31" tabindex="-1"></a>  df<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species)</span>
-<span id="cb65-32"><a href="enm-processing.html#cb65-32" tabindex="-1"></a></span>
-<span id="cb65-33"><a href="enm-processing.html#cb65-33" tabindex="-1"></a>  all_dfs[[species]] <span class="ot">&lt;-</span> df</span>
-<span id="cb65-34"><a href="enm-processing.html#cb65-34" tabindex="-1"></a>}</span>
-<span id="cb65-35"><a href="enm-processing.html#cb65-35" tabindex="-1"></a></span>
-<span id="cb65-36"><a href="enm-processing.html#cb65-36" tabindex="-1"></a><span class="co"># Combine all species into one data frame for faceted plotting.</span></span>
-<span id="cb65-37"><a href="enm-processing.html#cb65-37" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_dfs)</span>
-<span id="cb65-38"><a href="enm-processing.html#cb65-38" tabindex="-1"></a></span>
-<span id="cb65-39"><a href="enm-processing.html#cb65-39" tabindex="-1"></a><span class="co"># Determine overall plotting extent.</span></span>
-<span id="cb65-40"><a href="enm-processing.html#cb65-40" tabindex="-1"></a>combined_bbox <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span></span>
-<span id="cb65-41"><a href="enm-processing.html#cb65-41" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">xmin =</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb65-42"><a href="enm-processing.html#cb65-42" tabindex="-1"></a>            <span class="at">xmax =</span> <span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb65-43"><a href="enm-processing.html#cb65-43" tabindex="-1"></a>            <span class="at">ymin =</span> <span class="fu">min</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb65-44"><a href="enm-processing.html#cb65-44" tabindex="-1"></a>            <span class="at">ymax =</span> <span class="fu">max</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb65-45"><a href="enm-processing.html#cb65-45" tabindex="-1"></a></span>
-<span id="cb65-46"><a href="enm-processing.html#cb65-46" tabindex="-1"></a><span class="co"># Plot all species&#39; range shifts together.</span></span>
-<span id="cb65-47"><a href="enm-processing.html#cb65-47" tabindex="-1"></a>p_all <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_df) <span class="sc">+</span></span>
-<span id="cb65-48"><a href="enm-processing.html#cb65-48" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
-<span id="cb65-49"><a href="enm-processing.html#cb65-49" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> fill)) <span class="sc">+</span></span>
-<span id="cb65-50"><a href="enm-processing.html#cb65-50" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb65-51"><a href="enm-processing.html#cb65-51" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(combined_bbox<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, combined_bbox<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb65-52"><a href="enm-processing.html#cb65-52" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(combined_bbox<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, combined_bbox<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
-<span id="cb65-53"><a href="enm-processing.html#cb65-53" tabindex="-1"></a>           <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb65-54"><a href="enm-processing.html#cb65-54" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Pixel Change&quot;</span>, <span class="at">na.value =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
-<span id="cb65-55"><a href="enm-processing.html#cb65-55" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span></span>
-<span id="cb65-56"><a href="enm-processing.html#cb65-56" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Current vs Future Habitat Suitability Change&quot;</span>,</span>
-<span id="cb65-57"><a href="enm-processing.html#cb65-57" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
-<span id="cb65-58"><a href="enm-processing.html#cb65-58" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
-<span id="cb65-59"><a href="enm-processing.html#cb65-59" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb65-60"><a href="enm-processing.html#cb65-60" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb65-61"><a href="enm-processing.html#cb65-61" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb65-62"><a href="enm-processing.html#cb65-62" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb65-63"><a href="enm-processing.html#cb65-63" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb65-64"><a href="enm-processing.html#cb65-64" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>)) <span class="sc">+</span></span>
-<span id="cb65-65"><a href="enm-processing.html#cb65-65" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
-<span id="cb65-66"><a href="enm-processing.html#cb65-66" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
-<span id="cb65-67"><a href="enm-processing.html#cb65-67" tabindex="-1"></a>    <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
-<span id="cb65-68"><a href="enm-processing.html#cb65-68" tabindex="-1"></a>    <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
-<span id="cb65-69"><a href="enm-processing.html#cb65-69" tabindex="-1"></a></span>
-<span id="cb65-70"><a href="enm-processing.html#cb65-70" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;data/06_ENM_processing/all_species_range_change_map.png&quot;</span>,</span>
-<span id="cb65-71"><a href="enm-processing.html#cb65-71" tabindex="-1"></a>       <span class="at">plot =</span> p_all,</span>
-<span id="cb65-72"><a href="enm-processing.html#cb65-72" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>,</span>
-<span id="cb65-73"><a href="enm-processing.html#cb65-73" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">8</span>,</span>
-<span id="cb65-74"><a href="enm-processing.html#cb65-74" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="enm-processing.html#cb66-1" tabindex="-1"></a><span class="co"># Initialize a list to hold change maps for each species.</span></span>
+<span id="cb66-2"><a href="enm-processing.html#cb66-2" tabindex="-1"></a>all_dfs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb66-3"><a href="enm-processing.html#cb66-3" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="enm-processing.html#cb66-4" tabindex="-1"></a><span class="cf">for</span> (species <span class="cf">in</span> species_list) {</span>
+<span id="cb66-5"><a href="enm-processing.html#cb66-5" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="enm-processing.html#cb66-6" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Comparing projections for:&quot;</span>, species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb66-7"><a href="enm-processing.html#cb66-7" tabindex="-1"></a></span>
+<span id="cb66-8"><a href="enm-processing.html#cb66-8" tabindex="-1"></a>  <span class="co"># Load current and future suitability rasters.</span></span>
+<span id="cb66-9"><a href="enm-processing.html#cb66-9" tabindex="-1"></a>  current <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_EFT_Projection.asc&quot;</span>))</span>
+<span id="cb66-10"><a href="enm-processing.html#cb66-10" tabindex="-1"></a>  future <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">paste0</span>(<span class="st">&quot;data/06_ENM_processing/&quot;</span>, species, <span class="st">&quot;_Future_ETF_Projection.asc&quot;</span>))</span>
+<span id="cb66-11"><a href="enm-processing.html#cb66-11" tabindex="-1"></a></span>
+<span id="cb66-12"><a href="enm-processing.html#cb66-12" tabindex="-1"></a>  <span class="co"># Threshold each raster at 0.7 to produce binary presence/absence maps.</span></span>
+<span id="cb66-13"><a href="enm-processing.html#cb66-13" tabindex="-1"></a>  current_binary <span class="ot">&lt;-</span> current <span class="sc">&gt;=</span> <span class="fl">0.7</span></span>
+<span id="cb66-14"><a href="enm-processing.html#cb66-14" tabindex="-1"></a>  future_binary <span class="ot">&lt;-</span> future <span class="sc">&gt;=</span> <span class="fl">0.7</span></span>
+<span id="cb66-15"><a href="enm-processing.html#cb66-15" tabindex="-1"></a></span>
+<span id="cb66-16"><a href="enm-processing.html#cb66-16" tabindex="-1"></a>  <span class="co"># Compute range changes between current and future projections.</span></span>
+<span id="cb66-17"><a href="enm-processing.html#cb66-17" tabindex="-1"></a>  RangeSizeDiff <span class="ot">&lt;-</span> <span class="fu">BIOMOD_RangeSize</span>(<span class="fu">as</span>(current_binary, <span class="st">&quot;Raster&quot;</span>),</span>
+<span id="cb66-18"><a href="enm-processing.html#cb66-18" tabindex="-1"></a>                                    <span class="fu">as</span>(future_binary, <span class="st">&quot;Raster&quot;</span>))</span>
+<span id="cb66-19"><a href="enm-processing.html#cb66-19" tabindex="-1"></a></span>
+<span id="cb66-20"><a href="enm-processing.html#cb66-20" tabindex="-1"></a>  diff_raster <span class="ot">&lt;-</span> RangeSizeDiff<span class="sc">$</span>Diff.By.Pixel</span>
+<span id="cb66-21"><a href="enm-processing.html#cb66-21" tabindex="-1"></a></span>
+<span id="cb66-22"><a href="enm-processing.html#cb66-22" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(diff_raster, <span class="at">xy =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-23"><a href="enm-processing.html#cb66-23" tabindex="-1"></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;change&quot;</span>)</span>
+<span id="cb66-24"><a href="enm-processing.html#cb66-24" tabindex="-1"></a></span>
+<span id="cb66-25"><a href="enm-processing.html#cb66-25" tabindex="-1"></a>  <span class="co"># Convert numeric change codes to categorical labels for plotting.</span></span>
+<span id="cb66-26"><a href="enm-processing.html#cb66-26" tabindex="-1"></a>  df<span class="sc">$</span>fill <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>change,</span>
+<span id="cb66-27"><a href="enm-processing.html#cb66-27" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb66-28"><a href="enm-processing.html#cb66-28" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;lost&quot;</span>, <span class="st">&quot;unchanged&quot;</span>, <span class="st">&quot;not occupied&quot;</span>, <span class="st">&quot;occupied in future&quot;</span>))</span>
+<span id="cb66-29"><a href="enm-processing.html#cb66-29" tabindex="-1"></a></span>
+<span id="cb66-30"><a href="enm-processing.html#cb66-30" tabindex="-1"></a>  <span class="co"># Add species name for faceting plots.</span></span>
+<span id="cb66-31"><a href="enm-processing.html#cb66-31" tabindex="-1"></a>  df<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, species)</span>
+<span id="cb66-32"><a href="enm-processing.html#cb66-32" tabindex="-1"></a></span>
+<span id="cb66-33"><a href="enm-processing.html#cb66-33" tabindex="-1"></a>  all_dfs[[species]] <span class="ot">&lt;-</span> df</span>
+<span id="cb66-34"><a href="enm-processing.html#cb66-34" tabindex="-1"></a>}</span>
+<span id="cb66-35"><a href="enm-processing.html#cb66-35" tabindex="-1"></a></span>
+<span id="cb66-36"><a href="enm-processing.html#cb66-36" tabindex="-1"></a><span class="co"># Combine all species into one data frame for faceted plotting.</span></span>
+<span id="cb66-37"><a href="enm-processing.html#cb66-37" tabindex="-1"></a>combined_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(all_dfs)</span>
+<span id="cb66-38"><a href="enm-processing.html#cb66-38" tabindex="-1"></a></span>
+<span id="cb66-39"><a href="enm-processing.html#cb66-39" tabindex="-1"></a><span class="co"># Determine overall plotting extent.</span></span>
+<span id="cb66-40"><a href="enm-processing.html#cb66-40" tabindex="-1"></a>combined_bbox <span class="ot">&lt;-</span> combined_df <span class="sc">%&gt;%</span></span>
+<span id="cb66-41"><a href="enm-processing.html#cb66-41" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">xmin =</span> <span class="fu">min</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-42"><a href="enm-processing.html#cb66-42" tabindex="-1"></a>            <span class="at">xmax =</span> <span class="fu">max</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-43"><a href="enm-processing.html#cb66-43" tabindex="-1"></a>            <span class="at">ymin =</span> <span class="fu">min</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb66-44"><a href="enm-processing.html#cb66-44" tabindex="-1"></a>            <span class="at">ymax =</span> <span class="fu">max</span>(y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb66-45"><a href="enm-processing.html#cb66-45" tabindex="-1"></a></span>
+<span id="cb66-46"><a href="enm-processing.html#cb66-46" tabindex="-1"></a><span class="co"># Plot all species&#39; range shifts together.</span></span>
+<span id="cb66-47"><a href="enm-processing.html#cb66-47" tabindex="-1"></a>p_all <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_df) <span class="sc">+</span></span>
+<span id="cb66-48"><a href="enm-processing.html#cb66-48" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="st">&quot;grey70&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-49"><a href="enm-processing.html#cb66-49" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> fill)) <span class="sc">+</span></span>
+<span id="cb66-50"><a href="enm-processing.html#cb66-50" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> usa, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb66-51"><a href="enm-processing.html#cb66-51" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(combined_bbox<span class="sc">$</span>xmin <span class="sc">-</span> <span class="dv">2</span>, combined_bbox<span class="sc">$</span>xmax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb66-52"><a href="enm-processing.html#cb66-52" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(combined_bbox<span class="sc">$</span>ymin <span class="sc">-</span> <span class="dv">2</span>, combined_bbox<span class="sc">$</span>ymax <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb66-53"><a href="enm-processing.html#cb66-53" tabindex="-1"></a>           <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb66-54"><a href="enm-processing.html#cb66-54" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Pixel Change&quot;</span>, <span class="at">na.value =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-55"><a href="enm-processing.html#cb66-55" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span></span>
+<span id="cb66-56"><a href="enm-processing.html#cb66-56" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Current vs Future Habitat Suitability Change&quot;</span>,</span>
+<span id="cb66-57"><a href="enm-processing.html#cb66-57" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>,</span>
+<span id="cb66-58"><a href="enm-processing.html#cb66-58" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-59"><a href="enm-processing.html#cb66-59" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb66-60"><a href="enm-processing.html#cb66-60" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb66-61"><a href="enm-processing.html#cb66-61" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb66-62"><a href="enm-processing.html#cb66-62" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb66-63"><a href="enm-processing.html#cb66-63" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb66-64"><a href="enm-processing.html#cb66-64" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>)) <span class="sc">+</span></span>
+<span id="cb66-65"><a href="enm-processing.html#cb66-65" tabindex="-1"></a>  <span class="fu">annotation_north_arrow</span>(</span>
+<span id="cb66-66"><a href="enm-processing.html#cb66-66" tabindex="-1"></a>    <span class="at">location =</span> <span class="st">&quot;tl&quot;</span>,</span>
+<span id="cb66-67"><a href="enm-processing.html#cb66-67" tabindex="-1"></a>    <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>),</span>
+<span id="cb66-68"><a href="enm-processing.html#cb66-68" tabindex="-1"></a>    <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">&quot;cm&quot;</span>))</span>
+<span id="cb66-69"><a href="enm-processing.html#cb66-69" tabindex="-1"></a></span>
+<span id="cb66-70"><a href="enm-processing.html#cb66-70" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;data/06_ENM_processing/all_species_range_change_map.png&quot;</span>,</span>
+<span id="cb66-71"><a href="enm-processing.html#cb66-71" tabindex="-1"></a>       <span class="at">plot =</span> p_all,</span>
+<span id="cb66-72"><a href="enm-processing.html#cb66-72" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>,</span>
+<span id="cb66-73"><a href="enm-processing.html#cb66-73" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">8</span>,</span>
+<span id="cb66-74"><a href="enm-processing.html#cb66-74" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
 
 </div>
 </div>

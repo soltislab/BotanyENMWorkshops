@@ -255,70 +255,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Authors: Tyler Radtke and Sebastian Fernandez</p>
 <div id="load-required-packages-5" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Load Required Packages<a href="null-models.html#load-required-packages-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="null-models.html#cb51-1" tabindex="-1"></a><span class="fu">library</span>(ENMeval)</span>
-<span id="cb51-2"><a href="null-models.html#cb51-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb51-3"><a href="null-models.html#cb51-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="null-models.html#cb52-1" tabindex="-1"></a><span class="fu">library</span>(ENMeval)</span>
+<span id="cb52-2"><a href="null-models.html#cb52-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb52-3"><a href="null-models.html#cb52-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 </div>
 <div id="a-load-cleaned-occurrence-data-2" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> A) Load Cleaned Occurrence Data<a href="null-models.html#a-load-cleaned-occurrence-data-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="null-models.html#cb52-1" tabindex="-1"></a><span class="co"># Load all occurrence records</span></span>
-<span id="cb52-2"><a href="null-models.html#cb52-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="null-models.html#cb53-1" tabindex="-1"></a><span class="co"># Load all occurrence records</span></span>
+<span id="cb53-2"><a href="null-models.html#cb53-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="b-load-optimal-model-parameters" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> B) Load Optimal Model Parameters<a href="null-models.html#b-load-optimal-model-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="null-models.html#cb53-1" tabindex="-1"></a><span class="co"># Load optimal feature class (fc) and regularization multiplier (rm)</span></span>
-<span id="cb53-2"><a href="null-models.html#cb53-2" tabindex="-1"></a>opt.seq <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;data/05_ENMs/Galax_urceolata_OptModel.txt&quot;</span>)</span>
-<span id="cb53-3"><a href="null-models.html#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="null-models.html#cb53-4" tabindex="-1"></a><span class="co"># Extract parameters</span></span>
-<span id="cb53-5"><a href="null-models.html#cb53-5" tabindex="-1"></a>fc <span class="ot">&lt;-</span> opt.seq<span class="sc">$</span>fc</span>
-<span id="cb53-6"><a href="null-models.html#cb53-6" tabindex="-1"></a>rm <span class="ot">&lt;-</span> opt.seq<span class="sc">$</span>rm</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="null-models.html#cb54-1" tabindex="-1"></a><span class="co"># Load optimal feature class (fc) and regularization multiplier (rm)</span></span>
+<span id="cb54-2"><a href="null-models.html#cb54-2" tabindex="-1"></a>opt.seq <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;data/05_ENMs/Galax_urceolata_OptModel.txt&quot;</span>)</span>
+<span id="cb54-3"><a href="null-models.html#cb54-3" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="null-models.html#cb54-4" tabindex="-1"></a><span class="co"># Extract parameters</span></span>
+<span id="cb54-5"><a href="null-models.html#cb54-5" tabindex="-1"></a>fc <span class="ot">&lt;-</span> opt.seq<span class="sc">$</span>fc</span>
+<span id="cb54-6"><a href="null-models.html#cb54-6" tabindex="-1"></a>rm <span class="ot">&lt;-</span> opt.seq<span class="sc">$</span>rm</span></code></pre></div>
 </div>
 <div id="c-load-enmeval-object" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> C) Load ENMeval Object<a href="null-models.html#c-load-enmeval-object" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="null-models.html#cb54-1" tabindex="-1"></a><span class="co"># Load saved ENMeval object for Galax urceolata</span></span>
-<span id="cb54-2"><a href="null-models.html#cb54-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/05_ENMs/Galax_urceolata_ENM_eval.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="null-models.html#cb55-1" tabindex="-1"></a><span class="co"># Load saved ENMeval object for Galax urceolata</span></span>
+<span id="cb55-2"><a href="null-models.html#cb55-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/05_ENMs/Galax_urceolata_ENM_eval.RData&quot;</span>)</span></code></pre></div>
 </div>
 <div id="d-run-null-model-simulations" class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> D) Run Null Model Simulations<a href="null-models.html#d-run-null-model-simulations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="null-models.html#cb55-1" tabindex="-1"></a><span class="co"># Run ENMnulls with optimal parameters and 100 iterations</span></span>
-<span id="cb55-2"><a href="null-models.html#cb55-2" tabindex="-1"></a>spec.mod.null <span class="ot">&lt;-</span> <span class="fu">ENMnulls</span>(</span>
-<span id="cb55-3"><a href="null-models.html#cb55-3" tabindex="-1"></a>  eval,</span>
-<span id="cb55-4"><a href="null-models.html#cb55-4" tabindex="-1"></a>  <span class="at">mod.settings =</span> <span class="fu">list</span>(<span class="at">fc =</span> fc, <span class="at">rm =</span> rm),</span>
-<span id="cb55-5"><a href="null-models.html#cb55-5" tabindex="-1"></a>  <span class="at">no.iter =</span> <span class="dv">100</span></span>
-<span id="cb55-6"><a href="null-models.html#cb55-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="null-models.html#cb56-1" tabindex="-1"></a><span class="co"># Run ENMnulls with optimal parameters and 100 iterations</span></span>
+<span id="cb56-2"><a href="null-models.html#cb56-2" tabindex="-1"></a>spec.mod.null <span class="ot">&lt;-</span> <span class="fu">ENMnulls</span>(</span>
+<span id="cb56-3"><a href="null-models.html#cb56-3" tabindex="-1"></a>  eval,</span>
+<span id="cb56-4"><a href="null-models.html#cb56-4" tabindex="-1"></a>  <span class="at">mod.settings =</span> <span class="fu">list</span>(<span class="at">fc =</span> fc, <span class="at">rm =</span> rm),</span>
+<span id="cb56-5"><a href="null-models.html#cb56-5" tabindex="-1"></a>  <span class="at">no.iter =</span> <span class="dv">100</span></span>
+<span id="cb56-6"><a href="null-models.html#cb56-6" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="e-save-null-model-comparison-results" class="section level2 hasAnchor" number="7.6">
 <h2><span class="header-section-number">7.6</span> E) Save Null Model Comparison Results<a href="null-models.html#e-save-null-model-comparison-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="null-models.html#cb56-1" tabindex="-1"></a><span class="co"># Extract comparison results between empirical and null models</span></span>
-<span id="cb56-2"><a href="null-models.html#cb56-2" tabindex="-1"></a>null_comparison_results <span class="ot">&lt;-</span> <span class="fu">null.emp.results</span>(spec.mod.null)</span>
-<span id="cb56-3"><a href="null-models.html#cb56-3" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="null-models.html#cb56-4" tabindex="-1"></a><span class="co"># Save results as CSV</span></span>
-<span id="cb56-5"><a href="null-models.html#cb56-5" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
-<span id="cb56-6"><a href="null-models.html#cb56-6" tabindex="-1"></a>  null_comparison_results,</span>
-<span id="cb56-7"><a href="null-models.html#cb56-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/05_ENMs/Galax_urceolata_null_comparison_results.csv&quot;</span>,</span>
-<span id="cb56-8"><a href="null-models.html#cb56-8" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
-<span id="cb56-9"><a href="null-models.html#cb56-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="null-models.html#cb57-1" tabindex="-1"></a><span class="co"># Extract comparison results between empirical and null models</span></span>
+<span id="cb57-2"><a href="null-models.html#cb57-2" tabindex="-1"></a>null_comparison_results <span class="ot">&lt;-</span> <span class="fu">null.emp.results</span>(spec.mod.null)</span>
+<span id="cb57-3"><a href="null-models.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="null-models.html#cb57-4" tabindex="-1"></a><span class="co"># Save results as CSV</span></span>
+<span id="cb57-5"><a href="null-models.html#cb57-5" tabindex="-1"></a><span class="fu">write.csv</span>(</span>
+<span id="cb57-6"><a href="null-models.html#cb57-6" tabindex="-1"></a>  null_comparison_results,</span>
+<span id="cb57-7"><a href="null-models.html#cb57-7" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/05_ENMs/Galax_urceolata_null_comparison_results.csv&quot;</span>,</span>
+<span id="cb57-8"><a href="null-models.html#cb57-8" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb57-9"><a href="null-models.html#cb57-9" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="f-plot-null-model-results" class="section level2 hasAnchor" number="7.7">
 <h2><span class="header-section-number">7.7</span> F) Plot Null Model Results<a href="null-models.html#f-plot-null-model-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="null-models.html#cb57-1" tabindex="-1"></a><span class="co"># Generate histogram plots for AUC and OR.10p statistics</span></span>
-<span id="cb57-2"><a href="null-models.html#cb57-2" tabindex="-1"></a>spec.null <span class="ot">&lt;-</span> <span class="fu">evalplot.nulls</span>(</span>
-<span id="cb57-3"><a href="null-models.html#cb57-3" tabindex="-1"></a>  spec.mod.null,</span>
-<span id="cb57-4"><a href="null-models.html#cb57-4" tabindex="-1"></a>  <span class="at">stats =</span> <span class="fu">c</span>(<span class="st">&quot;or.10p&quot;</span>, <span class="st">&quot;auc.val&quot;</span>),</span>
-<span id="cb57-5"><a href="null-models.html#cb57-5" tabindex="-1"></a>  <span class="at">plot.type =</span> <span class="st">&quot;histogram&quot;</span></span>
-<span id="cb57-6"><a href="null-models.html#cb57-6" tabindex="-1"></a>)</span>
-<span id="cb57-7"><a href="null-models.html#cb57-7" tabindex="-1"></a></span>
-<span id="cb57-8"><a href="null-models.html#cb57-8" tabindex="-1"></a><span class="co"># Display plot in R console</span></span>
-<span id="cb57-9"><a href="null-models.html#cb57-9" tabindex="-1"></a><span class="fu">plot</span>(spec.null)</span>
-<span id="cb57-10"><a href="null-models.html#cb57-10" tabindex="-1"></a></span>
-<span id="cb57-11"><a href="null-models.html#cb57-11" tabindex="-1"></a><span class="co"># Save plot to PNG</span></span>
-<span id="cb57-12"><a href="null-models.html#cb57-12" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
-<span id="cb57-13"><a href="null-models.html#cb57-13" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">&quot;Galax_urceolata_null_histogram.png&quot;</span>,</span>
-<span id="cb57-14"><a href="null-models.html#cb57-14" tabindex="-1"></a>  <span class="at">plot =</span> spec.null,</span>
-<span id="cb57-15"><a href="null-models.html#cb57-15" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data/05_ENMs/&quot;</span>,</span>
-<span id="cb57-16"><a href="null-models.html#cb57-16" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">12</span>,</span>
-<span id="cb57-17"><a href="null-models.html#cb57-17" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">13</span></span>
-<span id="cb57-18"><a href="null-models.html#cb57-18" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="null-models.html#cb58-1" tabindex="-1"></a><span class="co"># Generate histogram plots for AUC and OR.10p statistics</span></span>
+<span id="cb58-2"><a href="null-models.html#cb58-2" tabindex="-1"></a>spec.null <span class="ot">&lt;-</span> <span class="fu">evalplot.nulls</span>(</span>
+<span id="cb58-3"><a href="null-models.html#cb58-3" tabindex="-1"></a>  spec.mod.null,</span>
+<span id="cb58-4"><a href="null-models.html#cb58-4" tabindex="-1"></a>  <span class="at">stats =</span> <span class="fu">c</span>(<span class="st">&quot;or.10p&quot;</span>, <span class="st">&quot;auc.val&quot;</span>),</span>
+<span id="cb58-5"><a href="null-models.html#cb58-5" tabindex="-1"></a>  <span class="at">plot.type =</span> <span class="st">&quot;histogram&quot;</span></span>
+<span id="cb58-6"><a href="null-models.html#cb58-6" tabindex="-1"></a>)</span>
+<span id="cb58-7"><a href="null-models.html#cb58-7" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="null-models.html#cb58-8" tabindex="-1"></a><span class="co"># Display plot in R console</span></span>
+<span id="cb58-9"><a href="null-models.html#cb58-9" tabindex="-1"></a><span class="fu">plot</span>(spec.null)</span>
+<span id="cb58-10"><a href="null-models.html#cb58-10" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="null-models.html#cb58-11" tabindex="-1"></a><span class="co"># Save plot to PNG</span></span>
+<span id="cb58-12"><a href="null-models.html#cb58-12" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb58-13"><a href="null-models.html#cb58-13" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">&quot;Galax_urceolata_null_histogram.png&quot;</span>,</span>
+<span id="cb58-14"><a href="null-models.html#cb58-14" tabindex="-1"></a>  <span class="at">plot =</span> spec.null,</span>
+<span id="cb58-15"><a href="null-models.html#cb58-15" tabindex="-1"></a>  <span class="at">path =</span> <span class="st">&quot;data/05_ENMs/&quot;</span>,</span>
+<span id="cb58-16"><a href="null-models.html#cb58-16" tabindex="-1"></a>  <span class="at">height =</span> <span class="dv">12</span>,</span>
+<span id="cb58-17"><a href="null-models.html#cb58-17" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">13</span></span>
+<span id="cb58-18"><a href="null-models.html#cb58-18" tabindex="-1"></a>)</span></code></pre></div>
 
 </div>
 </div>

@@ -17,7 +17,7 @@ library(gridExtra)    # For plotting
 ## A) Load Cleaned Occurrence Data ----
 
 # Read in cleaned occurrence data with geographic coordinates and species ID
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
 
 # Convert occurrence data to an sf object
 alldfsp <- st_as_sf(alldf,

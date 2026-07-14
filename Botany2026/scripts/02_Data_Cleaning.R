@@ -17,7 +17,7 @@ library(leaflet)        # For interactive mapping
 ## A) Read Raw Occurrence Data ----
 
 # Read species-specific raw data
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 nrow(rawdf)  # Starting number of records
 
 ## B) Taxonomic Harmonization ----
@@ -98,7 +98,7 @@ leaflet(df_fixed) %>%
 
 ## J) Save Cleaned CSV ----
 
-write.csv(df, "data/02_cleaning/Shortia_galacifolia_2025_06_27_cleaned.csv", row.names = FALSE)
+write.csv(df, "data/02_cleaning/Shortia_galacifolia_2026_07_14_cleaned.csv", row.names = FALSE)
 
 ## K) Batch Clean for All Species ----
 
@@ -120,7 +120,7 @@ for (i in 1:3) {
   df <- one_point_per_pixel(df)
   df <- thin_points(df, distance = 0.002, reps = 100)
 
-  outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2025_06_27_cleaned.csv")
+  outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2026_07_14_cleaned.csv")
   write.csv(df, outfile, row.names = FALSE)
   rm(df, search, outfile)
 }
@@ -131,7 +131,7 @@ alldf <- list.files("data/02_cleaning", pattern = "*.csv", full.names = TRUE)
 alldf <- lapply(alldf, read.csv)
 alldf <- do.call(rbind, alldf)
 
-write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv", row.names = FALSE)
+write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv", row.names = FALSE)
 
 ## M) Map All Records ----
 
@@ -151,7 +151,7 @@ all_map
 
 ## N) Prepare GeoLocate Batch File ----
 
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 rawdf_GeoRef <- need_to_georeference(rawdf)
 
 # Format columns for GeoLocate submission
@@ -179,4 +179,4 @@ rawdf_GeoRef2 <- rawdf_GeoRef[, c("locality string", "country", "state", "county
                                   "correction status", "precision", "error polygon", "multiple results",
                                   "ID", "name", "basis")]
 
-write.csv(rawdf_GeoRef2, "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2025_06_27.csv", row.names = FALSE)
+write.csv(rawdf_GeoRef2, "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2026_07_14.csv", row.names = FALSE)

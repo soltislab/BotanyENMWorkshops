@@ -18,7 +18,7 @@ library(gridExtra)      # For combining plots
 
 ## A) Load Cleaned Data ----
 ### Read in cleaned occurrence data with geographic coordinates and species ID
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
 
 ## B) Load and Stack Climatic Variables from WorldClim ----
 # List and sort all .tif files in the WorldClim directory

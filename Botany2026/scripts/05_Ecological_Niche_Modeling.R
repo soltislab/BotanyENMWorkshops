@@ -19,7 +19,7 @@ library(ggspatial)     # Scale bars and north arrows
 ## A) Load Cleaned Occurrence Data ----
 
 # Load occurrence data
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
 
 ## B) Subset for Single Species ----
 

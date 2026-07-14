@@ -8,7 +8,7 @@
 
 ## Download Zenodo Data ----
 source("scripts/tools/ZenodoDownload.R")
-download.packages(c("tools", "httr2", "utils", "magrittr"))
+install.packages(c("tools", "httr2", "utils", "magrittr"))
 ZenodoDownload()
 
 ## Install required CRAN packages ----

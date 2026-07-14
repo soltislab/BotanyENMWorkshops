@@ -36,8 +36,8 @@ rq_input <- list(
 iDigBio_GU_family_USA <- idig_search_records(rq_input, limit = 1000)
 
 # Save iDigBio results as CSV
-write.csv(iDigBio_GU, "data/01_download/iDigBio_GU_2025_06_27.csv", row.names = FALSE)
-write.csv(iDigBio_GU_family, "data/01_download/iDigBio_GU_family_2025_06_27.csv", row.names = FALSE)
+write.csv(iDigBio_GU, "data/01_download/iDigBio_GU_2026_07_14.csv", row.names = FALSE)
+write.csv(iDigBio_GU_family, "data/01_download/iDigBio_GU_family_2026_07_14.csv", row.names = FALSE)
 
 ## B) Download Using gatoRs ----
 
@@ -50,24 +50,24 @@ Pyxidanthera_brevifolia <- c("Pyxidanthera brevifolia", "Pyxidanthera barbulata 
 # Use gatoRs to download records with resolved synonyms
 gators_download(synonyms.list = Shortia_galacifolia,
                 write.file = TRUE,
-                filename = "data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
+                filename = "data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 
 gators_download(synonyms.list = Galax_urceolata,
                 write.file = TRUE,
-                filename = "data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv")
+                filename = "data/01_download/raw/Galax_urceolata_raw_2026_07_14.csv")
 
 gators_download(synonyms.list = Pyxidanthera_barbulata,
                 write.file = TRUE,
-                filename = "data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv")
+                filename = "data/01_download/raw/Pyxidanthera_barbulata_raw_2026_07_14.csv")
 
 gators_download(synonyms.list = Pyxidanthera_brevifolia,
                 write.file = TRUE,
-                filename = "data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv")
+                filename = "data/01_download/raw/Pyxidanthera_brevifolia_raw_2026_07_14.csv")
 
 ## C) Preview Downloaded Files ----
 
 # Read one downloaded file
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 
 # Preview columns and dimensions
 names(rawdf)

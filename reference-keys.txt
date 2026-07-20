@@ -74,3 +74,12 @@ c-calculate-niche-overlap
 d-test-phylogenetic-signal-in-niche-overlap
 e-project-models-onto-future-climate
 f-compare-current-and-future-projections
+phylodiversity-and-phyloendemism
+load-required-packages-7
+a-area-of-interest-aoi
+b-operational-taxonomic-units-otus-pa-data
+c-prune-a-phylogeny
+d-visualize-cactaceae-phylogeny
+run-phylodiversity-analysis-with-canaper
+f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd
+g-phyloendemism-analysis

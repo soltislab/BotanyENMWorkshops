@@ -1,5 +1,4 @@
-name: Build Bookdown
-
+name: Build Quarto Book
 on:
   push:
     branches: [main, jts-branch]
@@ -7,56 +6,49 @@ on:
       - "Botany2026/scripts/**"
       - "Botany2026/scripts/tools/**"
       - "book/**"
-
 permissions:
   contents: write
-
 jobs:
   build-book:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
+      
       - uses: r-lib/actions/setup-r@v2
-
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Install packages
+      
+      - uses: quarto-dev/quarto-actions/setup@v2
+      
+      - name: Install R packages
         shell: Rscript {0}
         run: |
           install.packages(c(
-            "bookdown",
             "knitr",
-            "rmarkdown",
-            "stringr"
+            "rmarkdown"
+            # Add any packages needed for your heavy computations
+            # that run during the build (not WebR packages)
           ))
-
+      
       - name: Convert scripts
         shell: Rscript {0}
         run: |
-          source("Botany2026/scripts/tools/convert_to_rmd.R")
-
-      - name: Build book
-        shell: Rscript {0}
+          source("Botany2026/scripts/tools/convert_to_qmd.R")
+      
+      - name: Render Quarto book
         run: |
-          setwd("book")
-          bookdown::render_book("index.Rmd")
-
-      - name: Publish to bookdown branch
+          cd book
+          quarto render
+      
+      - name: Publish to gh-pages branch
         run: |
-          git fetch origin bookdown:bookdown || true
-
-          git worktree add publish bookdown || \
-            git worktree add -b bookdown publish
+          git fetch origin gh-pages:gh-pages || true
+          git worktree add publish gh-pages || \
+            git worktree add -b gh-pages publish
           rm -rf publish/*
           cp -R book/_book/* publish/
-
           cd publish
           touch .nojekyll
-
           git add .
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "Update book" || echo "Nothing to commit"
-          git push origin bookdown
+          git push origin gh-pages

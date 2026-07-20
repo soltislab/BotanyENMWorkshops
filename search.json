@@ -24,7 +24,7 @@
     "href": "chapters/00_Setup.html",
     "title": "2  Setup",
     "section": "",
-    "text": "2.1 Download Zenodo Data\nPurpose:\nsource(\"scripts/tools/ZenodoDownload.R\")\ndownload.packages(c(\"tools\", \"httr2\", \"utils\", \"magrittr\"))\nZenodoDownload()",
+    "text": "2.1 Download Zenodo Data\nPurpose:\nsource(\"scripts/tools/ZenodoDownload.R\")\ndownload.packages(c(\"tools\", \"httr2\", \"utils\", \"magrittr\"), destdir = \"/blue/soltis/millerjared/r-pkgs/\")\nZenodoDownload()",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
     ]
@@ -94,7 +94,7 @@
     "href": "chapters/01_Data_Downloads.html#a-download-from-idigbio",
     "title": "3  Download Occurrence Data",
     "section": "3.2 A) Download from iDigBio",
-    "text": "3.2 A) Download from iDigBio\n\n# here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.\n\n# Search for specific species (Galax urceolata)\niDigBio_GU &lt;- idig_search_records(rq = list(scientificname = \"Galax urceolata\"))\n\n# Search for all Diapensiaceae occurrences (limit to 1000 for example)\niDigBio_GU_family &lt;- idig_search_records(rq = list(family = \"Diapensiaceae\"), limit = 1000)\n\n\n# search the API with a geographic bounding box (e.g. Eastern USA extent)\n\n# Search with a geographic bounding box (e.g., eastern USA extent)\nrq_input &lt;- list(\n  scientificname = list(type = \"exists\"),\n  family = \"Diapensiaceae\",\n  geopoint = list(\n    type = \"geo_bounding_box\",\n    top_left = list(lon = -98.16, lat = 48.92),\n    bottom_right = list(lon = -64.02, lat = 23.06)\n  )\n)\niDigBio_GU_family_USA &lt;- idig_search_records(rq_input, limit = 1000)\n\n# Save iDigBio results as CSV\nwrite.csv(iDigBio_GU, \"data/01_download/iDigBio_GU_2025_06_27.csv\", row.names = FALSE)\nwrite.csv(iDigBio_GU_family, \"data/01_download/iDigBio_GU_family_2025_06_27.csv\", row.names = FALSE)",
+    "text": "3.2 A) Download from iDigBio\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
     ]

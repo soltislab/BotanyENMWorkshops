@@ -139,13 +139,12 @@ tree_plot <- base_tree +
 print(tree_plot)
 
 ## Run Phylodiversity Analysis with CANAPER ----
-### In canaper's framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values
-### If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random
-
+### In canaper's framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values.
+### If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random.
 ### canaper generates random communities using the vegan package. To check what randomizations you can use ?vegan::commsim()
-### for each randomization algorithm used in canaper, there is two main components:
-### 1) n_reps: the number of random communities to simulate (if we have n_reps = 100, we are compared the observed metrics to 100 random replicates)
-### 2) n_iterations: the number of swaps used to produce each randomized community (calculation described below)
+### for each randomization algorithm used in canaper, there is two main components: <break>
+### 1) n_reps: the number of random communities to simulate (if we have n_reps = 100, we are compared the observed metrics to 100 random replicates) <break>
+### 2) n_iterations: the number of swaps used to produce each randomized community (calculation described below) <break>
 
 
 # compare the percentage of original community matrix similarity to that of the randomized community using 20,000 iterations/swaps
@@ -164,9 +163,9 @@ ggplot(iter_sim_res_molc, aes(x = iteration, y = similarity)) +
   ggtitle("Number of Iterations to Arrive at Maximum Dissimilarity") +
   labs(x = "Num. iterations", y = "% Similarity") # Appears that maximum dissimilarity between observed community and randomized happens around ~20,000 iterations.
 
-### in regards to n_reps (number of randomized communities to simulate), this isn't as simple. Ideally you could do a sensitivity style analysis by increasing this value and checking where results converge.
-### examples of how to do this in a iterative way can be found here:  https://docs.ropensci.org/canaper/articles/canape.html
-### keep in mind though that picking a very high number is safer at the expense of computation time, comparing more communities ensures you really are comparing observed vs random
+# in regards to n_reps (number of randomized communities to simulate), this isn't as simple. Ideally you could do a sensitivity style analysis by increasing this value and checking where results converge.
+# examples of how to do this in a iterative way can be found here:  https://docs.ropensci.org/canaper/articles/canape.html
+# keep in mind though that picking a very high number is safer at the expense of computation time, comparing more communities ensures you really are comparing observed vs random
 
 # Run randomization test
 #plan(multisession, workers = 7) # set up parallel computing, commented out for workshop. If you are using a personal computer, consider allocating workers to make this faster
@@ -271,11 +270,11 @@ rpd_sig_map <- ggplot() +
 print(rpd_sig_map)
 
 ## G) Phyloendemism Analysis ----
-### CANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps:
-### Step 1) If a cell is significantly high for either the PE on the observed tree (PE_obs) or PE on the alternative tree (PE_alt_obs), we evaluate the cell for neo- or paleoendemism
-### Step 2) RPE = PE_observed_tree / PE_alternative_tree. If RPE is significantly high = paleoendemism, if RPE is significantly low = neoendemism. (two tailed test)
-### if a cell is significant for PE_obs or PE_alt, but RPE is non-significant, then the cell is assigned to mixed endemism
-### a slightly special case of mixed is where PE_obs & PE_obs_alt are both highly significant in a cell (p < 0.01), then its called 'super'
+### CANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps: <break>
+### Step 1) If a cell is significantly high for either the PE on the observed tree (PE_obs) or PE on the alternative tree (PE_alt_obs), we evaluate the cell for neo- or paleoendemism <break>
+### Step 2) RPE = PE_observed_tree / PE_alternative_tree. If RPE is significantly high = paleoendemism, if RPE is significantly low = neoendemism. (two tailed test) <break>
+### If a cell is significant for PE_obs or PE_alt, but RPE is non-significant, then the cell is assigned to mixed endemism.
+### A slightly special case of mixed is where PE_obs & PE_obs_alt are both highly significant in a cell (p < 0.01), then its called 'super'
 
 # Plot and visualize all of the cells significant for either PE_obs or PE_alt_obs (one-tailed test)
 endemism_significant <- son_canape_map %>%
@@ -323,7 +322,7 @@ ggplot() +
   labs(x = "Longitude", y = "Latitude",
        title = "Sonoran Basin and Range Cactaceae Categorical Analysis of Neo- and Paleo-Endemism")
 
-## H) Optional: Visualize Lineage Compositions in Significant Cells
+## H) Optional: Visualize Lineage Compositions in Significant Cells ----
 
 # Write a function that visualizes lineage composition within a site, and reports both the observed and expected diversity metric...
 create_significant_cell_plot <- function(metric, type, cell_id,

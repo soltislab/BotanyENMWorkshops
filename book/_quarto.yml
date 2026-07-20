@@ -21,3 +21,10 @@ format:
     theme: cosmo
     code-fold: false
     code-tools: true
+
+filters:
+  - webr
+
+webr:
+  packages: []  # Start empty, add packages as needed
+  show-startup-message: false

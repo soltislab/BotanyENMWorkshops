@@ -18,7 +18,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
       c(paste0("```{webr-r}"), "")
     } else {
       # Static chunk (pre-computed)
-      c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
+      c(paste0("```{r ", label, ", warning=FALSE, message=FALSE, results='hide'}"), "")
     }
   }
 
@@ -88,7 +88,9 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
   writeLines(out, outfile)
 }
 
-# ADD THIS PART:
+# Load WebR configuration
+source("Botany2026/scripts/tools/webr_config.R")
+
 dir.create(
   file.path("book", "chapters"),
   recursive = TRUE,
@@ -102,17 +104,22 @@ files <- list.files(
 )
 
 for(f in files){
+  script_name <- tools::file_path_sans_ext(basename(f))
+  
+  # Get interactive chunks for this script
+  interactive <- if(script_name %in% names(webr_interactive)) {
+    webr_interactive[[script_name]]
+  } else {
+    NULL
+  }
+  
   convert_script(
     infile = f,
     outfile = file.path(
       "book",
       "chapters",
-      paste0(
-        tools::file_path_sans_ext(
-          basename(f)
-        ),
-        ".qmd"  # ← This is where .qmd is specified
-      )
-    )
+      paste0(script_name, ".qmd")
+    ),
+    interactive_chunks = interactive
   )
 }

@@ -3,7 +3,7 @@
 ### Purpose:
 ###
 ### - Use ecological niche models (ENMs) & a pruned phylogenetic tree on 57 Cactaceae species to analyze phylodiversity and phyloendemism in the Sonoran Basin and Range within AZ
-### - Construct a P/A matrix for the Cactaceae Community of the Sonoran Basin and Range #
+### - Construct a P/A matrix for the Cactaceae Community of the Sonoran Basin and Range 
 ### - Use the CANAPER (Categorization of Neo- and PaleoEndemism) R package to evaluate PD, RPD, and Phyloendemism Categories
 ### - Visualize Basic Species Richness, Observed PD, Significant PD, and Significant RPD measures
 ### - Identify what makes a spatial cell significant for phylogenetic endemism

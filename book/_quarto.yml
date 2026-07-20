@@ -26,5 +26,6 @@ filters:
   - webr
 
 webr:
-  packages: [ridigbio, gatoRs, leaflet]  # Start empty, add packages as needed
+  packages: ['ridigbio', 'gatoRs', 'leaflet']  # Start empty, add packages as needed
   show-startup-message: false
+  show-header-message: false

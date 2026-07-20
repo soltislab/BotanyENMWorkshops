@@ -10,17 +10,17 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
   )
 
   # Determine chunk type: heavy computation vs. exploration
-  open_chunk <- function(label, chunk_num){
-    is_interactive <- chunk_num %in% interactive_chunks
+open_chunk <- function(label, chunk_num){
+  is_interactive <- chunk_num %in% interactive_chunks
 
-    if(is_interactive){
-      # Interactive WebR chunk
-      c(paste0("```{webr-r}"), "")
-    } else {
-      # Static chunk (pre-computed)
-      c(paste0("```{r ", label, ", warning=FALSE, message=FALSE, results='hide'}"), "")
-    }
+  if(is_interactive){
+    # Interactive WebR chunk
+    c(paste0("```{webr-r}"), "")
+  } else {
+    # Static chunk (pre-computed) - DON'T eval by default
+    c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
   }
+}
 
   close_chunk <- function(){
     c("", "```", "")

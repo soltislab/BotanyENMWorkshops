@@ -1,26 +1,20 @@
-convert_script <- function(infile, outfile, interactive_chunks = NULL){
-  lines <- readLines(infile, warn = FALSE)
-  out <- character()
-  in_chunk <- FALSE
-  chunk <- 1
-  chunk_prefix <- paste0(
-    "script_",
-    gsub("[^A-Za-z0-9]+", "_",
-         tools::file_path_sans_ext(basename(infile)))
-  )
-
-  # Determine chunk type: heavy computation vs. exploration
-open_chunk <- function(label, chunk_num){
-  is_interactive <- chunk_num %in% interactive_chunks
-
-  if(is_interactive){
-    # Interactive WebR chunk
-    c(paste0("```{webr-r}"), "")
-  } else {
-    # Static chunk (pre-computed) - DON'T eval by default
-    c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
+convert_script <- function(infile, outfile, interactive_chunks = NULL, zenodo_data = NULL){
+      }),
+      "```",
+      ""
+    )
   }
-}
+
+  # Rest of your existing code...
+  open_chunk <- function(label, chunk_num){
+    is_interactive <- chunk_num %in% interactive_chunks
+
+    if(is_interactive){
+      c(paste0("```{webr-r}"), "")
+    } else {
+      c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
+    }
+  }
 
   close_chunk <- function(){
     c("", "```", "")
@@ -87,7 +81,6 @@ open_chunk <- function(label, chunk_num){
 
   writeLines(out, outfile)
 }
-
 # Load WebR configuration
 source("Botany2026/scripts/tools/webr_config.R")
 

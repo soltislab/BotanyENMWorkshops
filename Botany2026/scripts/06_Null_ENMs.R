@@ -13,7 +13,7 @@ library(dplyr)
 ## A) Load Cleaned Occurrence Data ----
 
 # Load all occurrence records
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
 
 ## B) Load Optimal Model Parameters ----
 
@@ -52,10 +52,10 @@ write.csv(
 
 ## F) Plot Null Model Results ----
 
-# Generate histogram plots for AUC and OR.10p statistics
+# Generate histogram plots for AUC, OR.10p, and CBI statistics
 spec.null <- evalplot.nulls(
   spec.mod.null,
-  stats = c("or.10p", "auc.val"),
+  stats = c("or.10p", "auc.val", "cbi.val"),
   plot.type = "histogram"
 )
 
@@ -70,3 +70,4 @@ ggsave(
   height = 12,
   width = 13
 )
+

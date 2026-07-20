@@ -17,11 +17,11 @@ convert_script <- function(infile, outfile){
   )
 
   open_chunk <- function(label){
-    c(
-      paste0("```{r ", label, ", eval=FALSE}"),
-      ""
-    )
-  }
+  c(
+    paste0("```{r ", label, ", echo=FALSE, warning=FALSE, message=FALSE, results='hide'}"), # dont show text or warnings, but do show plots.
+    ""
+  )
+}
 
   close_chunk <- function(){
     c("", "```", "")

@@ -14,3 +14,4 @@ rmd_files:
   - chapters/05_Ecological_Niche_Modeling.Rmd
   - chapters/06_Null_ENMs.Rmd
   - chapters/07_ENM_Processing.Rmd
+  - chapters/08_Phylodiversity_Phyloendemism.Rmd

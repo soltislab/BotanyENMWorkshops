@@ -20,7 +20,7 @@ library(ggforce)          # Provides a few plot annotations methods (arrows in t
 library(patchwork)        # Allows easier viewing of multiple plots
 library(rnaturalearth)    # For downloading shapefiles of countries and states
 #library(future)           # For running CANAPE fxns in parallel processing (not needed for this demo, but load this in on a personal laptop if you want to use the plan() fxn)
-library(canaper)          # Categorical Analysis of Neo- and Paleo- Endemism, also used for significant PD, RPD, PE etc
+library(canaper)          # Categorical Analysis of Neo- and Paleo- Endemism, also used for significant PD, RPD, PE, etc
 library(ape)              # Read in Phylogeny, provides pruning fxns as well
 library(dplyr)            # Provides data wrangling functions that resemble SQL
 

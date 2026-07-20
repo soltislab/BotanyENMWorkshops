@@ -12,3 +12,11 @@ webr_interactive <- list(
   "07_ENM_Processing" = c(),
   "08_Phylodiversity_Phyloendemism" = c()
 )
+
+# Define Zenodo data files for each script (record_id for each file)
+webr_zenodo_data <- list(
+  "01_Data_Downloads" = list(
+    "shortia_sample.rds" = "YOUR_ZENODO_RECORD_ID",
+    "galax_sample.rds" = "YOUR_ZENODO_RECORD_ID"
+  )
+)

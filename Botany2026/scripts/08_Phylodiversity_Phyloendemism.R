@@ -27,7 +27,7 @@ library(dplyr)            # Provides data wrangling functions that resemble SQL
 
 ## A) Area of interest (AOI) ----
 # Load the Sonoran Basin and Range (EPA level 3 ecoregion)
-ecoregions <- sf::st_read("./data/08_phylodiversity_phyloendemism/Ecoregions/az_eco_l3/az_eco_l3.shp")
+ecoregions <- sf::st_read("data/08_phylodiversity_phyloendemism/Ecoregions/az_eco_l3/az_eco_l3.shp")
 son_ecoregion <- ecoregions %>% dplyr::filter(NA_L3NAME %in% c("Sonoran Basin and Range"))
 # Load in rnaturalearths sociopolitical boundaries to make it easier to understand where we are
 pol_basemap <- rnaturalearth::ne_states(c("United States of America", "Mexico"), returnclass = "sf")
@@ -71,7 +71,7 @@ ggplot() +
 
 ## B) Operational Taxonomic Units (OTUs) P/A data ----
 # Load in pre-cropped SDMs for Sonoran Basin and Range Cactaceae
-sdm_stack_sonoran <- rast("./data/08_phylodiversity_phyloendemism/cactaceae_sdm_stack_sonoran.tif")
+sdm_stack_sonoran <- rast("data/08_phylodiversity_phyloendemism/cactaceae_sdm_stack_sonoran.tif")
 # Convert stack to community matrix in dataframe style (cells as sites, species as columns)
 comm_matrix_xy <- as.data.frame(sdm_stack_sonoran, xy = TRUE, na.rm = FALSE)
 comm_matrix_xy[is.na(comm_matrix_xy)] <- 0 # make NAs 0
@@ -93,7 +93,7 @@ dim(comm_matrix) # 3967 spatial cells (5x5km), 67 Cactaceae species
 ## C) Prune a Phylogeny ----
 
 # Read in the Euphyllophyte phylogenetic tree: Carruthers et al. in Review. https://www.biorxiv.org/content/10.64898/2026.01.06.695000v1.full.pdf
-molc_plant_tree <- ape::read.tree("./data/08_phylodiversity_phyloendemism/pruned-molc-tree-12-10-2025.tre")
+molc_plant_tree <- ape::read.tree("data/08_phylodiversity_phyloendemism/pruned-molc-tree-12-10-2025.tre")
 # Redo tip labels (currently they have higher order/family info on tip labels)
 molc_tip_df <- data.frame(
   original_label = molc_plant_tree$tip.label,
@@ -140,7 +140,7 @@ print(tree_plot)
 
 ## Run Phylodiversity Analysis with CANAPER ----
 # In canaper's framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values
-# If the observed values are that of the extremes (2.5% for a two-sided test), they can be considered more or less diverse than random
+# If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random
 
 # canaper generates random communities using the vegan package. To check what randomizations you can use ?vegan::commsim()
 # for each randomization algorithm used in canaper, there is two main components:
@@ -179,6 +179,7 @@ son_rand_res_molc <- cpr_rand_test(
   n_iterations = 20000, # number of swaps described above, based of cpr_iter_sim() output
   tbl_out = TRUE # creates a tabular output
 )
+#plan(sequential) # go back to single core mode, disabled for workshop
 
 # Classify Significant PD, RPD, PE, RPE, and Endemism Types (two tailed tests)
 son_canape <-

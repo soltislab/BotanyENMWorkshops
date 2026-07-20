@@ -8,7 +8,7 @@
 
 ## Download Zenodo Data ----
 source("scripts/tools/ZenodoDownload.R")
-download.packages(c("tools", "httr2", "utils", "magrittr"))
+download.packages(c("tools", "httr2", "utils", "magrittr"), destdir = "/blue/soltis/millerjared/r-pkgs/")
 ZenodoDownload()
 
 ## Install required CRAN packages ----

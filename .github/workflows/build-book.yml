@@ -24,8 +24,6 @@ jobs:
           install.packages(c(
             "knitr",
             "rmarkdown"
-            # Add any packages needed for your heavy computations
-            # that run during the build (not WebR packages)
           ))
       
       - name: Convert scripts

@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Botany 2026 ENM Workshop"
+  chapters:
+    - index.qmd
+    - chapters/00_Setup.qmd
+    - chapters/01_Data_Downloads.qmd
+    - chapters/02_Data_Cleaning.Rmd
+    - chapters/03_Data_Exploration.Rmd
+    - chapters/04_AccessibleArea_VariableSelection.Rmd
+    - chapters/05_Ecological_Niche_Modeling.Rmd
+    - chapters/06_Null_ENMs.Rmd
+    - chapters/07_ENM_Processing.Rmd
+    - chapters/08_Phylodiversity_Phyloendemism.Rmd
+
+format:
+  html:
+    theme: cosmo
+    code-fold: false
+    code-tools: true
+
+filters:
+  - webr
+
+webr:
+  packages: ['ggplot2', 'dplyr', 'terra', 'sf']  # lighter packages
+  show-startup-message: false

@@ -21,13 +21,16 @@ list_of_packages <- c(
   "sf", "rnaturalearth", "ggspatial", "leaflet", "fields", "rangeBuilder",
 
   # Visualization
-  "ggplot2", "viridis", "gridExtra",
+  "ggplot2", "viridis", "gridExtra", "ggtree", "ggforce", "patchwork",
 
   # Data manipulation
   "dplyr", "tidyr", "stringr", "gtools",
 
   # Phylogenetics
   "ape", "phytools",
+
+  # Spatial Phylogenetics
+  "canaper",
 
   # Biodiversity data
   "ridigbio", "gatoRs",

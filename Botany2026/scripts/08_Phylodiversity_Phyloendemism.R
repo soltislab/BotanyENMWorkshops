@@ -255,7 +255,7 @@ pd_sig_map <- ggplot() +
 print(pd_sig_map)
 
 # Plot the significant cells for comparing the alternative tree against the randomized communties
-ggplot() +
+rpd_sig_map <- ggplot() +
   geom_tile(data = son_canape_map, aes(x = x, y = y, fill = rpd_signif)) + # rpd_signif contains the two-tailed test output denoting when cells are significant for RPD as compared to the random communities
   scale_fill_manual(values = cpr_signif_cols_2, name = "Relative Phylogenetic diversity") +
   geom_sf(data = basemap_xy, fill = NA, color = "black") +
@@ -267,6 +267,7 @@ ggplot() +
   theme(legend.position = "right") +
   labs(x = "Longitude", y = "Latitude", title = "Sonoran Basin and Range Cactaceae Significant Relative Phylogenetic Diversity")
 
+print(rpd_sig_map)
 
 ## G) Phyloendemism Analysis ----
 # CANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps:

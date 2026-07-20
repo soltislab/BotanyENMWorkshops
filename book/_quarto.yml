@@ -21,10 +21,3 @@ format:
     theme: cosmo
     code-fold: false
     code-tools: true
-
-filters:
-  - webr
-
-webr:
-  packages: ['ggplot2', 'dplyr', 'terra', 'sf']  # lighter packages
-  show-startup-message: false

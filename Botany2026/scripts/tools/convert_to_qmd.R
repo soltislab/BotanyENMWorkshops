@@ -8,11 +8,11 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
     gsub("[^A-Za-z0-9]+", "_",
          tools::file_path_sans_ext(basename(infile)))
   )
-  
+
   # Determine chunk type: heavy computation vs. exploration
   open_chunk <- function(label, chunk_num){
     is_interactive <- chunk_num %in% interactive_chunks
-    
+
     if(is_interactive){
       # Interactive WebR chunk
       c(paste0("```{webr-r}"), "")
@@ -21,11 +21,11 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
       c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
     }
   }
-  
+
   close_chunk <- function(){
     c("", "```", "")
   }
-  
+
   comment_to_md <- function(x){
     txt <- sub("^###\\s?", "", x)
     if(grepl("^\\s*$", txt)) return("")
@@ -33,11 +33,11 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
     txt <- sub("^\\s*([0-9]+\\.)\\s+", "\\1 ", txt)
     txt
   }
-  
+
   i <- 1
   while(i <= length(lines)){
     line <- lines[i]
-    
+
     if(i == 1 && grepl("^# ", line)){
       out <- c(out, paste0("# ", sub("^# ", "", line)), "")
       i <- i + 1
@@ -51,7 +51,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
       out <- c(out, "")
       next
     }
-    
+
     if(grepl("^## .*----$", line)){
       if(in_chunk){
         out <- c(out, close_chunk())
@@ -71,7 +71,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
       out <- c(out, "")
       next
     }
-    
+
     if(!in_chunk){
       label <- paste0(chunk_prefix, "_chunk", chunk)
       out <- c(out, open_chunk(label, chunk))
@@ -81,9 +81,38 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL){
     out <- c(out, line)
     i <- i + 1
   }
-  
+
   if(in_chunk)
     out <- c(out, close_chunk())
-  
+
   writeLines(out, outfile)
+}
+
+# ADD THIS PART:
+dir.create(
+  file.path("book", "chapters"),
+  recursive = TRUE,
+  showWarnings = FALSE
+)
+
+files <- list.files(
+  "Botany2026/scripts",
+  pattern = "\\.R$",
+  full.names = TRUE
+)
+
+for(f in files){
+  convert_script(
+    infile = f,
+    outfile = file.path(
+      "book",
+      "chapters",
+      paste0(
+        tools::file_path_sans_ext(
+          basename(f)
+        ),
+        ".qmd"  # ← This is where .qmd is specified
+      )
+    )
+  )
 }

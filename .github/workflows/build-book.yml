@@ -36,17 +36,17 @@ jobs:
           cd book
           quarto render
       
-      - name: Publish to gh-pages branch
-        run: |
-          git fetch origin gh-pages:gh-pages || true
-          git worktree add publish gh-pages || \
-            git worktree add -b gh-pages publish
-          rm -rf publish/*
-          cp -R book/_book/* publish/
-          cd publish
-          touch .nojekyll
-          git add .
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git commit -m "Update book" || echo "Nothing to commit"
-          git push origin gh-pages
+      - name: Publish to gh-pages-jts branch (test)
+  run: |
+    git fetch origin gh-pages-jts:gh-pages-jts || true
+    git worktree add publish gh-pages-jts || \
+      git worktree add -b gh-pages-jts publish
+    rm -rf publish/*
+    cp -R book/_book/* publish/
+    cd publish
+    touch .nojekyll
+    git add .
+    git config user.name github-actions
+    git config user.email github-actions@github.com
+    git commit -m "Update book (test)" || echo "Nothing to commit"
+    git push origin gh-pages-jts

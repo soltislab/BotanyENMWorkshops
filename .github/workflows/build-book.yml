@@ -50,3 +50,13 @@ jobs:
           git config user.email github-actions@github.com
           git commit -m "Update book (test)" || echo "Nothing to commit"
           git push origin gh-pages-jts
+        
+      - name: Install Quarto WebR extension
+        run: |
+          cd book
+          quarto add coatless/quarto-webr --no-prompt
+
+      - name: Render Quarto book
+        run: |
+          cd book
+          quarto render

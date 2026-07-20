@@ -243,6 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.6" data-path="phylodiversity-and-phyloendemism.html"><a href="phylodiversity-and-phyloendemism.html#run-phylodiversity-analysis-with-canaper"><i class="fa fa-check"></i><b>9.6</b> Run Phylodiversity Analysis with CANAPER</a></li>
 <li class="chapter" data-level="9.7" data-path="phylodiversity-and-phyloendemism.html"><a href="phylodiversity-and-phyloendemism.html#f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd"><i class="fa fa-check"></i><b>9.7</b> F) Plot Diversity Measures (SR, Observed PD, Significant PD, Significant RPD)</a></li>
 <li class="chapter" data-level="9.8" data-path="phylodiversity-and-phyloendemism.html"><a href="phylodiversity-and-phyloendemism.html#g-phyloendemism-analysis"><i class="fa fa-check"></i><b>9.8</b> G) Phyloendemism Analysis</a></li>
+<li class="chapter" data-level="9.9" data-path="phylodiversity-and-phyloendemism.html"><a href="phylodiversity-and-phyloendemism.html#h-optional-visualize-lineage-compositions-in-significant-cells"><i class="fa fa-check"></i><b>9.9</b> H) Optional: Visualize Lineage Compositions in Significant Cells</a></li>
 </ul></li>
 </ul>
 
@@ -403,54 +404,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="run-phylodiversity-analysis-with-canaper" class="section level2 hasAnchor" number="9.6">
 <h2><span class="header-section-number">9.6</span> Run Phylodiversity Analysis with CANAPER<a href="phylodiversity-and-phyloendemism.html#run-phylodiversity-analysis-with-canaper" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In canaper’s framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values
-If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="phylodiversity-and-phyloendemism.html#cb73-1" tabindex="-1"></a><span class="do">### canaper generates random communities using the vegan package. To check what randomizations you can use ?vegan::commsim()</span></span>
-<span id="cb73-2"><a href="phylodiversity-and-phyloendemism.html#cb73-2" tabindex="-1"></a><span class="do">### for each randomization algorithm used in canaper, there is two main components:</span></span>
-<span id="cb73-3"><a href="phylodiversity-and-phyloendemism.html#cb73-3" tabindex="-1"></a><span class="do">### 1) n_reps: the number of random communities to simulate (if we have n_reps = 100, we are compared the observed metrics to 100 random replicates)</span></span>
-<span id="cb73-4"><a href="phylodiversity-and-phyloendemism.html#cb73-4" tabindex="-1"></a><span class="do">### 2) n_iterations: the number of swaps used to produce each randomized community (calculation described below)</span></span>
-<span id="cb73-5"><a href="phylodiversity-and-phyloendemism.html#cb73-5" tabindex="-1"></a></span>
-<span id="cb73-6"><a href="phylodiversity-and-phyloendemism.html#cb73-6" tabindex="-1"></a></span>
-<span id="cb73-7"><a href="phylodiversity-and-phyloendemism.html#cb73-7" tabindex="-1"></a><span class="co"># compare the percentage of original community matrix similarity to that of the randomized community using 20,000 iterations/swaps</span></span>
-<span id="cb73-8"><a href="phylodiversity-and-phyloendemism.html#cb73-8" tabindex="-1"></a>iter_sim_res_molc <span class="ot">&lt;-</span> <span class="fu">cpr_iter_sim</span>(</span>
-<span id="cb73-9"><a href="phylodiversity-and-phyloendemism.html#cb73-9" tabindex="-1"></a>  <span class="at">comm =</span> comm_matrix_molc, <span class="co"># our observed community matrix</span></span>
-<span id="cb73-10"><a href="phylodiversity-and-phyloendemism.html#cb73-10" tabindex="-1"></a>  <span class="at">null_model =</span> <span class="st">&quot;curveball&quot;</span>, <span class="co"># curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!</span></span>
-<span id="cb73-11"><a href="phylodiversity-and-phyloendemism.html#cb73-11" tabindex="-1"></a>  <span class="at">n_iterations =</span> <span class="dv">20000</span>, <span class="co"># make an educated guess at number of iterations needed. The more pixels or taxa you have, the higher this usually is</span></span>
-<span id="cb73-12"><a href="phylodiversity-and-phyloendemism.html#cb73-12" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">100</span>, <span class="co"># frequency to record percentage similarity between original matrix and randomized matrix. Pick something that makes sense with n_iterations</span></span>
-<span id="cb73-13"><a href="phylodiversity-and-phyloendemism.html#cb73-13" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span> <span class="co"># seed to make reproducible.</span></span>
-<span id="cb73-14"><a href="phylodiversity-and-phyloendemism.html#cb73-14" tabindex="-1"></a>)</span>
-<span id="cb73-15"><a href="phylodiversity-and-phyloendemism.html#cb73-15" tabindex="-1"></a></span>
-<span id="cb73-16"><a href="phylodiversity-and-phyloendemism.html#cb73-16" tabindex="-1"></a><span class="co"># Visualize how many iterations are needed to arrive at a plateau of community dissimilarity for comparing a random community to the observed community</span></span>
-<span id="cb73-17"><a href="phylodiversity-and-phyloendemism.html#cb73-17" tabindex="-1"></a><span class="fu">ggplot</span>(iter_sim_res_molc, <span class="fu">aes</span>(<span class="at">x =</span> iteration, <span class="at">y =</span> similarity)) <span class="sc">+</span></span>
-<span id="cb73-18"><a href="phylodiversity-and-phyloendemism.html#cb73-18" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb73-19"><a href="phylodiversity-and-phyloendemism.html#cb73-19" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb73-20"><a href="phylodiversity-and-phyloendemism.html#cb73-20" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of Iterations to Arrive at Maximum Dissimilarity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb73-21"><a href="phylodiversity-and-phyloendemism.html#cb73-21" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Num. iterations&quot;</span>, <span class="at">y =</span> <span class="st">&quot;% Similarity&quot;</span>) <span class="co"># Appears that maximum dissimilarity between observed community and randomized happens around ~20,000 iterations.</span></span>
-<span id="cb73-22"><a href="phylodiversity-and-phyloendemism.html#cb73-22" tabindex="-1"></a></span>
-<span id="cb73-23"><a href="phylodiversity-and-phyloendemism.html#cb73-23" tabindex="-1"></a><span class="do">### in regards to n_reps (number of randomized communities to simulate), this isn&#39;t as simple. Ideally you could do a sensitivity style analysis by increasing this value and checking where results converge.</span></span>
-<span id="cb73-24"><a href="phylodiversity-and-phyloendemism.html#cb73-24" tabindex="-1"></a><span class="do">### examples of how to do this in a iterative way can be found here:  https://docs.ropensci.org/canaper/articles/canape.html</span></span>
-<span id="cb73-25"><a href="phylodiversity-and-phyloendemism.html#cb73-25" tabindex="-1"></a><span class="do">### keep in mind though that picking a very high number is safer at the expense of computation time, comparing more communities ensures you really are comparing observed vs random</span></span>
-<span id="cb73-26"><a href="phylodiversity-and-phyloendemism.html#cb73-26" tabindex="-1"></a></span>
-<span id="cb73-27"><a href="phylodiversity-and-phyloendemism.html#cb73-27" tabindex="-1"></a><span class="co"># Run randomization test</span></span>
-<span id="cb73-28"><a href="phylodiversity-and-phyloendemism.html#cb73-28" tabindex="-1"></a><span class="co">#plan(multisession, workers = 7) # set up parallel computing, commented out for workshop. If you are using a personal computer, consider allocating workers to make this faster</span></span>
-<span id="cb73-29"><a href="phylodiversity-and-phyloendemism.html#cb73-29" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb73-30"><a href="phylodiversity-and-phyloendemism.html#cb73-30" tabindex="-1"></a>son_rand_res_molc <span class="ot">&lt;-</span> <span class="fu">cpr_rand_test</span>(</span>
-<span id="cb73-31"><a href="phylodiversity-and-phyloendemism.html#cb73-31" tabindex="-1"></a>  <span class="at">comm =</span> comm_matrix_molc, <span class="co"># our community matrix</span></span>
-<span id="cb73-32"><a href="phylodiversity-and-phyloendemism.html#cb73-32" tabindex="-1"></a>  <span class="at">phy =</span> pruned_molc_tree, <span class="co"># pruned phylogeny</span></span>
-<span id="cb73-33"><a href="phylodiversity-and-phyloendemism.html#cb73-33" tabindex="-1"></a>  <span class="at">null_model =</span> <span class="st">&quot;curveball&quot;</span>, <span class="co"># curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!</span></span>
-<span id="cb73-34"><a href="phylodiversity-and-phyloendemism.html#cb73-34" tabindex="-1"></a>  <span class="at">n_reps =</span> <span class="dv">50</span>, <span class="co"># number of communities, 50 is a bit low. typically choose 500 or more (but its slow!S)</span></span>
-<span id="cb73-35"><a href="phylodiversity-and-phyloendemism.html#cb73-35" tabindex="-1"></a>  <span class="at">n_iterations =</span> <span class="dv">20000</span>, <span class="co"># number of swaps described above, based of cpr_iter_sim() output</span></span>
-<span id="cb73-36"><a href="phylodiversity-and-phyloendemism.html#cb73-36" tabindex="-1"></a>  <span class="at">tbl_out =</span> <span class="cn">TRUE</span> <span class="co"># creates a tabular output</span></span>
-<span id="cb73-37"><a href="phylodiversity-and-phyloendemism.html#cb73-37" tabindex="-1"></a>)</span>
-<span id="cb73-38"><a href="phylodiversity-and-phyloendemism.html#cb73-38" tabindex="-1"></a><span class="co">#plan(sequential) # go back to single core mode, disabled for workshop</span></span>
-<span id="cb73-39"><a href="phylodiversity-and-phyloendemism.html#cb73-39" tabindex="-1"></a></span>
-<span id="cb73-40"><a href="phylodiversity-and-phyloendemism.html#cb73-40" tabindex="-1"></a><span class="co"># Classify Significant PD, RPD, PE, RPE, and Endemism Types (two tailed tests)</span></span>
-<span id="cb73-41"><a href="phylodiversity-and-phyloendemism.html#cb73-41" tabindex="-1"></a>son_canape <span class="ot">&lt;-</span></span>
-<span id="cb73-42"><a href="phylodiversity-and-phyloendemism.html#cb73-42" tabindex="-1"></a>  <span class="fu">cpr_classify_endem</span>(son_rand_res_molc) <span class="sc">|&gt;</span></span>
-<span id="cb73-43"><a href="phylodiversity-and-phyloendemism.html#cb73-43" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;pd&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb73-44"><a href="phylodiversity-and-phyloendemism.html#cb73-44" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;rpd&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb73-45"><a href="phylodiversity-and-phyloendemism.html#cb73-45" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;pe&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb73-46"><a href="phylodiversity-and-phyloendemism.html#cb73-46" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;rpe&quot;</span>)</span></code></pre></div>
+<p>In canaper’s framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values.
+If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random.
+canaper generates random communities using the vegan package. To check what randomizations you can use ?vegan::commsim()
+for each randomization algorithm used in canaper, there is two main components: <break>
+1) n_reps: the number of random communities to simulate (if we have n_reps = 100, we are compared the observed metrics to 100 random replicates) <break>
+2) n_iterations: the number of swaps used to produce each randomized community (calculation described below) <break></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="phylodiversity-and-phyloendemism.html#cb73-1" tabindex="-1"></a><span class="co"># compare the percentage of original community matrix similarity to that of the randomized community using 20,000 iterations/swaps</span></span>
+<span id="cb73-2"><a href="phylodiversity-and-phyloendemism.html#cb73-2" tabindex="-1"></a>iter_sim_res_molc <span class="ot">&lt;-</span> <span class="fu">cpr_iter_sim</span>(</span>
+<span id="cb73-3"><a href="phylodiversity-and-phyloendemism.html#cb73-3" tabindex="-1"></a>  <span class="at">comm =</span> comm_matrix_molc, <span class="co"># our observed community matrix</span></span>
+<span id="cb73-4"><a href="phylodiversity-and-phyloendemism.html#cb73-4" tabindex="-1"></a>  <span class="at">null_model =</span> <span class="st">&quot;curveball&quot;</span>, <span class="co"># curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!</span></span>
+<span id="cb73-5"><a href="phylodiversity-and-phyloendemism.html#cb73-5" tabindex="-1"></a>  <span class="at">n_iterations =</span> <span class="dv">20000</span>, <span class="co"># make an educated guess at number of iterations needed. The more pixels or taxa you have, the higher this usually is</span></span>
+<span id="cb73-6"><a href="phylodiversity-and-phyloendemism.html#cb73-6" tabindex="-1"></a>  <span class="at">thin =</span> <span class="dv">100</span>, <span class="co"># frequency to record percentage similarity between original matrix and randomized matrix. Pick something that makes sense with n_iterations</span></span>
+<span id="cb73-7"><a href="phylodiversity-and-phyloendemism.html#cb73-7" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span> <span class="co"># seed to make reproducible.</span></span>
+<span id="cb73-8"><a href="phylodiversity-and-phyloendemism.html#cb73-8" tabindex="-1"></a>)</span>
+<span id="cb73-9"><a href="phylodiversity-and-phyloendemism.html#cb73-9" tabindex="-1"></a></span>
+<span id="cb73-10"><a href="phylodiversity-and-phyloendemism.html#cb73-10" tabindex="-1"></a><span class="co"># Visualize how many iterations are needed to arrive at a plateau of community dissimilarity for comparing a random community to the observed community</span></span>
+<span id="cb73-11"><a href="phylodiversity-and-phyloendemism.html#cb73-11" tabindex="-1"></a><span class="fu">ggplot</span>(iter_sim_res_molc, <span class="fu">aes</span>(<span class="at">x =</span> iteration, <span class="at">y =</span> similarity)) <span class="sc">+</span></span>
+<span id="cb73-12"><a href="phylodiversity-and-phyloendemism.html#cb73-12" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb73-13"><a href="phylodiversity-and-phyloendemism.html#cb73-13" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb73-14"><a href="phylodiversity-and-phyloendemism.html#cb73-14" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of Iterations to Arrive at Maximum Dissimilarity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb73-15"><a href="phylodiversity-and-phyloendemism.html#cb73-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Num. iterations&quot;</span>, <span class="at">y =</span> <span class="st">&quot;% Similarity&quot;</span>) <span class="co"># Appears that maximum dissimilarity between observed community and randomized happens around ~20,000 iterations.</span></span>
+<span id="cb73-16"><a href="phylodiversity-and-phyloendemism.html#cb73-16" tabindex="-1"></a></span>
+<span id="cb73-17"><a href="phylodiversity-and-phyloendemism.html#cb73-17" tabindex="-1"></a><span class="co"># in regards to n_reps (number of randomized communities to simulate), this isn&#39;t as simple. Ideally you could do a sensitivity style analysis by increasing this value and checking where results converge.</span></span>
+<span id="cb73-18"><a href="phylodiversity-and-phyloendemism.html#cb73-18" tabindex="-1"></a><span class="co"># examples of how to do this in a iterative way can be found here:  https://docs.ropensci.org/canaper/articles/canape.html</span></span>
+<span id="cb73-19"><a href="phylodiversity-and-phyloendemism.html#cb73-19" tabindex="-1"></a><span class="co"># keep in mind though that picking a very high number is safer at the expense of computation time, comparing more communities ensures you really are comparing observed vs random</span></span>
+<span id="cb73-20"><a href="phylodiversity-and-phyloendemism.html#cb73-20" tabindex="-1"></a></span>
+<span id="cb73-21"><a href="phylodiversity-and-phyloendemism.html#cb73-21" tabindex="-1"></a><span class="co"># Run randomization test</span></span>
+<span id="cb73-22"><a href="phylodiversity-and-phyloendemism.html#cb73-22" tabindex="-1"></a><span class="co">#plan(multisession, workers = 7) # set up parallel computing, commented out for workshop. If you are using a personal computer, consider allocating workers to make this faster</span></span>
+<span id="cb73-23"><a href="phylodiversity-and-phyloendemism.html#cb73-23" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb73-24"><a href="phylodiversity-and-phyloendemism.html#cb73-24" tabindex="-1"></a>son_rand_res_molc <span class="ot">&lt;-</span> <span class="fu">cpr_rand_test</span>(</span>
+<span id="cb73-25"><a href="phylodiversity-and-phyloendemism.html#cb73-25" tabindex="-1"></a>  <span class="at">comm =</span> comm_matrix_molc, <span class="co"># our community matrix</span></span>
+<span id="cb73-26"><a href="phylodiversity-and-phyloendemism.html#cb73-26" tabindex="-1"></a>  <span class="at">phy =</span> pruned_molc_tree, <span class="co"># pruned phylogeny</span></span>
+<span id="cb73-27"><a href="phylodiversity-and-phyloendemism.html#cb73-27" tabindex="-1"></a>  <span class="at">null_model =</span> <span class="st">&quot;curveball&quot;</span>, <span class="co"># curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!</span></span>
+<span id="cb73-28"><a href="phylodiversity-and-phyloendemism.html#cb73-28" tabindex="-1"></a>  <span class="at">n_reps =</span> <span class="dv">50</span>, <span class="co"># number of communities, 50 is a bit low. typically choose 500 or more (but its slow!S)</span></span>
+<span id="cb73-29"><a href="phylodiversity-and-phyloendemism.html#cb73-29" tabindex="-1"></a>  <span class="at">n_iterations =</span> <span class="dv">20000</span>, <span class="co"># number of swaps described above, based of cpr_iter_sim() output</span></span>
+<span id="cb73-30"><a href="phylodiversity-and-phyloendemism.html#cb73-30" tabindex="-1"></a>  <span class="at">tbl_out =</span> <span class="cn">TRUE</span> <span class="co"># creates a tabular output</span></span>
+<span id="cb73-31"><a href="phylodiversity-and-phyloendemism.html#cb73-31" tabindex="-1"></a>)</span>
+<span id="cb73-32"><a href="phylodiversity-and-phyloendemism.html#cb73-32" tabindex="-1"></a><span class="co">#plan(sequential) # go back to single core mode, disabled for workshop</span></span>
+<span id="cb73-33"><a href="phylodiversity-and-phyloendemism.html#cb73-33" tabindex="-1"></a></span>
+<span id="cb73-34"><a href="phylodiversity-and-phyloendemism.html#cb73-34" tabindex="-1"></a><span class="co"># Classify Significant PD, RPD, PE, RPE, and Endemism Types (two tailed tests)</span></span>
+<span id="cb73-35"><a href="phylodiversity-and-phyloendemism.html#cb73-35" tabindex="-1"></a>son_canape <span class="ot">&lt;-</span></span>
+<span id="cb73-36"><a href="phylodiversity-and-phyloendemism.html#cb73-36" tabindex="-1"></a>  <span class="fu">cpr_classify_endem</span>(son_rand_res_molc) <span class="sc">|&gt;</span></span>
+<span id="cb73-37"><a href="phylodiversity-and-phyloendemism.html#cb73-37" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;pd&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb73-38"><a href="phylodiversity-and-phyloendemism.html#cb73-38" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;rpd&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb73-39"><a href="phylodiversity-and-phyloendemism.html#cb73-39" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;pe&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb73-40"><a href="phylodiversity-and-phyloendemism.html#cb73-40" tabindex="-1"></a>  <span class="fu">cpr_classify_signif</span>(<span class="st">&quot;rpe&quot;</span>)</span></code></pre></div>
 </div>
 <div id="f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd" class="section level2 hasAnchor" number="9.7">
 <h2><span class="header-section-number">9.7</span> F) Plot Diversity Measures (SR, Observed PD, Significant PD, Significant RPD)<a href="phylodiversity-and-phyloendemism.html#f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -535,11 +534,11 @@ If the observed values are that of the extremes (2.5% for a two-tailed test), th
 </div>
 <div id="g-phyloendemism-analysis" class="section level2 hasAnchor" number="9.8">
 <h2><span class="header-section-number">9.8</span> G) Phyloendemism Analysis<a href="phylodiversity-and-phyloendemism.html#g-phyloendemism-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>CANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps:
-Step 1) If a cell is significantly high for either the PE on the observed tree (PE_obs) or PE on the alternative tree (PE_alt_obs), we evaluate the cell for neo- or paleoendemism
-Step 2) RPE = PE_observed_tree / PE_alternative_tree. If RPE is significantly high = paleoendemism, if RPE is significantly low = neoendemism. (two tailed test)
-if a cell is significant for PE_obs or PE_alt, but RPE is non-significant, then the cell is assigned to mixed endemism
-a slightly special case of mixed is where PE_obs &amp; PE_obs_alt are both highly significant in a cell (p &lt; 0.01), then its called ‘super’</p>
+<p>CANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps: <break>
+Step 1) If a cell is significantly high for either the PE on the observed tree (PE_obs) or PE on the alternative tree (PE_alt_obs), we evaluate the cell for neo- or paleoendemism <break>
+Step 2) RPE = PE_observed_tree / PE_alternative_tree. If RPE is significantly high = paleoendemism, if RPE is significantly low = neoendemism. (two tailed test) <break>
+If a cell is significant for PE_obs or PE_alt, but RPE is non-significant, then the cell is assigned to mixed endemism.
+A slightly special case of mixed is where PE_obs &amp; PE_obs_alt are both highly significant in a cell (p &lt; 0.01), then its called ‘super’</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="phylodiversity-and-phyloendemism.html#cb75-1" tabindex="-1"></a><span class="co"># Plot and visualize all of the cells significant for either PE_obs or PE_alt_obs (one-tailed test)</span></span>
 <span id="cb75-2"><a href="phylodiversity-and-phyloendemism.html#cb75-2" tabindex="-1"></a>endemism_significant <span class="ot">&lt;-</span> son_canape_map <span class="sc">%&gt;%</span></span>
 <span id="cb75-3"><a href="phylodiversity-and-phyloendemism.html#cb75-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -584,214 +583,214 @@ a slightly special case of mixed is where PE_obs &amp; PE_obs_alt are both highl
 <span id="cb75-42"><a href="phylodiversity-and-phyloendemism.html#cb75-42" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb75-43"><a href="phylodiversity-and-phyloendemism.html#cb75-43" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="sc">+</span></span>
 <span id="cb75-44"><a href="phylodiversity-and-phyloendemism.html#cb75-44" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Longitude&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Latitude&quot;</span>,</span>
-<span id="cb75-45"><a href="phylodiversity-and-phyloendemism.html#cb75-45" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Sonoran Basin and Range Cactaceae Categorical Analysis of Neo- and Paleo-Endemism&quot;</span>)</span>
-<span id="cb75-46"><a href="phylodiversity-and-phyloendemism.html#cb75-46" tabindex="-1"></a></span>
-<span id="cb75-47"><a href="phylodiversity-and-phyloendemism.html#cb75-47" tabindex="-1"></a><span class="do">## H) Optional: Visualize Lineage Compositions in Significant Cells</span></span>
-<span id="cb75-48"><a href="phylodiversity-and-phyloendemism.html#cb75-48" tabindex="-1"></a></span>
-<span id="cb75-49"><a href="phylodiversity-and-phyloendemism.html#cb75-49" tabindex="-1"></a><span class="co"># Write a function that visualizes lineage composition within a site, and reports both the observed and expected diversity metric...</span></span>
-<span id="cb75-50"><a href="phylodiversity-and-phyloendemism.html#cb75-50" tabindex="-1"></a>create_significant_cell_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(metric, type, cell_id,</span>
-<span id="cb75-51"><a href="phylodiversity-and-phyloendemism.html#cb75-51" tabindex="-1"></a>                                         son_canape_map, comm_matrix_molc,</span>
-<span id="cb75-52"><a href="phylodiversity-and-phyloendemism.html#cb75-52" tabindex="-1"></a>                                         base_tree, bbox, sig_map) {</span>
-<span id="cb75-53"><a href="phylodiversity-and-phyloendemism.html#cb75-53" tabindex="-1"></a></span>
-<span id="cb75-54"><a href="phylodiversity-and-phyloendemism.html#cb75-54" tabindex="-1"></a>  <span class="co"># determine significance column and filter values based on metric and type</span></span>
-<span id="cb75-55"><a href="phylodiversity-and-phyloendemism.html#cb75-55" tabindex="-1"></a>  signif_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_signif&quot;</span>, <span class="st">&quot;rpd_signif&quot;</span>)</span>
-<span id="cb75-56"><a href="phylodiversity-and-phyloendemism.html#cb75-56" tabindex="-1"></a></span>
-<span id="cb75-57"><a href="phylodiversity-and-phyloendemism.html#cb75-57" tabindex="-1"></a>  <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;low&quot;</span>) {</span>
-<span id="cb75-58"><a href="phylodiversity-and-phyloendemism.html#cb75-58" tabindex="-1"></a>    signif_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt; 0.01&quot;</span>, <span class="st">&quot;&lt; 0.025&quot;</span>)</span>
-<span id="cb75-59"><a href="phylodiversity-and-phyloendemism.html#cb75-59" tabindex="-1"></a>    title_prefix <span class="ot">&lt;-</span> <span class="st">&quot;Significantly Low&quot;</span></span>
-<span id="cb75-60"><a href="phylodiversity-and-phyloendemism.html#cb75-60" tabindex="-1"></a>    tree_color <span class="ot">&lt;-</span> <span class="st">&quot;#E31A1C&quot;</span>  <span class="co"># Red for low</span></span>
-<span id="cb75-61"><a href="phylodiversity-and-phyloendemism.html#cb75-61" tabindex="-1"></a>    arrow_from <span class="ot">&lt;-</span> <span class="st">&quot;top-right&quot;</span>  <span class="co"># Arrow from top-right corner</span></span>
-<span id="cb75-62"><a href="phylodiversity-and-phyloendemism.html#cb75-62" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;high&quot;</span>) {</span>
-<span id="cb75-63"><a href="phylodiversity-and-phyloendemism.html#cb75-63" tabindex="-1"></a>    signif_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&gt; 0.975&quot;</span>, <span class="st">&quot;&gt; 0.99&quot;</span>)</span>
-<span id="cb75-64"><a href="phylodiversity-and-phyloendemism.html#cb75-64" tabindex="-1"></a>    title_prefix <span class="ot">&lt;-</span> <span class="st">&quot;Significantly High&quot;</span></span>
-<span id="cb75-65"><a href="phylodiversity-and-phyloendemism.html#cb75-65" tabindex="-1"></a>    tree_color <span class="ot">&lt;-</span> <span class="st">&quot;#1F78B4&quot;</span>  <span class="co"># Blue for high</span></span>
-<span id="cb75-66"><a href="phylodiversity-and-phyloendemism.html#cb75-66" tabindex="-1"></a>    arrow_from <span class="ot">&lt;-</span> <span class="st">&quot;bottom-left&quot;</span>  <span class="co"># Arrow from bottom-left corner</span></span>
-<span id="cb75-67"><a href="phylodiversity-and-phyloendemism.html#cb75-67" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb75-68"><a href="phylodiversity-and-phyloendemism.html#cb75-68" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;type must be either &#39;high&#39; or &#39;low&#39;&quot;</span>)</span>
-<span id="cb75-69"><a href="phylodiversity-and-phyloendemism.html#cb75-69" tabindex="-1"></a>  }</span>
-<span id="cb75-70"><a href="phylodiversity-and-phyloendemism.html#cb75-70" tabindex="-1"></a></span>
-<span id="cb75-71"><a href="phylodiversity-and-phyloendemism.html#cb75-71" tabindex="-1"></a>  <span class="co"># extract the representative cell</span></span>
-<span id="cb75-72"><a href="phylodiversity-and-phyloendemism.html#cb75-72" tabindex="-1"></a>  representative_cell <span class="ot">&lt;-</span> son_canape_map <span class="sc">%&gt;%</span></span>
-<span id="cb75-73"><a href="phylodiversity-and-phyloendemism.html#cb75-73" tabindex="-1"></a>    <span class="fu">filter</span>(.data[[signif_col]] <span class="sc">%in%</span> signif_values <span class="sc">&amp;</span> site <span class="sc">==</span> cell_id)</span>
-<span id="cb75-74"><a href="phylodiversity-and-phyloendemism.html#cb75-74" tabindex="-1"></a></span>
-<span id="cb75-75"><a href="phylodiversity-and-phyloendemism.html#cb75-75" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(representative_cell) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb75-76"><a href="phylodiversity-and-phyloendemism.html#cb75-76" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">sprintf</span>(<span class="st">&quot;No cell found with %s %s significance and site ID &#39;%s&#39;&quot;</span>,</span>
-<span id="cb75-77"><a href="phylodiversity-and-phyloendemism.html#cb75-77" tabindex="-1"></a>                 title_prefix, metric, cell_id))</span>
-<span id="cb75-78"><a href="phylodiversity-and-phyloendemism.html#cb75-78" tabindex="-1"></a>  }</span>
-<span id="cb75-79"><a href="phylodiversity-and-phyloendemism.html#cb75-79" tabindex="-1"></a></span>
-<span id="cb75-80"><a href="phylodiversity-and-phyloendemism.html#cb75-80" tabindex="-1"></a>  <span class="co"># grab cell coordinates</span></span>
-<span id="cb75-81"><a href="phylodiversity-and-phyloendemism.html#cb75-81" tabindex="-1"></a>  cell_x <span class="ot">&lt;-</span> representative_cell<span class="sc">$</span>x</span>
-<span id="cb75-82"><a href="phylodiversity-and-phyloendemism.html#cb75-82" tabindex="-1"></a>  cell_y <span class="ot">&lt;-</span> representative_cell<span class="sc">$</span>y</span>
-<span id="cb75-83"><a href="phylodiversity-and-phyloendemism.html#cb75-83" tabindex="-1"></a></span>
-<span id="cb75-84"><a href="phylodiversity-and-phyloendemism.html#cb75-84" tabindex="-1"></a>  <span class="co"># calculate offsets based on plot dimensions (same across both plots)</span></span>
-<span id="cb75-85"><a href="phylodiversity-and-phyloendemism.html#cb75-85" tabindex="-1"></a>  x_range <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmax&quot;</span>] <span class="sc">-</span> bbox[<span class="st">&quot;xmin&quot;</span>]</span>
-<span id="cb75-86"><a href="phylodiversity-and-phyloendemism.html#cb75-86" tabindex="-1"></a>  y_range <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymax&quot;</span>] <span class="sc">-</span> bbox[<span class="st">&quot;ymin&quot;</span>]</span>
-<span id="cb75-87"><a href="phylodiversity-and-phyloendemism.html#cb75-87" tabindex="-1"></a>  offset_x <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> x_range  <span class="co"># 5% of x range as offset</span></span>
-<span id="cb75-88"><a href="phylodiversity-and-phyloendemism.html#cb75-88" tabindex="-1"></a>  offset_y <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> y_range  <span class="co"># 5% of y range as offset</span></span>
-<span id="cb75-89"><a href="phylodiversity-and-phyloendemism.html#cb75-89" tabindex="-1"></a></span>
-<span id="cb75-90"><a href="phylodiversity-and-phyloendemism.html#cb75-90" tabindex="-1"></a>  <span class="co"># determine arrow start coordinates based on type</span></span>
-<span id="cb75-91"><a href="phylodiversity-and-phyloendemism.html#cb75-91" tabindex="-1"></a>  <span class="cf">if</span> (arrow_from <span class="sc">==</span> <span class="st">&quot;top-right&quot;</span>) {</span>
-<span id="cb75-92"><a href="phylodiversity-and-phyloendemism.html#cb75-92" tabindex="-1"></a>    start_x <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmax&quot;</span>] <span class="sc">+</span> offset_x</span>
-<span id="cb75-93"><a href="phylodiversity-and-phyloendemism.html#cb75-93" tabindex="-1"></a>    start_y <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymax&quot;</span>] <span class="sc">+</span> offset_y</span>
-<span id="cb75-94"><a href="phylodiversity-and-phyloendemism.html#cb75-94" tabindex="-1"></a>  } <span class="cf">else</span> {  <span class="co"># bottom-left</span></span>
-<span id="cb75-95"><a href="phylodiversity-and-phyloendemism.html#cb75-95" tabindex="-1"></a>    start_x <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmin&quot;</span>] <span class="sc">-</span> offset_x</span>
-<span id="cb75-96"><a href="phylodiversity-and-phyloendemism.html#cb75-96" tabindex="-1"></a>    start_y <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymin&quot;</span>] <span class="sc">-</span> offset_y</span>
-<span id="cb75-97"><a href="phylodiversity-and-phyloendemism.html#cb75-97" tabindex="-1"></a>  }</span>
-<span id="cb75-98"><a href="phylodiversity-and-phyloendemism.html#cb75-98" tabindex="-1"></a></span>
-<span id="cb75-99"><a href="phylodiversity-and-phyloendemism.html#cb75-99" tabindex="-1"></a>  <span class="co"># create the map visual with arrow pointing to cell</span></span>
-<span id="cb75-100"><a href="phylodiversity-and-phyloendemism.html#cb75-100" tabindex="-1"></a>  sig_cell_map <span class="ot">&lt;-</span> sig_map <span class="sc">+</span></span>
-<span id="cb75-101"><a href="phylodiversity-and-phyloendemism.html#cb75-101" tabindex="-1"></a>    <span class="co"># first draw a thicker white arrow as an outline</span></span>
-<span id="cb75-102"><a href="phylodiversity-and-phyloendemism.html#cb75-102" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(</span>
-<span id="cb75-103"><a href="phylodiversity-and-phyloendemism.html#cb75-103" tabindex="-1"></a>      <span class="at">x =</span> start_x,</span>
-<span id="cb75-104"><a href="phylodiversity-and-phyloendemism.html#cb75-104" tabindex="-1"></a>      <span class="at">y =</span> start_y,</span>
-<span id="cb75-105"><a href="phylodiversity-and-phyloendemism.html#cb75-105" tabindex="-1"></a>      <span class="at">xend =</span> cell_x,</span>
-<span id="cb75-106"><a href="phylodiversity-and-phyloendemism.html#cb75-106" tabindex="-1"></a>      <span class="at">yend =</span> cell_y</span>
-<span id="cb75-107"><a href="phylodiversity-and-phyloendemism.html#cb75-107" tabindex="-1"></a>    ),</span>
-<span id="cb75-108"><a href="phylodiversity-and-phyloendemism.html#cb75-108" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
-<span id="cb75-109"><a href="phylodiversity-and-phyloendemism.html#cb75-109" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;white&quot;</span>,  <span class="co"># outline color</span></span>
-<span id="cb75-110"><a href="phylodiversity-and-phyloendemism.html#cb75-110" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.2</span>,       <span class="co"># thicker for outline effect</span></span>
-<span id="cb75-111"><a href="phylodiversity-and-phyloendemism.html#cb75-111" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">type =</span> <span class="st">&quot;closed&quot;</span>)) <span class="sc">+</span>  <span class="co"># Larger arrowhead</span></span>
-<span id="cb75-112"><a href="phylodiversity-and-phyloendemism.html#cb75-112" tabindex="-1"></a>    <span class="co"># angle arrow from the specified corner</span></span>
-<span id="cb75-113"><a href="phylodiversity-and-phyloendemism.html#cb75-113" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(</span>
-<span id="cb75-114"><a href="phylodiversity-and-phyloendemism.html#cb75-114" tabindex="-1"></a>      <span class="at">x =</span> start_x,</span>
-<span id="cb75-115"><a href="phylodiversity-and-phyloendemism.html#cb75-115" tabindex="-1"></a>      <span class="at">y =</span> start_y,</span>
-<span id="cb75-116"><a href="phylodiversity-and-phyloendemism.html#cb75-116" tabindex="-1"></a>      <span class="at">xend =</span> cell_x,</span>
-<span id="cb75-117"><a href="phylodiversity-and-phyloendemism.html#cb75-117" tabindex="-1"></a>      <span class="at">yend =</span> cell_y</span>
-<span id="cb75-118"><a href="phylodiversity-and-phyloendemism.html#cb75-118" tabindex="-1"></a>    ),</span>
-<span id="cb75-119"><a href="phylodiversity-and-phyloendemism.html#cb75-119" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
-<span id="cb75-120"><a href="phylodiversity-and-phyloendemism.html#cb75-120" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb75-121"><a href="phylodiversity-and-phyloendemism.html#cb75-121" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.8</span>,</span>
-<span id="cb75-122"><a href="phylodiversity-and-phyloendemism.html#cb75-122" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">type =</span> <span class="st">&quot;closed&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb75-123"><a href="phylodiversity-and-phyloendemism.html#cb75-123" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;Focus on&quot;</span>, title_prefix, metric, representative_cell<span class="sc">$</span>site, <span class="st">&quot;Pixel&quot;</span>))</span>
-<span id="cb75-124"><a href="phylodiversity-and-phyloendemism.html#cb75-124" tabindex="-1"></a></span>
-<span id="cb75-125"><a href="phylodiversity-and-phyloendemism.html#cb75-125" tabindex="-1"></a>  <span class="co"># extract lineages present in representative cell</span></span>
-<span id="cb75-126"><a href="phylodiversity-and-phyloendemism.html#cb75-126" tabindex="-1"></a>  comm_matrix_molc_rep <span class="ot">&lt;-</span> comm_matrix_molc[representative_cell<span class="sc">$</span>site, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]  <span class="co"># extract by site</span></span>
-<span id="cb75-127"><a href="phylodiversity-and-phyloendemism.html#cb75-127" tabindex="-1"></a>  taxa_present_rep <span class="ot">&lt;-</span> <span class="fu">colnames</span>(comm_matrix_molc_rep)[comm_matrix_molc_rep <span class="sc">==</span> <span class="dv">1</span>]  <span class="co"># grab taxa with presence at site</span></span>
-<span id="cb75-128"><a href="phylodiversity-and-phyloendemism.html#cb75-128" tabindex="-1"></a></span>
-<span id="cb75-129"><a href="phylodiversity-and-phyloendemism.html#cb75-129" tabindex="-1"></a>  <span class="co"># create a label to show comparison of observed vs expected metric</span></span>
-<span id="cb75-130"><a href="phylodiversity-and-phyloendemism.html#cb75-130" tabindex="-1"></a>  obs_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_obs&quot;</span>, <span class="st">&quot;rpd_obs&quot;</span>)</span>
-<span id="cb75-131"><a href="phylodiversity-and-phyloendemism.html#cb75-131" tabindex="-1"></a>  exp_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_rand_mean&quot;</span>, <span class="st">&quot;rpd_rand_mean&quot;</span>)</span>
-<span id="cb75-132"><a href="phylodiversity-and-phyloendemism.html#cb75-132" tabindex="-1"></a></span>
-<span id="cb75-133"><a href="phylodiversity-and-phyloendemism.html#cb75-133" tabindex="-1"></a>  metric_label <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
-<span id="cb75-134"><a href="phylodiversity-and-phyloendemism.html#cb75-134" tabindex="-1"></a>    <span class="fu">toupper</span>(<span class="fu">substr</span>(metric, <span class="dv">1</span>, <span class="dv">1</span>)), <span class="fu">substr</span>(metric, <span class="dv">2</span>, <span class="fu">nchar</span>(metric)),</span>
-<span id="cb75-135"><a href="phylodiversity-and-phyloendemism.html#cb75-135" tabindex="-1"></a>    <span class="st">&quot; observed = &quot;</span>, <span class="fu">round</span>(representative_cell[[obs_col]], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb75-136"><a href="phylodiversity-and-phyloendemism.html#cb75-136" tabindex="-1"></a>    <span class="fu">toupper</span>(<span class="fu">substr</span>(metric, <span class="dv">1</span>, <span class="dv">1</span>)), <span class="fu">substr</span>(metric, <span class="dv">2</span>, <span class="fu">nchar</span>(metric)),</span>
-<span id="cb75-137"><a href="phylodiversity-and-phyloendemism.html#cb75-137" tabindex="-1"></a>    <span class="st">&quot; expected = &quot;</span>, <span class="fu">round</span>(representative_cell[[exp_col]], <span class="dv">3</span>)</span>
-<span id="cb75-138"><a href="phylodiversity-and-phyloendemism.html#cb75-138" tabindex="-1"></a>  )</span>
-<span id="cb75-139"><a href="phylodiversity-and-phyloendemism.html#cb75-139" tabindex="-1"></a></span>
-<span id="cb75-140"><a href="phylodiversity-and-phyloendemism.html#cb75-140" tabindex="-1"></a>  <span class="co"># create groupings using ggtree&#39;s groupOTU() to showcase branches</span></span>
-<span id="cb75-141"><a href="phylodiversity-and-phyloendemism.html#cb75-141" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(taxa_present_rep) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb75-142"><a href="phylodiversity-and-phyloendemism.html#cb75-142" tabindex="-1"></a>    <span class="co"># create a named list for groupOTU using setNames</span></span>
-<span id="cb75-143"><a href="phylodiversity-and-phyloendemism.html#cb75-143" tabindex="-1"></a>    group_list <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">list</span>(taxa_present_rep), type)</span>
-<span id="cb75-144"><a href="phylodiversity-and-phyloendemism.html#cb75-144" tabindex="-1"></a>    tree_grouped <span class="ot">&lt;-</span> <span class="fu">groupOTU</span>(base_tree<span class="sc">$</span>data, group_list)</span>
-<span id="cb75-145"><a href="phylodiversity-and-phyloendemism.html#cb75-145" tabindex="-1"></a></span>
-<span id="cb75-146"><a href="phylodiversity-and-phyloendemism.html#cb75-146" tabindex="-1"></a>    <span class="co"># create function for abbreviating Genus + specificEpithet</span></span>
-<span id="cb75-147"><a href="phylodiversity-and-phyloendemism.html#cb75-147" tabindex="-1"></a>    abbreviate_taxon <span class="ot">&lt;-</span> <span class="cf">function</span>(taxon_name) {</span>
-<span id="cb75-148"><a href="phylodiversity-and-phyloendemism.html#cb75-148" tabindex="-1"></a>      parts <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(taxon_name, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb75-149"><a href="phylodiversity-and-phyloendemism.html#cb75-149" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(parts) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
-<span id="cb75-150"><a href="phylodiversity-and-phyloendemism.html#cb75-150" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">paste0</span>(<span class="fu">substr</span>(parts[<span class="dv">1</span>], <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">&quot;. &quot;</span>, parts[<span class="dv">2</span>]))</span>
-<span id="cb75-151"><a href="phylodiversity-and-phyloendemism.html#cb75-151" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
-<span id="cb75-152"><a href="phylodiversity-and-phyloendemism.html#cb75-152" tabindex="-1"></a>        <span class="fu">return</span>(taxon_name)</span>
-<span id="cb75-153"><a href="phylodiversity-and-phyloendemism.html#cb75-153" tabindex="-1"></a>      }</span>
-<span id="cb75-154"><a href="phylodiversity-and-phyloendemism.html#cb75-154" tabindex="-1"></a>    }</span>
-<span id="cb75-155"><a href="phylodiversity-and-phyloendemism.html#cb75-155" tabindex="-1"></a></span>
-<span id="cb75-156"><a href="phylodiversity-and-phyloendemism.html#cb75-156" tabindex="-1"></a>    <span class="co"># abbreviate tip labels in the grouped trees</span></span>
-<span id="cb75-157"><a href="phylodiversity-and-phyloendemism.html#cb75-157" tabindex="-1"></a>    tree_grouped<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">sapply</span>(tree_grouped<span class="sc">$</span>label, abbreviate_taxon)</span>
-<span id="cb75-158"><a href="phylodiversity-and-phyloendemism.html#cb75-158" tabindex="-1"></a></span>
-<span id="cb75-159"><a href="phylodiversity-and-phyloendemism.html#cb75-159" tabindex="-1"></a>    <span class="co"># plot showing contributing branches + metric observed and expected</span></span>
-<span id="cb75-160"><a href="phylodiversity-and-phyloendemism.html#cb75-160" tabindex="-1"></a>    values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;grey30&quot;</span>)</span>
-<span id="cb75-161"><a href="phylodiversity-and-phyloendemism.html#cb75-161" tabindex="-1"></a>    values[[type]] <span class="ot">&lt;-</span> tree_color</span>
-<span id="cb75-162"><a href="phylodiversity-and-phyloendemism.html#cb75-162" tabindex="-1"></a></span>
-<span id="cb75-163"><a href="phylodiversity-and-phyloendemism.html#cb75-163" tabindex="-1"></a>    cell_lineages <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree_grouped, <span class="fu">aes</span>(<span class="at">color =</span> group)) <span class="sc">+</span></span>
-<span id="cb75-164"><a href="phylodiversity-and-phyloendemism.html#cb75-164" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(<span class="at">values =</span> values, <span class="at">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb75-165"><a href="phylodiversity-and-phyloendemism.html#cb75-165" tabindex="-1"></a>      <span class="fu">geom_tiplab</span>(<span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">align =</span> <span class="cn">TRUE</span>, <span class="at">linesize =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb75-166"><a href="phylodiversity-and-phyloendemism.html#cb75-166" tabindex="-1"></a>      <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
-<span id="cb75-167"><a href="phylodiversity-and-phyloendemism.html#cb75-167" tabindex="-1"></a>      <span class="fu">xlim</span>(<span class="cn">NA</span>, <span class="fu">max</span>(base_tree<span class="sc">$</span>data<span class="sc">$</span>x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb75-168"><a href="phylodiversity-and-phyloendemism.html#cb75-168" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste</span>(title_prefix, metric, representative_cell<span class="sc">$</span>site, <span class="st">&quot;Present Lineages&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb75-169"><a href="phylodiversity-and-phyloendemism.html#cb75-169" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
-<span id="cb75-170"><a href="phylodiversity-and-phyloendemism.html#cb75-170" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb75-171"><a href="phylodiversity-and-phyloendemism.html#cb75-171" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb75-172"><a href="phylodiversity-and-phyloendemism.html#cb75-172" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb75-173"><a href="phylodiversity-and-phyloendemism.html#cb75-173" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb75-174"><a href="phylodiversity-and-phyloendemism.html#cb75-174" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb75-175"><a href="phylodiversity-and-phyloendemism.html#cb75-175" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb75-176"><a href="phylodiversity-and-phyloendemism.html#cb75-176" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> metric_label,</span>
-<span id="cb75-177"><a href="phylodiversity-and-phyloendemism.html#cb75-177" tabindex="-1"></a>               <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>,</span>
-<span id="cb75-178"><a href="phylodiversity-and-phyloendemism.html#cb75-178" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>)</span>
-<span id="cb75-179"><a href="phylodiversity-and-phyloendemism.html#cb75-179" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb75-180"><a href="phylodiversity-and-phyloendemism.html#cb75-180" tabindex="-1"></a> <span class="co"># catch issues with missing taxa (not sure this really could happen at this stage but whatever)</span></span>
-<span id="cb75-181"><a href="phylodiversity-and-phyloendemism.html#cb75-181" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;No taxa present in the selected cell&quot;</span>)</span>
-<span id="cb75-182"><a href="phylodiversity-and-phyloendemism.html#cb75-182" tabindex="-1"></a>    cell_lineages <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(base_tree<span class="sc">$</span>data) <span class="sc">+</span></span>
-<span id="cb75-183"><a href="phylodiversity-and-phyloendemism.html#cb75-183" tabindex="-1"></a>      <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
-<span id="cb75-184"><a href="phylodiversity-and-phyloendemism.html#cb75-184" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;No taxa present in&quot;</span>, representative_cell<span class="sc">$</span>site)) <span class="sc">+</span></span>
-<span id="cb75-185"><a href="phylodiversity-and-phyloendemism.html#cb75-185" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
-<span id="cb75-186"><a href="phylodiversity-and-phyloendemism.html#cb75-186" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb75-187"><a href="phylodiversity-and-phyloendemism.html#cb75-187" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb75-188"><a href="phylodiversity-and-phyloendemism.html#cb75-188" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb75-189"><a href="phylodiversity-and-phyloendemism.html#cb75-189" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb75-190"><a href="phylodiversity-and-phyloendemism.html#cb75-190" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb75-191"><a href="phylodiversity-and-phyloendemism.html#cb75-191" tabindex="-1"></a>      )</span>
-<span id="cb75-192"><a href="phylodiversity-and-phyloendemism.html#cb75-192" tabindex="-1"></a>  }</span>
-<span id="cb75-193"><a href="phylodiversity-and-phyloendemism.html#cb75-193" tabindex="-1"></a></span>
-<span id="cb75-194"><a href="phylodiversity-and-phyloendemism.html#cb75-194" tabindex="-1"></a>  <span class="co"># plot both side by side</span></span>
-<span id="cb75-195"><a href="phylodiversity-and-phyloendemism.html#cb75-195" tabindex="-1"></a>  combined_plot <span class="ot">&lt;-</span> sig_cell_map <span class="sc">+</span> cell_lineages <span class="sc">+</span></span>
-<span id="cb75-196"><a href="phylodiversity-and-phyloendemism.html#cb75-196" tabindex="-1"></a>    <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb75-197"><a href="phylodiversity-and-phyloendemism.html#cb75-197" tabindex="-1"></a></span>
-<span id="cb75-198"><a href="phylodiversity-and-phyloendemism.html#cb75-198" tabindex="-1"></a>  <span class="fu">return</span>(combined_plot)</span>
-<span id="cb75-199"><a href="phylodiversity-and-phyloendemism.html#cb75-199" tabindex="-1"></a>}</span>
-<span id="cb75-200"><a href="phylodiversity-and-phyloendemism.html#cb75-200" tabindex="-1"></a></span>
-<span id="cb75-201"><a href="phylodiversity-and-phyloendemism.html#cb75-201" tabindex="-1"></a><span class="co"># Plot:</span></span>
-<span id="cb75-202"><a href="phylodiversity-and-phyloendemism.html#cb75-202" tabindex="-1"></a><span class="co"># Sig Low PD cell</span></span>
-<span id="cb75-203"><a href="phylodiversity-and-phyloendemism.html#cb75-203" tabindex="-1"></a>low_pd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
-<span id="cb75-204"><a href="phylodiversity-and-phyloendemism.html#cb75-204" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;pd&quot;</span>,</span>
-<span id="cb75-205"><a href="phylodiversity-and-phyloendemism.html#cb75-205" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;low&quot;</span>,</span>
-<span id="cb75-206"><a href="phylodiversity-and-phyloendemism.html#cb75-206" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_616&quot;</span>,</span>
-<span id="cb75-207"><a href="phylodiversity-and-phyloendemism.html#cb75-207" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
-<span id="cb75-208"><a href="phylodiversity-and-phyloendemism.html#cb75-208" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
-<span id="cb75-209"><a href="phylodiversity-and-phyloendemism.html#cb75-209" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
-<span id="cb75-210"><a href="phylodiversity-and-phyloendemism.html#cb75-210" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
-<span id="cb75-211"><a href="phylodiversity-and-phyloendemism.html#cb75-211" tabindex="-1"></a>  <span class="at">sig_map =</span> pd_sig_map</span>
-<span id="cb75-212"><a href="phylodiversity-and-phyloendemism.html#cb75-212" tabindex="-1"></a>)</span>
-<span id="cb75-213"><a href="phylodiversity-and-phyloendemism.html#cb75-213" tabindex="-1"></a><span class="fu">print</span>(low_pd_plot)</span>
-<span id="cb75-214"><a href="phylodiversity-and-phyloendemism.html#cb75-214" tabindex="-1"></a></span>
-<span id="cb75-215"><a href="phylodiversity-and-phyloendemism.html#cb75-215" tabindex="-1"></a><span class="co"># Sig High PD cell</span></span>
-<span id="cb75-216"><a href="phylodiversity-and-phyloendemism.html#cb75-216" tabindex="-1"></a>high_pd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
-<span id="cb75-217"><a href="phylodiversity-and-phyloendemism.html#cb75-217" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;pd&quot;</span>,</span>
-<span id="cb75-218"><a href="phylodiversity-and-phyloendemism.html#cb75-218" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;high&quot;</span>,</span>
-<span id="cb75-219"><a href="phylodiversity-and-phyloendemism.html#cb75-219" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_2722&quot;</span>,</span>
-<span id="cb75-220"><a href="phylodiversity-and-phyloendemism.html#cb75-220" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
-<span id="cb75-221"><a href="phylodiversity-and-phyloendemism.html#cb75-221" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
-<span id="cb75-222"><a href="phylodiversity-and-phyloendemism.html#cb75-222" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
-<span id="cb75-223"><a href="phylodiversity-and-phyloendemism.html#cb75-223" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
-<span id="cb75-224"><a href="phylodiversity-and-phyloendemism.html#cb75-224" tabindex="-1"></a>  <span class="at">sig_map =</span> pd_sig_map</span>
-<span id="cb75-225"><a href="phylodiversity-and-phyloendemism.html#cb75-225" tabindex="-1"></a>)</span>
-<span id="cb75-226"><a href="phylodiversity-and-phyloendemism.html#cb75-226" tabindex="-1"></a><span class="fu">print</span>(high_pd_plot)</span>
-<span id="cb75-227"><a href="phylodiversity-and-phyloendemism.html#cb75-227" tabindex="-1"></a></span>
-<span id="cb75-228"><a href="phylodiversity-and-phyloendemism.html#cb75-228" tabindex="-1"></a><span class="co"># Sig Low RPD cell</span></span>
-<span id="cb75-229"><a href="phylodiversity-and-phyloendemism.html#cb75-229" tabindex="-1"></a>low_rpd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
-<span id="cb75-230"><a href="phylodiversity-and-phyloendemism.html#cb75-230" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rpd&quot;</span>,</span>
-<span id="cb75-231"><a href="phylodiversity-and-phyloendemism.html#cb75-231" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;low&quot;</span>,</span>
-<span id="cb75-232"><a href="phylodiversity-and-phyloendemism.html#cb75-232" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_507&quot;</span>,</span>
-<span id="cb75-233"><a href="phylodiversity-and-phyloendemism.html#cb75-233" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
-<span id="cb75-234"><a href="phylodiversity-and-phyloendemism.html#cb75-234" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
-<span id="cb75-235"><a href="phylodiversity-and-phyloendemism.html#cb75-235" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
-<span id="cb75-236"><a href="phylodiversity-and-phyloendemism.html#cb75-236" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
-<span id="cb75-237"><a href="phylodiversity-and-phyloendemism.html#cb75-237" tabindex="-1"></a>  <span class="at">sig_map =</span> rpd_sig_map</span>
-<span id="cb75-238"><a href="phylodiversity-and-phyloendemism.html#cb75-238" tabindex="-1"></a>)</span>
-<span id="cb75-239"><a href="phylodiversity-and-phyloendemism.html#cb75-239" tabindex="-1"></a><span class="fu">print</span>(low_rpd_plot)</span>
-<span id="cb75-240"><a href="phylodiversity-and-phyloendemism.html#cb75-240" tabindex="-1"></a></span>
-<span id="cb75-241"><a href="phylodiversity-and-phyloendemism.html#cb75-241" tabindex="-1"></a><span class="co"># Sig High RPD cell</span></span>
-<span id="cb75-242"><a href="phylodiversity-and-phyloendemism.html#cb75-242" tabindex="-1"></a>high_rpd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
-<span id="cb75-243"><a href="phylodiversity-and-phyloendemism.html#cb75-243" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rpd&quot;</span>,</span>
-<span id="cb75-244"><a href="phylodiversity-and-phyloendemism.html#cb75-244" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;high&quot;</span>,</span>
-<span id="cb75-245"><a href="phylodiversity-and-phyloendemism.html#cb75-245" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_2050&quot;</span>,</span>
-<span id="cb75-246"><a href="phylodiversity-and-phyloendemism.html#cb75-246" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
-<span id="cb75-247"><a href="phylodiversity-and-phyloendemism.html#cb75-247" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
-<span id="cb75-248"><a href="phylodiversity-and-phyloendemism.html#cb75-248" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
-<span id="cb75-249"><a href="phylodiversity-and-phyloendemism.html#cb75-249" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
-<span id="cb75-250"><a href="phylodiversity-and-phyloendemism.html#cb75-250" tabindex="-1"></a>  <span class="at">sig_map =</span> rpd_sig_map</span>
-<span id="cb75-251"><a href="phylodiversity-and-phyloendemism.html#cb75-251" tabindex="-1"></a>)</span>
-<span id="cb75-252"><a href="phylodiversity-and-phyloendemism.html#cb75-252" tabindex="-1"></a><span class="fu">print</span>(high_rpd_plot)</span></code></pre></div>
+<span id="cb75-45"><a href="phylodiversity-and-phyloendemism.html#cb75-45" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Sonoran Basin and Range Cactaceae Categorical Analysis of Neo- and Paleo-Endemism&quot;</span>)</span></code></pre></div>
+</div>
+<div id="h-optional-visualize-lineage-compositions-in-significant-cells" class="section level2 hasAnchor" number="9.9">
+<h2><span class="header-section-number">9.9</span> H) Optional: Visualize Lineage Compositions in Significant Cells<a href="phylodiversity-and-phyloendemism.html#h-optional-visualize-lineage-compositions-in-significant-cells" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="phylodiversity-and-phyloendemism.html#cb76-1" tabindex="-1"></a><span class="co"># Write a function that visualizes lineage composition within a site, and reports both the observed and expected diversity metric...</span></span>
+<span id="cb76-2"><a href="phylodiversity-and-phyloendemism.html#cb76-2" tabindex="-1"></a>create_significant_cell_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(metric, type, cell_id,</span>
+<span id="cb76-3"><a href="phylodiversity-and-phyloendemism.html#cb76-3" tabindex="-1"></a>                                         son_canape_map, comm_matrix_molc,</span>
+<span id="cb76-4"><a href="phylodiversity-and-phyloendemism.html#cb76-4" tabindex="-1"></a>                                         base_tree, bbox, sig_map) {</span>
+<span id="cb76-5"><a href="phylodiversity-and-phyloendemism.html#cb76-5" tabindex="-1"></a></span>
+<span id="cb76-6"><a href="phylodiversity-and-phyloendemism.html#cb76-6" tabindex="-1"></a>  <span class="co"># determine significance column and filter values based on metric and type</span></span>
+<span id="cb76-7"><a href="phylodiversity-and-phyloendemism.html#cb76-7" tabindex="-1"></a>  signif_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_signif&quot;</span>, <span class="st">&quot;rpd_signif&quot;</span>)</span>
+<span id="cb76-8"><a href="phylodiversity-and-phyloendemism.html#cb76-8" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="phylodiversity-and-phyloendemism.html#cb76-9" tabindex="-1"></a>  <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;low&quot;</span>) {</span>
+<span id="cb76-10"><a href="phylodiversity-and-phyloendemism.html#cb76-10" tabindex="-1"></a>    signif_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt; 0.01&quot;</span>, <span class="st">&quot;&lt; 0.025&quot;</span>)</span>
+<span id="cb76-11"><a href="phylodiversity-and-phyloendemism.html#cb76-11" tabindex="-1"></a>    title_prefix <span class="ot">&lt;-</span> <span class="st">&quot;Significantly Low&quot;</span></span>
+<span id="cb76-12"><a href="phylodiversity-and-phyloendemism.html#cb76-12" tabindex="-1"></a>    tree_color <span class="ot">&lt;-</span> <span class="st">&quot;#E31A1C&quot;</span>  <span class="co"># Red for low</span></span>
+<span id="cb76-13"><a href="phylodiversity-and-phyloendemism.html#cb76-13" tabindex="-1"></a>    arrow_from <span class="ot">&lt;-</span> <span class="st">&quot;top-right&quot;</span>  <span class="co"># Arrow from top-right corner</span></span>
+<span id="cb76-14"><a href="phylodiversity-and-phyloendemism.html#cb76-14" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (type <span class="sc">==</span> <span class="st">&quot;high&quot;</span>) {</span>
+<span id="cb76-15"><a href="phylodiversity-and-phyloendemism.html#cb76-15" tabindex="-1"></a>    signif_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&gt; 0.975&quot;</span>, <span class="st">&quot;&gt; 0.99&quot;</span>)</span>
+<span id="cb76-16"><a href="phylodiversity-and-phyloendemism.html#cb76-16" tabindex="-1"></a>    title_prefix <span class="ot">&lt;-</span> <span class="st">&quot;Significantly High&quot;</span></span>
+<span id="cb76-17"><a href="phylodiversity-and-phyloendemism.html#cb76-17" tabindex="-1"></a>    tree_color <span class="ot">&lt;-</span> <span class="st">&quot;#1F78B4&quot;</span>  <span class="co"># Blue for high</span></span>
+<span id="cb76-18"><a href="phylodiversity-and-phyloendemism.html#cb76-18" tabindex="-1"></a>    arrow_from <span class="ot">&lt;-</span> <span class="st">&quot;bottom-left&quot;</span>  <span class="co"># Arrow from bottom-left corner</span></span>
+<span id="cb76-19"><a href="phylodiversity-and-phyloendemism.html#cb76-19" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb76-20"><a href="phylodiversity-and-phyloendemism.html#cb76-20" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;type must be either &#39;high&#39; or &#39;low&#39;&quot;</span>)</span>
+<span id="cb76-21"><a href="phylodiversity-and-phyloendemism.html#cb76-21" tabindex="-1"></a>  }</span>
+<span id="cb76-22"><a href="phylodiversity-and-phyloendemism.html#cb76-22" tabindex="-1"></a></span>
+<span id="cb76-23"><a href="phylodiversity-and-phyloendemism.html#cb76-23" tabindex="-1"></a>  <span class="co"># extract the representative cell</span></span>
+<span id="cb76-24"><a href="phylodiversity-and-phyloendemism.html#cb76-24" tabindex="-1"></a>  representative_cell <span class="ot">&lt;-</span> son_canape_map <span class="sc">%&gt;%</span></span>
+<span id="cb76-25"><a href="phylodiversity-and-phyloendemism.html#cb76-25" tabindex="-1"></a>    <span class="fu">filter</span>(.data[[signif_col]] <span class="sc">%in%</span> signif_values <span class="sc">&amp;</span> site <span class="sc">==</span> cell_id)</span>
+<span id="cb76-26"><a href="phylodiversity-and-phyloendemism.html#cb76-26" tabindex="-1"></a></span>
+<span id="cb76-27"><a href="phylodiversity-and-phyloendemism.html#cb76-27" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(representative_cell) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb76-28"><a href="phylodiversity-and-phyloendemism.html#cb76-28" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">sprintf</span>(<span class="st">&quot;No cell found with %s %s significance and site ID &#39;%s&#39;&quot;</span>,</span>
+<span id="cb76-29"><a href="phylodiversity-and-phyloendemism.html#cb76-29" tabindex="-1"></a>                 title_prefix, metric, cell_id))</span>
+<span id="cb76-30"><a href="phylodiversity-and-phyloendemism.html#cb76-30" tabindex="-1"></a>  }</span>
+<span id="cb76-31"><a href="phylodiversity-and-phyloendemism.html#cb76-31" tabindex="-1"></a></span>
+<span id="cb76-32"><a href="phylodiversity-and-phyloendemism.html#cb76-32" tabindex="-1"></a>  <span class="co"># grab cell coordinates</span></span>
+<span id="cb76-33"><a href="phylodiversity-and-phyloendemism.html#cb76-33" tabindex="-1"></a>  cell_x <span class="ot">&lt;-</span> representative_cell<span class="sc">$</span>x</span>
+<span id="cb76-34"><a href="phylodiversity-and-phyloendemism.html#cb76-34" tabindex="-1"></a>  cell_y <span class="ot">&lt;-</span> representative_cell<span class="sc">$</span>y</span>
+<span id="cb76-35"><a href="phylodiversity-and-phyloendemism.html#cb76-35" tabindex="-1"></a></span>
+<span id="cb76-36"><a href="phylodiversity-and-phyloendemism.html#cb76-36" tabindex="-1"></a>  <span class="co"># calculate offsets based on plot dimensions (same across both plots)</span></span>
+<span id="cb76-37"><a href="phylodiversity-and-phyloendemism.html#cb76-37" tabindex="-1"></a>  x_range <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmax&quot;</span>] <span class="sc">-</span> bbox[<span class="st">&quot;xmin&quot;</span>]</span>
+<span id="cb76-38"><a href="phylodiversity-and-phyloendemism.html#cb76-38" tabindex="-1"></a>  y_range <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymax&quot;</span>] <span class="sc">-</span> bbox[<span class="st">&quot;ymin&quot;</span>]</span>
+<span id="cb76-39"><a href="phylodiversity-and-phyloendemism.html#cb76-39" tabindex="-1"></a>  offset_x <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> x_range  <span class="co"># 5% of x range as offset</span></span>
+<span id="cb76-40"><a href="phylodiversity-and-phyloendemism.html#cb76-40" tabindex="-1"></a>  offset_y <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> y_range  <span class="co"># 5% of y range as offset</span></span>
+<span id="cb76-41"><a href="phylodiversity-and-phyloendemism.html#cb76-41" tabindex="-1"></a></span>
+<span id="cb76-42"><a href="phylodiversity-and-phyloendemism.html#cb76-42" tabindex="-1"></a>  <span class="co"># determine arrow start coordinates based on type</span></span>
+<span id="cb76-43"><a href="phylodiversity-and-phyloendemism.html#cb76-43" tabindex="-1"></a>  <span class="cf">if</span> (arrow_from <span class="sc">==</span> <span class="st">&quot;top-right&quot;</span>) {</span>
+<span id="cb76-44"><a href="phylodiversity-and-phyloendemism.html#cb76-44" tabindex="-1"></a>    start_x <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmax&quot;</span>] <span class="sc">+</span> offset_x</span>
+<span id="cb76-45"><a href="phylodiversity-and-phyloendemism.html#cb76-45" tabindex="-1"></a>    start_y <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymax&quot;</span>] <span class="sc">+</span> offset_y</span>
+<span id="cb76-46"><a href="phylodiversity-and-phyloendemism.html#cb76-46" tabindex="-1"></a>  } <span class="cf">else</span> {  <span class="co"># bottom-left</span></span>
+<span id="cb76-47"><a href="phylodiversity-and-phyloendemism.html#cb76-47" tabindex="-1"></a>    start_x <span class="ot">&lt;-</span> bbox[<span class="st">&quot;xmin&quot;</span>] <span class="sc">-</span> offset_x</span>
+<span id="cb76-48"><a href="phylodiversity-and-phyloendemism.html#cb76-48" tabindex="-1"></a>    start_y <span class="ot">&lt;-</span> bbox[<span class="st">&quot;ymin&quot;</span>] <span class="sc">-</span> offset_y</span>
+<span id="cb76-49"><a href="phylodiversity-and-phyloendemism.html#cb76-49" tabindex="-1"></a>  }</span>
+<span id="cb76-50"><a href="phylodiversity-and-phyloendemism.html#cb76-50" tabindex="-1"></a></span>
+<span id="cb76-51"><a href="phylodiversity-and-phyloendemism.html#cb76-51" tabindex="-1"></a>  <span class="co"># create the map visual with arrow pointing to cell</span></span>
+<span id="cb76-52"><a href="phylodiversity-and-phyloendemism.html#cb76-52" tabindex="-1"></a>  sig_cell_map <span class="ot">&lt;-</span> sig_map <span class="sc">+</span></span>
+<span id="cb76-53"><a href="phylodiversity-and-phyloendemism.html#cb76-53" tabindex="-1"></a>    <span class="co"># first draw a thicker white arrow as an outline</span></span>
+<span id="cb76-54"><a href="phylodiversity-and-phyloendemism.html#cb76-54" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb76-55"><a href="phylodiversity-and-phyloendemism.html#cb76-55" tabindex="-1"></a>      <span class="at">x =</span> start_x,</span>
+<span id="cb76-56"><a href="phylodiversity-and-phyloendemism.html#cb76-56" tabindex="-1"></a>      <span class="at">y =</span> start_y,</span>
+<span id="cb76-57"><a href="phylodiversity-and-phyloendemism.html#cb76-57" tabindex="-1"></a>      <span class="at">xend =</span> cell_x,</span>
+<span id="cb76-58"><a href="phylodiversity-and-phyloendemism.html#cb76-58" tabindex="-1"></a>      <span class="at">yend =</span> cell_y</span>
+<span id="cb76-59"><a href="phylodiversity-and-phyloendemism.html#cb76-59" tabindex="-1"></a>    ),</span>
+<span id="cb76-60"><a href="phylodiversity-and-phyloendemism.html#cb76-60" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb76-61"><a href="phylodiversity-and-phyloendemism.html#cb76-61" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;white&quot;</span>,  <span class="co"># outline color</span></span>
+<span id="cb76-62"><a href="phylodiversity-and-phyloendemism.html#cb76-62" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.2</span>,       <span class="co"># thicker for outline effect</span></span>
+<span id="cb76-63"><a href="phylodiversity-and-phyloendemism.html#cb76-63" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">type =</span> <span class="st">&quot;closed&quot;</span>)) <span class="sc">+</span>  <span class="co"># Larger arrowhead</span></span>
+<span id="cb76-64"><a href="phylodiversity-and-phyloendemism.html#cb76-64" tabindex="-1"></a>    <span class="co"># angle arrow from the specified corner</span></span>
+<span id="cb76-65"><a href="phylodiversity-and-phyloendemism.html#cb76-65" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb76-66"><a href="phylodiversity-and-phyloendemism.html#cb76-66" tabindex="-1"></a>      <span class="at">x =</span> start_x,</span>
+<span id="cb76-67"><a href="phylodiversity-and-phyloendemism.html#cb76-67" tabindex="-1"></a>      <span class="at">y =</span> start_y,</span>
+<span id="cb76-68"><a href="phylodiversity-and-phyloendemism.html#cb76-68" tabindex="-1"></a>      <span class="at">xend =</span> cell_x,</span>
+<span id="cb76-69"><a href="phylodiversity-and-phyloendemism.html#cb76-69" tabindex="-1"></a>      <span class="at">yend =</span> cell_y</span>
+<span id="cb76-70"><a href="phylodiversity-and-phyloendemism.html#cb76-70" tabindex="-1"></a>    ),</span>
+<span id="cb76-71"><a href="phylodiversity-and-phyloendemism.html#cb76-71" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb76-72"><a href="phylodiversity-and-phyloendemism.html#cb76-72" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb76-73"><a href="phylodiversity-and-phyloendemism.html#cb76-73" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb76-74"><a href="phylodiversity-and-phyloendemism.html#cb76-74" tabindex="-1"></a>    <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">&quot;cm&quot;</span>), <span class="at">type =</span> <span class="st">&quot;closed&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb76-75"><a href="phylodiversity-and-phyloendemism.html#cb76-75" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;Focus on&quot;</span>, title_prefix, metric, representative_cell<span class="sc">$</span>site, <span class="st">&quot;Pixel&quot;</span>))</span>
+<span id="cb76-76"><a href="phylodiversity-and-phyloendemism.html#cb76-76" tabindex="-1"></a></span>
+<span id="cb76-77"><a href="phylodiversity-and-phyloendemism.html#cb76-77" tabindex="-1"></a>  <span class="co"># extract lineages present in representative cell</span></span>
+<span id="cb76-78"><a href="phylodiversity-and-phyloendemism.html#cb76-78" tabindex="-1"></a>  comm_matrix_molc_rep <span class="ot">&lt;-</span> comm_matrix_molc[representative_cell<span class="sc">$</span>site, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]  <span class="co"># extract by site</span></span>
+<span id="cb76-79"><a href="phylodiversity-and-phyloendemism.html#cb76-79" tabindex="-1"></a>  taxa_present_rep <span class="ot">&lt;-</span> <span class="fu">colnames</span>(comm_matrix_molc_rep)[comm_matrix_molc_rep <span class="sc">==</span> <span class="dv">1</span>]  <span class="co"># grab taxa with presence at site</span></span>
+<span id="cb76-80"><a href="phylodiversity-and-phyloendemism.html#cb76-80" tabindex="-1"></a></span>
+<span id="cb76-81"><a href="phylodiversity-and-phyloendemism.html#cb76-81" tabindex="-1"></a>  <span class="co"># create a label to show comparison of observed vs expected metric</span></span>
+<span id="cb76-82"><a href="phylodiversity-and-phyloendemism.html#cb76-82" tabindex="-1"></a>  obs_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_obs&quot;</span>, <span class="st">&quot;rpd_obs&quot;</span>)</span>
+<span id="cb76-83"><a href="phylodiversity-and-phyloendemism.html#cb76-83" tabindex="-1"></a>  exp_col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(metric <span class="sc">==</span> <span class="st">&quot;pd&quot;</span>, <span class="st">&quot;pd_rand_mean&quot;</span>, <span class="st">&quot;rpd_rand_mean&quot;</span>)</span>
+<span id="cb76-84"><a href="phylodiversity-and-phyloendemism.html#cb76-84" tabindex="-1"></a></span>
+<span id="cb76-85"><a href="phylodiversity-and-phyloendemism.html#cb76-85" tabindex="-1"></a>  metric_label <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb76-86"><a href="phylodiversity-and-phyloendemism.html#cb76-86" tabindex="-1"></a>    <span class="fu">toupper</span>(<span class="fu">substr</span>(metric, <span class="dv">1</span>, <span class="dv">1</span>)), <span class="fu">substr</span>(metric, <span class="dv">2</span>, <span class="fu">nchar</span>(metric)),</span>
+<span id="cb76-87"><a href="phylodiversity-and-phyloendemism.html#cb76-87" tabindex="-1"></a>    <span class="st">&quot; observed = &quot;</span>, <span class="fu">round</span>(representative_cell[[obs_col]], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb76-88"><a href="phylodiversity-and-phyloendemism.html#cb76-88" tabindex="-1"></a>    <span class="fu">toupper</span>(<span class="fu">substr</span>(metric, <span class="dv">1</span>, <span class="dv">1</span>)), <span class="fu">substr</span>(metric, <span class="dv">2</span>, <span class="fu">nchar</span>(metric)),</span>
+<span id="cb76-89"><a href="phylodiversity-and-phyloendemism.html#cb76-89" tabindex="-1"></a>    <span class="st">&quot; expected = &quot;</span>, <span class="fu">round</span>(representative_cell[[exp_col]], <span class="dv">3</span>)</span>
+<span id="cb76-90"><a href="phylodiversity-and-phyloendemism.html#cb76-90" tabindex="-1"></a>  )</span>
+<span id="cb76-91"><a href="phylodiversity-and-phyloendemism.html#cb76-91" tabindex="-1"></a></span>
+<span id="cb76-92"><a href="phylodiversity-and-phyloendemism.html#cb76-92" tabindex="-1"></a>  <span class="co"># create groupings using ggtree&#39;s groupOTU() to showcase branches</span></span>
+<span id="cb76-93"><a href="phylodiversity-and-phyloendemism.html#cb76-93" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(taxa_present_rep) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb76-94"><a href="phylodiversity-and-phyloendemism.html#cb76-94" tabindex="-1"></a>    <span class="co"># create a named list for groupOTU using setNames</span></span>
+<span id="cb76-95"><a href="phylodiversity-and-phyloendemism.html#cb76-95" tabindex="-1"></a>    group_list <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">list</span>(taxa_present_rep), type)</span>
+<span id="cb76-96"><a href="phylodiversity-and-phyloendemism.html#cb76-96" tabindex="-1"></a>    tree_grouped <span class="ot">&lt;-</span> <span class="fu">groupOTU</span>(base_tree<span class="sc">$</span>data, group_list)</span>
+<span id="cb76-97"><a href="phylodiversity-and-phyloendemism.html#cb76-97" tabindex="-1"></a></span>
+<span id="cb76-98"><a href="phylodiversity-and-phyloendemism.html#cb76-98" tabindex="-1"></a>    <span class="co"># create function for abbreviating Genus + specificEpithet</span></span>
+<span id="cb76-99"><a href="phylodiversity-and-phyloendemism.html#cb76-99" tabindex="-1"></a>    abbreviate_taxon <span class="ot">&lt;-</span> <span class="cf">function</span>(taxon_name) {</span>
+<span id="cb76-100"><a href="phylodiversity-and-phyloendemism.html#cb76-100" tabindex="-1"></a>      parts <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(taxon_name, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb76-101"><a href="phylodiversity-and-phyloendemism.html#cb76-101" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">length</span>(parts) <span class="sc">&gt;=</span> <span class="dv">2</span>) {</span>
+<span id="cb76-102"><a href="phylodiversity-and-phyloendemism.html#cb76-102" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">paste0</span>(<span class="fu">substr</span>(parts[<span class="dv">1</span>], <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">&quot;. &quot;</span>, parts[<span class="dv">2</span>]))</span>
+<span id="cb76-103"><a href="phylodiversity-and-phyloendemism.html#cb76-103" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb76-104"><a href="phylodiversity-and-phyloendemism.html#cb76-104" tabindex="-1"></a>        <span class="fu">return</span>(taxon_name)</span>
+<span id="cb76-105"><a href="phylodiversity-and-phyloendemism.html#cb76-105" tabindex="-1"></a>      }</span>
+<span id="cb76-106"><a href="phylodiversity-and-phyloendemism.html#cb76-106" tabindex="-1"></a>    }</span>
+<span id="cb76-107"><a href="phylodiversity-and-phyloendemism.html#cb76-107" tabindex="-1"></a></span>
+<span id="cb76-108"><a href="phylodiversity-and-phyloendemism.html#cb76-108" tabindex="-1"></a>    <span class="co"># abbreviate tip labels in the grouped trees</span></span>
+<span id="cb76-109"><a href="phylodiversity-and-phyloendemism.html#cb76-109" tabindex="-1"></a>    tree_grouped<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">sapply</span>(tree_grouped<span class="sc">$</span>label, abbreviate_taxon)</span>
+<span id="cb76-110"><a href="phylodiversity-and-phyloendemism.html#cb76-110" tabindex="-1"></a></span>
+<span id="cb76-111"><a href="phylodiversity-and-phyloendemism.html#cb76-111" tabindex="-1"></a>    <span class="co"># plot showing contributing branches + metric observed and expected</span></span>
+<span id="cb76-112"><a href="phylodiversity-and-phyloendemism.html#cb76-112" tabindex="-1"></a>    values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;grey30&quot;</span>)</span>
+<span id="cb76-113"><a href="phylodiversity-and-phyloendemism.html#cb76-113" tabindex="-1"></a>    values[[type]] <span class="ot">&lt;-</span> tree_color</span>
+<span id="cb76-114"><a href="phylodiversity-and-phyloendemism.html#cb76-114" tabindex="-1"></a></span>
+<span id="cb76-115"><a href="phylodiversity-and-phyloendemism.html#cb76-115" tabindex="-1"></a>    cell_lineages <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(tree_grouped, <span class="fu">aes</span>(<span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb76-116"><a href="phylodiversity-and-phyloendemism.html#cb76-116" tabindex="-1"></a>      <span class="fu">scale_color_manual</span>(<span class="at">values =</span> values, <span class="at">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-117"><a href="phylodiversity-and-phyloendemism.html#cb76-117" tabindex="-1"></a>      <span class="fu">geom_tiplab</span>(<span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">align =</span> <span class="cn">TRUE</span>, <span class="at">linesize =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb76-118"><a href="phylodiversity-and-phyloendemism.html#cb76-118" tabindex="-1"></a>      <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
+<span id="cb76-119"><a href="phylodiversity-and-phyloendemism.html#cb76-119" tabindex="-1"></a>      <span class="fu">xlim</span>(<span class="cn">NA</span>, <span class="fu">max</span>(base_tree<span class="sc">$</span>data<span class="sc">$</span>x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb76-120"><a href="phylodiversity-and-phyloendemism.html#cb76-120" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste</span>(title_prefix, metric, representative_cell<span class="sc">$</span>site, <span class="st">&quot;Present Lineages&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb76-121"><a href="phylodiversity-and-phyloendemism.html#cb76-121" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb76-122"><a href="phylodiversity-and-phyloendemism.html#cb76-122" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb76-123"><a href="phylodiversity-and-phyloendemism.html#cb76-123" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
+<span id="cb76-124"><a href="phylodiversity-and-phyloendemism.html#cb76-124" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb76-125"><a href="phylodiversity-and-phyloendemism.html#cb76-125" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb76-126"><a href="phylodiversity-and-phyloendemism.html#cb76-126" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb76-127"><a href="phylodiversity-and-phyloendemism.html#cb76-127" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb76-128"><a href="phylodiversity-and-phyloendemism.html#cb76-128" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> metric_label,</span>
+<span id="cb76-129"><a href="phylodiversity-and-phyloendemism.html#cb76-129" tabindex="-1"></a>               <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>,</span>
+<span id="cb76-130"><a href="phylodiversity-and-phyloendemism.html#cb76-130" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>)</span>
+<span id="cb76-131"><a href="phylodiversity-and-phyloendemism.html#cb76-131" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb76-132"><a href="phylodiversity-and-phyloendemism.html#cb76-132" tabindex="-1"></a> <span class="co"># catch issues with missing taxa (not sure this really could happen at this stage but whatever)</span></span>
+<span id="cb76-133"><a href="phylodiversity-and-phyloendemism.html#cb76-133" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;No taxa present in the selected cell&quot;</span>)</span>
+<span id="cb76-134"><a href="phylodiversity-and-phyloendemism.html#cb76-134" tabindex="-1"></a>    cell_lineages <span class="ot">&lt;-</span> <span class="fu">ggtree</span>(base_tree<span class="sc">$</span>data) <span class="sc">+</span></span>
+<span id="cb76-135"><a href="phylodiversity-and-phyloendemism.html#cb76-135" tabindex="-1"></a>      <span class="fu">theme_tree2</span>() <span class="sc">+</span></span>
+<span id="cb76-136"><a href="phylodiversity-and-phyloendemism.html#cb76-136" tabindex="-1"></a>      <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;No taxa present in&quot;</span>, representative_cell<span class="sc">$</span>site)) <span class="sc">+</span></span>
+<span id="cb76-137"><a href="phylodiversity-and-phyloendemism.html#cb76-137" tabindex="-1"></a>      <span class="fu">theme</span>(</span>
+<span id="cb76-138"><a href="phylodiversity-and-phyloendemism.html#cb76-138" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb76-139"><a href="phylodiversity-and-phyloendemism.html#cb76-139" tabindex="-1"></a>        <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
+<span id="cb76-140"><a href="phylodiversity-and-phyloendemism.html#cb76-140" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb76-141"><a href="phylodiversity-and-phyloendemism.html#cb76-141" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb76-142"><a href="phylodiversity-and-phyloendemism.html#cb76-142" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb76-143"><a href="phylodiversity-and-phyloendemism.html#cb76-143" tabindex="-1"></a>      )</span>
+<span id="cb76-144"><a href="phylodiversity-and-phyloendemism.html#cb76-144" tabindex="-1"></a>  }</span>
+<span id="cb76-145"><a href="phylodiversity-and-phyloendemism.html#cb76-145" tabindex="-1"></a></span>
+<span id="cb76-146"><a href="phylodiversity-and-phyloendemism.html#cb76-146" tabindex="-1"></a>  <span class="co"># plot both side by side</span></span>
+<span id="cb76-147"><a href="phylodiversity-and-phyloendemism.html#cb76-147" tabindex="-1"></a>  combined_plot <span class="ot">&lt;-</span> sig_cell_map <span class="sc">+</span> cell_lineages <span class="sc">+</span></span>
+<span id="cb76-148"><a href="phylodiversity-and-phyloendemism.html#cb76-148" tabindex="-1"></a>    <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb76-149"><a href="phylodiversity-and-phyloendemism.html#cb76-149" tabindex="-1"></a></span>
+<span id="cb76-150"><a href="phylodiversity-and-phyloendemism.html#cb76-150" tabindex="-1"></a>  <span class="fu">return</span>(combined_plot)</span>
+<span id="cb76-151"><a href="phylodiversity-and-phyloendemism.html#cb76-151" tabindex="-1"></a>}</span>
+<span id="cb76-152"><a href="phylodiversity-and-phyloendemism.html#cb76-152" tabindex="-1"></a></span>
+<span id="cb76-153"><a href="phylodiversity-and-phyloendemism.html#cb76-153" tabindex="-1"></a><span class="co"># Plot:</span></span>
+<span id="cb76-154"><a href="phylodiversity-and-phyloendemism.html#cb76-154" tabindex="-1"></a><span class="co"># Sig Low PD cell</span></span>
+<span id="cb76-155"><a href="phylodiversity-and-phyloendemism.html#cb76-155" tabindex="-1"></a>low_pd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
+<span id="cb76-156"><a href="phylodiversity-and-phyloendemism.html#cb76-156" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;pd&quot;</span>,</span>
+<span id="cb76-157"><a href="phylodiversity-and-phyloendemism.html#cb76-157" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;low&quot;</span>,</span>
+<span id="cb76-158"><a href="phylodiversity-and-phyloendemism.html#cb76-158" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_616&quot;</span>,</span>
+<span id="cb76-159"><a href="phylodiversity-and-phyloendemism.html#cb76-159" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
+<span id="cb76-160"><a href="phylodiversity-and-phyloendemism.html#cb76-160" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
+<span id="cb76-161"><a href="phylodiversity-and-phyloendemism.html#cb76-161" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
+<span id="cb76-162"><a href="phylodiversity-and-phyloendemism.html#cb76-162" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
+<span id="cb76-163"><a href="phylodiversity-and-phyloendemism.html#cb76-163" tabindex="-1"></a>  <span class="at">sig_map =</span> pd_sig_map</span>
+<span id="cb76-164"><a href="phylodiversity-and-phyloendemism.html#cb76-164" tabindex="-1"></a>)</span>
+<span id="cb76-165"><a href="phylodiversity-and-phyloendemism.html#cb76-165" tabindex="-1"></a><span class="fu">print</span>(low_pd_plot)</span>
+<span id="cb76-166"><a href="phylodiversity-and-phyloendemism.html#cb76-166" tabindex="-1"></a></span>
+<span id="cb76-167"><a href="phylodiversity-and-phyloendemism.html#cb76-167" tabindex="-1"></a><span class="co"># Sig High PD cell</span></span>
+<span id="cb76-168"><a href="phylodiversity-and-phyloendemism.html#cb76-168" tabindex="-1"></a>high_pd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
+<span id="cb76-169"><a href="phylodiversity-and-phyloendemism.html#cb76-169" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;pd&quot;</span>,</span>
+<span id="cb76-170"><a href="phylodiversity-and-phyloendemism.html#cb76-170" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;high&quot;</span>,</span>
+<span id="cb76-171"><a href="phylodiversity-and-phyloendemism.html#cb76-171" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_2722&quot;</span>,</span>
+<span id="cb76-172"><a href="phylodiversity-and-phyloendemism.html#cb76-172" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
+<span id="cb76-173"><a href="phylodiversity-and-phyloendemism.html#cb76-173" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
+<span id="cb76-174"><a href="phylodiversity-and-phyloendemism.html#cb76-174" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
+<span id="cb76-175"><a href="phylodiversity-and-phyloendemism.html#cb76-175" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
+<span id="cb76-176"><a href="phylodiversity-and-phyloendemism.html#cb76-176" tabindex="-1"></a>  <span class="at">sig_map =</span> pd_sig_map</span>
+<span id="cb76-177"><a href="phylodiversity-and-phyloendemism.html#cb76-177" tabindex="-1"></a>)</span>
+<span id="cb76-178"><a href="phylodiversity-and-phyloendemism.html#cb76-178" tabindex="-1"></a><span class="fu">print</span>(high_pd_plot)</span>
+<span id="cb76-179"><a href="phylodiversity-and-phyloendemism.html#cb76-179" tabindex="-1"></a></span>
+<span id="cb76-180"><a href="phylodiversity-and-phyloendemism.html#cb76-180" tabindex="-1"></a><span class="co"># Sig Low RPD cell</span></span>
+<span id="cb76-181"><a href="phylodiversity-and-phyloendemism.html#cb76-181" tabindex="-1"></a>low_rpd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
+<span id="cb76-182"><a href="phylodiversity-and-phyloendemism.html#cb76-182" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rpd&quot;</span>,</span>
+<span id="cb76-183"><a href="phylodiversity-and-phyloendemism.html#cb76-183" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;low&quot;</span>,</span>
+<span id="cb76-184"><a href="phylodiversity-and-phyloendemism.html#cb76-184" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_507&quot;</span>,</span>
+<span id="cb76-185"><a href="phylodiversity-and-phyloendemism.html#cb76-185" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
+<span id="cb76-186"><a href="phylodiversity-and-phyloendemism.html#cb76-186" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
+<span id="cb76-187"><a href="phylodiversity-and-phyloendemism.html#cb76-187" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
+<span id="cb76-188"><a href="phylodiversity-and-phyloendemism.html#cb76-188" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
+<span id="cb76-189"><a href="phylodiversity-and-phyloendemism.html#cb76-189" tabindex="-1"></a>  <span class="at">sig_map =</span> rpd_sig_map</span>
+<span id="cb76-190"><a href="phylodiversity-and-phyloendemism.html#cb76-190" tabindex="-1"></a>)</span>
+<span id="cb76-191"><a href="phylodiversity-and-phyloendemism.html#cb76-191" tabindex="-1"></a><span class="fu">print</span>(low_rpd_plot)</span>
+<span id="cb76-192"><a href="phylodiversity-and-phyloendemism.html#cb76-192" tabindex="-1"></a></span>
+<span id="cb76-193"><a href="phylodiversity-and-phyloendemism.html#cb76-193" tabindex="-1"></a><span class="co"># Sig High RPD cell</span></span>
+<span id="cb76-194"><a href="phylodiversity-and-phyloendemism.html#cb76-194" tabindex="-1"></a>high_rpd_plot <span class="ot">&lt;-</span> <span class="fu">create_significant_cell_plot</span>(</span>
+<span id="cb76-195"><a href="phylodiversity-and-phyloendemism.html#cb76-195" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">&quot;rpd&quot;</span>,</span>
+<span id="cb76-196"><a href="phylodiversity-and-phyloendemism.html#cb76-196" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;high&quot;</span>,</span>
+<span id="cb76-197"><a href="phylodiversity-and-phyloendemism.html#cb76-197" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="st">&quot;cell_2050&quot;</span>,</span>
+<span id="cb76-198"><a href="phylodiversity-and-phyloendemism.html#cb76-198" tabindex="-1"></a>  <span class="at">son_canape_map =</span> son_canape_map,</span>
+<span id="cb76-199"><a href="phylodiversity-and-phyloendemism.html#cb76-199" tabindex="-1"></a>  <span class="at">comm_matrix_molc =</span> comm_matrix_molc,</span>
+<span id="cb76-200"><a href="phylodiversity-and-phyloendemism.html#cb76-200" tabindex="-1"></a>  <span class="at">base_tree =</span> base_tree,</span>
+<span id="cb76-201"><a href="phylodiversity-and-phyloendemism.html#cb76-201" tabindex="-1"></a>  <span class="at">bbox =</span> bbox,</span>
+<span id="cb76-202"><a href="phylodiversity-and-phyloendemism.html#cb76-202" tabindex="-1"></a>  <span class="at">sig_map =</span> rpd_sig_map</span>
+<span id="cb76-203"><a href="phylodiversity-and-phyloendemism.html#cb76-203" tabindex="-1"></a>)</span>
+<span id="cb76-204"><a href="phylodiversity-and-phyloendemism.html#cb76-204" tabindex="-1"></a><span class="fu">print</span>(high_rpd_plot)</span></code></pre></div>
 
 </div>
 </div>

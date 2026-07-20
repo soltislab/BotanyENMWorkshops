@@ -83,3 +83,4 @@ d-visualize-cactaceae-phylogeny
 run-phylodiversity-analysis-with-canaper
 f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd
 g-phyloendemism-analysis
+h-optional-visualize-lineage-compositions-in-significant-cells

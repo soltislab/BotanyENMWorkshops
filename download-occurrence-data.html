@@ -277,32 +277,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="a-download-from-idigbio" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> A) Download from iDigBio<a href="download-occurrence-data.html#a-download-from-idigbio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="download-occurrence-data.html#cb7-1" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
-<span id="cb7-2"><a href="download-occurrence-data.html#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="download-occurrence-data.html#cb7-3" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
-<span id="cb7-4"><a href="download-occurrence-data.html#cb7-4" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">&quot;Galax urceolata&quot;</span>))</span>
-<span id="cb7-5"><a href="download-occurrence-data.html#cb7-5" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="download-occurrence-data.html#cb7-6" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
-<span id="cb7-7"><a href="download-occurrence-data.html#cb7-7" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
-<span id="cb7-8"><a href="download-occurrence-data.html#cb7-8" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="download-occurrence-data.html#cb7-9" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="download-occurrence-data.html#cb7-10" tabindex="-1"></a><span class="co"># search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
-<span id="cb7-11"><a href="download-occurrence-data.html#cb7-11" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="download-occurrence-data.html#cb7-12" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
-<span id="cb7-13"><a href="download-occurrence-data.html#cb7-13" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb7-14"><a href="download-occurrence-data.html#cb7-14" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;exists&quot;</span>),</span>
-<span id="cb7-15"><a href="download-occurrence-data.html#cb7-15" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>,</span>
-<span id="cb7-16"><a href="download-occurrence-data.html#cb7-16" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
-<span id="cb7-17"><a href="download-occurrence-data.html#cb7-17" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;geo_bounding_box&quot;</span>,</span>
-<span id="cb7-18"><a href="download-occurrence-data.html#cb7-18" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
-<span id="cb7-19"><a href="download-occurrence-data.html#cb7-19" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
-<span id="cb7-20"><a href="download-occurrence-data.html#cb7-20" tabindex="-1"></a>  )</span>
-<span id="cb7-21"><a href="download-occurrence-data.html#cb7-21" tabindex="-1"></a>)</span>
-<span id="cb7-22"><a href="download-occurrence-data.html#cb7-22" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
-<span id="cb7-23"><a href="download-occurrence-data.html#cb7-23" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="download-occurrence-data.html#cb7-24" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
-<span id="cb7-25"><a href="download-occurrence-data.html#cb7-25" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">&quot;data/01_download/iDigBio_GU_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-26"><a href="download-occurrence-data.html#cb7-26" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">&quot;data/01_download/iDigBio_GU_family_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Here we use <code>ridigbio</code> to download data.
+We show how you can search the iDigBio API for occurrence record by taxonomic designations.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="download-occurrence-data.html#cb7-1" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
+<span id="cb7-2"><a href="download-occurrence-data.html#cb7-2" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">&quot;Galax urceolata&quot;</span>))</span>
+<span id="cb7-3"><a href="download-occurrence-data.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="download-occurrence-data.html#cb7-4" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
+<span id="cb7-5"><a href="download-occurrence-data.html#cb7-5" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-6"><a href="download-occurrence-data.html#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="download-occurrence-data.html#cb7-7" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-8"><a href="download-occurrence-data.html#cb7-8" tabindex="-1"></a><span class="do">### Search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
+<span id="cb7-9"><a href="download-occurrence-data.html#cb7-9" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-10"><a href="download-occurrence-data.html#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="download-occurrence-data.html#cb7-11" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
+<span id="cb7-12"><a href="download-occurrence-data.html#cb7-12" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-13"><a href="download-occurrence-data.html#cb7-13" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;exists&quot;</span>),</span>
+<span id="cb7-14"><a href="download-occurrence-data.html#cb7-14" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;Diapensiaceae&quot;</span>,</span>
+<span id="cb7-15"><a href="download-occurrence-data.html#cb7-15" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
+<span id="cb7-16"><a href="download-occurrence-data.html#cb7-16" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">&quot;geo_bounding_box&quot;</span>,</span>
+<span id="cb7-17"><a href="download-occurrence-data.html#cb7-17" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
+<span id="cb7-18"><a href="download-occurrence-data.html#cb7-18" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
+<span id="cb7-19"><a href="download-occurrence-data.html#cb7-19" tabindex="-1"></a>  )</span>
+<span id="cb7-20"><a href="download-occurrence-data.html#cb7-20" tabindex="-1"></a>)</span>
+<span id="cb7-21"><a href="download-occurrence-data.html#cb7-21" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-22"><a href="download-occurrence-data.html#cb7-22" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="download-occurrence-data.html#cb7-23" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
+<span id="cb7-24"><a href="download-occurrence-data.html#cb7-24" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">&quot;data/01_download/iDigBio_GU_2026_07_14.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-25"><a href="download-occurrence-data.html#cb7-25" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">&quot;data/01_download/iDigBio_GU_family_2026_07_14.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="b-download-using-gators" class="section level2 hasAnchor" number="2.3">
 <h2><span class="header-section-number">2.3</span> B) Download Using gatoRs<a href="download-occurrence-data.html#b-download-using-gators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -315,24 +316,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-7"><a href="download-occurrence-data.html#cb8-7" tabindex="-1"></a><span class="co"># Use gatoRs to download records with resolved synonyms</span></span>
 <span id="cb8-8"><a href="download-occurrence-data.html#cb8-8" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Shortia_galacifolia,</span>
 <span id="cb8-9"><a href="download-occurrence-data.html#cb8-9" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-10"><a href="download-occurrence-data.html#cb8-10" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-10"><a href="download-occurrence-data.html#cb8-10" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb8-11"><a href="download-occurrence-data.html#cb8-11" tabindex="-1"></a></span>
 <span id="cb8-12"><a href="download-occurrence-data.html#cb8-12" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Galax_urceolata,</span>
 <span id="cb8-13"><a href="download-occurrence-data.html#cb8-13" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-14"><a href="download-occurrence-data.html#cb8-14" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-14"><a href="download-occurrence-data.html#cb8-14" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Galax_urceolata_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb8-15"><a href="download-occurrence-data.html#cb8-15" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="download-occurrence-data.html#cb8-16" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_barbulata,</span>
 <span id="cb8-17"><a href="download-occurrence-data.html#cb8-17" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-18"><a href="download-occurrence-data.html#cb8-18" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb8-18"><a href="download-occurrence-data.html#cb8-18" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_barbulata_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb8-19"><a href="download-occurrence-data.html#cb8-19" tabindex="-1"></a></span>
 <span id="cb8-20"><a href="download-occurrence-data.html#cb8-20" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_brevifolia,</span>
 <span id="cb8-21"><a href="download-occurrence-data.html#cb8-21" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-22"><a href="download-occurrence-data.html#cb8-22" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv&quot;</span>)</span></code></pre></div>
+<span id="cb8-22"><a href="download-occurrence-data.html#cb8-22" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">&quot;data/01_download/raw/Pyxidanthera_brevifolia_raw_2026_07_14.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="c-preview-downloaded-files" class="section level2 hasAnchor" number="2.4">
 <h2><span class="header-section-number">2.4</span> C) Preview Downloaded Files<a href="download-occurrence-data.html#c-preview-downloaded-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="download-occurrence-data.html#cb9-1" tabindex="-1"></a><span class="co"># Read one downloaded file</span></span>
-<span id="cb9-2"><a href="download-occurrence-data.html#cb9-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb9-2"><a href="download-occurrence-data.html#cb9-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb9-3"><a href="download-occurrence-data.html#cb9-3" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="download-occurrence-data.html#cb9-4" tabindex="-1"></a><span class="co"># Preview columns and dimensions</span></span>
 <span id="cb9-5"><a href="download-occurrence-data.html#cb9-5" tabindex="-1"></a><span class="fu">names</span>(rawdf)</span>

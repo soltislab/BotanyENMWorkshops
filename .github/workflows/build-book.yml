@@ -2,7 +2,7 @@ name: Build Bookdown
 
 on:
   push:
-    branches: [main, jts-branch]
+    branches: [main]
     paths:
       - "Botany2026/scripts/**"
       - "Botany2026/scripts/tools/**"

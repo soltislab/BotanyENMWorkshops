@@ -1,0 +1,782 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Botany 2026 ENM Workshop",
+    "section": "",
+    "text": "Welcome\nThis book accompanies the Botany ENM Workshop 2026.\nThe chapters below are generated automatically from the workshop R scripts.\nThe code examples shown throughout the book are taken directly from the workshop scripts and are intended to be copied and run by participants.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Botany ENM Workshops 2026</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#contributors",
+    "href": "index.html#contributors",
+    "title": "Botany 2026 ENM Workshop",
+    "section": "0.1 Contributors",
+    "text": "0.1 Contributors\nThis document was developed by Pamela S. Soltis, Douglas E. Soltis, Shelly Gaynor, Makenzie Mabry, Elizabeth White, JT Miller, Sarah Ellen Strickland, and Cameron J. McMullen.\nMany people contributed to this material including:\n- Anthony Melton\n- Johanna Jantzen\n- Andre Naranjo\n- Maria Cortez\n- Malu Ore Rengifo\n- Lauren Gillett\n- Sebastian Fernandez\n- Sydney Barfus\n- Tyler Radtke",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Botany ENM Workshops 2026</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html",
+    "href": "chapters/00_Setup.html",
+    "title": "2  Setup",
+    "section": "",
+    "text": "2.1 Download Zenodo Data\nPurpose:\nsource(\"scripts/tools/ZenodoDownload.R\")\ndownload.packages(c(\"tools\", \"httr2\", \"utils\", \"magrittr\"))\nZenodoDownload()",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html#install-required-cran-packages",
+    "href": "chapters/00_Setup.html#install-required-cran-packages",
+    "title": "2  Setup",
+    "section": "2.2 Install required CRAN packages",
+    "text": "2.2 Install required CRAN packages",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html#define-cran-packages",
+    "href": "chapters/00_Setup.html#define-cran-packages",
+    "title": "2  Setup",
+    "section": "2.3 Define CRAN Packages",
+    "text": "2.3 Define CRAN Packages\n\nlist_of_packages &lt;- c(\n  # Core ENM tools\n  \"terra\", \"dismo\", \"ENMeval\", \"ENMTools\", \"biomod2\",\n\n  # Spatial / Mapping\n  \"sf\", \"rnaturalearth\", \"ggspatial\", \"leaflet\", \"fields\", \"rangeBuilder\",\n\n  # Visualization\n  \"ggplot2\", \"viridis\", \"gridExtra\", \"ggtree\", \"ggforce\", \"patchwork\",\n\n  # Data manipulation\n  \"dplyr\", \"tidyr\", \"stringr\", \"gtools\",\n\n  # Phylogenetics\n  \"ape\", \"phytools\",\n\n  # Spatial Phylogenetics\n  \"canaper\",\n\n  # Biodiversity data\n  \"ridigbio\", \"gatoRs\",\n\n  # Other utilities\n  \"multcompView\", \"usdm\", \"predicts\", \"rJava\"\n)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html#install-missing-cran-packages",
+    "href": "chapters/00_Setup.html#install-missing-cran-packages",
+    "title": "2  Setup",
+    "section": "2.4 Install Missing CRAN Packages",
+    "text": "2.4 Install Missing CRAN Packages\n\n# Identify any packages from the list not currently installed.\nnew.packages &lt;- list_of_packages[!(list_of_packages %in% installed.packages()[,\"Package\"])]\n\nif (length(new.packages)) {\n  cat(\"\\nInstalling missing CRAN packages:\\n\")\n  print(new.packages)\n  install.packages(new.packages)\n} else {\n  cat(\"\\nAll required CRAN packages already installed.\\n\")\n}",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html#load-all-cran-packages",
+    "href": "chapters/00_Setup.html#load-all-cran-packages",
+    "title": "2  Setup",
+    "section": "2.5 Load All CRAN Packages",
+    "text": "2.5 Load All CRAN Packages\n\n# Try loading all required CRAN packages.\nloaded &lt;- sapply(list_of_packages, require, character.only = TRUE)\n\nif (any(!loaded)) {\n  cat(\"\\nWARNING: These CRAN packages failed to load:\\n\")\n  print(list_of_packages[!loaded])\n} else {\n  cat(\"\\nAll CRAN packages loaded successfully.\\n\")\n}",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/00_Setup.html#install-required-github-packages",
+    "href": "chapters/00_Setup.html#install-required-github-packages",
+    "title": "2  Setup",
+    "section": "2.6 Install required GitHub packages",
+    "text": "2.6 Install required GitHub packages\n\n# devtools is required for installing from GitHub.\nif (!require(devtools)) {\n  install.packages(\"devtools\")\n  library(devtools)\n}\n\n# List of GitHub repositories for required packages.\ngithub_repos &lt;- c(\n  \"vqv/ggbiplot\"\n)\n\n# Check whether these GitHub packages are installed, and install if not.\nfor (repo in github_repos) {\n  pkg &lt;- tail(strsplit(repo, \"/\")[[1]], 1)\n  if (!pkg %in% installed.packages()[,\"Package\"]) {\n    cat(paste(\"\\nInstalling GitHub package:\", repo, \"\\n\"))\n    devtools::install_github(repo, upgrade = \"never\")\n  } else {\n    cat(paste(\"\\nGitHub package already installed:\", pkg, \"\\n\"))\n  }\n}\n\n# Try loading GitHub packages\ngithub_packages &lt;- c(\"ggbiplot\")\ngithub_loaded &lt;- sapply(github_packages, require, character.only = TRUE)\n\nif (any(!github_loaded)) {\n  cat(\"\\nWARNING: These GitHub packages failed to load:\\n\")\n  print(github_packages[!github_loaded])\n} else {\n  cat(\"\\nAll GitHub packages loaded successfully.\\n\")\n}",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Setup</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01_Data_Downloads.html",
+    "href": "chapters/01_Data_Downloads.html",
+    "title": "3  Download Occurrence Data",
+    "section": "",
+    "text": "3.1 Load Required Packages\nPurpose:\nCreated by ML Gaynor.\nlibrary(ridigbio)     # Interface to iDigBio API\nlibrary(gatoRs)       # Unified taxonomic/occurrence tools\nlibrary(leaflet)      # Interactive mapping",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01_Data_Downloads.html#a-download-from-idigbio",
+    "href": "chapters/01_Data_Downloads.html#a-download-from-idigbio",
+    "title": "3  Download Occurrence Data",
+    "section": "3.2 A) Download from iDigBio",
+    "text": "3.2 A) Download from iDigBio\n\n# here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.\n\n# Search for specific species (Galax urceolata)\niDigBio_GU &lt;- idig_search_records(rq = list(scientificname = \"Galax urceolata\"))\n\n# Search for all Diapensiaceae occurrences (limit to 1000 for example)\niDigBio_GU_family &lt;- idig_search_records(rq = list(family = \"Diapensiaceae\"), limit = 1000)\n\n\n# search the API with a geographic bounding box (e.g. Eastern USA extent)\n\n# Search with a geographic bounding box (e.g., eastern USA extent)\nrq_input &lt;- list(\n  scientificname = list(type = \"exists\"),\n  family = \"Diapensiaceae\",\n  geopoint = list(\n    type = \"geo_bounding_box\",\n    top_left = list(lon = -98.16, lat = 48.92),\n    bottom_right = list(lon = -64.02, lat = 23.06)\n  )\n)\niDigBio_GU_family_USA &lt;- idig_search_records(rq_input, limit = 1000)\n\n# Save iDigBio results as CSV\nwrite.csv(iDigBio_GU, \"data/01_download/iDigBio_GU_2025_06_27.csv\", row.names = FALSE)\nwrite.csv(iDigBio_GU_family, \"data/01_download/iDigBio_GU_family_2025_06_27.csv\", row.names = FALSE)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01_Data_Downloads.html#b-download-using-gators",
+    "href": "chapters/01_Data_Downloads.html#b-download-using-gators",
+    "title": "3  Download Occurrence Data",
+    "section": "3.3 B) Download Using gatoRs",
+    "text": "3.3 B) Download Using gatoRs\n\n# Define synonym lists for each focal species\nShortia_galacifolia &lt;- c(\"Shortia galacifolia\", \"Sherwoodia galacifolia\")\nGalax_urceolata &lt;- c(\"Galax urceolata\", \"Galax aphylla\")\nPyxidanthera_barbulata &lt;- c(\"Pyxidanthera barbulata\", \"Pyxidanthera barbulata var. barbulata\")\nPyxidanthera_brevifolia &lt;- c(\"Pyxidanthera brevifolia\", \"Pyxidanthera barbulata var. brevifolia\")\n\n# Use gatoRs to download records with resolved synonyms\ngators_download(synonyms.list = Shortia_galacifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Galax_urceolata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_barbulata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_brevifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01_Data_Downloads.html#c-preview-downloaded-files",
+    "href": "chapters/01_Data_Downloads.html#c-preview-downloaded-files",
+    "title": "3  Download Occurrence Data",
+    "section": "3.4 C) Preview Downloaded Files",
+    "text": "3.4 C) Preview Downloaded Files\n\n# Read one downloaded file\nrawdf &lt;- read.csv(\"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\n# Preview columns and dimensions\nnames(rawdf)\nnrow(rawdf)\n\n# Visualize records interactively - The error message here indicates many points do not have long/lat values\nleaflet(rawdf) %&gt;%\n  addTiles() %&gt;%\n  addMarkers(label = paste0(rawdf$longitude, \", \", rawdf$latitude))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html",
+    "href": "chapters/02_Data_Cleaning.html",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "",
+    "text": "4.1 Load Required Packages\nPurpose:\nCreated and modified by ML Gaynor\nlibrary(gatoRs)         # Taxonomic and geographic cleaning\nlibrary(fields)         # For calculating spatial distances\nlibrary(sf)             # For spatial operations and visualization\nlibrary(ggplot2)        # For plotting\nlibrary(ggspatial)      # Scale bars and north arrows\nlibrary(leaflet)        # For interactive mapping",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#a-read-raw-occurrence-data",
+    "href": "chapters/02_Data_Cleaning.html#a-read-raw-occurrence-data",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.2 A) Read Raw Occurrence Data",
+    "text": "4.2 A) Read Raw Occurrence Data\n\n# Read species-specific raw data\nrawdf &lt;- read.csv(\"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\nnrow(rawdf)  # Starting number of records",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#b-taxonomic-harmonization",
+    "href": "chapters/02_Data_Cleaning.html#b-taxonomic-harmonization",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.3 B) Taxonomic Harmonization",
+    "text": "4.3 B) Taxonomic Harmonization\n\n# Inspect unique names\nunique(rawdf$scientificName)\n\n# Define synonym list\nsearch &lt;- c(\"Shortia galacifolia\", \"Sherwoodia galacifolia\")\n\n# Clean names with fuzzy matching\ndf &lt;- taxa_clean(df = rawdf,\n                 synonyms.list = search,\n                 taxa.filter = \"fuzzy\",\n                 accepted.name = \"Shortia galacifolia\")\nnrow(df)  # Updated count",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#c-locality-cleaning",
+    "href": "chapters/02_Data_Cleaning.html#c-locality-cleaning",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.4 C) Locality Cleaning",
+    "text": "4.4 C) Locality Cleaning\n\n# Remove invalid/skewed records and round coordinates\ndf &lt;- basic_locality_clean(df = df,\n                           remove.zero = TRUE,\n                           precision = TRUE,\n                           digits = 2,\n                           remove.skewed = TRUE)\nnrow(df)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#d-flag-and-filter-cultivated-coordinates",
+    "href": "chapters/02_Data_Cleaning.html#d-flag-and-filter-cultivated-coordinates",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.5 D) Flag and Filter Cultivated Coordinates",
+    "text": "4.5 D) Flag and Filter Cultivated Coordinates\n\ndf &lt;- process_flagged(df, interactive = FALSE, scientific.name = \"accepted_name\")\nnrow(df)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#e-duplicate-removal",
+    "href": "chapters/02_Data_Cleaning.html#e-duplicate-removal",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.6 E) Duplicate Removal",
+    "text": "4.6 E) Duplicate Removal\n\n# Remove duplicate specimens and aggregator artifacts\ndf &lt;- remove_duplicates(df, remove.unparseable = TRUE)\nnrow(df)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#f-spatial-deduplication",
+    "href": "chapters/02_Data_Cleaning.html#f-spatial-deduplication",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.7 F) Spatial Deduplication",
+    "text": "4.7 F) Spatial Deduplication\n\n# Retain one point per raster pixel (30 arc-sec default)\ndf &lt;- one_point_per_pixel(df)\nnrow(df)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#g-spatial-thinning",
+    "href": "chapters/02_Data_Cleaning.html#g-spatial-thinning",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.8 G) Spatial Thinning",
+    "text": "4.8 G) Spatial Thinning\n\n# Calculate minimum nearest-neighbor distance\nnnDm &lt;- rdist.earth(as.matrix(df[, c(\"longitude\", \"latitude\")]), miles = FALSE)\nnnDmin &lt;- do.call(rbind, lapply(1:5, function(i) sort(nnDm[, i])[2]))\nmin(nnDmin)  # e.g., 2.22 km\n\n# If thinning is needed\ndf &lt;- thin_points(df, distance = 0.002, reps = 100)\nnrow(df)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#h-static-map-of-cleaned-points",
+    "href": "chapters/02_Data_Cleaning.html#h-static-map-of-cleaned-points",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.9 H) Static Map of Cleaned Points",
+    "text": "4.9 H) Static Map of Cleaned Points\n\ndf_fixed &lt;- st_as_sf(df, coords = c(\"longitude\", \"latitude\"), crs = 4326)\nUSA &lt;- borders(database = \"usa\", colour = \"gray80\", fill = \"gray80\")\nstate &lt;- borders(database = \"state\", colour = \"black\", fill = NA)\n\nsimple_map &lt;- ggplot() +\n  USA + state +\n  geom_sf(data = df_fixed, color = \"blue\") +\n  coord_sf(xlim = c(min(df$longitude) - 3, max(df$longitude) + 3),\n           ylim = c(min(df$latitude) - 3, max(df$latitude) + 3)) +\n  xlab(\"Longitude\") + ylab(\"Latitude\") +\n  annotation_scale() +\n  annotation_north_arrow(location = \"tl\", height = unit(1, \"cm\"), width = unit(1, \"cm\"))\n\nsimple_map",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#i-interactive-map-with-leaflet",
+    "href": "chapters/02_Data_Cleaning.html#i-interactive-map-with-leaflet",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.10 I) Interactive Map with Leaflet",
+    "text": "4.10 I) Interactive Map with Leaflet\n\nleaflet(df_fixed) %&gt;%\n  addMarkers(label = paste0(df$longitude, \", \", df$latitude)) %&gt;%\n  addTiles()",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#j-save-cleaned-csv",
+    "href": "chapters/02_Data_Cleaning.html#j-save-cleaned-csv",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.11 J) Save Cleaned CSV",
+    "text": "4.11 J) Save Cleaned CSV\n\nwrite.csv(df, \"data/02_cleaning/Shortia_galacifolia_2025_06_27_cleaned.csv\", row.names = FALSE)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#k-batch-clean-for-all-species",
+    "href": "chapters/02_Data_Cleaning.html#k-batch-clean-for-all-species",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.12 K) Batch Clean for All Species",
+    "text": "4.12 K) Batch Clean for All Species\n\nfiles &lt;- list.files(\"data/01_download/raw\", full.names = TRUE)[1:3]\nsynonymns &lt;- list(\n  Galax_urceolata = c(\"Galax urceolata\", \"Galax urceolata (Poir.) Brummitt\", \"Galax urceolata (Poiret) Brummitt\", \"Galax urceolaa\", \"Galax aphylla L.\", \"Galax aphylla\"),\n  Pyxidanthera_barbulata = c(\"Pyxidanthera barbulata\", \"Pyxidanthera barbulata Michx.\", \"Pyxidanthera barbulata var. barbulata\", \"Pyxidenthera barbulata\"),\n  Pyxidanthera_brevifolia = c(\"Pyxidanthera brevifolia\", \"Pyxidanthera brevifolia Wells\", \"Pyxidanthera barbulata var. brevifolia (Wells) H.E.Ahles\", \"Pyxidanthera barbulata var. brevifolia\")\n)\n\nfor (i in 1:3) {\n  df &lt;- read.csv(files[i])\n  search &lt;- synonymns[[i]]\n\n  df &lt;- taxa_clean(df, synonyms.list = search, taxa.filter = \"fuzzy\", accepted.name = search[1])\n  df &lt;- basic_locality_clean(df, remove.zero = TRUE, precision = TRUE, digits = 2, remove.skewed = TRUE)\n  df &lt;- process_flagged(df, interactive = FALSE, scientific.name = \"accepted_name\") # removing all points for brevifolia\n  df &lt;- remove_duplicates(df, remove.unparseable = TRUE)\n  df &lt;- one_point_per_pixel(df)\n  df &lt;- thin_points(df, distance = 0.002, reps = 100)\n\n  outfile &lt;- paste0(\"data/02_cleaning/\", gsub(\" \", \"_\", search[1]), \"_2025_06_27_cleaned.csv\")\n  write.csv(df, outfile, row.names = FALSE)\n  rm(df, search, outfile)\n}",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#l-merge-cleaned-files-for-maxent",
+    "href": "chapters/02_Data_Cleaning.html#l-merge-cleaned-files-for-maxent",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.13 L) Merge Cleaned Files for Maxent",
+    "text": "4.13 L) Merge Cleaned Files for Maxent\n\nalldf &lt;- list.files(\"data/02_cleaning\", pattern = \"*.csv\", full.names = TRUE)\nalldf &lt;- lapply(alldf, read.csv)\nalldf &lt;- do.call(rbind, alldf)\n\nwrite.csv(alldf, \"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv\", row.names = FALSE)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#m-map-all-records",
+    "href": "chapters/02_Data_Cleaning.html#m-map-all-records",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.14 M) Map All Records",
+    "text": "4.14 M) Map All Records\n\nalldf_fixed &lt;- st_as_sf(alldf, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n\nall_map &lt;- ggplot() +\n  USA + state +\n  geom_sf(data = alldf_fixed, aes(col = factor(accepted_name))) +\n  coord_sf(xlim = c(min(alldf$longitude) - 3, max(alldf$longitude) + 3),\n           ylim = c(min(alldf$latitude) - 3, max(alldf$latitude) + 3)) +\n  xlab(\"Longitude\") + ylab(\"Latitude\") +\n  labs(color = \"Scientific name\") +\n  annotation_scale() +\n  annotation_north_arrow(location = \"tl\", height = unit(1, \"cm\"), width = unit(1, \"cm\"))\n\nall_map",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02_Data_Cleaning.html#n-prepare-geolocate-batch-file",
+    "href": "chapters/02_Data_Cleaning.html#n-prepare-geolocate-batch-file",
+    "title": "4  Occurrence Data Cleaning",
+    "section": "4.15 N) Prepare GeoLocate Batch File",
+    "text": "4.15 N) Prepare GeoLocate Batch File\n\nrawdf &lt;- read.csv(\"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\nrawdf_GeoRef &lt;- need_to_georeference(rawdf)\n\n# Format columns for GeoLocate submission\nrawdf_GeoRef &lt;- rawdf_GeoRef %&gt;%\n  dplyr::select(\n    \"locality string\" = locality,\n    country,\n    state = stateProvince,\n    county,\n    latitude,\n    longitude,\n    ID,\n    name = scientificName,\n    basis = basisOfRecord\n  )\n\n# Add required empty columns\nrawdf_GeoRef$'correction status' &lt;- \"\"\nrawdf_GeoRef$precision &lt;- \"\"\nrawdf_GeoRef$'error polygon' &lt;- \"\"\nrawdf_GeoRef$'multiple results' &lt;- \"\"\n\n# Reorder columns\nrawdf_GeoRef2 &lt;- rawdf_GeoRef[, c(\"locality string\", \"country\", \"state\", \"county\", \"latitude\", \"longitude\",\n                                  \"correction status\", \"precision\", \"error polygon\", \"multiple results\",\n                                  \"ID\", \"name\", \"basis\")]\n\nwrite.csv(rawdf_GeoRef2, \"data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2025_06_27.csv\", row.names = FALSE)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html",
+    "href": "chapters/03_Data_Exploration.html",
+    "title": "5  Data Exploration",
+    "section": "",
+    "text": "5.1 Load Required Packages\nPurpose:\nlibrary(gtools)         # For mixedsort of file names\nlibrary(terra)          # For raster and spatial extraction\nlibrary(dplyr)          # For data wrangling\nlibrary(tidyr)          # For handling NAs and reshaping\nlibrary(ggplot2)        # For plotting\nlibrary(ggbiplot)       # For PCA biplot visualization\nlibrary(multcompView)   # For compact letter display (Tukey HSD)\nlibrary(gridExtra)      # For combining plots",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#a-load-cleaned-data",
+    "href": "chapters/03_Data_Exploration.html#a-load-cleaned-data",
+    "title": "5  Data Exploration",
+    "section": "5.2 A) Load Cleaned Data",
+    "text": "5.2 A) Load Cleaned Data\nRead in cleaned occurrence data with geographic coordinates and species ID\n\nalldf &lt;- read.csv(\"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#b-load-and-stack-climatic-variables-from-worldclim",
+    "href": "chapters/03_Data_Exploration.html#b-load-and-stack-climatic-variables-from-worldclim",
+    "title": "5  Data Exploration",
+    "section": "5.3 B) Load and Stack Climatic Variables from WorldClim",
+    "text": "5.3 B) Load and Stack Climatic Variables from WorldClim\n\n# List and sort all .tif files in the WorldClim directory\nlist &lt;- list.files(\"data/04_climate_processing/BioClim/\", full.names = TRUE)\nlist &lt;- gtools::mixedsort(sort(list))\n\n# Stack the raster files\nenvtStack &lt;- terra::rast(list)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#c-extract-climatic-variables-at-occurrence-points",
+    "href": "chapters/03_Data_Exploration.html#c-extract-climatic-variables-at-occurrence-points",
+    "title": "5  Data Exploration",
+    "section": "5.4 C) Extract Climatic Variables at Occurrence Points",
+    "text": "5.4 C) Extract Climatic Variables at Occurrence Points\n\n# Extract values of environmental rasters at occurrence points\nptExtracted &lt;- terra::extract(envtStack, alldf[, c(\"longitude\", \"latitude\")])\n# Combine with species names and coordinates\nptExtracteddf &lt;- ptExtracted %&gt;%\n  dplyr::mutate(name = as.character(alldf$accepted_name),\n                x = alldf$longitude,\n                y = alldf$latitude)\n\n# Remove any rows with missing climate values\nptExtracteddf &lt;- ptExtracteddf %&gt;% tidyr::drop_na()",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#d-perform-pca-on-climatic-variables",
+    "href": "chapters/03_Data_Exploration.html#d-perform-pca-on-climatic-variables",
+    "title": "5  Data Exploration",
+    "section": "5.5 D) Perform PCA on Climatic Variables",
+    "text": "5.5 D) Perform PCA on Climatic Variables\n\n# Subset climate variables (assumed to be columns 2 to 21)\ndata.bioclim &lt;- ptExtracteddf[, 2:21]\ndata.species &lt;- ptExtracteddf[, \"name\"]\n\n# Scale and run PCA\npca_result &lt;- prcomp(data.bioclim, scale. = TRUE)\n\n# Extract variable loadings\nloadings &lt;- pca_result$rotation\n\n# Calculate relative contributions of each variable to each PC\nloadings_relative &lt;- sweep(abs(loadings), 2, colSums(abs(loadings)), \"/\") * 100",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#e-visualize-pca",
+    "href": "chapters/03_Data_Exploration.html#e-visualize-pca",
+    "title": "5  Data Exploration",
+    "section": "5.6 E) Visualize PCA",
+    "text": "5.6 E) Visualize PCA\n\n# Customize theme\ncustom_theme &lt;- theme(\n  panel.background = element_blank(),\n  panel.border = element_rect(fill = NA),\n  panel.grid.major = element_blank(),\n  panel.grid.minor = element_blank(),\n  strip.background = element_blank(),\n  axis.ticks = element_line(colour = \"black\"),\n  plot.margin = unit(c(1, 1, 1, 1), \"line\"),\n  axis.text = element_text(size = 12),\n  legend.text = element_text(size = 12),\n  legend.title = element_text(size = 12),\n  text = element_text(size = 12)\n)\n\n# Define color palette for species\npal &lt;- c(\"#D43F3AFF\", \"#EEA236FF\", \"#5CB85CFF\", \"#46B8DAFF\")\n\n# PCA Biplot\npca_plot &lt;- ggbiplot(pca_result, obs.scale = 1, var.scale = 1,\n                     groups = data.species, ellipse = TRUE, circle = TRUE) +\n  scale_color_manual(name = '', values = pal) +\n  theme(legend.direction = 'vertical', legend.position = 'bottom',\n        legend.text = element_text(size = 12, face = \"italic\")) +\n  custom_theme\n\nprint(pca_plot)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#f-identify-top-contributors-to-pc1-and-pc2",
+    "href": "chapters/03_Data_Exploration.html#f-identify-top-contributors-to-pc1-and-pc2",
+    "title": "5  Data Exploration",
+    "section": "5.7 F) Identify Top Contributors to PC1 and PC2",
+    "text": "5.7 F) Identify Top Contributors to PC1 and PC2\n\n# Top 2 contributing variables to PC1 and PC2\ntop_PC1_vars &lt;- rownames(loadings)[order(abs(loadings[, \"PC1\"]), decreasing = TRUE)][1:2]\ntop_PC2_vars &lt;- rownames(loadings)[order(abs(loadings[, \"PC2\"]), decreasing = TRUE)][1:2]\nselected_vars &lt;- unique(c(top_PC1_vars, top_PC2_vars))  # remove duplicates",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03_Data_Exploration.html#g-anova-tukey-hsd-plotting-for-top-variables",
+    "href": "chapters/03_Data_Exploration.html#g-anova-tukey-hsd-plotting-for-top-variables",
+    "title": "5  Data Exploration",
+    "section": "5.8 G) ANOVA + Tukey HSD + Plotting for Top Variables",
+    "text": "5.8 G) ANOVA + Tukey HSD + Plotting for Top Variables\n\nplotlist &lt;- list()\n\nfor (i in seq_along(selected_vars)) {\n  varname &lt;- selected_vars[i]\n\n  # Run ANOVA\n  model &lt;- aov(as.formula(paste0(varname, \" ~ name\")), data = ptExtracteddf)\n  tukey &lt;- TukeyHSD(model)\n  pvals &lt;- tukey$`name`[, 4]\n\n  # Convert p-values to significance letters\n  letters_out &lt;- multcompLetters(pvals)\n  groups_df &lt;- data.frame(\n    name = names(letters_out$Letters),\n    groups = letters_out$Letters\n  )\n\n  # Set y position for labels\n  max_y &lt;- max(ptExtracteddf[[varname]], na.rm = TRUE)\n  groups_df$y_position &lt;- max_y * 1.1\n\n  # Create plot\n  plotlist[[i]] &lt;- ggplot(ptExtracteddf, aes(x = name, y = .data[[varname]])) +\n    geom_jitter(aes(color = name), width = 0.3, alpha = 0.5, size = 1) +\n    geom_boxplot(fill = NA, color = \"black\", size = 0.6) +\n    geom_text(data = groups_df,\n              aes(x = name, y = y_position, label = groups),\n              inherit.aes = FALSE, size = 4) +\n    scale_fill_manual(values = pal) +\n    scale_color_manual(values = pal) +\n    ggtitle(paste0(varname)) +\n    ylab(varname) +\n    theme_classic() +\n    theme(legend.position = \"none\",\n          axis.text.x = element_text(angle = 45, hjust = 1, face = \"italic\")) +\n    ylim(0, max_y * 1.3)\n}\n\n# Combine plots\ngridExtra::grid.arrange(grobs = plotlist, ncol = 2)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Data Exploration</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html",
+    "title": "6  Climate Processing",
+    "section": "",
+    "text": "6.1 Load Required Packages\nlibrary(terra)        # For raster handling\nlibrary(sf)           # For vector spatial operations\nlibrary(ggplot2)      # For plotting\nlibrary(rangeBuilder) # For creating alpha hull\nlibrary(dplyr)        # For data manipulation\nlibrary(usdm)         # For VIF calculations\nlibrary(stringr)      # For string operations\nlibrary(gridExtra)    # For plotting",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html#a-load-cleaned-occurrence-data",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html#a-load-cleaned-occurrence-data",
+    "title": "6  Climate Processing",
+    "section": "6.2 A) Load Cleaned Occurrence Data",
+    "text": "6.2 A) Load Cleaned Occurrence Data\n\n# Read in cleaned occurrence data with geographic coordinates and species ID\nalldf &lt;- read.csv(\"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv\")\n\n# Convert occurrence data to an sf object\nalldfsp &lt;- st_as_sf(alldf,\n                    coords = c(\"longitude\", \"latitude\"),\n                    crs = 4326)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html#b-load-and-stack-climatic-variables",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html#b-load-and-stack-climatic-variables",
+    "title": "6  Climate Processing",
+    "section": "6.3 B) Load and Stack Climatic Variables",
+    "text": "6.3 B) Load and Stack Climatic Variables\n\n# List and sort all .tif files in the BioClim directory\nbiolist &lt;- list.files(\"data/04_climate_processing/BioClim/\",\n                      pattern = \"\\\\.tif$\",\n                      full.names = TRUE)\n\n# Stack the raster files into a SpatRaster\nbiostack &lt;- terra::rast(biolist)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html#c-crop-and-mask-bioclim-layers-to-accessible-area-m-for-each-species",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html#c-crop-and-mask-bioclim-layers-to-accessible-area-m-for-each-species",
+    "title": "6  Climate Processing",
+    "section": "6.4 C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species",
+    "text": "6.4 C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species\n\n# Define base output directory for cropped rasters\ndir  &lt;- \"data/04_climate_processing/Cropped\"\n\n# Loop through each unique species in the occurrence data\nfor (species in unique(alldf$accepted_name)) {\n\n  # Print current species for progress tracking\n  message(\"Processing species: \", species)\n\n  # Subset occurrence data for this species\n  species_df &lt;- alldf %&gt;%\n    filter(accepted_name == species)\n\n  # Convert species occurrences to sf\n  species_sf &lt;- st_as_sf(species_df,\n                         coords = c(\"longitude\", \"latitude\"),\n                         crs = 4326)\n\n  # Run alpha hull via rangeBuilder\n  hull &lt;- rangeBuilder::getDynamicAlphaHull(\n    x = species_df,\n    coordHeaders = c(\"longitude\", \"latitude\"),\n    fraction = 1,\n    partCount = 1,\n    initialAlpha = 20,\n    clipToCoast = \"terrestrial\",\n    verbose = FALSE\n  )\n\n  # Convert hull to sf\n  hull_sf &lt;- st_as_sf(hull[[1]])\n\n  # Transform hull and points to equal-area projection\n  proj &lt;- \"+proj=cea +lat_ts=0 +lon_0=0\"\n  hull_sf_proj &lt;- st_transform(hull_sf, crs = proj)\n  species_sf_proj &lt;- st_transform(species_sf, crs = proj)\n\n  # Calculate nearest-neighbor distances\n  dist_matrix &lt;- st_distance(species_sf_proj)\n  nearest_neighbor_dists &lt;- apply(dist_matrix, 2, function(x) sort(x)[2])\n  buffer_distance &lt;- quantile(nearest_neighbor_dists, probs = 0.80, na.rm = TRUE)\n\n  # Buffer the hull\n  buffer_proj &lt;- st_buffer(hull_sf_proj, dist = buffer_distance)\n\n  # Union polygons in case of multiple pieces\n  buffer_proj &lt;- st_union(buffer_proj)\n\n  # Transform both hull and buffered hull back to WGS84 for plotting\n  hull_sf_wgs84 &lt;- st_transform(hull_sf_proj, crs = 4326)\n  buffer_wgs84 &lt;- st_transform(buffer_proj, crs = 4326)\n\n  # plot hull before buffering\n  p_before &lt;- ggplot() +\n    geom_sf(data = hull_sf_wgs84, fill = \"gray70\", alpha = 0.5, color = NA) +\n    geom_sf(data = species_sf, color = \"black\", size = 0.5) +\n    theme_minimal() +\n    ggtitle(paste(\"Alpha Hull (No Buffer) -\", species))\n\n  # plot after buffering alpha hull\n  p_after &lt;- ggplot() +\n    geom_sf(data = buffer_wgs84, fill = \"gray70\", alpha = 0.5, color = NA) +\n    geom_sf(data = species_sf, color = \"red\", size = 0.5) +\n    theme_minimal() +\n    ggtitle(paste(\"Buffered Hull -\", species))\n\n  gridExtra::grid.arrange(p_before, p_after, ncol = 2)\n\n  # Convert buffered area to terra SpatVector\n  buffer_vect &lt;- terra::vect(buffer_wgs84)\n\n  # Define output directory for this species\n  spec &lt;- gsub(\" \", \"_\", species)\n  species_dir &lt;- file.path(dir, spec)\n  dir.create(species_dir, showWarnings = FALSE)\n\n  # Loop through each raster layer and crop/mask to buffered area\n  for (i in seq_along(biolist)) {\n\n    rast &lt;- biostack[[i]]\n\n    # Crop raster to extent\n    rast_crop &lt;- crop(rast, buffer_vect)\n\n    # Mask raster to buffered hull shape\n    rast_mask &lt;- mask(rast_crop, buffer_vect)\n\n    # Define output file name\n    layer_name &lt;- names(rast)\n    outfile &lt;- file.path(species_dir, paste0(layer_name, \".tif\"))\n\n    # Write cropped raster\n    writeRaster(rast_mask,outfile,overwrite = TRUE)\n\n    message(\"  Cropped and saved: \", outfile)\n  }\n}",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html#d-vif-selection-for-each-species",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html#d-vif-selection-for-each-species",
+    "title": "6  Climate Processing",
+    "section": "6.5 D) VIF Selection for Each Species",
+    "text": "6.5 D) VIF Selection for Each Species\n\n# Loop through each species\nfor (species in unique(alldf$accepted_name)) {\n  spec &lt;- gsub(\" \", \"_\", species)\n  spec_dir &lt;- file.path(dir, spec)\n\n  # Read in species cropped rasters and stack them\n  cropped_files &lt;- list.files(spec_dir,\n                              pattern = \"\\\\.tif$\",\n                              full.names = TRUE)\n\n  species_stack &lt;- terra::rast(cropped_files)\n\n  # Calculate VIF and exclude collinear variables\n  vif_result &lt;- usdm::vifstep(species_stack, th = 10)\n  message(\"VIF calculated for species: \", species)\n\n  reduced_stack &lt;- exclude(species_stack, vif_result)\n\n  # Create a folder for VIF-selected layers\n  vif_dir &lt;- file.path(spec_dir, \"VIF\")\n  dir.create(vif_dir, showWarnings = FALSE)\n\n  # Save each retained raster layer\n  for (layer_name in names(reduced_stack)) {\n\n    r_layer &lt;- reduced_stack[[layer_name]]\n\n    out_file &lt;- file.path(vif_dir, paste0(layer_name, \".tif\"))\n\n    terra::writeRaster(r_layer,\n                       out_file,\n                       overwrite = TRUE)\n\n    message(\"Saved layer: \", out_file)\n  }\n}",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04_AccessibleArea_VariableSelection.html#e-correlation-matrix-of-cropped-bioclim-layers-for-each-species",
+    "href": "chapters/04_AccessibleArea_VariableSelection.html#e-correlation-matrix-of-cropped-bioclim-layers-for-each-species",
+    "title": "6  Climate Processing",
+    "section": "6.6 E) Correlation Matrix of Cropped Bioclim Layers for Each Species",
+    "text": "6.6 E) Correlation Matrix of Cropped Bioclim Layers for Each Species\n\n# List species folders in the cropped directory\nspecies_dirs &lt;- list.dirs(dir, recursive = FALSE, full.names = TRUE)\n\n# Loop through each species folder\nfor (species_dir in species_dirs) {\n\n  # Extract species name from folder path\n  species_name &lt;- basename(species_dir)\n\n  # List all cropped raster files for this species\n  cropped_files &lt;- list.files(species_dir,\n                              pattern = \"\\\\.tif$\",\n                              full.names = TRUE)\n\n  # Stack the rasters for this species\n  cropped_stack &lt;- terra::rast(cropped_files)\n\n  # Calculate correlation matrix\n  corr &lt;- terra::layerCor(cropped_stack, fun = \"cor\", na.rm = TRUE)\n\n  # Extract absolute Pearson correlation values\n  cor_abs &lt;- abs(corr$correlation)\n\n  # Define output CSV path\n  corr_outfile &lt;- file.path(species_dir,paste0(\"correlationBioclim_\", species_name, \".csv\"))\n\n  # Write correlation matrix to CSV\n  write.csv(cor_abs,corr_outfile,row.names = TRUE)\n\n}",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Climate Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html",
+    "href": "chapters/05_Ecological_Niche_Modeling.html",
+    "title": "7  Ecological Niche Modeling",
+    "section": "",
+    "text": "7.1 Load Required Packages\nPurpose:\nlibrary(terra)         # For raster data\nlibrary(ENMeval)       # For ENM evaluation and tuning\nlibrary(predicts)      # For niche modeling tools\nlibrary(dplyr)         # For data manipulation\nlibrary(ggplot2)       # Optional for additional plots\nlibrary(sf)            # For vector spatial operations\nlibrary(rnaturalearth) # For downloading shapefiles of countries and states\nlibrary(ggspatial)     # Scale bars and north arrows",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#a-load-cleaned-occurrence-data",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#a-load-cleaned-occurrence-data",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.2 A) Load Cleaned Occurrence Data",
+    "text": "7.2 A) Load Cleaned Occurrence Data\n\n# Load occurrence data\nalldf &lt;- read.csv(\"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#b-subset-for-single-species",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#b-subset-for-single-species",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.3 B) Subset for Single Species",
+    "text": "7.3 B) Subset for Single Species\n\n# Example species: Galax urceolata\nGalax_urceolata &lt;- alldf %&gt;%\n  filter(accepted_name == \"Galax urceolata\")",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#c-load-vif-selected-climate-layers",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#c-load-vif-selected-climate-layers",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.4 C) Load VIF-Selected Climate Layers",
+    "text": "7.4 C) Load VIF-Selected Climate Layers\n\n# List environmental layers\nvif_list &lt;- list.files(\n  \"data/04_climate_processing/Cropped/Galax_urceolata/VIF/\",\n  full.names = TRUE,\n  recursive = FALSE\n)\n\n# Load as raster stack\nvifStack &lt;- terra::rast(vif_list)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#d-run-enmeval-to-generate-models",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#d-run-enmeval-to-generate-models",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.5 D) Run ENMeval to Generate Models",
+    "text": "7.5 D) Run ENMeval to Generate Models\n\n# ENMeval model generation:\n# - Tests combinations of feature classes (FC)\n# - Tests different regularization multipliers (RM)\n\neval &lt;- ENMevaluate(\n  occs = Galax_urceolata[, c(\"longitude\", \"latitude\")],\n  envs = vifStack,\n  tune.args = list(fc = c(\"L\", \"Q\"), rm = 1:2),\n  partitions = \"block\",\n  n.bg = 10000,\n  parallel = FALSE,\n  algorithm = 'maxent.jar',\n)\n\n# Save ENMeval object\nsave(eval, file = \"data/05_ENMs/Galax_urceolata_ENM_eval.RData\")",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#e-visualize-model-predictions",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#e-visualize-model-predictions",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.6 E) Visualize Model Predictions",
+    "text": "7.6 E) Visualize Model Predictions\n\n# Extract predictions from ENMeval object\nmaps &lt;- eval@predictions\n\n# Plot first 6 prediction rasters\nterra::plot(maps,\n            nc = 2,\n            main = names(maps))",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#f-calculate-niche-overlap-between-models",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#f-calculate-niche-overlap-between-models",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.7 F) Calculate Niche Overlap Between Models",
+    "text": "7.7 F) Calculate Niche Overlap Between Models\n\n# Calculate Schoener's D among all models\nmod_overlap &lt;- calc.niche.overlap(maps, overlapStat = \"D\")\nprint(mod_overlap)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#g-examine-overall-tuning-results",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#g-examine-overall-tuning-results",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.8 G) Examine Overall Tuning Results",
+    "text": "7.8 G) Examine Overall Tuning Results\n\n# Retrieve summary table\nresults &lt;- eval.results(eval)\nhead(results)\n\n## Plot model tuning results\nevalplot.stats(\n  e = eval,\n  stats = c(\"or.10p\", \"auc.val\"),\n  color = \"fc\",\n  x.var = \"rm\")",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#h-select-optimal-model-based-on-criteria",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#h-select-optimal-model-based-on-criteria",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.9 H) Select Optimal Model Based on Criteria",
+    "text": "7.9 H) Select Optimal Model Based on Criteria\n\nopt.seq &lt;- results %&gt;%\n  filter(!is.na(AICc)) %&gt;%                      # Exclude models with NA AICc\n  filter(AICc == min(AICc)) %&gt;%                 # Minimum AICc\n  filter(or.10p.avg != 0) %&gt;%                   # Exclude zero omission\n  filter(or.10p.avg == min(or.10p.avg)) %&gt;%     # Minimum omission\n  filter(auc.val.avg == max(auc.val.avg))       # Maximum AUC\n\nopt.seq\n\n# Save optimal model summary\nwrite.table(\n  opt.seq,\n  file = \"data/05_ENMs/Galax_urceolata_OptModel.txt\",\n  sep = \"\\t\",\n  row.names = FALSE\n)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#i-visualize-the-variable-contributions",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#i-visualize-the-variable-contributions",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.10 I) Visualize the variable contributions",
+    "text": "7.10 I) Visualize the variable contributions\n\n# Retrieve the optimal model from ENMeval object\nopt.mod &lt;- eval.models(eval)[[opt.seq$tune.args]]\n\n# Save optimal model as RData\nsave(opt.mod, file = \"data/05_ENMs/Galax_urceolata_opt_mod.RData\")\n\n# Plot variables and their contribution to the model\npng(\"data/05_ENMs/Galax_urceolata_Variable_Contribution.png\",\n    width = 1200,\n    height = 800,\n    res = 150)\n\n# Plot variable contributions\ndismo::plot(opt.mod, main = \"Variable Contribution - Optimal Model\")\n\ndev.off()",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#j-visualize-response-curves",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#j-visualize-response-curves",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.11 J) Visualize Response Curves",
+    "text": "7.11 J) Visualize Response Curves\n\n# Plot response curves for optimal model\npredicts::partialResponse(eval@models[[opt.seq$tune.args]], var = \"elev\")",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#k-plot-optimal-model",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#k-plot-optimal-model",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.12 K) Plot Optimal Model",
+    "text": "7.12 K) Plot Optimal Model\n\nopt.pred &lt;- eval.predictions(eval)[[as.character(opt.seq$tune.args)]]\n\nr_df &lt;- as.data.frame(opt.pred, xy = TRUE)\ncolnames(r_df) &lt;- c(\"x\", \"y\", \"suitability\")\n\n#  Occurrences  sf\nocc_sf &lt;- st_as_sf(eval@occs, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n\n# get bounding box for plotting from occurences\nbbox_vals &lt;- sf::st_bbox(occ_sf)\n\n# USA states\nusa &lt;- ne_states(country = \"United States of America\", returnclass = \"sf\")\n\n# Plot\np &lt;- ggplot() +\n  geom_tile(data = r_df, aes(x = x, y = y, fill = suitability)) +\n  scale_fill_viridis_c(name = \"Suitability\") +\n  geom_sf(data = occ_sf, color = \"red\", size = 0.1) +\n  geom_sf(data = usa, fill = NA, color = \"white\", linewidth = 0.5) +\n  coord_sf(\n    xlim = c(bbox_vals[\"xmin\"] - 2, bbox_vals[\"xmax\"] + 2),\n    ylim = c(bbox_vals[\"ymin\"] - 2, bbox_vals[\"ymax\"] + 2),\n    expand = FALSE) +\n  labs(\n    title = \"Predicted Suitability (Optimal ENMeval Model)\",\n    x = \"Longitude\",\n    y = \"Latitude\")+\n  theme_bw()+\n  theme(\n    panel.grid.major = element_blank(),\n    panel.grid.minor = element_blank(),\n    panel.background = element_rect(fill = \"grey80\", color = NA),\n    plot.background = element_rect(fill = \"white\", color = NA)) +\n  annotation_north_arrow(location = \"tl\", height = unit(1, \"cm\"), width = unit(1, \"cm\"))\n\nprint(p)\n\n# Save Outputs\nggsave(filename = \"data/05_ENMs/Galax_urceolata_Optimal_Model_Map.png\",\n       plot = p,\n       width = 8,\n       height = 5,\n       dpi = 300)\n\nwriteRaster(x = opt.pred,\n            filename = \"data/05_ENMs/Galax_urceolata_ENM_optModel.asc\",\n            overwrite = TRUE,\n            NAflag = -9999)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05_Ecological_Niche_Modeling.html#l-loop-through-other-species",
+    "href": "chapters/05_Ecological_Niche_Modeling.html#l-loop-through-other-species",
+    "title": "7  Ecological Niche Modeling",
+    "section": "7.13 L) Loop Through Other Species",
+    "text": "7.13 L) Loop Through Other Species\n\n# List all unique species\nspecies_list &lt;- unique(alldf$accepted_name)\n\n# Exclude Galax urceolata (already processed)\nspecies_list &lt;- setdiff(species_list, \"Galax urceolata\")\n\n# Loop over remaining species\nfor (sp in species_list) {\n  cat(\"Processing species:\", sp, \"\\n\")\n\n  ## Subset occurrence data\n  sp_df &lt;- alldf %&gt;%\n    filter(accepted_name == sp)\n\n  ## List VIF-selected rasters for this species\n  sp_vif_path &lt;- paste0(\n    \"data/04_climate_processing/Cropped/\",\n    gsub(\" \", \"_\", sp),\n    \"/VIF/\"\n  )\n\n  vif_list &lt;- list.files(\n    sp_vif_path,\n    full.names = TRUE,\n    recursive = FALSE\n  )\n\n  ## Load rasters\n  vifStack &lt;- terra::rast(vif_list)\n\n  ## Run ENMevaluate\n  eval &lt;- ENMevaluate(\n    occs = sp_df[, c(\"longitude\", \"latitude\")],\n    envs = vifStack,\n    tune.args = list(fc = c(\"L\", \"Q\"), rm = 1:2),\n    partitions = \"block\",\n    n.bg = 10000,\n    parallel = FALSE,\n    algorithm = 'maxent.jar'\n  )\n\n  ## Save ENMeval object\n  save(eval, file = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_ENM_eval.RData\"))\n\n  ## Identify optimal model\n  opt.seq &lt;- results %&gt;%\n    filter(!is.na(AICc)) %&gt;%\n    filter(AICc == min(AICc)) %&gt;%\n    filter(or.10p.avg != 0) %&gt;%\n    filter(or.10p.avg == min(or.10p.avg)) %&gt;%\n    filter(auc.val.avg == max(auc.val.avg))\n\n  ## Save optimal model summary\n  write.table(\n    opt.seq,\n    file = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_OptModel.txt\"),\n    sep = \"\\t\",\n    row.names = FALSE\n  )\n\n  ## Plot variable contributions\n  opt.mod &lt;- eval.models(eval)[[opt.seq$tune.args]]\n\n  # Save optimal model as RData\n  save(opt.mod, file = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_opt_mod.RData\"))\n\n  png(filename = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_Variable_Contribution.png\"),\n      width = 1200,\n      height = 800,\n      res = 150)\n\n  dismo::plot(opt.mod, main = paste(\"Variable Contribution -\", sp))\n\n  dev.off()\n\n  ## Plot optimal prediction raster\n  opt.pred &lt;- eval.predictions(eval)[[as.character(opt.seq$tune.args)]]\n\n  r_df &lt;- as.data.frame(opt.pred, xy = TRUE)\n  colnames(r_df) &lt;- c(\"x\", \"y\", \"suitability\")\n\n  occ_sf &lt;- st_as_sf(eval@occs, coords = c(\"longitude\", \"latitude\"), crs = 4326)\n  usa &lt;- ne_states(country = \"United States of America\", returnclass = \"sf\")\n\n  bbox_vals &lt;- sf::st_bbox(occ_sf)\n\n  p &lt;- ggplot() +\n    geom_tile(data = r_df, aes(x = x, y = y, fill = suitability)) +\n    scale_fill_viridis_c(name = \"Suitability\") +\n    geom_sf(data = occ_sf, color = \"red\", size = 0.1) +\n    geom_sf(data = usa, fill = NA, color = \"white\", linewidth = 0.5) +\n    coord_sf(\n      xlim = c(bbox_vals[\"xmin\"] - 2, bbox_vals[\"xmax\"] + 2),\n      ylim = c(bbox_vals[\"ymin\"] - 2, bbox_vals[\"ymax\"] + 2),\n      expand = FALSE) +\n    labs(\n      title = paste(\"Predicted Suitability -\", sp),\n      x = \"Longitude\",\n      y = \"Latitude\"\n    ) +\n    theme_bw() +\n    theme(\n      panel.grid.major = element_blank(),\n      panel.grid.minor = element_blank(),\n      panel.background = element_rect(fill = \"grey80\", color = NA),\n      plot.background = element_rect(fill = \"white\", color = NA)\n    ) +\n    annotation_north_arrow(\n      location = \"tl\",\n      height = unit(1, \"cm\"),\n      width = unit(1, \"cm\")\n    )\n\n  print(p)\n\n  ## Save raster\n  writeRaster(x = opt.pred,\n              filename = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_ENM_optModel.asc\"),\n              overwrite = TRUE,\n              NAflag = -9999)\n\n  ggsave(filename = paste0(\"data/05_ENMs/\", gsub(\" \", \"_\", sp), \"_Optimal_Model_Map.png\"),\n         plot = p,\n         width = 8,\n         height = 5,\n         dpi = 300)\n\n}",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ecological Niche Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html",
+    "href": "chapters/06_Null_ENMs.html",
+    "title": "8  Null Models",
+    "section": "",
+    "text": "8.1 Load Required Packages\nPurpose: - Assess performance of niche models using null models\nAuthors: Tyler Radtke and Sebastian Fernandez\nlibrary(ENMeval)\nlibrary(ggplot2)\nlibrary(dplyr)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#a-load-cleaned-occurrence-data",
+    "href": "chapters/06_Null_ENMs.html#a-load-cleaned-occurrence-data",
+    "title": "8  Null Models",
+    "section": "8.2 A) Load Cleaned Occurrence Data",
+    "text": "8.2 A) Load Cleaned Occurrence Data\n\n# Load all occurrence records\nalldf &lt;- read.csv(\"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv\")",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#b-load-optimal-model-parameters",
+    "href": "chapters/06_Null_ENMs.html#b-load-optimal-model-parameters",
+    "title": "8  Null Models",
+    "section": "8.3 B) Load Optimal Model Parameters",
+    "text": "8.3 B) Load Optimal Model Parameters\n\n# Load optimal feature class (fc) and regularization multiplier (rm)\nopt.seq &lt;- read.delim(\"data/05_ENMs/Galax_urceolata_OptModel.txt\")\n\n# Extract parameters\nfc &lt;- opt.seq$fc\nrm &lt;- opt.seq$rm",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#c-load-enmeval-object",
+    "href": "chapters/06_Null_ENMs.html#c-load-enmeval-object",
+    "title": "8  Null Models",
+    "section": "8.4 C) Load ENMeval Object",
+    "text": "8.4 C) Load ENMeval Object\n\n# Load saved ENMeval object for Galax urceolata\nload(\"data/05_ENMs/Galax_urceolata_ENM_eval.RData\")",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#d-run-null-model-simulations",
+    "href": "chapters/06_Null_ENMs.html#d-run-null-model-simulations",
+    "title": "8  Null Models",
+    "section": "8.5 D) Run Null Model Simulations",
+    "text": "8.5 D) Run Null Model Simulations\n\n# Run ENMnulls with optimal parameters and 100 iterations\nspec.mod.null &lt;- ENMnulls(\n  eval,\n  mod.settings = list(fc = fc, rm = rm),\n  no.iter = 100\n)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#e-save-null-model-comparison-results",
+    "href": "chapters/06_Null_ENMs.html#e-save-null-model-comparison-results",
+    "title": "8  Null Models",
+    "section": "8.6 E) Save Null Model Comparison Results",
+    "text": "8.6 E) Save Null Model Comparison Results\n\n# Extract comparison results between empirical and null models\nnull_comparison_results &lt;- null.emp.results(spec.mod.null)\n\n# Save results as CSV\nwrite.csv(\n  null_comparison_results,\n  file = \"data/05_ENMs/Galax_urceolata_null_comparison_results.csv\",\n  row.names = FALSE\n)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06_Null_ENMs.html#f-plot-null-model-results",
+    "href": "chapters/06_Null_ENMs.html#f-plot-null-model-results",
+    "title": "8  Null Models",
+    "section": "8.7 F) Plot Null Model Results",
+    "text": "8.7 F) Plot Null Model Results\n\n# Generate histogram plots for AUC, OR.10p, and CBI statistics\nspec.null &lt;- evalplot.nulls(\n  spec.mod.null,\n  stats = c(\"or.10p\", \"auc.val\", \"cbi.val\"),\n  plot.type = \"histogram\"\n)\n\n# Display plot in R console\nplot(spec.null)\n\n# Save plot to PNG\nggsave(\n  filename = \"Galax_urceolata_null_histogram.png\",\n  plot = spec.null,\n  path = \"data/05_ENMs/\",\n  height = 12,\n  width = 13\n)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Null Models</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html",
+    "href": "chapters/07_ENM_Processing.html",
+    "title": "9  ENM Processing",
+    "section": "",
+    "text": "9.1 Setup\nPurpose:\nIncrease Java memory limit to avoid OutOfMemoryError Some ENM packages, especially dismo and older ENMeval workflows, may call Java routines that require more RAM. This sets the Java heap space to 8GB.\noptions(java.parameters = \"-Xmx30g\")",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#load-required-packages",
+    "href": "chapters/07_ENM_Processing.html#load-required-packages",
+    "title": "9  ENM Processing",
+    "section": "9.2 Load Required Packages",
+    "text": "9.2 Load Required Packages\n\nlibrary(terra)            # For reading and manipulating raster data (modern replacement for raster package)\nlibrary(dismo)            # For predicting from ENMs and compatibility with Maxent models\nlibrary(ENMeval)          # For calculating niche overlap statistics\nlibrary(ENMTools)         # For calculating niche breadth (Levins' B2)\nlibrary(ggplot2)          # For creating publication-quality plots\nlibrary(rnaturalearth)    # For downloading shapefiles of countries and states\nlibrary(viridis)          # For colorblind-friendly color scales\nlibrary(ggspatial)        # For adding north arrows to plots\nlibrary(dplyr)            # For data manipulation\nlibrary(ape)              # For reading and processing phylogenetic trees\nlibrary(biomod2)          # For range size change calculations between binary rasters",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#a-project-models-onto-current-climate-eastern-temperate-forests",
+    "href": "chapters/07_ENM_Processing.html#a-project-models-onto-current-climate-eastern-temperate-forests",
+    "title": "9  ENM Processing",
+    "section": "9.3 A) Project Models onto Current Climate (Eastern Temperate Forests)",
+    "text": "9.3 A) Project Models onto Current Climate (Eastern Temperate Forests)\n\n# List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.\n# These will be used as environmental predictors for projecting the ENMs.\nclim_files &lt;- list.files(\"data/04_climate_processing/CurrentEasternTemperateForests\",pattern = \"\\\\.asc$\", full.names = TRUE)\n\n# Read all climate rasters into a single SpatRaster object for efficient processing.\nclim_stack &lt;- terra::rast(clim_files)\n\n# Plot a quick preview of the first four layers to check that rasters loaded correctly.\nplot(clim_stack[[1:4]])\n\n# Define a vector of the species you want to process.\n# Each species has an ENM already built and saved to disk.\nspecies_list &lt;- c(\"Galax_urceolata\",\n                  \"Pyxidanthera_barbulata\",\n                  \"Pyxidanthera_brevifolia\",\n                  \"Shortia_galacifolia\")\n\n# Load the USA state boundaries as an sf object.\n# This will be used as a basemap for plotting projections.\nusa &lt;- rnaturalearth::ne_states(country = \"United States of America\", returnclass = \"sf\")\n\n# Loop through each species to project their ENM onto the current climate layers.\nfor (species in species_list) {\n\n  cat(\"\\nProjecting current climate for:\", species, \"\\n\")\n\n  # Load the optimal ENM for this species.\n  # The object `opt.mod` will be loaded into the workspace.\n  mod_file &lt;- paste0(\"data/05_ENMs/\", species, \"_opt_mod.RData\")\n  load(mod_file)  # loads object: opt.mod\n\n  # Identify which layers were used to build the ENM.\n  # This ensures that your projection uses the same predictor variables\n  # as the model was trained on.\n  vif_dir &lt;- paste0(\"data/04_climate_processing/Cropped/\", species, \"/VIF/\")\n  species_layers &lt;- list.files(vif_dir, full.names = TRUE)\n\n  # Read in those specific rasters\n  spec_stack &lt;- terra::rast(species_layers)\n  layer_names &lt;- names(spec_stack)\n\n  # Subset the full ETF raster stack to only the layers used in the ENM.\n  ETF_Rasters &lt;- terra::subset(clim_stack, layer_names)\n  #if error, try: ETF_Rasters &lt;- raster::stack(ETF_Rasters)\n\n  # Project the ENM onto the current ETF climate layers.\n  proj_file &lt;- paste0(\"data/06_ENM_processing/\", species, \"_EFT_Projection.asc\")\n\n  p &lt;- dismo::predict(opt.mod, ETF_Rasters, filename = proj_file, overwrite = TRUE, NAflag = -9999)\n\n  # Convert the raster to a data frame for plotting in ggplot.\n  p_df &lt;- as.data.frame(p, xy = TRUE)\n  colnames(p_df)[3] &lt;- \"Habitat_Suitability\"\n\n  # Get the bounding box coordinates of the raster for plotting.\n  bbox_vals &lt;- terra::ext(p)\n\n  # Create the habitat suitability map.\n  p_plot &lt;- ggplot() +\n    geom_sf(data = usa, fill = \"grey70\") +  # basemap\n    geom_tile(data = p_df, aes(x = x, y = y, fill = Habitat_Suitability)) +\n    geom_sf(data = usa, fill = NA, color = \"white\", linewidth = 0.5) +\n    coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),\n             ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),\n             expand = FALSE) +\n    scale_fill_viridis_c(name = \"Suitability\") +\n    labs(title = paste0(gsub(\"_\", \" \", species), \" - Eastern Temperate Forest Habitat Suitability\"),\n         x = \"Longitude\",\n         y = \"Latitude\") +\n    theme_bw() +\n    theme(panel.grid = element_blank(),\n          axis.text = element_text(size = 8),\n          axis.title = element_text(size = 8),\n          plot.title = element_text(size = 10)) +\n    annotation_north_arrow(location = \"tl\",\n                           height = unit(1, \"cm\"),\n                           width = unit(1, \"cm\"))\n\n  # Save the plot as a PNG file.\n  png_file &lt;- paste0(\"data/06_ENM_processing/\", species, \"_ETF_Projection_Plot.png\")\n\n  ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)\n}",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#b-calculate-niche-breadth",
+    "href": "chapters/07_ENM_Processing.html#b-calculate-niche-breadth",
+    "title": "9  ENM Processing",
+    "section": "9.4 B) Calculate Niche Breadth",
+    "text": "9.4 B) Calculate Niche Breadth\n\n# For each species, calculate niche breadth across the ETF region.\n# Niche breadth (Levins' B2) indicates whether a species is a generalist (high value) or specialist (low value).\nfor (species in species_list) {\n\n  cat(\"\\nCalculating niche breadth for:\", species, \"\\n\")\n\n  proj_file &lt;- paste0(\"data/06_ENM_processing/\", species, \"_EFT_Projection.asc\")\n\n  proj_raster &lt;- terra::rast(proj_file)\n\n  # Compute Levins' B2 niche breadth\n  breadth &lt;- ENMTools::raster.breadth(proj_raster)\n\n  cat(\"Niche breadth:\", round(breadth$B2, 3), \"\\n\")\n}",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#c-calculate-niche-overlap",
+    "href": "chapters/07_ENM_Processing.html#c-calculate-niche-overlap",
+    "title": "9  ENM Processing",
+    "section": "9.5 C) Calculate Niche Overlap",
+    "text": "9.5 C) Calculate Niche Overlap\n\n# Stack all species projections into a single SpatRaster object.\n# This allows calculation of pairwise niche overlap (Schoener's D).\nenm_stack &lt;- c(terra::rast(\"data/06_ENM_processing/Galax_urceolata_EFT_Projection.asc\"),\n               terra::rast(\"data/06_ENM_processing/Pyxidanthera_barbulata_EFT_Projection.asc\"),\n               terra::rast(\"data/06_ENM_processing/Pyxidanthera_brevifolia_EFT_Projection.asc\"),\n               terra::rast(\"data/06_ENM_processing/Shortia_galacifolia_EFT_Projection.asc\")\n)\n\n# Assign species names as layer names in the raster stack.\nnames(enm_stack) &lt;- c(\"Galax urceolata\",\n                      \"Pyxidanthera barbulata\",\n                      \"Pyxidanthera brevifolia\",\n                      \"Shortia galacifolia\")\n\n# Calculate pairwise Schoener's D overlap between species.\n# Values range from 0 (no overlap) to 1 (identical niches).\noverlap_matrix &lt;- calc.niche.overlap(enm_stack, overlapStat = \"D\")\n\nprint(overlap_matrix)",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#d-test-phylogenetic-signal-in-niche-overlap",
+    "href": "chapters/07_ENM_Processing.html#d-test-phylogenetic-signal-in-niche-overlap",
+    "title": "9  ENM Processing",
+    "section": "9.6 D) Test Phylogenetic Signal in Niche Overlap",
+    "text": "9.6 D) Test Phylogenetic Signal in Niche Overlap\n\n# Read the phylogenetic tree of the species.\ntree &lt;- ape::read.tree(\"data/06_ENM_processing/diapensiaceae_subset.tre\")\n\n# Drop the outgroup so only focal species remain.\ntree &lt;- ape::drop.tip(tree, \"Cyrilla_racemiflora\")\n\n# Replace underscores with spaces to match overlap matrix species names.\ntree$tip.label &lt;- gsub(\"_\", \" \", tree$tip.label)\n\n# Calculate pairwise phylogenetic distances between species.\nphylo_dist &lt;- cophenetic(tree)\n\n# Ensure the phylogenetic distance matrix matches the species order in the overlap matrix.\nspecies_names &lt;- rownames(overlap_matrix)\nspecies_names &lt;- gsub(\"\\\\.\", \" \", species_names)\nphylo_dist &lt;- phylo_dist[species_names, species_names]\n\n# Initialize vectors to store pairwise values.\npair_names &lt;- NULL\nphylo_vals &lt;- NULL\noverlap_vals &lt;- NULL\n\n# Loop through the lower triangle of the matrices to extract pairwise comparisons.\nfor (i in 2:length(species_names)) {\n  for (j in 1:(i - 1)) {\n    pair_names &lt;- c(pair_names,\n                    paste(species_names[i], species_names[j], sep = \" - \"))\n    phylo_vals &lt;- c(phylo_vals, phylo_dist[i, j])\n    overlap_vals &lt;- c(overlap_vals, overlap_matrix[i, j])\n  }\n}\n\n# Fit a linear regression between phylogenetic distance and niche overlap.\nlm_res &lt;- lm(overlap_vals ~ phylo_vals)\ns &lt;- summary(lm_res)\nprint(s)\n\n# Format regression statistics for display on the plot.\nlabel_text &lt;- paste0(\"Intercept = \", format(round(coef(lm_res)[1], 3)), \"\\n\",\n                     \"Slope = \", format(round(coef(lm_res)[2], 5)), \"\\n\",\n                     \"P-value = \", format(signif(s$coefficients[2, 4], 3)), \"\\n\",\n                     \"R² = \", format(round(s$r.squared, 3)))\n\n# Plot the relationship between phylogenetic distance and niche overlap.\nplot(phylo_vals, overlap_vals,\n     xlab = \"Phylogenetic Distance\",\n     ylab = \"Niche Overlap (Schoener's D)\",\n     pch = 19)\nabline(lm_res, col = \"red\", lwd = 2)\ntext(phylo_vals - 3,\n     overlap_vals - 0.02,\n     labels = 1:length(pair_names),\n     pos = 3,\n     cex = 0.8)\ntext(x = max(phylo_vals) * 0.7,\n     y = max(overlap_vals) * 0.9,\n     labels = label_text,\n     col = \"red\",\n     cex = 0.9, pos = 4)\nlegend(\"topleft\",\n       legend = paste(1:length(pair_names), pair_names, sep = \": \"),\n       bty = \"n\", cex = 0.7)\n\n# For niche Age Overlap Correlations (AOCs), a high intercept and negative slope\n# indicate niche conservatism,meaning closely related species tend to occupy\n# similar ecological niches. A low intercept combined with a positive slope\n# suggests niche divergence, where closely related species occupy different\n# niches.The results here are pretty meaningless since we're looking at very few,\n# distantly related species, but it serves the purpose of the demo. A linear\n# regression indicated no significant relationship between phylogenetic distance\n# and niche overlap among the four species,suggesting minimal phylogenetic signal\n# in ecological niche similarity.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#e-project-models-onto-future-climate",
+    "href": "chapters/07_ENM_Processing.html#e-project-models-onto-future-climate",
+    "title": "9  ENM Processing",
+    "section": "9.7 E) Project Models onto Future Climate",
+    "text": "9.7 E) Project Models onto Future Climate\n\n# List future climate layers under the SSP370 scenario for 2081-2100.\nfuture_files &lt;- list.files(\"data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/\", pattern = \"\\\\.asc$\", full.names = TRUE)\n\n# Add the current elevation layer to the future stack, since elevation remains constant.\nelev_file &lt;- list.files(\"data/04_climate_processing/CurrentEasternTemperateForests/\", pattern = \"elev\\\\.asc$\", full.names = TRUE)\n\nfuturestack &lt;- terra::rast(c(future_files, elev_file))\n\n# Project each species onto future ETF climate conditions.\nfor (species in species_list) {\n\n  cat(\"\\nProjecting future climate for:\", species, \"\\n\")\n\n  load(paste0(\"data/05_ENMs/\", species, \"_opt_mod.RData\"))\n\n  vif_dir &lt;- paste0(\"data/04_climate_processing/Cropped/\", species, \"/VIF/\")\n\n  species_layers &lt;- list.files(vif_dir, full.names = TRUE)\n  spec_stack &lt;- terra::rast(species_layers)\n  layer_names &lt;- names(spec_stack)\n\n  FutureETF_Rasters &lt;- terra::subset(futurestack, layer_names)\n  #if error, try: FutureETF_Rasters &lt;- raster::stack(FutureETF_Rasters)\n\n  future_file &lt;- paste0(\"data/06_ENM_processing/\", species, \"_Future_ETF_Projection.asc\")\n\n  p_future &lt;- dismo::predict(opt.mod, FutureETF_Rasters, filename = future_file, overwrite = TRUE, NAflag = -9999)\n\n  save(p_future, file = sub(\"\\\\.asc$\", \".RData\", future_file))\n\n  # Plot the future habitat suitability map.\n  p_future_df &lt;- as.data.frame(p_future, xy = TRUE)\n  colnames(p_future_df)[3] &lt;- \"Habitat_Suitability\"\n\n  bbox_vals &lt;- terra::ext(p_future)\n\n  p_plot &lt;- ggplot() +\n    geom_sf(data = usa, fill = \"grey70\") +\n    geom_tile(data = p_future_df,\n              aes(x = x, y = y, fill = Habitat_Suitability)) +\n    geom_sf(data = usa, fill = NA, color = \"white\", linewidth = 0.5) +\n    coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),\n             ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),\n             expand = FALSE) +\n    scale_fill_viridis_c(name = \"Future Suitability\") +\n    labs(title = paste0(gsub(\"_\", \" \", species), \" - Future Habitat Suitability\"),\n         x = \"Longitude\",\n         y = \"Latitude\") +\n    theme_bw() +\n    theme(panel.grid = element_blank(),\n          axis.text = element_text(size = 8),\n          axis.title = element_text(size = 8),\n          plot.title = element_text(size = 10)) +\n    annotation_north_arrow(location = \"tl\",\n                           height = unit(1, \"cm\"),\n                           width = unit(1, \"cm\"))\n\n  png_file &lt;- paste0(\"data/06_ENM_processing/\", species, \"_Future_ETF_Projection.png\")\n\n  ggsave(filename = png_file, plot = p_plot, width = 7, height = 5, dpi = 300)\n}",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07_ENM_Processing.html#f-compare-current-and-future-projections",
+    "href": "chapters/07_ENM_Processing.html#f-compare-current-and-future-projections",
+    "title": "9  ENM Processing",
+    "section": "9.8 F) Compare Current and Future Projections",
+    "text": "9.8 F) Compare Current and Future Projections\n\n# Initialize a list to hold change maps for each species.\nall_dfs &lt;- list()\n\nfor (species in species_list) {\n\n  cat(\"\\nComparing projections for:\", species, \"\\n\")\n\n  # Load current and future suitability rasters.\n  current &lt;- terra::rast(paste0(\"data/06_ENM_processing/\", species, \"_EFT_Projection.asc\"))\n  future &lt;- terra::rast(paste0(\"data/06_ENM_processing/\", species, \"_Future_ETF_Projection.asc\"))\n\n  # Threshold each raster at 0.7 to produce binary presence/absence maps.\n  current_binary &lt;- current &gt;= 0.7\n  future_binary &lt;- future &gt;= 0.7\n\n  # Compute range changes between current and future projections.\n  RangeSizeDiff &lt;- BIOMOD_RangeSize(as(current_binary, \"Raster\"),\n                                    as(future_binary, \"Raster\"))\n\n  diff_raster &lt;- RangeSizeDiff$Diff.By.Pixel\n\n  df &lt;- as.data.frame(diff_raster, xy = TRUE)\n  colnames(df) &lt;- c(\"x\", \"y\", \"change\")\n\n  # Convert numeric change codes to categorical labels for plotting.\n  df$fill &lt;- factor(df$change,\n                    levels = c(-2, -1, 0, 1),\n                    labels = c(\"lost\", \"unchanged\", \"not occupied\", \"occupied in future\"))\n\n  # Add species name for faceting plots.\n  df$species &lt;- gsub(\"_\", \" \", species)\n\n  all_dfs[[species]] &lt;- df\n}\n\n# Combine all species into one data frame for faceted plotting.\ncombined_df &lt;- bind_rows(all_dfs)\n\n# Determine overall plotting extent.\ncombined_bbox &lt;- combined_df %&gt;%\n  summarise(xmin = min(x, na.rm = TRUE),\n            xmax = max(x, na.rm = TRUE),\n            ymin = min(y, na.rm = TRUE),\n            ymax = max(y, na.rm = TRUE))\n\n# Plot all species' range shifts together.\np_all &lt;- ggplot(combined_df) +\n  geom_sf(data = usa, fill = \"grey70\") +\n  geom_tile(aes(x = x, y = y, fill = fill)) +\n  geom_sf(data = usa, fill = NA, color = \"white\", linewidth = 0.5) +\n  coord_sf(xlim = c(combined_bbox$xmin - 2, combined_bbox$xmax + 2),\n           ylim = c(combined_bbox$ymin - 2, combined_bbox$ymax + 2),\n           expand = FALSE) +\n  scale_fill_viridis_d(name = \"Pixel Change\", na.value = \"white\") +\n  facet_wrap(~ species) +\n  labs(title = \"Current vs Future Habitat Suitability Change\",\n       x = \"Longitude\",\n       y = \"Latitude\") +\n  theme_bw() +\n  theme(panel.grid = element_blank(),\n        axis.text = element_text(size = 8),\n        axis.title = element_text(size = 8),\n        plot.title = element_text(size = 10),\n        strip.text = element_text(size = 9)) +\n  annotation_north_arrow(\n    location = \"tl\",\n    height = unit(1, \"cm\"),\n    width = unit(1, \"cm\"))\n\nggsave(\"data/06_ENM_processing/all_species_range_change_map.png\",\n       plot = p_all,\n       width = 10,\n       height = 8,\n       dpi = 300)",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>ENM Processing</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "",
+    "text": "10.1 Load Required Packages\nPurpose:\nlibrary(terra)            # For reading and manipulating raster data (modern replacement for raster package)\nlibrary(sf)               # For working with simple features spatial data\nlibrary(ggplot2)          # For visualizations\nlibrary(ggtree)           # Visualizing the phylogenetic tree\nlibrary(ggforce)          # Provides a few plot annotations methods (arrows in this script)\nlibrary(patchwork)        # Allows easier viewing of multiple plots\nlibrary(rnaturalearth)    # For downloading shapefiles of countries and states\n#library(future)           # For running CANAPE fxns in parallel processing (not needed for this demo, but load this in on a personal laptop if you want to use the plan() fxn)\nlibrary(canaper)          # Categorical Analysis of Neo- and Paleo- Endemism, also used for significant PD, RPD, PE, etc\nlibrary(ape)              # Read in Phylogeny, provides pruning fxns as well\nlibrary(dplyr)            # Provides data wrangling functions that resemble SQL",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#a-area-of-interest-aoi",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#a-area-of-interest-aoi",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.2 A) Area of interest (AOI)",
+    "text": "10.2 A) Area of interest (AOI)\n\n# Load the Sonoran Basin and Range (EPA level 3 ecoregion)\necoregions &lt;- sf::st_read(\"data/08_phylodiversity_phyloendemism/Ecoregions/az_eco_l3/az_eco_l3.shp\")\nson_ecoregion &lt;- ecoregions %&gt;% dplyr::filter(NA_L3NAME %in% c(\"Sonoran Basin and Range\"))\n# Load in rnaturalearths sociopolitical boundaries to make it easier to understand where we are\npol_basemap &lt;- rnaturalearth::ne_states(c(\"United States of America\", \"Mexico\"), returnclass = \"sf\")\n# Simplify to states that surround the Sonoran Basin and Range\nson_states &lt;- pol_basemap |&gt; dplyr::filter(name %in% c(\"Arizona\", \"California\", \"Sonora\", \"Baja California\"))\n# Reproject to match ecoregion\nson_states_reproj &lt;- son_states |&gt; st_transform(crs = st_crs(son_ecoregion))\n# Add a few major cities to provide some context\nlocations &lt;- data.frame(\n  name = c(\"Tuscon\", \"Phoenix\"),\n  lon = c(-110.97452583202717, -112.07265839152035),\n  lat = c(32.256114232723995, 33.445900912002735)\n)\n# Make spatial using sf (with wgs84), transform to ecoregion projection\nlocations_sf &lt;- st_as_sf(locations, coords = c(\"lon\", \"lat\"), crs = 4326)\nlocations_proj &lt;- st_transform(locations_sf, st_crs(son_ecoregion))\n# Get bounding box of ecoregion and expand slightly for zoom\nbbox &lt;- st_bbox(son_ecoregion)\nx_range &lt;- bbox[\"xmax\"] - bbox[\"xmin\"]\ny_range &lt;- bbox[\"ymax\"] - bbox[\"ymin\"]\nexpand &lt;- 0.15  # can be adjusted to zoom out more if we want\n# Create nudging so that the names of the cities dont overlap the pts\nnudge_x_val &lt;- x_range * 0.05\nnudge_y_val &lt;- y_range * 0.05\n# Plot!\nggplot() +\n  geom_sf(son_states_reproj, mapping = aes(), fill = \"white\") +\n  geom_sf(son_ecoregion, mapping = aes(color = NA_L3NAME), fill = \"darkorange\", alpha = 0.2, show.legend = FALSE) +\n  scale_color_manual(labels = c(\"The Sonoran Basin and Range EPA Ecoregion\"), values = c(\"darkred\", \"darkorange\")) +\n  ggtitle(\"The Sonoran Basin and Range EPA Ecoregion\") +\n  # add pts of cities\n  geom_sf(data = locations_proj, color = \"black\", size = 3) +\n  # add city labels nudged\n  geom_sf_text(data = locations_proj, aes(label = name), nudge_x = nudge_x_val, nudge_y = nudge_y_val, color = \"black\", fontface = \"bold\", size = 4) +\n  coord_sf(crs = st_crs(son_ecoregion),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"]))  +\n  xlab(\"Longitude\") +\n  ylab(\"Latitude\") +\n  theme_minimal()",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#b-operational-taxonomic-units-otus-pa-data",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#b-operational-taxonomic-units-otus-pa-data",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.3 B) Operational Taxonomic Units (OTUs) P/A data",
+    "text": "10.3 B) Operational Taxonomic Units (OTUs) P/A data\n\n# Load in pre-cropped SDMs for Sonoran Basin and Range Cactaceae\nsdm_stack_sonoran &lt;- rast(\"data/08_phylodiversity_phyloendemism/cactaceae_sdm_stack_sonoran.tif\")\n# Convert stack to community matrix in dataframe style (cells as sites, species as columns)\ncomm_matrix_xy &lt;- as.data.frame(sdm_stack_sonoran, xy = TRUE, na.rm = FALSE)\ncomm_matrix_xy[is.na(comm_matrix_xy)] &lt;- 0 # make NAs 0\n# Remove Empty Cells\ncomm_matrix_xy &lt;- comm_matrix_xy[rowSums(comm_matrix_xy[, -(1:2)]) &gt; 0, ]\n# Save coords and assign site ids so we can join these back up later with the canaper output\ncell_coords &lt;- data.frame(\n  site = paste0(\"cell_\", seq_len(nrow(comm_matrix_xy))),\n  x = comm_matrix_xy$x,\n  y = comm_matrix_xy$y\n)\n# Remake community matrix so that coordinate values are removed and rownames are the sites (necessary for canape fxns)\ncomm_matrix &lt;- comm_matrix_xy[, -(1:2)] # removes coordinate values\nrownames(comm_matrix) &lt;- paste0(\"cell_\", seq_len(nrow(comm_matrix)))\n\n# Take a look at the structure of our P/A Matrix?\ndim(comm_matrix) # 3967 spatial cells (5x5km), 67 Cactaceae species",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#c-prune-a-phylogeny",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#c-prune-a-phylogeny",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.4 C) Prune a Phylogeny",
+    "text": "10.4 C) Prune a Phylogeny\n\n# Read in the Euphyllophyte phylogenetic tree: Carruthers et al. in Review. https://www.biorxiv.org/content/10.64898/2026.01.06.695000v1.full.pdf\nmolc_plant_tree &lt;- ape::read.tree(\"data/08_phylodiversity_phyloendemism/pruned-molc-tree-12-10-2025.tre\")\n# Redo tip labels (currently they have higher order/family info on tip labels)\nmolc_tip_df &lt;- data.frame(\n  original_label = molc_plant_tree$tip.label,\n  name = sub(\".*_([^_]+_[^_]+)$\", \"\\\\1\", molc_plant_tree$tip.label) # removes Order Family info\n) |&gt;\n  mutate(name = gsub(\"_\", \" \", name))\nmolc_plant_tree$tip.label &lt;- molc_tip_df$name # reassign\n\n# Prune the Phylogeny to the taxa in our community matrix\nshared_sp_molc &lt;- intersect(molc_plant_tree$tip.label, colnames(comm_matrix)) # find shared taxa among tree and community matrix\npruned_molc_tree &lt;- ape::keep.tip(molc_plant_tree, shared_sp_molc) # prunes the phylogeny to these shared taxa\n\n# Now subset the community matrix so that we're only including taxa that are in the pruned tree\ncomm_matrix_molc &lt;- comm_matrix[, shared_sp_molc]\n\n# Drop sites that are completely empty post-pruning\ncomm_matrix_molc &lt;- comm_matrix_molc[rowSums(comm_matrix_molc, na.rm = TRUE) &gt; 0,]\ncomm_matrix_molc &lt;- comm_matrix_molc[, colSums(comm_matrix_molc, na.rm = TRUE) &gt; 0]\n\n# Check whether the dimensions of sp in community matrix and pruned tree matches\ndim(comm_matrix_molc) # sites, sp\nlength(pruned_molc_tree$tip.label) # number of tips match number of sites, so we're good to go.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#d-visualize-cactaceae-phylogeny",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#d-visualize-cactaceae-phylogeny",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.5 D) Visualize Cactaceae Phylogeny",
+    "text": "10.5 D) Visualize Cactaceae Phylogeny\n\n# Prepare tree for plotting\nbase_tree &lt;- ggtree(pruned_molc_tree, layout = \"rectangular\", linewidth = 0.25) # set up basic tree plot using ggtree\n# Create the final plot with proper axis extension for tip labels\ntree_plot &lt;- base_tree +\n  geom_tiplab(size = 2.5, align = TRUE, linesize = 0.2) +\n  theme_tree2() +\n  xlim(NA, max(base_tree$data$x, na.rm = TRUE) * 1.1) + # buffer the axis for viewing tip labels a bit better\n  ggtitle(\"Cactaceae of the Sonoran Basin and Range Phylogeny\") +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = 12, face = \"bold\"),\n    plot.margin = margin(10, 20, 10, 10), # Increased right margin\n    axis.text.x = element_blank(), # removes x-axis\n    axis.title.x = element_blank(),\n    axis.ticks.x = element_blank()\n  )\n\n# Print the plot\nprint(tree_plot)",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#run-phylodiversity-analysis-with-canaper",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#run-phylodiversity-analysis-with-canaper",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.6 Run Phylodiversity Analysis with CANAPER",
+    "text": "10.6 Run Phylodiversity Analysis with CANAPER\nIn canaper’s framework, we use randomization tests where we generate a set of random communities, calculate the metric of interest (e.g. PD, RPD) for each random community, then compare the observed values to the random values. If the observed values are that of the extremes (2.5% for a two-tailed test), they can be considered more or less diverse than random. canaper generates random communities using the vegan package. To check what randomizations you can use ?vegan::commsim() for each randomization algorithm used in canaper, there is two main components:  1) n_reps: the number of random communities to simulate (if we have n_reps = 100, we are compared the observed metrics to 100 random replicates)  2) n_iterations: the number of swaps used to produce each randomized community (calculation described below) \n\n# compare the percentage of original community matrix similarity to that of the randomized community using 20,000 iterations/swaps\niter_sim_res_molc &lt;- cpr_iter_sim(\n  comm = comm_matrix_molc, # our observed community matrix\n  null_model = \"curveball\", # curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!\n  n_iterations = 20000, # make an educated guess at number of iterations needed. The more pixels or taxa you have, the higher this usually is\n  thin = 100, # frequency to record percentage similarity between original matrix and randomized matrix. Pick something that makes sense with n_iterations\n  seed = 123 # seed to make reproducible.\n)\n\n# Visualize how many iterations are needed to arrive at a plateau of community dissimilarity for comparing a random community to the observed community\nggplot(iter_sim_res_molc, aes(x = iteration, y = similarity)) +\n  geom_line() +\n  theme_bw() +\n  ggtitle(\"Number of Iterations to Arrive at Maximum Dissimilarity\") +\n  labs(x = \"Num. iterations\", y = \"% Similarity\") # Appears that maximum dissimilarity between observed community and randomized happens around ~20,000 iterations.\n\n# in regards to n_reps (number of randomized communities to simulate), this isn't as simple. Ideally you could do a sensitivity style analysis by increasing this value and checking where results converge.\n# examples of how to do this in a iterative way can be found here:  https://docs.ropensci.org/canaper/articles/canape.html\n# keep in mind though that picking a very high number is safer at the expense of computation time, comparing more communities ensures you really are comparing observed vs random\n\n# Run randomization test\n#plan(multisession, workers = 7) # set up parallel computing, commented out for workshop. If you are using a personal computer, consider allocating workers to make this faster\nset.seed(42)\nson_rand_res_molc &lt;- cpr_rand_test(\n  comm = comm_matrix_molc, # our community matrix\n  phy = pruned_molc_tree, # pruned phylogeny\n  null_model = \"curveball\", # curveball maintains sp richness and abundance patterns, while randomizing species identity. Its a good choice typically but feel free to try others, it can change results!\n  n_reps = 50, # number of communities, 50 is a bit low. typically choose 500 or more (but its slow!S)\n  n_iterations = 20000, # number of swaps described above, based of cpr_iter_sim() output\n  tbl_out = TRUE # creates a tabular output\n)\n#plan(sequential) # go back to single core mode, disabled for workshop\n\n# Classify Significant PD, RPD, PE, RPE, and Endemism Types (two tailed tests)\nson_canape &lt;-\n  cpr_classify_endem(son_rand_res_molc) |&gt;\n  cpr_classify_signif(\"pd\") |&gt;\n  cpr_classify_signif(\"rpd\") |&gt;\n  cpr_classify_signif(\"pe\") |&gt;\n  cpr_classify_signif(\"rpe\")",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#f-plot-diversity-measures-sr-observed-pd-significant-pd-significant-rpd",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.7 F) Plot Diversity Measures (SR, Observed PD, Significant PD, Significant RPD)",
+    "text": "10.7 F) Plot Diversity Measures (SR, Observed PD, Significant PD, Significant RPD)\n\n# Join classified output w/Sonoran Desert sites for plotting purposes\nson_canape_map &lt;- son_canape |&gt;\n  full_join(cell_coords, by = \"site\")\n\n# Reproj our state map & our ecoregion map to match the projection of the outputs\nbasemap_xy &lt;- sf::st_transform(son_states, crs = st_crs(sdm_stack_sonoran))\nson_ecoregion_xy &lt;- sf::st_transform(son_ecoregion, crs = st_crs(sdm_stack_sonoran))\n\n# Create a bbox to narrow in on the AOI\nbbox &lt;- st_bbox(son_ecoregion_xy)\nx_range &lt;- bbox[\"xmax\"] - bbox[\"xmin\"]\ny_range &lt;- bbox[\"ymax\"] - bbox[\"ymin\"]\nexpand &lt;- 0.15 # adjust if you want this zoomed more out\n\n# Sum across all layers of the SDMs to add up number of species per cell\nspecies_richness &lt;- terra::app(sdm_stack_sonoran, fun = sum, na.rm = TRUE)\n# Convert to a df\nrichness_df &lt;- as.data.frame(species_richness, xy = TRUE)\ncolnames(richness_df) &lt;- c(\"x\", \"y\", \"richness\") # rename columns\n\n# Plot a species richness map\nggplot() +\n  geom_tile(data = richness_df, aes(x = x, y = y, fill = richness)) +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  geom_sf(data = son_states_reproj, fill = NA, color = \"black\", linewidth = 1) +\n  scale_fill_viridis_c(name = \"Species\\nRichness\", option = \"plasma\") +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n\n  theme_minimal() +\n  labs(\n    x = \"Longitude\",\n    y = \"Latitude\",\n    title = \"Sonoran Basin and Range Cactaceae Species Richness Map\")\n\n# Plot the observed phylodiversity map (compare against SR, you'll notice some similar trends)\nggplot() +\n  geom_tile(data = son_canape_map, aes(x = x, y = y, fill = pd_obs)) +\n  scale_fill_viridis_c(name = \"Observed\\nPhylogenetic Diversity\", option = \"plasma\") +\n  geom_sf(data = basemap_xy, fill = NA, color = \"black\", linewidth = 1) +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n  theme_minimal() +\n  theme(legend.position = \"right\") +\n  labs(x = \"Longitude\", y = \"Latitude\", title = \"Sonoran Basin and Range Cactaceae Observed Phylogenetic Diversity Map\")\n\n# Plot the significant cells for comparing the observed phylodiversity against the randomized communities\npd_sig_map &lt;- ggplot() +\n  geom_tile(data = son_canape_map, aes(x = x, y = y, fill = pd_signif)) + # pd_signif contains the two-tailed test output denoting when cells are significant for PD as compared to the random communities\n  scale_fill_manual(values = cpr_signif_cols_2, name = \"Phylogenetic diversity\") +\n  geom_sf(data = basemap_xy, fill = NA, color = \"black\") +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n  theme_minimal() +\n  theme(legend.position = \"right\") +\n  labs(x = \"Longitude\", y = \"Latitude\", title = \"Sonoran Basin and Range Cactaceae Significant Phylogenetic Diversity Map\")\n\nprint(pd_sig_map)\n\n# Plot the significant cells for comparing the alternative tree against the randomized communties\nrpd_sig_map &lt;- ggplot() +\n  geom_tile(data = son_canape_map, aes(x = x, y = y, fill = rpd_signif)) + # rpd_signif contains the two-tailed test output denoting when cells are significant for RPD as compared to the random communities\n  scale_fill_manual(values = cpr_signif_cols_2, name = \"Relative Phylogenetic diversity\") +\n  geom_sf(data = basemap_xy, fill = NA, color = \"black\") +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n  theme_minimal() +\n  theme(legend.position = \"right\") +\n  labs(x = \"Longitude\", y = \"Latitude\", title = \"Sonoran Basin and Range Cactaceae Significant Relative Phylogenetic Diversity\")\n\nprint(rpd_sig_map)",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#g-phyloendemism-analysis",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#g-phyloendemism-analysis",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.8 G) Phyloendemism Analysis",
+    "text": "10.8 G) Phyloendemism Analysis\nCANAPE (Categorization of Neo- and Paleoendemism) classifies sites/cells by endemic types (paleo, neo, or mixed) in two steps:  Step 1) If a cell is significantly high for either the PE on the observed tree (PE_obs) or PE on the alternative tree (PE_alt_obs), we evaluate the cell for neo- or paleoendemism  Step 2) RPE = PE_observed_tree / PE_alternative_tree. If RPE is significantly high = paleoendemism, if RPE is significantly low = neoendemism. (two tailed test)  If a cell is significant for PE_obs or PE_alt, but RPE is non-significant, then the cell is assigned to mixed endemism. A slightly special case of mixed is where PE_obs & PE_obs_alt are both highly significant in a cell (p &lt; 0.01), then its called ‘super’\n\n# Plot and visualize all of the cells significant for either PE_obs or PE_alt_obs (one-tailed test)\nendemism_significant &lt;- son_canape_map %&gt;%\n  mutate(\n    PE_significant =\n      case_when(\n        # If any of the p‑upper/lower values are missing, return NA (logical)\n        is.na(pe_obs_p_upper) | is.na(pe_alt_obs_p_upper) |\n          is.na(rpe_obs_p_upper) | is.na(rpe_obs_p_lower) ~ NA,\n        # If either observed or alternative tree p‑upper exceeds 0.95, call it significant (1 tailed test)\n        pe_obs_p_upper &gt; 0.95 | pe_alt_obs_p_upper &gt; 0.95 ~ TRUE,\n        # All other cases: not significant\n        TRUE ~ FALSE\n      )\n  )\n\n# Plot sites that are significant for PE in step 1\nggplot() +\n  geom_tile(data = endemism_significant, aes(x = x, y = y, fill = PE_significant)) +\n  scale_fill_manual(values = c(\"grey\", \"purple\")) +\n  geom_sf(data = basemap_xy, fill = NA, color = \"black\") +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n  guides(fill = guide_legend(title = \"Significant Endemism Present\")) +\n  theme_minimal() +\n  theme(legend.position = \"right\") +\n  labs(x = \"Longitude\", y = \"Latitude\",\n       title = \"Sonoran Basin and Range Cactaceae Sites that are Significant for Phyloendemism\")\n\n\n# Plot and visualize significant phyloendemism & categories of endemism from CANAPE\nggplot() +\n  geom_tile(data = son_canape_map, aes(x = x, y = y, fill = endem_type)) + #  cpr_classify_endem() ran the two tailed test to determine endemism types, so we can just call them here\n  scale_fill_manual(values = cpr_endem_cols_4) +\n  geom_sf(data = basemap_xy, fill = NA, color = \"black\") +\n  geom_sf(data = son_ecoregion_xy, fill = NA, color = \"black\", linewidth = 1) +\n  coord_sf(crs = st_crs(sdm_stack_sonoran),\n           xlim = c(bbox[\"xmin\"], bbox[\"xmax\"]),\n           ylim = c(bbox[\"ymin\"], bbox[\"ymax\"])) +\n  guides(fill = guide_legend(title = \"Endemism Type\")) +\n  theme_minimal() +\n  theme(legend.position = \"right\") +\n  labs(x = \"Longitude\", y = \"Latitude\",\n       title = \"Sonoran Basin and Range Cactaceae Categorical Analysis of Neo- and Paleo-Endemism\")",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08_Phylodiversity_Phyloendemism.html#h-optional-visualize-lineage-compositions-in-significant-cells",
+    "href": "chapters/08_Phylodiversity_Phyloendemism.html#h-optional-visualize-lineage-compositions-in-significant-cells",
+    "title": "10  Phylodiversity and Phyloendemism",
+    "section": "10.9 H) Optional: Visualize Lineage Compositions in Significant Cells",
+    "text": "10.9 H) Optional: Visualize Lineage Compositions in Significant Cells\n\n# Write a function that visualizes lineage composition within a site, and reports both the observed and expected diversity metric...\ncreate_significant_cell_plot &lt;- function(metric, type, cell_id,\n                                         son_canape_map, comm_matrix_molc,\n                                         base_tree, bbox, sig_map) {\n\n  # determine significance column and filter values based on metric and type\n  signif_col &lt;- ifelse(metric == \"pd\", \"pd_signif\", \"rpd_signif\")\n\n  if (type == \"low\") {\n    signif_values &lt;- c(\"&lt; 0.01\", \"&lt; 0.025\")\n    title_prefix &lt;- \"Significantly Low\"\n    tree_color &lt;- \"#E31A1C\"  # Red for low\n    arrow_from &lt;- \"top-right\"  # Arrow from top-right corner\n  } else if (type == \"high\") {\n    signif_values &lt;- c(\"&gt; 0.975\", \"&gt; 0.99\")\n    title_prefix &lt;- \"Significantly High\"\n    tree_color &lt;- \"#1F78B4\"  # Blue for high\n    arrow_from &lt;- \"bottom-left\"  # Arrow from bottom-left corner\n  } else {\n    stop(\"type must be either 'high' or 'low'\")\n  }\n\n  # extract the representative cell\n  representative_cell &lt;- son_canape_map %&gt;%\n    filter(.data[[signif_col]] %in% signif_values & site == cell_id)\n\n  if (nrow(representative_cell) == 0) {\n    stop(sprintf(\"No cell found with %s %s significance and site ID '%s'\",\n                 title_prefix, metric, cell_id))\n  }\n\n  # grab cell coordinates\n  cell_x &lt;- representative_cell$x\n  cell_y &lt;- representative_cell$y\n\n  # calculate offsets based on plot dimensions (same across both plots)\n  x_range &lt;- bbox[\"xmax\"] - bbox[\"xmin\"]\n  y_range &lt;- bbox[\"ymax\"] - bbox[\"ymin\"]\n  offset_x &lt;- 0.05 * x_range  # 5% of x range as offset\n  offset_y &lt;- 0.05 * y_range  # 5% of y range as offset\n\n  # determine arrow start coordinates based on type\n  if (arrow_from == \"top-right\") {\n    start_x &lt;- bbox[\"xmax\"] + offset_x\n    start_y &lt;- bbox[\"ymax\"] + offset_y\n  } else {  # bottom-left\n    start_x &lt;- bbox[\"xmin\"] - offset_x\n    start_y &lt;- bbox[\"ymin\"] - offset_y\n  }\n\n  # create the map visual with arrow pointing to cell\n  sig_cell_map &lt;- sig_map +\n    # first draw a thicker white arrow as an outline\n    geom_segment(data = data.frame(\n      x = start_x,\n      y = start_y,\n      xend = cell_x,\n      yend = cell_y\n    ),\n    aes(x = x, y = y, xend = xend, yend = yend),\n    color = \"white\",  # outline color\n    size = 1.2,       # thicker for outline effect\n    arrow = arrow(length = unit(0.3, \"cm\"), type = \"closed\")) +  # Larger arrowhead\n    # angle arrow from the specified corner\n    geom_segment(data = data.frame(\n      x = start_x,\n      y = start_y,\n      xend = cell_x,\n      yend = cell_y\n    ),\n    aes(x = x, y = y, xend = xend, yend = yend),\n    color = \"black\",\n    size = 0.8,\n    arrow = arrow(length = unit(0.25, \"cm\"), type = \"closed\")) +\n    ggtitle(paste(\"Focus on\", title_prefix, metric, representative_cell$site, \"Pixel\"))\n\n  # extract lineages present in representative cell\n  comm_matrix_molc_rep &lt;- comm_matrix_molc[representative_cell$site, , drop = FALSE]  # extract by site\n  taxa_present_rep &lt;- colnames(comm_matrix_molc_rep)[comm_matrix_molc_rep == 1]  # grab taxa with presence at site\n\n  # create a label to show comparison of observed vs expected metric\n  obs_col &lt;- ifelse(metric == \"pd\", \"pd_obs\", \"rpd_obs\")\n  exp_col &lt;- ifelse(metric == \"pd\", \"pd_rand_mean\", \"rpd_rand_mean\")\n\n  metric_label &lt;- paste0(\n    toupper(substr(metric, 1, 1)), substr(metric, 2, nchar(metric)),\n    \" observed = \", round(representative_cell[[obs_col]], 3), \"\\n\",\n    toupper(substr(metric, 1, 1)), substr(metric, 2, nchar(metric)),\n    \" expected = \", round(representative_cell[[exp_col]], 3)\n  )\n\n  # create groupings using ggtree's groupOTU() to showcase branches\n  if (length(taxa_present_rep) &gt; 0) {\n    # create a named list for groupOTU using setNames\n    group_list &lt;- setNames(list(taxa_present_rep), type)\n    tree_grouped &lt;- groupOTU(base_tree$data, group_list)\n\n    # create function for abbreviating Genus + specificEpithet\n    abbreviate_taxon &lt;- function(taxon_name) {\n      parts &lt;- strsplit(taxon_name, \" \")[[1]]\n      if (length(parts) &gt;= 2) {\n        return(paste0(substr(parts[1], 1, 1), \". \", parts[2]))\n      } else {\n        return(taxon_name)\n      }\n    }\n\n    # abbreviate tip labels in the grouped trees\n    tree_grouped$label &lt;- sapply(tree_grouped$label, abbreviate_taxon)\n\n    # plot showing contributing branches + metric observed and expected\n    values &lt;- c(\"0\" = \"grey30\")\n    values[[type]] &lt;- tree_color\n\n    cell_lineages &lt;- ggtree(tree_grouped, aes(color = group)) +\n      scale_color_manual(values = values, guide = \"none\") +\n      geom_tiplab(size = 2.5, align = TRUE, linesize = 0.2) +\n      theme_tree2() +\n      xlim(NA, max(base_tree$data$x, na.rm = TRUE) * 1.1) +\n      ggtitle(paste(title_prefix, metric, representative_cell$site, \"Present Lineages\")) +\n      theme(\n        plot.title = element_text(hjust = 0.5, size = 12),\n        plot.margin = margin(10, 20, 10, 10),\n        axis.text.x = element_blank(),\n        axis.title.x = element_blank(),\n        axis.ticks.x = element_blank()\n      ) +\n      annotate(\"text\", x = -Inf, y = Inf, label = metric_label,\n               hjust = -0.1, vjust = 1.5,\n               size = 4, colour = \"black\", fontface = \"bold\")\n  } else {\n # catch issues with missing taxa (not sure this really could happen at this stage but whatever)\n    warning(\"No taxa present in the selected cell\")\n    cell_lineages &lt;- ggtree(base_tree$data) +\n      theme_tree2() +\n      ggtitle(paste(\"No taxa present in\", representative_cell$site)) +\n      theme(\n        plot.title = element_text(hjust = 0.5, size = 12),\n        plot.margin = margin(10, 20, 10, 10),\n        axis.text.x = element_blank(),\n        axis.title.x = element_blank(),\n        axis.ticks.x = element_blank()\n      )\n  }\n\n  # plot both side by side\n  combined_plot &lt;- sig_cell_map + cell_lineages +\n    plot_layout(widths = c(1, 2))\n\n  return(combined_plot)\n}\n\n# Plot:\n# Sig Low PD cell\nlow_pd_plot &lt;- create_significant_cell_plot(\n  metric = \"pd\",\n  type = \"low\",\n  cell_id = \"cell_616\",\n  son_canape_map = son_canape_map,\n  comm_matrix_molc = comm_matrix_molc,\n  base_tree = base_tree,\n  bbox = bbox,\n  sig_map = pd_sig_map\n)\nprint(low_pd_plot)\n\n# Sig High PD cell\nhigh_pd_plot &lt;- create_significant_cell_plot(\n  metric = \"pd\",\n  type = \"high\",\n  cell_id = \"cell_2722\",\n  son_canape_map = son_canape_map,\n  comm_matrix_molc = comm_matrix_molc,\n  base_tree = base_tree,\n  bbox = bbox,\n  sig_map = pd_sig_map\n)\nprint(high_pd_plot)\n\n# Sig Low RPD cell\nlow_rpd_plot &lt;- create_significant_cell_plot(\n  metric = \"rpd\",\n  type = \"low\",\n  cell_id = \"cell_507\",\n  son_canape_map = son_canape_map,\n  comm_matrix_molc = comm_matrix_molc,\n  base_tree = base_tree,\n  bbox = bbox,\n  sig_map = rpd_sig_map\n)\nprint(low_rpd_plot)\n\n# Sig High RPD cell\nhigh_rpd_plot &lt;- create_significant_cell_plot(\n  metric = \"rpd\",\n  type = \"high\",\n  cell_id = \"cell_2050\",\n  son_canape_map = son_canape_map,\n  comm_matrix_molc = comm_matrix_molc,\n  base_tree = base_tree,\n  bbox = bbox,\n  sig_map = rpd_sig_map\n)\nprint(high_rpd_plot)",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Phylodiversity and Phyloendemism</span>"
+    ]
+  }
+]

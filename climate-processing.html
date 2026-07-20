@@ -270,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-load-cleaned-occurrence-data" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> A) Load Cleaned Occurrence Data<a href="climate-processing.html#a-load-cleaned-occurrence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="climate-processing.html#cb35-1" tabindex="-1"></a><span class="co"># Read in cleaned occurrence data with geographic coordinates and species ID</span></span>
-<span id="cb35-2"><a href="climate-processing.html#cb35-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv&quot;</span>)</span>
+<span id="cb35-2"><a href="climate-processing.html#cb35-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>)</span>
 <span id="cb35-3"><a href="climate-processing.html#cb35-3" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="climate-processing.html#cb35-4" tabindex="-1"></a><span class="co"># Convert occurrence data to an sf object</span></span>
 <span id="cb35-5"><a href="climate-processing.html#cb35-5" tabindex="-1"></a>alldfsp <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(alldf,</span>

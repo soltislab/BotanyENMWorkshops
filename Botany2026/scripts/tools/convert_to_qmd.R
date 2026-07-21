@@ -27,21 +27,22 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
       "",
       "# Load pre‑saved data files"
     )
-    for (var_name in names(data_files)) {
-      file_info <- data_files[[var_name]]
-      if (is.list(file_info)) {
-        if (file_info$type == "csv") {
-          out <- c(out, paste0(var_name, " <- read.csv('", file_info$file, "')"))
-        } else {
-          out <- c(out, paste0(var_name, " <- readRDS('", file_info$file, "')"))
-        }
-      } else {
-        out <- c(out, paste0(var_name, " <- readRDS('", file_info, "')"))
-      }
+ for (var_name in names(data_files)) {
+  file_info <- data_files[[var_name]]
+  
+  if (is.list(file_info)) {
+    # Handle structured format
+    if (file_info$type == "csv") {
+      out <- c(out, paste0(var_name, " <- read.csv('", file_info$file, "')"))
+    } else {
+      // This handles "rds" type and any other non-CSV type
+      out <- c(out, paste0(var_name, " <- readRDS('", file_info$file, "')"))
     }
-    out <- c(out, paste0("cat('Data loaded: ", paste(names(data_files), collapse=", "), "\\n')"))
-    out <- c(out, "```", "")
+  } else {
+    // Simple string path (assume RDS)
+    out <- c(out, paste0(var_name, " <- readRDS('", file_info, "')"))
   }
+}
 
   # ----- Chunk open/close helpers -----
   open_chunk <- function(label, chunk_num){

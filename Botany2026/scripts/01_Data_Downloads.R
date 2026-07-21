@@ -77,6 +77,7 @@ rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 names(rawdf)
 nrow(rawdf)
 
+## D) Interactive Visualization
 # Visualize records interactively - The error message here indicates many points do not have long/lat values
 leaflet(rawdf) %>%
   addTiles() %>%

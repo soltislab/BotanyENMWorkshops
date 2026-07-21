@@ -12,11 +12,11 @@ webr_interactive <- list(
 )
 
 # Define data files to pre-load for WebR (hidden from users)
-# Path is relative to where the HTML chapter is served from
+# In webr_config.R for "01_Data_Downloads"
 webr_data_files <- list(
   "01_Data_Downloads" = list(
     "rawdf" = list(
-      file = "../data/rds-objects/01_Data_Downloads/Shortia_galacifolia_raw_2026_07_14.rds",
+      file = "../data/Shortia_galacifolia_raw_2026_07_14.rds",  # ← Note the "../"
       type = "rds"
     )
   )

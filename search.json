@@ -244,7 +244,7 @@
     "href": "chapters/02_Data_Cleaning.html#l-merge-cleaned-files-for-maxent",
     "title": "4  Occurrence Data Cleaning",
     "section": "4.13 L) Merge Cleaned Files for Maxent",
-    "text": "4.13 L) Merge Cleaned Files for Maxent\n\nalldf &lt;- list.files(\"data/02_cleaning\", pattern = \"*.csv\", full.names = TRUE)\nalldf &lt;- lapply(alldf, read.csv)\nalldf &lt;- do.call(rbind, alldf)\n\nwrite.csv(alldf, \"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv\", row.names = FALSE)",
+    "text": "4.13 L) Merge Cleaned Files for Maxent\n\nalldf &lt;- list.files(\"data/02_cleaning\", pattern = \"*.csv\", full.names = TRUE)\nalldf &lt;- lapply(alldf, read.csv)\nalldf &lt;- do.call(rbind, alldf)\n\nwrite.csv(alldf, \"data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv\", row.names = FALSE)",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Occurrence Data Cleaning</span>"
     ]

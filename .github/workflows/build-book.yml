@@ -30,7 +30,11 @@ jobs:
         shell: Rscript {0}
         run: |
           source("Botany2026/scripts/tools/convert_to_qmd.R")
-      
+          
+      - name: Copy data folder to book output
+        run: |
+          cp -r Botany2026/data book/_book/data
+          
       - name: Install Quarto WebR extension
         run: |
           cd book

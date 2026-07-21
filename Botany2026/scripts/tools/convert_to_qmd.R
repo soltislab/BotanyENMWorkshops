@@ -54,7 +54,7 @@ if (!is.null(data_files) && length(data_files) > 0) {
   }
   # Close the webr chunk with a status message
 out <- c(out, "```", "")  # Just close the chunk properly
-  
+  } 
   # ----- Chunk open/close helpers -----
   open_chunk <- function(label, chunk_num){
     is_interactive <- chunk_num %in% interactive_chunks

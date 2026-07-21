@@ -23,7 +23,7 @@
 <meta name="author" content="Soltis Lab" />
 
 
-<meta name="date" content="2026-07-20" />
+<meta name="date" content="2026-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -281,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-read-raw-occurrence-data" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> A) Read Raw Occurrence Data<a href="occurrence-data-cleaning.html#a-read-raw-occurrence-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="occurrence-data-cleaning.html#cb11-1" tabindex="-1"></a><span class="co"># Read species-specific raw data</span></span>
-<span id="cb11-2"><a href="occurrence-data-cleaning.html#cb11-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<span id="cb11-2"><a href="occurrence-data-cleaning.html#cb11-2" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb11-3"><a href="occurrence-data-cleaning.html#cb11-3" tabindex="-1"></a><span class="fu">nrow</span>(rawdf)  <span class="co"># Starting number of records</span></span></code></pre></div>
 </div>
 <div id="b-taxonomic-harmonization" class="section level2 hasAnchor" number="3.3">
@@ -362,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="j-save-cleaned-csv" class="section level2 hasAnchor" number="3.11">
 <h2><span class="header-section-number">3.11</span> J) Save Cleaned CSV<a href="occurrence-data-cleaning.html#j-save-cleaned-csv" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="occurrence-data-cleaning.html#cb20-1" tabindex="-1"></a><span class="fu">write.csv</span>(df, <span class="st">&quot;data/02_cleaning/Shortia_galacifolia_2025_06_27_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="occurrence-data-cleaning.html#cb20-1" tabindex="-1"></a><span class="fu">write.csv</span>(df, <span class="st">&quot;data/02_cleaning/Shortia_galacifolia_2026_07_14_cleaned.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="k-batch-clean-for-all-species" class="section level2 hasAnchor" number="3.12">
 <h2><span class="header-section-number">3.12</span> K) Batch Clean for All Species<a href="occurrence-data-cleaning.html#k-batch-clean-for-all-species" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -384,7 +384,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-16"><a href="occurrence-data-cleaning.html#cb21-16" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">one_point_per_pixel</span>(df)</span>
 <span id="cb21-17"><a href="occurrence-data-cleaning.html#cb21-17" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">thin_points</span>(df, <span class="at">distance =</span> <span class="fl">0.002</span>, <span class="at">reps =</span> <span class="dv">100</span>)</span>
 <span id="cb21-18"><a href="occurrence-data-cleaning.html#cb21-18" tabindex="-1"></a></span>
-<span id="cb21-19"><a href="occurrence-data-cleaning.html#cb21-19" tabindex="-1"></a>  outfile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/02_cleaning/&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, search[<span class="dv">1</span>]), <span class="st">&quot;_2025_06_27_cleaned.csv&quot;</span>)</span>
+<span id="cb21-19"><a href="occurrence-data-cleaning.html#cb21-19" tabindex="-1"></a>  outfile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;data/02_cleaning/&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, search[<span class="dv">1</span>]), <span class="st">&quot;_2026_07_14_cleaned.csv&quot;</span>)</span>
 <span id="cb21-20"><a href="occurrence-data-cleaning.html#cb21-20" tabindex="-1"></a>  <span class="fu">write.csv</span>(df, outfile, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-21"><a href="occurrence-data-cleaning.html#cb21-21" tabindex="-1"></a>  <span class="fu">rm</span>(df, search, outfile)</span>
 <span id="cb21-22"><a href="occurrence-data-cleaning.html#cb21-22" tabindex="-1"></a>}</span></code></pre></div>
@@ -395,7 +395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-2"><a href="occurrence-data-cleaning.html#cb22-2" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">lapply</span>(alldf, read.csv)</span>
 <span id="cb22-3"><a href="occurrence-data-cleaning.html#cb22-3" tabindex="-1"></a>alldf <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, alldf)</span>
 <span id="cb22-4"><a href="occurrence-data-cleaning.html#cb22-4" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="occurrence-data-cleaning.html#cb22-5" tabindex="-1"></a><span class="fu">write.csv</span>(alldf, <span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb22-5"><a href="occurrence-data-cleaning.html#cb22-5" tabindex="-1"></a><span class="fu">write.csv</span>(alldf, <span class="st">&quot;data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="m-map-all-records" class="section level2 hasAnchor" number="3.14">
 <h2><span class="header-section-number">3.14</span> M) Map All Records<a href="occurrence-data-cleaning.html#m-map-all-records" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -415,7 +415,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="n-prepare-geolocate-batch-file" class="section level2 hasAnchor" number="3.15">
 <h2><span class="header-section-number">3.15</span> N) Prepare GeoLocate Batch File<a href="occurrence-data-cleaning.html#n-prepare-geolocate-batch-file" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="occurrence-data-cleaning.html#cb24-1" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv&quot;</span>)</span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="occurrence-data-cleaning.html#cb24-1" tabindex="-1"></a>rawdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv&quot;</span>)</span>
 <span id="cb24-2"><a href="occurrence-data-cleaning.html#cb24-2" tabindex="-1"></a>rawdf_GeoRef <span class="ot">&lt;-</span> <span class="fu">need_to_georeference</span>(rawdf)</span>
 <span id="cb24-3"><a href="occurrence-data-cleaning.html#cb24-3" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="occurrence-data-cleaning.html#cb24-4" tabindex="-1"></a><span class="co"># Format columns for GeoLocate submission</span></span>
@@ -443,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-26"><a href="occurrence-data-cleaning.html#cb24-26" tabindex="-1"></a>                                  <span class="st">&quot;correction status&quot;</span>, <span class="st">&quot;precision&quot;</span>, <span class="st">&quot;error polygon&quot;</span>, <span class="st">&quot;multiple results&quot;</span>,</span>
 <span id="cb24-27"><a href="occurrence-data-cleaning.html#cb24-27" tabindex="-1"></a>                                  <span class="st">&quot;ID&quot;</span>, <span class="st">&quot;name&quot;</span>, <span class="st">&quot;basis&quot;</span>)]</span>
 <span id="cb24-28"><a href="occurrence-data-cleaning.html#cb24-28" tabindex="-1"></a></span>
-<span id="cb24-29"><a href="occurrence-data-cleaning.html#cb24-29" tabindex="-1"></a><span class="fu">write.csv</span>(rawdf_GeoRef2, <span class="st">&quot;data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2025_06_27.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb24-29"><a href="occurrence-data-cleaning.html#cb24-29" tabindex="-1"></a><span class="fu">write.csv</span>(rawdf_GeoRef2, <span class="st">&quot;data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2026_07_14.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 
 </div>
 </div>

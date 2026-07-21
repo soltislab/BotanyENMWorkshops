@@ -25,7 +25,7 @@ make_webr_setup_chunk <- function(csv_files) {
     filename <- info$filename
 
     url <- sprintf(
-      "https://zenodo.org/records/%s/files/%s?download=1",
+      "https://zenodo.org/record/%s/files/%s?download=1",
       record_id,
       filename
     )

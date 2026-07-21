@@ -67,7 +67,7 @@ gators_download(synonyms.list = Pyxidanthera_brevifolia,
 ## C) Preview Downloaded Files ----
 
 # Read one downloaded file
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
 
 # Preview columns and dimensions
 names(rawdf)

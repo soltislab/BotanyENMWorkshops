@@ -1,8 +1,33 @@
-convert_script <- function(infile, outfile, interactive_chunks = NULL, zenodo_data = NULL){
-      }),
-      "```",
-      ""
+convert_script <- function(infile, outfile, interactive_chunks = NULL, data_files = NULL){
+  lines <- readLines(infile, warn = FALSE)
+  out <- character()
+  in_chunk <- FALSE
+  chunk <- 1
+  chunk_prefix <- paste0(
+    "script_",
+    gsub("[^A-Za-z0-9]+", "_",
+         tools::file_path_sans_ext(basename(infile)))
+  )
+
+  # Add hidden data loading chunk if data files are specified
+  if (!is.null(data_files) && length(data_files) > 0) {
+    out <- c(
+      out,
+      "",
+      "```{webr-r}",
+      "#| include: false",
+      "#| context: setup",
+      "",
+      "# Load pre-saved data files"
     )
+    
+    # Add a line to load each data file
+    for (var_name in names(data_files)) {
+      filepath <- data_files[[var_name]]
+      out <- c(out, paste0(var_name, " <- readRDS('", filepath, "')"))
+    }
+    
+    out <- c(out, "```", "")
   }
 
   # Rest of your existing code...
@@ -81,6 +106,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, zenodo_da
 
   writeLines(out, outfile)
 }
+
 # Load WebR configuration
 source("Botany2026/scripts/tools/webr_config.R")
 
@@ -106,6 +132,13 @@ for(f in files){
     NULL
   }
   
+  # Get data files for this script
+  data_files <- if(script_name %in% names(webr_data_files)) {
+    webr_data_files[[script_name]]
+  } else {
+    NULL
+  }
+  
   convert_script(
     infile = f,
     outfile = file.path(
@@ -113,6 +146,7 @@ for(f in files){
       "chapters",
       paste0(script_name, ".qmd")
     ),
-    interactive_chunks = interactive
+    interactive_chunks = interactive,
+    data_files = data_files
   )
 }

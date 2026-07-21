@@ -11,15 +11,15 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
   
   # Add hidden data loading chunk if data files are specified
   if (!is.null(data_files) && length(data_files) > 0) {
-    out <- c(
-      out,
-      "",
-      "```{webr-r}",
-      "#| include: false",
-      "#| context: setup",
-      "",
-      "# Load pre-saved data files"
-    )
+  out <- c(
+    out,
+    "",
+    "```{webr-r}",
+    "#| echo: false",
+    "#| output: false",
+    "",
+    "# Load pre-saved data files (this may take a moment)"
+  )
     
     # Add a line to load each data file
     for (var_name in names(data_files)) {
@@ -39,6 +39,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     }
     
     # Close the webr chunk
+    out <- c(out, paste0("cat('Data loaded: ", paste(names(data_files), collapse=", "), "\\n')"))
     out <- c(out, "```", "")
   }
   

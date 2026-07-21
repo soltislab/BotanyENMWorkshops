@@ -16,7 +16,9 @@ webr_interactive <- list(
 # Define data files to pre-load for WebR (hidden from users)
 webr_data_files <- list(
   "01_Data_Downloads" = list(
-    "rawdf" = "data/Shortia_galacifolia_raw_2026_07_14.rds"
-    # Add more if needed: "other_data" = "data/other_file.rds"
+    "rawdf" = list(
+      file = "data/Shortia_galacifolia_raw_2026_07_14.csv",
+      type = "csv"  # Specify type
+    )
   )
 )

@@ -6,6 +6,7 @@ on:
       - "Botany2026/scripts/**"
       - "Botany2026/scripts/tools/**"
       - "book/**"
+      - "data/**"               # <-- watch the data folder too
 permissions:
   contents: write
 jobs:
@@ -13,38 +14,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: r-lib/actions/setup-r@v2
-      
+
       - uses: quarto-dev/quarto-actions/setup@v2
-      
+
       - name: Install R packages
         shell: Rscript {0}
         run: |
-          install.packages(c(
-            "knitr",
-            "rmarkdown"
-          ))
-      
+          install.packages(c("knitr", "rmarkdown"))
+
       - name: Convert scripts
         shell: Rscript {0}
         run: |
           source("Botany2026/scripts/tools/convert_to_qmd.R")
-          
-      - name: Copy data folder to book output
-        run: |
-          cp -r Botany2026/data book/_book/data
-          
+
+      # *** No manual copy step needed ***
+
       - name: Install Quarto WebR extension
         run: |
           cd book
           quarto add coatless/quarto-webr --no-prompt
-      
+
       - name: Render Quarto book
         run: |
           cd book
           quarto render
-      
+
       - name: Publish to gh-pages-jts branch (test)
         run: |
           git fetch origin gh-pages-jts:gh-pages-jts || true

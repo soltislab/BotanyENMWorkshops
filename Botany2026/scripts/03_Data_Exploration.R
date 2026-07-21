@@ -18,16 +18,16 @@ library(gridExtra)      # For combining plots
 
 ## A) Load Cleaned Data ----
 ### Read in cleaned occurrence data with geographic coordinates and species ID
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
+alldf <- read.csv("02_cleaning/maxent_ready/diapensiaceae_maxentready_2025_06_27.csv")
 
 ## B) Load and Stack Climatic Variables from WorldClim ----
 # List and sort all .tif files in the WorldClim directory
-list <- list.files("data/04_climate_processing/BioClim/", full.names = TRUE)
+list <- list.files("04_climate_processing/BioClim/", full.names = TRUE)
 list <- gtools::mixedsort(sort(list))
 
 # Stack the raster files
 envtStack <- terra::rast(list)
-
+envtStack
 
 ## C) Extract Climatic Variables at Occurrence Points ----
 # Extract values of environmental rasters at occurrence points
@@ -49,6 +49,7 @@ data.species <- ptExtracteddf[, "name"]
 
 # Scale and run PCA
 pca_result <- prcomp(data.bioclim, scale. = TRUE)
+summary(pca_result)
 
 # Extract variable loadings
 loadings <- pca_result$rotation
@@ -95,7 +96,7 @@ selected_vars <- unique(c(top_PC1_vars, top_PC2_vars))  # remove duplicates
 
 ## G) ANOVA + Tukey HSD + Plotting for Top Variables ----
 
-plotlist <- list()
+plotlist <- list() # Creating a place to put plots from the loop
 
 for (i in seq_along(selected_vars)) {
   varname <- selected_vars[i]

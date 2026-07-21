@@ -13,12 +13,11 @@ webr_interactive <- list(
   "08_Phylodiversity_Phyloendemism" = c()
 )
 
-# Define data files to pre-load for WebR (hidden from users)
-webr_data_files <- list(
-  "01_Data_Downloads" = list(
-    "rawdf" = list(
-      file = "data/Shortia_galacifolia_raw_2026_07_14.csv",
-      type = "csv"  # Specify type
-    )
+# Files WebR is allowed to fetch from Zenodo.
+# The key should be the basename used in read.csv().
+webr_csv_files <- list(
+  "Shortia_galacifolia_raw_2026_07_14.csv" = list(
+    doi = "10.5281/zenodo.21464606",
+    filename = "Shortia_galacifolia_raw_2026_07_14.csv"
   )
 )

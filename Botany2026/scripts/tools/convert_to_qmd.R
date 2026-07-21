@@ -35,11 +35,11 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     if (file_info$type == "csv") {
       out <- c(out, paste0(var_name, " <- read.csv('", file_info$file, "')"))
     } else {
-      // This handles "rds" type and any other non-CSV type
+      # This handles "rds" type and any other non-CSV type
       out <- c(out, paste0(var_name, " <- readRDS('", file_info$file, "')"))
     }
   } else {
-    // Simple string path (assume RDS)
+    # Simple string path (assume RDS)
     out <- c(out, paste0(var_name, " <- readRDS('", file_info, "')"))
   }
 }

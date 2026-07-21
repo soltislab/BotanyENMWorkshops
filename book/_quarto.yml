@@ -2,7 +2,7 @@ project:
   type: book
   output-dir: _book
   resources:
-    - data/**
+    - data/
 
 book:
   title: "Botany 2026 ENM Workshop"

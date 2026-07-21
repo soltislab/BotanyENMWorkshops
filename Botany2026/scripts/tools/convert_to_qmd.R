@@ -1,3 +1,7 @@
+# -------------------------------------------------
+# convert_to_qmd.R  –  converts R scripts → QMD for Quarto
+# -------------------------------------------------
+
 convert_script <- function(infile, outfile, interactive_chunks = NULL, data_files = NULL){
   lines <- readLines(infile, warn = FALSE)
   out <- character()
@@ -11,103 +15,88 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
       tools::file_path_sans_ext(basename(infile))
     )
   )
-  
-  # Add hidden data loading chunk if data files are specified
+
+  # ----- Hidden data‑loading chunk (WebR) -----
   if (!is.null(data_files) && length(data_files) > 0) {
     out <- c(
       out,
       "",
       "```{webr-r}",
       "#| include: false",
-      "#| echo: false",
-      "#| output: false",
+      "#| context: setup",
       "",
-      "# Load pre-saved data files (this may take a moment)"
+      "# Load pre‑saved data files"
     )
-    
-    # Add a line to load each data file
     for (var_name in names(data_files)) {
       file_info <- data_files[[var_name]]
-      
       if (is.list(file_info)) {
-        # Handle structured format
         if (file_info$type == "csv") {
           out <- c(out, paste0(var_name, " <- read.csv('", file_info$file, "')"))
         } else {
           out <- c(out, paste0(var_name, " <- readRDS('", file_info$file, "')"))
         }
       } else {
-        # Simple string path (assume RDS)
         out <- c(out, paste0(var_name, " <- readRDS('", file_info, "')"))
       }
     }
-    
-    # Close the webr chunk
     out <- c(out, paste0("cat('Data loaded: ", paste(names(data_files), collapse=", "), "\\n')"))
     out <- c(out, "```", "")
   }
-  
-  # Rest of your existing code...
+
+  # ----- Chunk open/close helpers -----
   open_chunk <- function(label, chunk_num){
     is_interactive <- chunk_num %in% interactive_chunks
-    
     if(is_interactive){
       c(paste0("```{webr-r}"), "")
     } else {
       c(paste0("```{r ", label, ", eval=FALSE, warning=FALSE, message=FALSE}"), "")
     }
   }
-  
-  close_chunk <- function(){
-    c("", "```", "")
-  }
-  
+  close_chunk <- function(){ c("", "```", "") }
+
+  # ----- Turn comment lines into markdown -----
   comment_to_md <- function(x){
-    txt <- sub("^###\\\\s?", "", x)
-    if(grepl("^\\\\s*$", txt)) return("")
-    txt <- sub("^\\\\s*-\\\\s+", "- ", txt)
-    txt <- sub("^\\\\s*([0-9]+\\\\.)\\\\s+", "\\\\1 ", txt)
+    txt <- sub("^###\\s?", "", x)
+    if(grepl("^\\s*$", txt)) return("")
+    txt <- sub("^\\s*-\\s+", "- ", txt)
+    txt <- sub("^\\s*([0-9]+\\.)\\s+", "\\1 ", txt)
     txt
   }
-  
+
   i <- 1
   while(i <= length(lines)){
     line <- lines[i]
-    
+
+    # ----- Title (first line only) -----
     if(i == 1 && grepl("^# ", line)){
       out <- c(out, paste0("# ", sub("^# ", "", line)), "")
       i <- i + 1
-      while(i <= length(lines) && grepl("^\\\\s*$", lines[i])) {
-        i <- i + 1
-      }
-      while(i <= length(lines) && grepl("^###", lines[i])) {
+      while(i <= length(lines) && grepl("^\\s*$", lines[i])) i <- i + 1
+      while(i <= length(lines) && grepl("^###", lines[i])){
         out <- c(out, comment_to_md(lines[i]))
         i <- i + 1
       }
       out <- c(out, "")
       next
     }
-    
+
+    # ----- Section heading -----
     if(grepl("^## .*----$", line)){
-      if(in_chunk){
-        out <- c(out, close_chunk())
-        in_chunk <- FALSE
-      }
-      heading <- sub("^##\\\\s*", "", line)
-      heading <- sub("\\\\s*----$", "", heading)
+      if(in_chunk){ out <- c(out, close_chunk()); in_chunk <- FALSE }
+      heading <- sub("^##\\s*", "", line)
+      heading <- sub("\\s*----$", "", heading)
       out <- c(out, paste0("## ", heading), "")
       i <- i + 1
-      while(i <= length(lines) && grepl("^\\\\s*$", lines[i])) {
-        i <- i + 1
-      }
-      while(i <= length(lines) && grepl("^###", lines[i])) {
+      while(i <= length(lines) && grepl("^\\s*$", lines[i])) i <- i + 1
+      while(i <= length(lines) && grepl("^###", lines[i])){
         out <- c(out, comment_to_md(lines[i]))
         i <- i + 1
       }
       out <- c(out, "")
       next
     }
-    
+
+    # ----- Code chunk -----
     if(!in_chunk){
       label <- paste0(chunk_prefix, "_chunk", chunk)
       out <- c(out, open_chunk(label, chunk))
@@ -117,45 +106,42 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     out <- c(out, line)
     i <- i + 1
   }
-  
-  if(in_chunk)
-    out <- c(out, close_chunk())
-  
+
+  if(in_chunk) out <- c(out, close_chunk())
   writeLines(out, outfile)
 }
 
-# Load WebR configuration
+# -------------------------------------------------
+# Actually run the conversion
+# -------------------------------------------------
+
+# Load your WebR configuration (defines which chunks are interactive and which data to pre‑load)
 source("Botany2026/scripts/tools/webr_config.R")
 
-dir.create(
-  file.path("book", "chapters"),
-  recursive = TRUE,
-  showWarnings = FALSE
-)
+# Make sure the output folder exists
+dir.create(file.path("book", "chapters"), recursive = TRUE, showWarnings = FALSE)
 
+# Find all R scripts to convert
 files <- list.files(
   "Botany2026/scripts",
-  pattern = "\\\\.R$",
+  pattern = "\\.R$",
   full.names = TRUE
 )
 
+# Convert each script → .qmd (note the .qmd extension)
 for(f in files){
   script_name <- tools::file_path_sans_ext(basename(f))
-  
-  # Get interactive chunks for this script
-  interactive <- if(script_name %in% names(webr_interactive)) {
+
+  # Get interactive chunks for this script (if any)
+  interactive <- if(script_name %in% names(webr_interactive)){
     webr_interactive[[script_name]]
-  } else {
-    NULL
-  }
-  
-  # Get data files for this script
-  data_files <- if(script_name %in% names(webr_data_files)) {
+  } else { NULL }
+
+  # Get data files to pre‑load for this script (if any)
+  data_files <- if(script_name %in% names(webr_data_files)){
     webr_data_files[[script_name]]
-  } else {
-    NULL
-  }
-  
+  } else { NULL }
+
   convert_script(
     infile = f,
     outfile = file.path(

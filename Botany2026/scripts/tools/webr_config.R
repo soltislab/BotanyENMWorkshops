@@ -1,7 +1,7 @@
 # Define which scripts have interactive chunks
 webr_interactive <- list(
   "00_Setup" = c(),
-  "01_Data_Downloads" = c(6),  # Chunk 6 for leaflet preview
+  "01_Data_Downloads" = c(7),  # Chunk 6 for leaflet preview
   "02_Data_Cleaning" = c(),
   "03_Data_Exploration" = c(),  
   "04_AccessibleArea_VariableSelection" = c(),

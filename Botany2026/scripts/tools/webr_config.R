@@ -15,10 +15,8 @@ webr_interactive <- list(
 webr_data_files <- list(
   "01_Data_Downloads" = list(
     "rawdf" = list(
-      file = "data/Shortia_galacifolia_raw_2026_07_14.csv",
+      file = "../data/Shortia_galacifolia_raw_2026_07_14.csv",  # Note the "../" to go up from chapters/
       type = "csv"
     )
-    # Add more data files as needed:
-    # "other_data" = list(file = "data/other_file.csv", type = "csv")
   )
 )

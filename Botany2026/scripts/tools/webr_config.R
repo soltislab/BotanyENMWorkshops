@@ -12,11 +12,12 @@ webr_interactive <- list(
 )
 
 # Define data files to pre-load for WebR (hidden from users)
+# Path is relative to where the HTML chapter is served from
 webr_data_files <- list(
   "01_Data_Downloads" = list(
     "rawdf" = list(
-      file = "../data/Shortia_galacifolia_raw_2026_07_14.csv",  # Note the "../" to go up from chapters/
-      type = "csv"
+      file = "../data/rds-objects/01_Data_Downloads/Shortia_galacifolia_raw_2026_07_14.rds",
+      type = "rds"
     )
   )
 )

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Download Occurrence Data – Botany 2026 ENM Workshop</title>
+<title>3&nbsp; Load pre-saved data files – Botany 2026 ENM Workshop</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -407,7 +407,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"code":"# Read one downloaded file\nrawdf <- read.csv(\"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\n# Preview columns and dimensions\nnames(rawdf)\nnrow(rawdf)\n\n# Visualize records interactively - The error message here indicates many points do not have long/lat values\nleaflet(rawdf) %>%\n  addTiles() %>%\n  addMarkers(label = paste0(rawdf$longitude, \", \", rawdf$latitude))","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"code":"rawdf <- readRDS('data/Shortia_galacifolia_raw_2026_07_14.rds')","id":1,"options":{"autorun":"true","classes":"","comment":"","context":"setup","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"include":"false","label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"# Read one downloaded file\nrawdf <- read.csv(\"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\n# Preview columns and dimensions\nnames(rawdf)\nnrow(rawdf)\n\n# Visualize records interactively - The error message here indicates many points do not have long/lat values\nleaflet(rawdf) %>%\n  addTiles() %>%\n  addMarkers(label = paste0(rawdf$longitude, \", \", rawdf$latitude))","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"1","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
 </script>
 <script type="module">
@@ -1673,7 +1673,7 @@ globalThis.qwebrExecuteCode = async function (
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01_Data_Downloads.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Download Occurrence Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01_Data_Downloads.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Load pre-saved data files</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -1713,7 +1713,7 @@ globalThis.qwebrExecuteCode = async function (
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/01_Data_Downloads.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Download Occurrence Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Load pre-saved data files</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -1768,10 +1768,13 @@ globalThis.qwebrExecuteCode = async function (
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#load-required-packages" id="toc-load-required-packages" class="nav-link active" data-scroll-target="#load-required-packages"><span class="header-section-number">3.1</span> Load Required Packages</a></li>
-  <li><a href="#a-download-from-idigbio" id="toc-a-download-from-idigbio" class="nav-link" data-scroll-target="#a-download-from-idigbio"><span class="header-section-number">3.2</span> A) Download from iDigBio</a></li>
-  <li><a href="#b-download-using-gators" id="toc-b-download-using-gators" class="nav-link" data-scroll-target="#b-download-using-gators"><span class="header-section-number">3.3</span> B) Download Using gatoRs</a></li>
-  <li><a href="#c-preview-downloaded-files" id="toc-c-preview-downloaded-files" class="nav-link" data-scroll-target="#c-preview-downloaded-files"><span class="header-section-number">3.4</span> C) Preview Downloaded Files</a></li>
+  <li><a href="#download-occurrence-data" id="toc-download-occurrence-data" class="nav-link active" data-scroll-target="#download-occurrence-data"><span class="header-section-number">4</span> Download Occurrence Data</a>
+  <ul class="collapse">
+  <li><a href="#load-required-packages" id="toc-load-required-packages" class="nav-link" data-scroll-target="#load-required-packages"><span class="header-section-number">4.1</span> Load Required Packages</a></li>
+  <li><a href="#a-download-from-idigbio" id="toc-a-download-from-idigbio" class="nav-link" data-scroll-target="#a-download-from-idigbio"><span class="header-section-number">4.2</span> A) Download from iDigBio</a></li>
+  <li><a href="#b-download-using-gators" id="toc-b-download-using-gators" class="nav-link" data-scroll-target="#b-download-using-gators"><span class="header-section-number">4.3</span> B) Download Using gatoRs</a></li>
+  <li><a href="#c-preview-downloaded-files" id="toc-c-preview-downloaded-files" class="nav-link" data-scroll-target="#c-preview-downloaded-files"><span class="header-section-number">4.4</span> C) Preview Downloaded Files</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -2064,7 +2067,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Download Occurrence Data</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Load pre-saved data files</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -2081,21 +2084,25 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
+<div id="qwebr-insertion-location-1"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<section id="download-occurrence-data" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Download Occurrence Data</h1>
 <p>Purpose:</p>
 <ul>
 <li>Download and preview species occurrence records using iDigBio and gatoRs.</li>
 </ul>
 <p>Created by ML Gaynor.</p>
-<section id="load-required-packages" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="load-required-packages"><span class="header-section-number">3.1</span> Load Required Packages</h2>
+<section id="load-required-packages" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="load-required-packages"><span class="header-section-number">4.1</span> Load Required Packages</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gatoRs)       <span class="co"># Unified taxonomic/occurrence tools</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Interactive mapping</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="a-download-from-idigbio" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="a-download-from-idigbio"><span class="header-section-number">3.2</span> A) Download from iDigBio</h2>
+<section id="a-download-from-idigbio" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="a-download-from-idigbio"><span class="header-section-number">4.2</span> A) Download from iDigBio</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2125,8 +2132,8 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">"data/01_download/iDigBio_GU_family_2025_06_27.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="b-download-using-gators" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="b-download-using-gators"><span class="header-section-number">3.3</span> B) Download Using gatoRs</h2>
+<section id="b-download-using-gators" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="b-download-using-gators"><span class="header-section-number">4.3</span> B) Download Using gatoRs</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define synonym lists for each focal species</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Shortia_galacifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Shortia galacifolia"</span>, <span class="st">"Sherwoodia galacifolia"</span>)</span>
@@ -2152,14 +2159,15 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="c-preview-downloaded-files" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="c-preview-downloaded-files"><span class="header-section-number">3.4</span> C) Preview Downloaded Files</h2>
-<div id="qwebr-insertion-location-1"></div>
+<section id="c-preview-downloaded-files" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="c-preview-downloaded-files"><span class="header-section-number">4.4</span> C) Preview Downloaded Files</h2>
+<div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -2626,116 +2634,124 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Download Occurrence Data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Purpose:</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr-r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| include: false</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| context: setup</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Download and preview species occurrence records using iDigBio and gatoRs.</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Created by ML Gaynor.</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in"># Load pre-saved data files</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">rawdf &lt;- readRDS('data/Shortia_galacifolia_raw_2026_07_14.rds')</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk1, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu"># Download Occurrence Data</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>Purpose:</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Download and preview species occurrence records using iDigBio and gatoRs.</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load Required Packages</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Created by ML Gaynor.</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk2, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk1, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gatoRs)       <span class="co"># Unified taxonomic/occurrence tools</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Interactive mapping</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load Required Packages</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## A) Download from iDigBio</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk3, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk2, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ridigbio)     <span class="co"># Interface to iDigBio API</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gatoRs)       <span class="co"># Unified taxonomic/occurrence tools</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Interactive mapping</span></span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">"Galax urceolata"</span>))</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## A) Download from iDigBio</span></span>
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Diapensiaceae"</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk3, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co"># search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"exists"</span>),</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"Diapensiaceae"</span>,</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"geo_bounding_box"</span>,</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">"data/01_download/iDigBio_GU_2025_06_27.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">"data/01_download/iDigBio_GU_family_2025_06_27.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## B) Download Using gatoRs</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk4, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co"># here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for specific species (Galax urceolata)</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>iDigBio_GU <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">scientificname =</span> <span class="st">"Galax urceolata"</span>))</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for all Diapensiaceae occurrences (limit to 1000 for example)</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>iDigBio_GU_family <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(<span class="at">rq =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">"Diapensiaceae"</span>), <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co"># search the API with a geographic bounding box (e.g. Eastern USA extent)</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Search with a geographic bounding box (e.g., eastern USA extent)</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>rq_input <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">scientificname =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">"exists"</span>),</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"Diapensiaceae"</span>,</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">geopoint =</span> <span class="fu">list</span>(</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"geo_bounding_box"</span>,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">top_left =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">98.16</span>, <span class="at">lat =</span> <span class="fl">48.92</span>),</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">bottom_right =</span> <span class="fu">list</span>(<span class="at">lon =</span> <span class="sc">-</span><span class="fl">64.02</span>, <span class="at">lat =</span> <span class="fl">23.06</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>iDigBio_GU_family_USA <span class="ot">&lt;-</span> <span class="fu">idig_search_records</span>(rq_input, <span class="at">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Save iDigBio results as CSV</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU, <span class="st">"data/01_download/iDigBio_GU_2025_06_27.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(iDigBio_GU_family, <span class="st">"data/01_download/iDigBio_GU_family_2025_06_27.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Define synonym lists for each focal species</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>Shortia_galacifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Shortia galacifolia"</span>, <span class="st">"Sherwoodia galacifolia"</span>)</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>Galax_urceolata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Galax urceolata"</span>, <span class="st">"Galax aphylla"</span>)</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>Pyxidanthera_barbulata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pyxidanthera barbulata"</span>, <span class="st">"Pyxidanthera barbulata var. barbulata"</span>)</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>Pyxidanthera_brevifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pyxidanthera brevifolia"</span>, <span class="st">"Pyxidanthera barbulata var. brevifolia"</span>)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## B) Download Using gatoRs</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Use gatoRs to download records with resolved synonyms</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Shortia_galacifolia,</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv"</span>)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Galax_urceolata,</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv"</span>)</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_barbulata,</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r script_01_Data_Downloads_chunk4, eval=FALSE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Define synonym lists for each focal species</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>Shortia_galacifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Shortia galacifolia"</span>, <span class="st">"Sherwoodia galacifolia"</span>)</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>Galax_urceolata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Galax urceolata"</span>, <span class="st">"Galax aphylla"</span>)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>Pyxidanthera_barbulata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pyxidanthera barbulata"</span>, <span class="st">"Pyxidanthera barbulata var. barbulata"</span>)</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>Pyxidanthera_brevifolia <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Pyxidanthera brevifolia"</span>, <span class="st">"Pyxidanthera barbulata var. brevifolia"</span>)</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Use gatoRs to download records with resolved synonyms</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Shortia_galacifolia,</span>
 <span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv"</span>)</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv"</span>)</span>
 <span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_brevifolia,</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Galax_urceolata,</span>
 <span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv"</span>)</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv"</span>)</span>
 <span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## C) Preview Downloaded Files</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr-r}</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_barbulata,</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv"</span>)</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="fu">gators_download</span>(<span class="at">synonyms.list =</span> Pyxidanthera_brevifolia,</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>                <span class="at">write.file =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>                <span class="at">filename =</span> <span class="st">"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv"</span>)</span>
 <span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="in"># Read one downloaded file</span></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="in">rawdf &lt;- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="in"># Preview columns and dimensions</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a><span class="in">names(rawdf)</span></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="in">nrow(rawdf)</span></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="in"># Visualize records interactively - The error message here indicates many points do not have long/lat values</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="in">leaflet(rawdf) %&gt;%</span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="in">  addTiles() %&gt;%</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="in">  addMarkers(label = paste0(rawdf$longitude, ", ", rawdf$latitude))</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## C) Preview Downloaded Files</span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{webr-r}</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a><span class="in"># Read one downloaded file</span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="in">rawdf &lt;- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv")</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a><span class="in"># Preview columns and dimensions</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="in">names(rawdf)</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a><span class="in">nrow(rawdf)</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="in"># Visualize records interactively - The error message here indicates many points do not have long/lat values</span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="in">leaflet(rawdf) %&gt;%</span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a><span class="in">  addTiles() %&gt;%</span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="in">  addMarkers(label = paste0(rawdf$longitude, ", ", rawdf$latitude))</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <script type="module">

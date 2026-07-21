@@ -48,9 +48,11 @@ if (!is.null(data_files) && length(data_files) > 0) {
   }
 
   # Close the webr chunk with a status message
-  out <- c(out,
-           paste0("cat('Data loaded: ", paste(names(data_files), collapse = ", "), "\\n')"),
-           "```", "")
+ out <- c(out,
+         "# Debug: check if file exists",
+         paste0("cat('Looking for: ", path, "\\n')"),
+         paste0("cat('File exists: ', file.exists('", path, "'), '\\n')"),
+         paste0(var_name, " <- readRDS('", path, "')"))
 }
   
   # ----- Chunk open/close helpers -----

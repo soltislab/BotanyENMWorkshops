@@ -5,23 +5,20 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
   chunk <- 1
   chunk_prefix <- paste0(
     "script_",
-    gsub(
-      "[^A-Za-z0-9]+",
-      "_",
-      tools::file_path_sans_ext(basename(infile))
-    )
+    gsub("[^A-Za-z0-9]+", "_",
+         tools::file_path_sans_ext(basename(infile)))
   )
-
+  
   # Add hidden data loading chunk if data files are specified
   if (!is.null(data_files) && length(data_files) > 0) {
     out <- c(
       out,
       "",
       "```{webr-r}",
-      "#| echo: false",
-      "#| output: false",
+      "#| include: false",
+      "#| context: setup",
       "",
-      "# Load pre-saved data files (this may take a moment)"
+      "# Load pre-saved data files"
     )
     
     # Add a line to load each data file
@@ -42,7 +39,6 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     }
     
     # Close the webr chunk
-    out <- c(out, paste0("cat('Data loaded: ", paste(names(data_files), collapse=", "), "\\n')"))
     out <- c(out, "```", "")
   }
   
@@ -62,10 +58,10 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
   }
   
   comment_to_md <- function(x){
-    txt <- sub("^###\\\\s?", "", x)
-    if(grepl("^\\\\s*$", txt)) return("")
-    txt <- sub("^\\\\s*-\\\\s+", "- ", txt)
-    txt <- sub("^\\\\s*([0-9]+\\\\.)\\\\s+", "\\\\1 ", txt)
+    txt <- sub("^###\\s?", "", x)
+    if(grepl("^\\s*$", txt)) return("")
+    txt <- sub("^\\s*-\\s+", "- ", txt)
+    txt <- sub("^\\s*([0-9]+\\.)\\s+", "\\1 ", txt)
     txt
   }
   
@@ -76,7 +72,7 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     if(i == 1 && grepl("^# ", line)){
       out <- c(out, paste0("# ", sub("^# ", "", line)), "")
       i <- i + 1
-      while(i <= length(lines) && grepl("^\\\\s*$", lines[i])) {
+      while(i <= length(lines) && grepl("^\\s*$", lines[i])) {
         i <- i + 1
       }
       while(i <= length(lines) && grepl("^###", lines[i])) {
@@ -92,11 +88,11 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
         out <- c(out, close_chunk())
         in_chunk <- FALSE
       }
-      heading <- sub("^##\\\\s*", "", line)
-      heading <- sub("\\\\s*----$", "", heading)
+      heading <- sub("^##\\s*", "", line)
+      heading <- sub("\\s*----$", "", heading)
       out <- c(out, paste0("## ", heading), "")
       i <- i + 1
-      while(i <= length(lines) && grepl("^\\\\s*$", lines[i])) {
+      while(i <= length(lines) && grepl("^\\s*$", lines[i])) {
         i <- i + 1
       }
       while(i <= length(lines) && grepl("^###", lines[i])) {
@@ -121,4 +117,48 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     out <- c(out, close_chunk())
   
   writeLines(out, outfile)
+}
+
+# Load WebR configuration
+source("Botany2026/scripts/tools/webr_config.R")
+
+dir.create(
+  file.path("book", "chapters"),
+  recursive = TRUE,
+  showWarnings = FALSE
+)
+
+files <- list.files(
+  "Botany2026/scripts",
+  pattern = "\\.R$",
+  full.names = TRUE
+)
+
+for(f in files){
+  script_name <- tools::file_path_sans_ext(basename(f))
+  
+  # Get interactive chunks for this script
+  interactive <- if(script_name %in% names(webr_interactive)) {
+    webr_interactive[[script_name]]
+  } else {
+    NULL
+  }
+  
+  # Get data files for this script
+  data_files <- if(script_name %in% names(webr_data_files)) {
+    webr_data_files[[script_name]]
+  } else {
+    NULL
+  }
+  
+  convert_script(
+    infile = f,
+    outfile = file.path(
+      "book",
+      "chapters",
+      paste0(script_name, ".qmd")
+    ),
+    interactive_chunks = interactive,
+    data_files = data_files
+  )
 }

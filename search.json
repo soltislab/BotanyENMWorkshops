@@ -82,51 +82,41 @@
   {
     "objectID": "chapters/01_Data_Downloads.html",
     "href": "chapters/01_Data_Downloads.html",
-    "title": "3  Load pre-saved data files (this may take a moment)",
+    "title": "3  Download Occurrence Data",
     "section": "",
-    "text": "4 Download Occurrence Data\nPurpose:\nCreated by ML Gaynor.",
+    "text": "3.1 Load Required Packages\nPurpose:\nCreated by ML Gaynor.\nlibrary(ridigbio)     # Interface to iDigBio API\nlibrary(gatoRs)       # Unified taxonomic/occurrence tools\nlibrary(leaflet)      # Interactive mapping",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre-saved data files (this may take a moment)</span>"
-    ]
-  },
-  {
-    "objectID": "chapters/01_Data_Downloads.html#load-required-packages",
-    "href": "chapters/01_Data_Downloads.html#load-required-packages",
-    "title": "3  Load pre-saved data files (this may take a moment)",
-    "section": "4.1 Load Required Packages",
-    "text": "4.1 Load Required Packages\n\nlibrary(ridigbio)     # Interface to iDigBio API\nlibrary(gatoRs)       # Unified taxonomic/occurrence tools\nlibrary(leaflet)      # Interactive mapping",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre-saved data files (this may take a moment)</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
     ]
   },
   {
     "objectID": "chapters/01_Data_Downloads.html#a-download-from-idigbio",
     "href": "chapters/01_Data_Downloads.html#a-download-from-idigbio",
-    "title": "3  Load pre-saved data files (this may take a moment)",
-    "section": "4.2 A) Download from iDigBio",
-    "text": "4.2 A) Download from iDigBio\n\n# here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.\n\n# Search for specific species (Galax urceolata)\niDigBio_GU &lt;- idig_search_records(rq = list(scientificname = \"Galax urceolata\"))\n\n# Search for all Diapensiaceae occurrences (limit to 1000 for example)\niDigBio_GU_family &lt;- idig_search_records(rq = list(family = \"Diapensiaceae\"), limit = 1000)\n\n\n# search the API with a geographic bounding box (e.g. Eastern USA extent)\n\n# Search with a geographic bounding box (e.g., eastern USA extent)\nrq_input &lt;- list(\n  scientificname = list(type = \"exists\"),\n  family = \"Diapensiaceae\",\n  geopoint = list(\n    type = \"geo_bounding_box\",\n    top_left = list(lon = -98.16, lat = 48.92),\n    bottom_right = list(lon = -64.02, lat = 23.06)\n  )\n)\niDigBio_GU_family_USA &lt;- idig_search_records(rq_input, limit = 1000)\n\n# Save iDigBio results as CSV\nwrite.csv(iDigBio_GU, \"data/01_download/iDigBio_GU_2025_06_27.csv\", row.names = FALSE)\nwrite.csv(iDigBio_GU_family, \"data/01_download/iDigBio_GU_family_2025_06_27.csv\", row.names = FALSE)",
+    "title": "3  Download Occurrence Data",
+    "section": "3.2 A) Download from iDigBio",
+    "text": "3.2 A) Download from iDigBio\n\n# here we use `ridigbio` to download data. We show how you can search the iDigBio API for occurrence record by taxonomic designations.\n\n# Search for specific species (Galax urceolata)\niDigBio_GU &lt;- idig_search_records(rq = list(scientificname = \"Galax urceolata\"))\n\n# Search for all Diapensiaceae occurrences (limit to 1000 for example)\niDigBio_GU_family &lt;- idig_search_records(rq = list(family = \"Diapensiaceae\"), limit = 1000)\n\n\n# search the API with a geographic bounding box (e.g. Eastern USA extent)\n\n# Search with a geographic bounding box (e.g., eastern USA extent)\nrq_input &lt;- list(\n  scientificname = list(type = \"exists\"),\n  family = \"Diapensiaceae\",\n  geopoint = list(\n    type = \"geo_bounding_box\",\n    top_left = list(lon = -98.16, lat = 48.92),\n    bottom_right = list(lon = -64.02, lat = 23.06)\n  )\n)\niDigBio_GU_family_USA &lt;- idig_search_records(rq_input, limit = 1000)\n\n# Save iDigBio results as CSV\nwrite.csv(iDigBio_GU, \"data/01_download/iDigBio_GU_2025_06_27.csv\", row.names = FALSE)\nwrite.csv(iDigBio_GU_family, \"data/01_download/iDigBio_GU_family_2025_06_27.csv\", row.names = FALSE)",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre-saved data files (this may take a moment)</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
     ]
   },
   {
     "objectID": "chapters/01_Data_Downloads.html#b-download-using-gators",
     "href": "chapters/01_Data_Downloads.html#b-download-using-gators",
-    "title": "3  Load pre-saved data files (this may take a moment)",
-    "section": "4.3 B) Download Using gatoRs",
-    "text": "4.3 B) Download Using gatoRs\n\n# Define synonym lists for each focal species\nShortia_galacifolia &lt;- c(\"Shortia galacifolia\", \"Sherwoodia galacifolia\")\nGalax_urceolata &lt;- c(\"Galax urceolata\", \"Galax aphylla\")\nPyxidanthera_barbulata &lt;- c(\"Pyxidanthera barbulata\", \"Pyxidanthera barbulata var. barbulata\")\nPyxidanthera_brevifolia &lt;- c(\"Pyxidanthera brevifolia\", \"Pyxidanthera barbulata var. brevifolia\")\n\n# Use gatoRs to download records with resolved synonyms\ngators_download(synonyms.list = Shortia_galacifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Galax_urceolata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_barbulata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_brevifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv\")",
+    "title": "3  Download Occurrence Data",
+    "section": "3.3 B) Download Using gatoRs",
+    "text": "3.3 B) Download Using gatoRs\n\n# Define synonym lists for each focal species\nShortia_galacifolia &lt;- c(\"Shortia galacifolia\", \"Sherwoodia galacifolia\")\nGalax_urceolata &lt;- c(\"Galax urceolata\", \"Galax aphylla\")\nPyxidanthera_barbulata &lt;- c(\"Pyxidanthera barbulata\", \"Pyxidanthera barbulata var. barbulata\")\nPyxidanthera_brevifolia &lt;- c(\"Pyxidanthera brevifolia\", \"Pyxidanthera barbulata var. brevifolia\")\n\n# Use gatoRs to download records with resolved synonyms\ngators_download(synonyms.list = Shortia_galacifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Shortia_galacifolia_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Galax_urceolata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Galax_urceolata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_barbulata,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_barbulata_raw_2025_06_27.csv\")\n\ngators_download(synonyms.list = Pyxidanthera_brevifolia,\n                write.file = TRUE,\n                filename = \"data/01_download/raw/Pyxidanthera_brevifolia_raw_2025_06_27.csv\")",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre-saved data files (this may take a moment)</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
     ]
   },
   {
     "objectID": "chapters/01_Data_Downloads.html#c-preview-downloaded-files",
     "href": "chapters/01_Data_Downloads.html#c-preview-downloaded-files",
-    "title": "3  Load pre-saved data files (this may take a moment)",
-    "section": "4.4 C) Preview Downloaded Files",
-    "text": "4.4 C) Preview Downloaded Files\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "title": "3  Download Occurrence Data",
+    "section": "3.4 C) Preview Downloaded Files",
+    "text": "3.4 C) Preview Downloaded Files\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre-saved data files (this may take a moment)</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Download Occurrence Data</span>"
     ]
   },
   {

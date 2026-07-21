@@ -22,13 +22,21 @@ convert_script <- function(infile, outfile, interactive_chunks = NULL, data_file
     )
     
     # Add a line to load each data file
-    for (var_name in names(data_files)) {
-      filepath <- data_files[[var_name]]
-      out <- c(out, paste0(var_name, " <- readRDS('", filepath, "')"))
+  for (var_name in names(data_files)) {
+  file_info <- data_files[[var_name]]
+  
+  if (is.list(file_info)) {
+    # Handle structured format
+    if (file_info$type == "csv") {
+      out <- c(out, paste0(var_name, " <- read.csv('", file_info$file, "')"))
+    } else {
+      out <- c(out, paste0(var_name, " <- readRDS('", file_info$file, "')"))
     }
-    
-    out <- c(out, "```", "")
+  } else {
+    # Simple string path (assume RDS)
+    out <- c(out, paste0(var_name, " <- readRDS('", file_info, "')"))
   }
+}
 
   # Rest of your existing code...
   open_chunk <- function(label, chunk_num){

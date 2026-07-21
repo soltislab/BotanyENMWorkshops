@@ -130,6 +130,16 @@
     ]
   },
   {
+    "objectID": "chapters/01_Data_Downloads.html#d-interactive-visualization",
+    "href": "chapters/01_Data_Downloads.html#d-interactive-visualization",
+    "title": "3  Load pre‑saved data files",
+    "section": "4.5 D) Interactive Visualization",
+    "text": "4.5 D) Interactive Visualization\n\n# Visualize records interactively - The error message here indicates many points do not have long/lat values\nleaflet(rawdf) %&gt;%\n  addTiles() %&gt;%\n  addMarkers(label = paste0(rawdf$longitude, \", \", rawdf$latitude))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Load pre‑saved data files</span>"
+    ]
+  },
+  {
     "objectID": "chapters/02_Data_Cleaning.html",
     "href": "chapters/02_Data_Cleaning.html",
     "title": "4  Occurrence Data Cleaning",

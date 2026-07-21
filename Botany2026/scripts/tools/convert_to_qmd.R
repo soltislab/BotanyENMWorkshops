@@ -25,9 +25,8 @@ if (!is.null(data_files) && length(data_files) > 0) {
     "",
     "# Load pre‑saved data files"
   )
-  for (var_name in names(data_files)) {
+    for (var_name in names(data_files)) {
     file_info <- data_files[[var_name]]
-
     # ---- NEW: guard against missing `type` ----
     if (is.list(file_info) && !is.null(file_info$type)) {
       # Structured entry with explicit type
@@ -45,15 +44,16 @@ if (!is.null(data_files) && length(data_files) > 0) {
       }
       out <- c(out, paste0(var_name, " <- readRDS('", path, "')"))
     }
+    
+    # Add debug section for THIS file (inside the loop)
+    out <- c(out,
+             "# Debug: check if file exists",
+             paste0("cat('Looking for: ", path, "\\n')"),
+             paste0("cat('File exists: ', file.exists('", path, "'), '\\n')"),
+             paste0(var_name, " <- readRDS('", path, "')"))
   }
-
   # Close the webr chunk with a status message
- out <- c(out,
-         "# Debug: check if file exists",
-         paste0("cat('Looking for: ", path, "\\n')"),
-         paste0("cat('File exists: ', file.exists('", path, "'), '\\n')"),
-         paste0(var_name, " <- readRDS('", path, "')"))
-}
+out <- c(out, "```", "")  # Just close the chunk properly
   
   # ----- Chunk open/close helpers -----
   open_chunk <- function(label, chunk_num){

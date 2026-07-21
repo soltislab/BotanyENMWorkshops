@@ -17,7 +17,7 @@ webr_interactive <- list(
 webr_data_files <- list(
   "01_Data_Downloads" = list(
     "rawdf" = list(
-      file = "/blue/soltis/millerjared/Botany2026/BotanyENMWorkshops/book/data/Shortia_galacifolia_raw_2026_07_14.csv",
+      file = "data/Shortia_galacifolia_raw_2026_07_14.csv",
       type = "csv"  # Specify type
     )
   )

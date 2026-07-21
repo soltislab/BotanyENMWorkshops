@@ -16,8 +16,7 @@ webr_interactive <- list(
 webr_data_files <- list(
   "01_Data_Downloads" = list(
     "rawdf" = list(
-      file = "data/Shortia_galacifolia_raw_2026_07_14.rds",  # ← Note the "../"
-      type = "rds"
+      file = "data/Shortia_galacifolia_raw_2026_07_14.rds",  #
     )
   )
 )

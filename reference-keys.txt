@@ -5,6 +5,7 @@ install-required-cran-packages
 define-cran-packages
 install-missing-cran-packages
 load-all-cran-packages
+install-required-bioconductor-package
 install-required-github-packages
 download-occurrence-data
 load-required-packages

@@ -21,7 +21,7 @@ list_of_packages <- c(
   "sf", "rnaturalearth", "ggspatial", "leaflet", "fields", "rangeBuilder",
 
   # Visualization
-  "ggplot2", "viridis", "gridExtra", "ggtree", "ggforce", "patchwork",
+  "ggplot2", "viridis", "gridExtra", "ggforce", "patchwork",
 
   # Data manipulation
   "dplyr", "tidyr", "stringr", "gtools",
@@ -36,7 +36,10 @@ list_of_packages <- c(
   "ridigbio", "gatoRs",
 
   # Other utilities
-  "multcompView", "usdm", "predicts", "rJava"
+  "multcompView", "usdm", "predicts", "rJava",
+
+  # package helper
+  "remotes"
 )
 
 ## Install Missing CRAN Packages ----
@@ -51,6 +54,8 @@ if (length(new.packages)) {
   cat("\nAll required CRAN packages already installed.\n")
 }
 
+remotes::install_version("biomod2",version="3.5.1", force = TRUE)
+
 ## Load All CRAN Packages ----
 
 # Try loading all required CRAN packages.
@@ -62,6 +67,13 @@ if (any(!loaded)) {
 } else {
   cat("\nAll CRAN packages loaded successfully.\n")
 }
+
+## Install required Bioconductor package ----
+
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("ggtree", force = TRUE)
 
 ## Install required GitHub packages ----
 

@@ -17,12 +17,11 @@
 ### may call Java routines that require more RAM.
 ### This sets the Java heap space to 8GB.
 
-options(java.parameters = "-Xmx30g")
-
+options(java.parameters = "-Xmx8g -Xms8g")
 ## Load Required Packages ----
 
 library(terra)            # For reading and manipulating raster data (modern replacement for raster package)
-library(dismo)            # For predicting from ENMs and compatibility with Maxent models
+library(dismo)   # For predicting from ENMs and compatibility with Maxent models
 library(ENMeval)          # For calculating niche overlap statistics
 library(ENMTools)         # For calculating niche breadth (Levins' B2)
 library(ggplot2)          # For creating publication-quality plots
@@ -37,7 +36,9 @@ library(biomod2)          # For range size change calculations between binary ra
 
 # List all climate raster files (.asc format) for the Eastern Temperate Forests (ETF) region.
 # These will be used as environmental predictors for projecting the ENMs.
-clim_files <- list.files("data/04_climate_processing/CurrentEasternTemperateForests",pattern = "\\.asc$", full.names = TRUE)
+clim_files <- list.files("data/04_climate_processing/CurrentEasternTemperateForests",
+                         pattern = "\\.asc$",
+                         full.names = TRUE)
 
 # Read all climate rasters into a single SpatRaster object for efficient processing.
 clim_stack <- terra::rast(clim_files)
@@ -54,7 +55,8 @@ species_list <- c("Galax_urceolata",
 
 # Load the USA state boundaries as an sf object.
 # This will be used as a basemap for plotting projections.
-usa <- rnaturalearth::ne_states(country = "United States of America", returnclass = "sf")
+usa <- rnaturalearth::ne_states(country = "United States of America",
+                                returnclass = "sf")
 
 # Loop through each species to project their ENM onto the current climate layers.
 for (species in species_list) {
@@ -83,7 +85,10 @@ for (species in species_list) {
   # Project the ENM onto the current ETF climate layers.
   proj_file <- paste0("data/06_ENM_processing/", species, "_EFT_Projection.asc")
 
-  p <- dismo::predict(opt.mod, ETF_Rasters, filename = proj_file, overwrite = TRUE, NAflag = -9999)
+  p <- dismo::predict(opt.mod, ETF_Rasters,
+                      filename = proj_file,
+                      overwrite = TRUE,
+                      NAflag = -9999)
 
   # Convert the raster to a data frame for plotting in ggplot.
   p_df <- as.data.frame(p, xy = TRUE)
@@ -94,24 +99,30 @@ for (species in species_list) {
 
   # Create the habitat suitability map.
   p_plot <- ggplot() +
-    geom_sf(data = usa, fill = "grey70") +  # basemap
-    geom_tile(data = p_df, aes(x = x, y = y, fill = Habitat_Suitability)) +
-    geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-    coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),
-             ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),
-             expand = FALSE) +
-    scale_fill_viridis_c(name = "Suitability") +
-    labs(title = paste0(gsub("_", " ", species), " - Eastern Temperate Forest Habitat Suitability"),
-         x = "Longitude",
-         y = "Latitude") +
-    theme_bw() +
-    theme(panel.grid = element_blank(),
-          axis.text = element_text(size = 8),
-          axis.title = element_text(size = 8),
-          plot.title = element_text(size = 10)) +
-    annotation_north_arrow(location = "tl",
-                           height = unit(1, "cm"),
-                           width = unit(1, "cm"))
+            geom_sf(data = usa,
+                    fill = "grey70") +  # basemap
+            geom_tile(data = p_df,
+                      mapping = aes(x = x, y = y,
+                                    fill = Habitat_Suitability)) +
+            geom_sf(data = usa,
+                    fill = NA,
+                    color = "white",
+                    linewidth = 0.5) +
+            coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),
+                     ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),
+                     expand = FALSE) +
+            scale_fill_viridis_c(name = "Suitability") +
+            labs(title = paste0(gsub("_", " ", species), " - Eastern Temperate Forest Habitat Suitability"),
+                 x = "Longitude",
+                 y = "Latitude") +
+            theme_bw() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 8),
+                  axis.title = element_text(size = 8),
+                  plot.title = element_text(size = 10)) +
+            annotation_north_arrow(location = "tl",
+                                   height = unit(1, "cm"),
+                                   width = unit(1, "cm"))
 
   # Save the plot as a PNG file.
   png_file <- paste0("data/06_ENM_processing/", species, "_ETF_Projection_Plot.png")
@@ -184,8 +195,8 @@ phylo_vals <- NULL
 overlap_vals <- NULL
 
 # Loop through the lower triangle of the matrices to extract pairwise comparisons.
-for (i in 2:length(species_names)) {
-  for (j in 1:(i - 1)) {
+for (i in 2:length(species_names)){
+  for (j in 1:(i - 1)){
     pair_names <- c(pair_names,
                     paste(species_names[i], species_names[j], sep = " - "))
     phylo_vals <- c(phylo_vals, phylo_dist[i, j])
@@ -205,6 +216,7 @@ label_text <- paste0("Intercept = ", format(round(coef(lm_res)[1], 3)), "\n",
                      "R² = ", format(round(s$r.squared, 3)))
 
 # Plot the relationship between phylogenetic distance and niche overlap.
+# This uses the basic R plotting functions!
 plot(phylo_vals, overlap_vals,
      xlab = "Phylogenetic Distance",
      ylab = "Niche Overlap (Schoener's D)",
@@ -237,10 +249,14 @@ legend("topleft",
 ## E) Project Models onto Future Climate ----
 
 # List future climate layers under the SSP370 scenario for 2081-2100.
-future_files <- list.files("data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/", pattern = "\\.asc$", full.names = TRUE)
+future_files <- list.files("data/04_climate_processing/ACCESS-CM2_2081-2100_ssp370/",
+                           pattern = "\\.asc$",
+                           full.names = TRUE)
 
 # Add the current elevation layer to the future stack, since elevation remains constant.
-elev_file <- list.files("data/04_climate_processing/CurrentEasternTemperateForests/", pattern = "elev\\.asc$", full.names = TRUE)
+elev_file <- list.files("data/04_climate_processing/CurrentEasternTemperateForests/",
+                        pattern = "elev\\.asc$",
+                        full.names = TRUE)
 
 futurestack <- terra::rast(c(future_files, elev_file))
 
@@ -273,25 +289,25 @@ for (species in species_list) {
   bbox_vals <- terra::ext(p_future)
 
   p_plot <- ggplot() +
-    geom_sf(data = usa, fill = "grey70") +
-    geom_tile(data = p_future_df,
-              aes(x = x, y = y, fill = Habitat_Suitability)) +
-    geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-    coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),
-             ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),
-             expand = FALSE) +
-    scale_fill_viridis_c(name = "Future Suitability") +
-    labs(title = paste0(gsub("_", " ", species), " - Future Habitat Suitability"),
-         x = "Longitude",
-         y = "Latitude") +
-    theme_bw() +
-    theme(panel.grid = element_blank(),
-          axis.text = element_text(size = 8),
-          axis.title = element_text(size = 8),
-          plot.title = element_text(size = 10)) +
-    annotation_north_arrow(location = "tl",
-                           height = unit(1, "cm"),
-                           width = unit(1, "cm"))
+            geom_sf(data = usa, fill = "grey70") +
+            geom_tile(data = p_future_df,
+                      aes(x = x, y = y, fill = Habitat_Suitability)) +
+            geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
+            coord_sf(xlim = c(bbox_vals$xmin - 2, bbox_vals$xmax + 2),
+                     ylim = c(bbox_vals$ymin - 2, bbox_vals$ymax + 2),
+                     expand = FALSE) +
+            scale_fill_viridis_c(name = "Future Suitability") +
+            labs(title = paste0(gsub("_", " ", species), " - Future Habitat Suitability"),
+                 x = "Longitude",
+                 y = "Latitude") +
+            theme_bw() +
+            theme(panel.grid = element_blank(),
+                  axis.text = element_text(size = 8),
+                  axis.title = element_text(size = 8),
+                  plot.title = element_text(size = 10)) +
+            annotation_north_arrow(location = "tl",
+                                   height = unit(1, "cm"),
+                                   width = unit(1, "cm"))
 
   png_file <- paste0("data/06_ENM_processing/", species, "_Future_ETF_Projection.png")
 
@@ -315,10 +331,12 @@ for (species in species_list) {
   current_binary <- current >= 0.7
   future_binary <- future >= 0.7
 
-  # Compute range changes between current and future projections.
-  RangeSizeDiff <- BIOMOD_RangeSize(as(current_binary, "Raster"),
-                                    as(future_binary, "Raster"))
 
+  # Compute range changes between current and future projections.
+  # RangeSizeDiff <- BIOMOD_RangeSize(proj.current = as(current_binary, "Raster")
+  #                                   proj.future =  as(future_binary, "Raster"))
+  RangeSizeDiff <- bm_RangeSize(proj.current = current_binary,
+                                proj.future = future_binary)
   diff_raster <- RangeSizeDiff$Diff.By.Pixel
 
   df <- as.data.frame(diff_raster, xy = TRUE)
@@ -340,34 +358,42 @@ combined_df <- bind_rows(all_dfs)
 
 # Determine overall plotting extent.
 combined_bbox <- combined_df %>%
-  summarise(xmin = min(x, na.rm = TRUE),
-            xmax = max(x, na.rm = TRUE),
-            ymin = min(y, na.rm = TRUE),
-            ymax = max(y, na.rm = TRUE))
+                 summarise(xmin = min(x, na.rm = TRUE),
+                           xmax = max(x, na.rm = TRUE),
+                           ymin = min(y, na.rm = TRUE),
+                           ymax = max(y, na.rm = TRUE))
 
 # Plot all species' range shifts together.
-p_all <- ggplot(combined_df) +
-  geom_sf(data = usa, fill = "grey70") +
-  geom_tile(aes(x = x, y = y, fill = fill)) +
-  geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-  coord_sf(xlim = c(combined_bbox$xmin - 2, combined_bbox$xmax + 2),
-           ylim = c(combined_bbox$ymin - 2, combined_bbox$ymax + 2),
-           expand = FALSE) +
-  scale_fill_viridis_d(name = "Pixel Change", na.value = "white") +
-  facet_wrap(~ species) +
-  labs(title = "Current vs Future Habitat Suitability Change",
-       x = "Longitude",
-       y = "Latitude") +
-  theme_bw() +
-  theme(panel.grid = element_blank(),
-        axis.text = element_text(size = 8),
-        axis.title = element_text(size = 8),
-        plot.title = element_text(size = 10),
-        strip.text = element_text(size = 9)) +
-  annotation_north_arrow(
-    location = "tl",
-    height = unit(1, "cm"),
-    width = unit(1, "cm"))
+p_all <-  ggplot(combined_df) +
+          geom_sf(data = usa,
+                  fill = "grey70") +
+          geom_tile(mapping = aes(x = x, y = y, fill = fill)) +
+          geom_sf(data = usa,
+                  fill = NA,
+                  color = "white",
+                  linewidth = 0.5) +
+          coord_sf(xlim = c(combined_bbox$xmin - 2,
+                            combined_bbox$xmax + 2),
+                   ylim = c(combined_bbox$ymin - 2,
+                            combined_bbox$ymax + 2),
+                   expand = FALSE) +
+          scale_fill_viridis_d(name = "Pixel Change",
+                               na.value = "white") +
+          facet_wrap(~ species) +
+          labs(title = "Current vs Future Habitat Suitability Change",
+               x = "Longitude",
+               y = "Latitude") +
+          theme_bw() +
+          theme(panel.grid = element_blank(),
+                axis.text = element_text(size = 8),
+                axis.title = element_text(size = 8),
+                plot.title = element_text(size = 10),
+                strip.text = element_text(size = 9)) +
+          annotation_north_arrow(location = "tl",
+                                 height = unit(1, "cm"),
+                                 width = unit(1, "cm"))
+
+
 
 ggsave("data/06_ENM_processing/all_species_range_change_map.png",
        plot = p_all,

@@ -19,22 +19,20 @@ library(ggspatial)     # Scale bars and north arrows
 ## A) Load Cleaned Occurrence Data ----
 
 # Load occurrence data
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_22.csv")
 
 ## B) Subset for Single Species ----
 
 # Example species: Galax urceolata
 Galax_urceolata <- alldf %>%
-  filter(accepted_name == "Galax urceolata")
+                   filter(accepted_name == "Galax urceolata")
 
 ## C) Load VIF-Selected Climate Layers ----
 
 # List environmental layers
-vif_list <- list.files(
-  "data/04_climate_processing/Cropped/Galax_urceolata/VIF/",
-  full.names = TRUE,
-  recursive = FALSE
-)
+vif_list <- list.files("data/04_climate_processing/Cropped/Galax_urceolata/VIF/",
+                       full.names = TRUE,
+                       recursive = FALSE)
 
 # Load as raster stack
 vifStack <- terra::rast(vif_list)
@@ -45,15 +43,13 @@ vifStack <- terra::rast(vif_list)
 # - Tests combinations of feature classes (FC)
 # - Tests different regularization multipliers (RM)
 
-eval <- ENMevaluate(
-  occs = Galax_urceolata[, c("longitude", "latitude")],
-  envs = vifStack,
-  tune.args = list(fc = c("L", "Q"), rm = 1:2),
-  partitions = "block",
-  n.bg = 10000,
-  parallel = FALSE,
-  algorithm = 'maxent.jar',
-)
+eval <- ENMevaluate(occs = Galax_urceolata[, c("longitude", "latitude")],
+                    envs = vifStack,
+                    tune.args = list(fc = c("L", "Q"), rm = 1:2),
+                    partitions = "block",
+                    n.bg = 10000,
+                    parallel = FALSE,
+                    algorithm = 'maxent.jar')
 
 # Save ENMeval object
 save(eval, file = "data/05_ENMs/Galax_urceolata_ENM_eval.RData")
@@ -81,29 +77,26 @@ results <- eval.results(eval)
 head(results)
 
 ## Plot model tuning results
-evalplot.stats(
-  e = eval,
-  stats = c("or.10p", "auc.val"),
-  color = "fc",
-  x.var = "rm")
+evalplot.stats(e = eval,
+               stats = c("or.10p", "auc.val"),
+               color = "fc",
+               x.var = "rm")
 
 ## H) Select Optimal Model Based on Criteria ----
 opt.seq <- results %>%
-  filter(!is.na(AICc)) %>%                      # Exclude models with NA AICc
-  filter(AICc == min(AICc)) %>%                 # Minimum AICc
-  filter(or.10p.avg != 0) %>%                   # Exclude zero omission
-  filter(or.10p.avg == min(or.10p.avg)) %>%     # Minimum omission
-  filter(auc.val.avg == max(auc.val.avg))       # Maximum AUC
+           filter(!is.na(AICc)) %>%                      # Exclude models with NA AICc
+           filter(AICc == min(AICc)) %>%                 # Minimum AICc
+           filter(or.10p.avg != 0) %>%                   # Exclude zero omission
+           filter(or.10p.avg == min(or.10p.avg)) %>%     # Minimum omission
+           filter(auc.val.avg == max(auc.val.avg))       # Maximum AUC
 
 opt.seq
 
 # Save optimal model summary
-write.table(
-  opt.seq,
-  file = "data/05_ENMs/Galax_urceolata_OptModel.txt",
-  sep = "\t",
-  row.names = FALSE
-)
+write.table(opt.seq,
+            file = "data/05_ENMs/Galax_urceolata_OptModel.txt",
+            sep = "\t",
+            row.names = FALSE)
 
 ## I) Visualize the variable contributions  ----
 
@@ -120,14 +113,16 @@ png("data/05_ENMs/Galax_urceolata_Variable_Contribution.png",
     res = 150)
 
 # Plot variable contributions
-dismo::plot(opt.mod, main = "Variable Contribution - Optimal Model")
+dismo::plot(opt.mod,
+            main = "Variable Contribution - Optimal Model")
 
 dev.off()
 
 ## J) Visualize Response Curves ----
 
 # Plot response curves for optimal model
-predicts::partialResponse(eval@models[[opt.seq$tune.args]], var = "elev")
+predicts::partialResponse(eval@models[[opt.seq$tune.args]],
+                          var = "elev")
 
 ## K) Plot Optimal Model ----
 opt.pred <- eval.predictions(eval)[[as.character(opt.seq$tune.args)]]
@@ -146,27 +141,26 @@ usa <- ne_states(country = "United States of America", returnclass = "sf")
 
 # Plot
 p <- ggplot() +
-  geom_tile(data = r_df, aes(x = x, y = y, fill = suitability)) +
-  scale_fill_viridis_c(name = "Suitability") +
-  geom_sf(data = occ_sf, color = "red", size = 0.1) +
-  geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-  coord_sf(
-    xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
-    ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
-    expand = FALSE) +
-  labs(
-    title = "Predicted Suitability (Optimal ENMeval Model)",
-    x = "Longitude",
-    y = "Latitude")+
-  theme_bw()+
-  theme(
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(),
-    panel.background = element_rect(fill = "grey80", color = NA),
-    plot.background = element_rect(fill = "white", color = NA)) +
-  annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
+     geom_tile(data = r_df, mapping = aes(x = x, y = y, fill = suitability)) +
+     scale_fill_viridis_c(name = "Suitability") +
+     geom_sf(data = occ_sf, color = "red", size = 0.1) +
+     geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
+     coord_sf(xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
+              ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
+              expand = FALSE) +
+    labs(title = "Predicted Suitability (Optimal ENMeval Model)",
+         x = "Longitude",
+         y = "Latitude")+
+    theme_bw()+
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(fill = "grey80", color = NA),
+          plot.background = element_rect(fill = "white", color = NA)) +
+    annotation_north_arrow(location = "tl",
+                           height = unit(1, "cm"),
+                           width = unit(1, "cm"))
 
-print(p)
+p
 
 # Save Outputs
 ggsave(filename = "data/05_ENMs/Galax_urceolata_Optimal_Model_Map.png",
@@ -195,53 +189,45 @@ for (sp in species_list) {
 
   ## Subset occurrence data
   sp_df <- alldf %>%
-    filter(accepted_name == sp)
+           filter(accepted_name == sp)
 
   ## List VIF-selected rasters for this species
-  sp_vif_path <- paste0(
-    "data/04_climate_processing/Cropped/",
-    gsub(" ", "_", sp),
-    "/VIF/"
-  )
+  sp_vif_path <- paste0("data/04_climate_processing/Cropped/",
+                        gsub(" ", "_", sp),
+                        "/VIF/")
 
-  vif_list <- list.files(
-    sp_vif_path,
-    full.names = TRUE,
-    recursive = FALSE
-  )
+  vif_list <- list.files(sp_vif_path,
+                         full.names = TRUE,
+                         recursive = FALSE)
 
   ## Load rasters
   vifStack <- terra::rast(vif_list)
 
   ## Run ENMevaluate
-  eval <- ENMevaluate(
-    occs = sp_df[, c("longitude", "latitude")],
-    envs = vifStack,
-    tune.args = list(fc = c("L", "Q"), rm = 1:2),
-    partitions = "block",
-    n.bg = 10000,
-    parallel = FALSE,
-    algorithm = 'maxent.jar'
-  )
+  eval <- ENMevaluate(occs = sp_df[, c("longitude", "latitude")],
+                      envs = vifStack,
+                      tune.args = list(fc = c("L", "Q"), rm = 1:2),
+                      partitions = "block",
+                      n.bg = 10000,
+                      parallel = FALSE,
+                      algorithm = 'maxent.jar')
 
   ## Save ENMeval object
   save(eval, file = paste0("data/05_ENMs/", gsub(" ", "_", sp), "_ENM_eval.RData"))
 
   ## Identify optimal model
   opt.seq <- results %>%
-    filter(!is.na(AICc)) %>%
-    filter(AICc == min(AICc)) %>%
-    filter(or.10p.avg != 0) %>%
-    filter(or.10p.avg == min(or.10p.avg)) %>%
-    filter(auc.val.avg == max(auc.val.avg))
+             filter(!is.na(AICc)) %>%
+             filter(AICc == min(AICc)) %>%
+             filter(or.10p.avg != 0) %>%
+             filter(or.10p.avg == min(or.10p.avg)) %>%
+             filter(auc.val.avg == max(auc.val.avg))
 
   ## Save optimal model summary
-  write.table(
-    opt.seq,
-    file = paste0("data/05_ENMs/", gsub(" ", "_", sp), "_OptModel.txt"),
-    sep = "\t",
-    row.names = FALSE
-  )
+  write.table(opt.seq,
+              file = paste0("data/05_ENMs/", gsub(" ", "_", sp), "_OptModel.txt"),
+              sep = "\t",
+              row.names = FALSE)
 
   ## Plot variable contributions
   opt.mod <- eval.models(eval)[[opt.seq$tune.args]]
@@ -270,33 +256,26 @@ for (sp in species_list) {
   bbox_vals <- sf::st_bbox(occ_sf)
 
   p <- ggplot() +
-    geom_tile(data = r_df, aes(x = x, y = y, fill = suitability)) +
-    scale_fill_viridis_c(name = "Suitability") +
-    geom_sf(data = occ_sf, color = "red", size = 0.1) +
-    geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
-    coord_sf(
-      xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
-      ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
-      expand = FALSE) +
-    labs(
-      title = paste("Predicted Suitability -", sp),
-      x = "Longitude",
-      y = "Latitude"
-    ) +
-    theme_bw() +
-    theme(
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.background = element_rect(fill = "grey80", color = NA),
-      plot.background = element_rect(fill = "white", color = NA)
-    ) +
-    annotation_north_arrow(
-      location = "tl",
-      height = unit(1, "cm"),
-      width = unit(1, "cm")
-    )
+       geom_tile(data = r_df, mapping = aes(x = x, y = y, fill = suitability)) +
+       scale_fill_viridis_c(name = "Suitability") +
+       geom_sf(data = occ_sf, color = "red", size = 0.1) +
+       geom_sf(data = usa, fill = NA, color = "white", linewidth = 0.5) +
+       coord_sf(xlim = c(bbox_vals["xmin"] - 2, bbox_vals["xmax"] + 2),
+                ylim = c(bbox_vals["ymin"] - 2, bbox_vals["ymax"] + 2),
+                expand = FALSE) +
+       labs(title = paste("Predicted Suitability -", sp),
+            x = "Longitude",
+            y = "Latitude") +
+      theme_bw() +
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_rect(fill = "grey80", color = NA),
+            plot.background = element_rect(fill = "white", color = NA)) +
+      annotation_north_arrow(location = "tl",
+                             height = unit(1, "cm"),
+                             width = unit(1, "cm"))
 
-  print(p)
+  p
 
   ## Save raster
   writeRaster(x = opt.pred,

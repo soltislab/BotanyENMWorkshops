@@ -17,7 +17,7 @@ library(gridExtra)    # For plotting
 ## A) Load Cleaned Occurrence Data ----
 
 # Read in cleaned occurrence data with geographic coordinates and species ID
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_22.csv")
 
 # Convert occurrence data to an sf object
 alldfsp <- st_as_sf(alldf,
@@ -27,17 +27,18 @@ alldfsp <- st_as_sf(alldf,
 ## B) Load and Stack Climatic Variables ----
 
 # List and sort all .tif files in the BioClim directory
-biolist <- list.files("data/04_climate_processing/BioClim/",
+biolist <- list.files("data/04_climate_processing/BioClim",
                       pattern = "\\.tif$",
                       full.names = TRUE)
 
 # Stack the raster files into a SpatRaster
 biostack <- terra::rast(biolist)
+names(biostack) <- gsub("wc2.1_30s_", "", names(biostack))
 
 ## C) Crop and Mask Bioclim Layers to Accessible Area (M) for Each Species ----
 
 # Define base output directory for cropped rasters
-dir  <- "data/04_climate_processing/Cropped"
+oudir  <- "data/04_climate_processing/Cropped/"
 
 # Loop through each unique species in the occurrence data
 for (species in unique(alldf$accepted_name)) {
@@ -47,7 +48,7 @@ for (species in unique(alldf$accepted_name)) {
 
   # Subset occurrence data for this species
   species_df <- alldf %>%
-    filter(accepted_name == species)
+                filter(accepted_name == species)
 
   # Convert species occurrences to sf
   species_sf <- st_as_sf(species_df,
@@ -55,15 +56,13 @@ for (species in unique(alldf$accepted_name)) {
                          crs = 4326)
 
   # Run alpha hull via rangeBuilder
-  hull <- rangeBuilder::getDynamicAlphaHull(
-    x = species_df,
-    coordHeaders = c("longitude", "latitude"),
-    fraction = 1,
-    partCount = 1,
-    initialAlpha = 20,
-    clipToCoast = "terrestrial",
-    verbose = FALSE
-  )
+  hull <- rangeBuilder::getDynamicAlphaHull(x = species_df,
+                                            coordHeaders = c("longitude", "latitude"),
+                                            fraction = 1,
+                                            partCount = 1,
+                                            initialAlpha = 20,
+                                            clipToCoast = "terrestrial",
+                                            verbose = FALSE)
 
   # Convert hull to sf
   hull_sf <- st_as_sf(hull[[1]])
@@ -90,17 +89,17 @@ for (species in unique(alldf$accepted_name)) {
 
   # plot hull before buffering
   p_before <- ggplot() +
-    geom_sf(data = hull_sf_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
-    geom_sf(data = species_sf, color = "black", size = 0.5) +
-    theme_minimal() +
-    ggtitle(paste("Alpha Hull (No Buffer) -", species))
+              geom_sf(data = hull_sf_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
+              geom_sf(data = species_sf, color = "black", size = 0.5) +
+              theme_minimal() +
+              ggtitle(paste("Alpha Hull (No Buffer) -", species))
 
   # plot after buffering alpha hull
   p_after <- ggplot() +
-    geom_sf(data = buffer_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
-    geom_sf(data = species_sf, color = "red", size = 0.5) +
-    theme_minimal() +
-    ggtitle(paste("Buffered Hull -", species))
+             geom_sf(data = buffer_wgs84, fill = "gray70", alpha = 0.5, color = NA) +
+             geom_sf(data = species_sf, color = "red", size = 0.5) +
+             theme_minimal() +
+             ggtitle(paste("Buffered Hull -", species))
 
   gridExtra::grid.arrange(p_before, p_after, ncol = 2)
 
@@ -109,7 +108,7 @@ for (species in unique(alldf$accepted_name)) {
 
   # Define output directory for this species
   spec <- gsub(" ", "_", species)
-  species_dir <- file.path(dir, spec)
+  species_dir <- file.path(oudir, spec)
   dir.create(species_dir, showWarnings = FALSE)
 
   # Loop through each raster layer and crop/mask to buffered area
@@ -139,7 +138,7 @@ for (species in unique(alldf$accepted_name)) {
 # Loop through each species
 for (species in unique(alldf$accepted_name)) {
   spec <- gsub(" ", "_", species)
-  spec_dir <- file.path(dir, spec)
+  spec_dir <- file.path(oudir, spec)
 
   # Read in species cropped rasters and stack them
   cropped_files <- list.files(spec_dir,
@@ -176,7 +175,7 @@ for (species in unique(alldf$accepted_name)) {
 ## E) Correlation Matrix of Cropped Bioclim Layers for Each Species ----
 
 # List species folders in the cropped directory
-species_dirs <- list.dirs(dir, recursive = FALSE, full.names = TRUE)
+species_dirs <- list.dirs(oudir, recursive = FALSE, full.names = TRUE)
 
 # Loop through each species folder
 for (species_dir in species_dirs) {
@@ -199,9 +198,9 @@ for (species_dir in species_dirs) {
   cor_abs <- abs(corr$correlation)
 
   # Define output CSV path
-  corr_outfile <- file.path(species_dir,paste0("correlationBioclim_", species_name, ".csv"))
+  corr_outfile <- file.path(species_dir, paste0("correlationBioclim_", species_name, ".csv"))
 
   # Write correlation matrix to CSV
-  write.csv(cor_abs,corr_outfile,row.names = TRUE)
+  write.csv(cor_abs, corr_outfile,row.names = TRUE)
 
 }

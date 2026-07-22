@@ -13,7 +13,7 @@ library(dplyr)
 ## A) Load Cleaned Occurrence Data ----
 
 # Load all occurrence records
-alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv")
+alldf <- read.csv("data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_22.csv")
 
 ## B) Load Optimal Model Parameters ----
 
@@ -32,11 +32,9 @@ load("data/05_ENMs/Galax_urceolata_ENM_eval.RData")
 ## D) Run Null Model Simulations ----
 
 # Run ENMnulls with optimal parameters and 100 iterations
-spec.mod.null <- ENMnulls(
-  eval,
-  mod.settings = list(fc = fc, rm = rm),
-  no.iter = 100
-)
+spec.mod.null <- ENMnulls(eval,
+                          mod.settings = list(fc = fc, rm = rm),
+                          no.iter = 100)
 
 ## E) Save Null Model Comparison Results ----
 
@@ -44,30 +42,24 @@ spec.mod.null <- ENMnulls(
 null_comparison_results <- null.emp.results(spec.mod.null)
 
 # Save results as CSV
-write.csv(
-  null_comparison_results,
-  file = "data/05_ENMs/Galax_urceolata_null_comparison_results.csv",
-  row.names = FALSE
-)
+write.csv(null_comparison_results,
+          file = "data/05_ENMs/Galax_urceolata_null_comparison_results.csv",
+          row.names = FALSE)
 
 ## F) Plot Null Model Results ----
 
 # Generate histogram plots for AUC, OR.10p, and CBI statistics
-spec.null <- evalplot.nulls(
-  spec.mod.null,
-  stats = c("or.10p", "auc.val", "cbi.val"),
-  plot.type = "histogram"
-)
+spec.null <- evalplot.nulls(spec.mod.null,
+                            stats = c("or.10p", "auc.val", "cbi.val"),
+                            plot.type = "histogram")
 
 # Display plot in R console
 plot(spec.null)
 
 # Save plot to PNG
-ggsave(
-  filename = "Galax_urceolata_null_histogram.png",
+ggsave(filename = "Galax_urceolata_null_histogram.png",
   plot = spec.null,
   path = "data/05_ENMs/",
   height = 12,
-  width = 13
-)
+  width = 13)
 

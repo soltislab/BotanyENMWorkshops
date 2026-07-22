@@ -17,7 +17,7 @@ library(leaflet)        # For interactive mapping
 ## A) Read Raw Occurrence Data ----
 
 # Read species-specific raw data
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_22.csv")
 nrow(rawdf)  # Starting number of records
 
 ## B) Taxonomic Harmonization ----
@@ -47,13 +47,16 @@ nrow(df)
 
 ## D) Flag and Filter Cultivated Coordinates ----
 
-df <- process_flagged(df, interactive = FALSE, scientific.name = "accepted_name")
+df <- process_flagged(df,
+                      interactive = FALSE,
+                      scientific.name = "accepted_name")
 nrow(df)
 
 ## E) Duplicate Removal ----
 
 # Remove duplicate specimens and aggregator artifacts
-df <- remove_duplicates(df, remove.unparseable = TRUE)
+df <- remove_duplicates(df,
+                        remove.unparseable = TRUE)
 nrow(df)
 
 ## F) Spatial Deduplication ----
@@ -70,23 +73,30 @@ nnDmin <- do.call(rbind, lapply(1:5, function(i) sort(nnDm[, i])[2]))
 min(nnDmin)  # e.g., 2.22 km
 
 # If thinning is needed
-df <- thin_points(df, distance = 0.002, reps = 100)
+df <- thin_points(df,
+                  distance = 0.002,
+                  reps = 100)
 nrow(df)
 
 ## H) Static Map of Cleaned Points ----
 
 df_fixed <- st_as_sf(df, coords = c("longitude", "latitude"), crs = 4326)
-USA <- borders(database = "usa", colour = "gray80", fill = "gray80")
-state <- borders(database = "state", colour = "black", fill = NA)
+USA <- annotation_borders(database = "usa", colour = "gray80", fill = "gray80")
+state <- annotation_borders(database = "state", colour = "black", fill = NA)
 
 simple_map <- ggplot() +
-  USA + state +
-  geom_sf(data = df_fixed, color = "blue") +
-  coord_sf(xlim = c(min(df$longitude) - 3, max(df$longitude) + 3),
-           ylim = c(min(df$latitude) - 3, max(df$latitude) + 3)) +
-  xlab("Longitude") + ylab("Latitude") +
-  annotation_scale() +
-  annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
+              USA +
+              state +
+              geom_sf(data = df_fixed,
+                      color = "blue") +
+              coord_sf(xlim = c(min(df$longitude) - 3, max(df$longitude) + 3),
+                       ylim = c(min(df$latitude) - 3, max(df$latitude) + 3)) +
+              xlab("Longitude") +
+              ylab("Latitude") +
+              annotation_scale() +
+              annotation_north_arrow(location = "tl",
+                                     height = unit(1, "cm"),
+                                     width = unit(1, "cm"))
 
 simple_map
 
@@ -98,16 +108,14 @@ leaflet(df_fixed) %>%
 
 ## J) Save Cleaned CSV ----
 
-write.csv(df, "data/02_cleaning/Shortia_galacifolia_2026_07_14_cleaned.csv", row.names = FALSE)
+write.csv(df, "data/02_cleaning/Shortia_galacifolia_2026_07_22_cleaned.csv", row.names = FALSE)
 
 ## K) Batch Clean for All Species ----
 
 files <- list.files("data/01_download/raw", full.names = TRUE)[1:3]
-synonymns <- list(
-  Galax_urceolata = c("Galax urceolata", "Galax urceolata (Poir.) Brummitt", "Galax urceolata (Poiret) Brummitt", "Galax urceolaa", "Galax aphylla L.", "Galax aphylla"),
-  Pyxidanthera_barbulata = c("Pyxidanthera barbulata", "Pyxidanthera barbulata Michx.", "Pyxidanthera barbulata var. barbulata", "Pyxidenthera barbulata"),
-  Pyxidanthera_brevifolia = c("Pyxidanthera brevifolia", "Pyxidanthera brevifolia Wells", "Pyxidanthera barbulata var. brevifolia (Wells) H.E.Ahles", "Pyxidanthera barbulata var. brevifolia")
-)
+synonymns <- list(Galax_urceolata = c("Galax urceolata", "Galax urceolata (Poir.) Brummitt", "Galax urceolata (Poiret) Brummitt", "Galax urceolaa", "Galax aphylla L.", "Galax aphylla"),
+                  Pyxidanthera_barbulata = c("Pyxidanthera barbulata", "Pyxidanthera barbulata Michx.", "Pyxidanthera barbulata var. barbulata", "Pyxidenthera barbulata"),
+                  Pyxidanthera_brevifolia = c("Pyxidanthera brevifolia", "Pyxidanthera brevifolia Wells", "Pyxidanthera barbulata var. brevifolia (Wells) H.E.Ahles", "Pyxidanthera barbulata var. brevifolia"))
 
 for (i in 1:3) {
   df <- read.csv(files[i])
@@ -120,7 +128,7 @@ for (i in 1:3) {
   df <- one_point_per_pixel(df)
   df <- thin_points(df, distance = 0.002, reps = 100)
 
-  outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2026_07_14_cleaned.csv")
+  outfile <- paste0("data/02_cleaning/", gsub(" ", "_", search[1]), "_2026_07_22_cleaned.csv")
   write.csv(df, outfile, row.names = FALSE)
   rm(df, search, outfile)
 }
@@ -131,42 +139,45 @@ alldf <- list.files("data/02_cleaning", pattern = "*.csv", full.names = TRUE)
 alldf <- lapply(alldf, read.csv)
 alldf <- do.call(rbind, alldf)
 
-write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_14.csv", row.names = FALSE)
+write.csv(alldf, "data/02_cleaning/maxent_ready/diapensiaceae_maxentready_2026_07_22.csv", row.names = FALSE)
 
 ## M) Map All Records ----
 
 alldf_fixed <- st_as_sf(alldf, coords = c("longitude", "latitude"), crs = 4326)
 
 all_map <- ggplot() +
-  USA + state +
-  geom_sf(data = alldf_fixed, aes(col = factor(accepted_name))) +
-  coord_sf(xlim = c(min(alldf$longitude) - 3, max(alldf$longitude) + 3),
-           ylim = c(min(alldf$latitude) - 3, max(alldf$latitude) + 3)) +
-  xlab("Longitude") + ylab("Latitude") +
-  labs(color = "Scientific name") +
-  annotation_scale() +
-  annotation_north_arrow(location = "tl", height = unit(1, "cm"), width = unit(1, "cm"))
+           USA +
+           state +
+           geom_sf(data = alldf_fixed,
+                   aes(col = factor(accepted_name))) +
+           coord_sf(xlim = c(min(alldf$longitude) - 3, max(alldf$longitude) + 3),
+                    ylim = c(min(alldf$latitude) - 3, max(alldf$latitude) + 3)) +
+          xlab("Longitude") +
+          ylab("Latitude") +
+          labs(color = "Scientific name") +
+          annotation_scale() +
+          annotation_north_arrow(location = "tl",
+                                 height = unit(1, "cm"),
+                                 width = unit(1, "cm"))
 
 all_map
 
 ## N) Prepare GeoLocate Batch File ----
 
-rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_14.csv")
+rawdf <- read.csv("data/01_download/raw/Shortia_galacifolia_raw_2026_07_22.csv")
 rawdf_GeoRef <- need_to_georeference(rawdf)
 
 # Format columns for GeoLocate submission
 rawdf_GeoRef <- rawdf_GeoRef %>%
-  dplyr::select(
-    "locality string" = locality,
-    country,
-    state = stateProvince,
-    county,
-    latitude,
-    longitude,
-    ID,
-    name = scientificName,
-    basis = basisOfRecord
-  )
+                dplyr::select("locality string" = locality,
+                              country,
+                              state = stateProvince,
+                              county,
+                              latitude,
+                              longitude,
+                              ID,
+                              name = scientificName,
+                              basis = basisOfRecord)
 
 # Add required empty columns
 rawdf_GeoRef$'correction status' <- ""
@@ -175,8 +186,11 @@ rawdf_GeoRef$'error polygon' <- ""
 rawdf_GeoRef$'multiple results' <- ""
 
 # Reorder columns
-rawdf_GeoRef2 <- rawdf_GeoRef[, c("locality string", "country", "state", "county", "latitude", "longitude",
-                                  "correction status", "precision", "error polygon", "multiple results",
+rawdf_GeoRef2 <- rawdf_GeoRef[, c("locality string", "country", "state",
+                                  "county", "latitude", "longitude",
+                                  "correction status", "precision",
+                                  "error polygon", "multiple results",
                                   "ID", "name", "basis")]
 
-write.csv(rawdf_GeoRef2, "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2026_07_14.csv", row.names = FALSE)
+write.csv(rawdf_GeoRef2,
+          file = "data/03_georeferencing/Shortia_galacifolia_Needing_GeoRef_2026_07_22.csv", row.names = FALSE)

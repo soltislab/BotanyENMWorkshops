@@ -46,8 +46,8 @@ ZenodoDownload <- function(overwrite = FALSE){
   if(token == 1){
     message("Checking Zenodo DOI.")
     ### Zenodo DOI
-    doi <- "10.5281/zenodo.16755492" ###UPDATE ME###
-
+    # doi <- "10.5281/zenodo.16755492" ###UPDATE ME###
+    doi <- "10.5281/zenodo.21497438"
     landing_page <- tryCatch(
       httr2::request(paste0("https://doi.org/", doi)) |>
         httr2::req_perform() |>

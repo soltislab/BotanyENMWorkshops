@@ -14,7 +14,7 @@ Current organizers: Pam Soltis, Doug Soltis, Shelly Gaynor, Makenzie Mabry, Eliz
 - If you join the workshop late or if you are using this material outside of the workshop, please clone this repository locally. Then navigate to `Botany2026/` and open the .Rproj object. Start with 01_Setup.R, here you will also download all the data needed to run these tutorials.
 
 ### Data information:    
-The data for this workshop has been moved to Zenodo. Please download the data folder from Zenodo: [doi.org/10.5281/zenodo.16755492](https://zenodo.org/records/16755492) 
+The data for this workshop has been moved to Zenodo. Please download the data folder from Zenodo: [doi.org/10.5281/zenodo.21497438](https://zenodo.org/records/21497438) 
 
 ## rJava issues
 

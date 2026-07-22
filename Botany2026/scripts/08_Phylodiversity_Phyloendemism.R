@@ -194,7 +194,7 @@ print(tree_plot)
 ### 2) n_iterations: the number of swaps used to produce each randomized community (calculation described below) <break>
 
 
-# compare the percentage of original community matrix similarity
+# Compare the percentage of original community matrix similarity
 # to that of the randomized community using 20,000 iterations/swaps
 # comm: equal to our observed community matrix
 # null_model: is equal to curveball maintains sp richness and abundance patterns,

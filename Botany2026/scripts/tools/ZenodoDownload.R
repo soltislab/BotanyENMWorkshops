@@ -84,7 +84,7 @@ ZenodoDownload <- function(overwrite = FALSE){
     }
     message("Zipfile Downloaded! Time to unzip!")
     utils::unzip(zipfile,
-                 exdir = paste0(dbdir, "/data"),
+                 exdir = dbdir,
                  overwrite = TRUE)
 
     if(!dir.exists(paste0(dbdir, "/data"))){
